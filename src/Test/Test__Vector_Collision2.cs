@@ -31,7 +31,7 @@ internal static partial class Program {
             && LineVsRect((1.5f, 2.5f), (1.5f, 0.5f),   (1f, 1f), (1f, 1f)) == true
 
             && LineVsRect((0.5f, 1.5f), (1.5f, 2.5f),   (1f, 1f), (1f, 1f)) == true
-            && LineVsRect((0.5f, 1.5f), (1.5f, 2.51f),   (1f, 1f), (1f, 1f)) == false
+            && LineVsRect((0.5f, 1.5f), (1.5f, 2.51f),  (1f, 1f), (1f, 1f)) == false
         );
         #if false
             PRINT($"------------------------------------------------------------------------------------------------------------------------");

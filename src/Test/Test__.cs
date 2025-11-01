@@ -3,11 +3,138 @@ namespace UtilityTest;
 internal static partial class Program {static void Test___() {  //PRINT("\n[BLARG]");
 //##############################################################################################################################################################
 //##############################################################################################################################################################
-#if true
+#if false
+    PRINT("");
+    PRINT($"                       nint: {sizeof(nint )} bytes"); //  'nint'  does not have a predefined size, therefore sizeof can only be used in an unsafe context
+    PRINT($"                      nuint: {sizeof(nuint)} bytes"); //  'nuint' does not have a predefined size...
+#endif
 
-    //PRINT($"{(uint)new bvec4(247,  31,   0, 255):X8}");
-    //PRINT($"{(uint)new bvec4(103, 255,   0, 255):X8}");
-    //PRINT($"{(uint)new bvec4(  0, 128, 255, 255):X8}");
+#if false
+    PRINT("");
+    PRINT($"                       bool: {sizeof(bool  ),2} bytes");
+    PRINT("");
+    PRINT($"                      sbyte: {sizeof(sbyte ),2} bytes       byte: {sizeof(byte  ),2} bytes");
+    PRINT($"                      short: {sizeof(short ),2} bytes     ushort: {sizeof(ushort),2} bytes");
+    PRINT($"                        int: {sizeof(int   ),2} bytes       uint: {sizeof(uint  ),2} bytes");
+    PRINT($"                       long: {sizeof(long  ),2} bytes      ulong: {sizeof(ulong ),2} bytes");
+    PRINT("");
+    PRINT($"                      float: {sizeof(float ),2} bytes");
+    PRINT($"                     double: {sizeof(double),2} bytes");
+#endif
+
+#if false
+    PRINT("");
+    PRINT($"                       vec2: {System.Runtime.InteropServices.Marshal.SizeOf<vec2>(),2} bytes");
+    PRINT($"                      ivec2: {System.Runtime.InteropServices.Marshal.SizeOf<ivec2>(),2} bytes");
+    PRINT($"                       vec3: {System.Runtime.InteropServices.Marshal.SizeOf<vec3>(),2} bytes");
+    PRINT($"                      ivec3: {System.Runtime.InteropServices.Marshal.SizeOf<ivec3>(),2} bytes");
+    PRINT($"                       vec4: {System.Runtime.InteropServices.Marshal.SizeOf<vec4>(),2} bytes");
+    PRINT($"                      ivec4: {System.Runtime.InteropServices.Marshal.SizeOf<ivec4>(),2} bytes");
+    PRINT("");
+    PRINT($"                      bvec4: {System.Runtime.InteropServices.Marshal.SizeOf<bvec4>(),2} bytes");
+  //PRINT($"                      bvec8: {System.Runtime.InteropServices.Marshal.SizeOf<bvec8>(),2} bytes");
+    PRINT("");
+    PRINT($"                       mat4: {System.Runtime.InteropServices.Marshal.SizeOf<mat4>(),2} bytes");
+
+    //PRINT($"                       vec2: {System.Runtime.InteropServices.Marshal.SizeOf(typeof(vec2)),2} bytes"); //  Using member 'System.Runtime.InteropServices.Marshal.SizeOf(Type)' which has 'RequiresDynamicCodeAttribute' can break functionality when AOT compiling.
+    //PRINT($"                       vec3: {System.Runtime.InteropServices.Marshal.SizeOf(typeof(vec3)),2} bytes"); //  Marshalling code for the object might not be available.
+    //PRINT($"                       vec4: {System.Runtime.InteropServices.Marshal.SizeOf(typeof(vec4)),2} bytes"); //  Use the SizeOf<T> overload instead.
+
+    //PRINT($"                       vec2: {sizeof(vec2),2} bytes"); //  Structs do not have a predefined size...
+    //PRINT($"                       vec3: {sizeof(vec3),2} bytes"); //  auto-struct-padding is dependent on:
+    //PRINT($"                       vec4: {sizeof(vec4),2} bytes"); //     platform allocation-size, allocation-addressing, bus-width,  etc.
+#endif
+
+#if false
+    PRINT("");
+    PRINT($"    System.Numerics.Vector2: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Vector2>(),2} bytes");
+    PRINT($"    System.Numerics.Vector3: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Vector3>(),2} bytes");
+    PRINT($"    System.Numerics.Vector4: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Vector4>(),2} bytes");
+    PRINT("");
+    PRINT($"    System.Numerics.Matrix4: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Matrix4x4>(),2} bytes");
+#endif
+//##############################################################################################################################################################
+//##############################################################################################################################################################
+#if false
+    System.Random Random = new();
+    int N = 1 << 24; //pow(2,24);
+
+    {
+        float Blarg = 0f;
+        Time Timer = new();
+
+        for (int i = 0; i < N; ++i) {Blarg += _minA(Random.NextSingle(), Random.NextSingle(), Random.NextSingle(), Random.NextSingle());}
+
+        Timer.Update();
+        PRINT($"\n  Iterations: {CommaDelimit(N)}    Seconds: {Timer.SinceStart,10:0.0000000}    Sum: {Blarg:0.00}\n");
+    }
+
+    {
+        float Blarg = 0f;
+        Time Timer = new();
+
+        for (int i = 0; i < N; ++i) {Blarg += min(Random.NextSingle(), Random.NextSingle(), Random.NextSingle(), Random.NextSingle());}
+
+        Timer.Update();
+        PRINT($"\n  Iterations: {CommaDelimit(N)}    Seconds: {Timer.SinceStart,10:0.0000000}    Sum: {Blarg:0.00}\n");
+    }
+
+#endif
+#if true
+    {
+        for (int i = 2; i < 32; ++i) {
+            PRINT($"""
+            [{i}]
+                 2:    X: { 2-1,2}    return: {(i/ 2 - 1),2} + {(i %  2),2}    TOTAL: {( 2-1) + (i/ 2 - 1) + (i %  2),2}
+                 3:    X: { 3-1,2}    return: {(i/ 3 - 1),2} + {(i %  3),2}    TOTAL: {( 3-1) + (i/ 3 - 1) + (i %  3),2}
+                 4:    X: { 4-1,2}    return: {(i/ 4 - 1),2} + {(i %  4),2}    TOTAL: {( 4-1) + (i/ 4 - 1) + (i %  4),2}
+                 5:    X: { 5-1,2}    return: {(i/ 5 - 1),2} + {(i %  5),2}    TOTAL: {( 5-1) + (i/ 5 - 1) + (i %  5),2}
+                 6:    X: { 6-1,2}    return: {(i/ 6 - 1),2} + {(i %  6),2}    TOTAL: {( 6-1) + (i/ 6 - 1) + (i %  6),2}
+                 7:    X: { 7-1,2}    return: {(i/ 7 - 1),2} + {(i %  7),2}    TOTAL: {( 7-1) + (i/ 7 - 1) + (i %  7),2}
+                 8:    X: { 8-1,2}    return: {(i/ 8 - 1),2} + {(i %  8),2}    TOTAL: {( 8-1) + (i/ 8 - 1) + (i %  8),2}
+                 9:    X: { 9-1,2}    return: {(i/ 9 - 1),2} + {(i %  9),2}    TOTAL: {( 9-1) + (i/ 9 - 1) + (i %  9),2}
+                10:    X: {10-1,2}    return: {(i/10 - 1),2} + {(i % 10),2}    TOTAL: {(10-1) + (i/10 - 1) + (i % 10),2}
+                11:    X: {11-1,2}    return: {(i/11 - 1),2} + {(i % 11),2}    TOTAL: {(11-1) + (i/11 - 1) + (i % 11),2}
+                12:    X: {12-1,2}    return: {(i/12 - 1),2} + {(i % 12),2}    TOTAL: {(12-1) + (i/12 - 1) + (i % 12),2}
+                13:    X: {13-1,2}    return: {(i/13 - 1),2} + {(i % 13),2}    TOTAL: {(13-1) + (i/13 - 1) + (i % 13),2}
+                14:    X: {14-1,2}    return: {(i/14 - 1),2} + {(i % 14),2}    TOTAL: {(14-1) + (i/14 - 1) + (i % 14),2}
+                15:    X: {15-1,2}    return: {(i/15 - 1),2} + {(i % 15),2}    TOTAL: {(15-1) + (i/15 - 1) + (i % 15),2}
+                16:    X: {16-1,2}    return: {(i/16 - 1),2} + {(i % 16),2}    TOTAL: {(16-1) + (i/16 - 1) + (i % 16),2}
+            """);
+        }
+    }
+
+#endif
+//##############################################################################################################################################################
+//##############################################################################################################################################################
+#if false
+
+    //PRINT($"""
+    //""");
+
+    PRINT($"{(uint)new bvec4(247,  31,   0, 255):X8}");
+    PRINT($"{(uint)new bvec4(103, 255,   0, 255):X8}");
+    PRINT($"{(uint)new bvec4(  0, 128, 255, 255):X8}");
+
+#endif
+#if false
+
+    bvec8 V = 0L;
+    V.b0=0x12; V.b1=0x34; V.b2=0x56; V.b3=0x78; V.b4=0x9A; V.b5=0xBC; V.b6=0xDE; V.b7=0xF0;
+
+    PRINT($"""
+        B:  {V.b0:X} {V.b1:X} {V.b2:X} {V.b3:X} {V.b4:X} {V.b5:X} {V.b6:X} {V.b7:X}
+        S:  {V.s0:X}  {V.s1:X}  {V.s2:X}  {V.s3:X}
+        I:   {V.i0:X}    {V.i1:X}
+        L:     {V.L:X}
+    """);
+
+    /*
+        B:  12 34 56 78 9A BC DE F0
+        S:  1234  5678  9ABC  DEF0
+        I:   12345678    9ABCDEF0
+        L:     123456789ABCDEF0
+    */
 
 #endif
 //##############################################################################################################################################################
@@ -15,7 +142,7 @@ internal static partial class Program {static void Test___() {  //PRINT("\n[BLAR
 #if false
 
     static void F(params int[] args) {
-        string str = $"Array contains {args.Length} elements:";
+        string str = $"ParamsArray contains {args.Length} elements:";
         foreach (int i in args)  str += $" {i}";
         PRINT(str);
     }
@@ -23,6 +150,17 @@ internal static partial class Program {static void Test___() {  //PRINT("\n[BLAR
     F(new int[] {1, 2, 3});
     F(10, 20, 30, 40);
     F();
+
+#endif
+#if false
+
+    double[][] Pnt = new double[5][];
+
+    x[0] = new double[10];
+    x[1] = new double[5];
+    x[2] = new double[3];
+    x[3] = new double[100];
+    x[4] = new double[1];
 
 #endif
 //##############################################################################################################################################################
@@ -96,7 +234,6 @@ internal static partial class Program {static void Test___() {  //PRINT("\n[BLAR
             STR += $"[{i,2}] {Filo3[i]}\n";
         }
         PRINT(STR);
-
     }
 #endif
 //##############################################################################################################################################################

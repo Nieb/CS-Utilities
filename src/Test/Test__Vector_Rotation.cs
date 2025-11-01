@@ -7,175 +7,176 @@ internal static partial class Program {
 
         //======================================================================================================================================================
         RESULT("vec2 rot(P,        Theta)", true
-            && rot((0, 1), ToRad(-450)).IsApproximately((-1, 0))
-            && rot((0, 1), ToRad(-360)).IsApproximately(( 0, 1))
-            && rot((0, 1), ToRad(-270)).IsApproximately(( 1, 0))
-            && rot((0, 1), ToRad(-180)).IsApproximately(( 0,-1))
-            && rot((0, 1), ToRad( -90)).IsApproximately((-1, 0))
-            && rot((0, 1),          0 ).IsApproximately(( 0, 1))
-            && rot((0, 1), ToRad(  90)).IsApproximately(( 1, 0))
-            && rot((0, 1), ToRad( 180)).IsApproximately(( 0,-1))
-            && rot((0, 1), ToRad( 270)).IsApproximately((-1, 0))
-            && rot((0, 1), ToRad( 360)).IsApproximately(( 0, 1))
-            && rot((0, 1), ToRad( 450)).IsApproximately(( 1, 0))
+            && rot((0f,1f), ToRad(-450f)).IsApproximately((-1f, 0f))
+            && rot((0f,1f), ToRad(-360f)).IsApproximately(( 0f, 1f))
+            && rot((0f,1f), ToRad(-270f)).IsApproximately(( 1f, 0f))
+            && rot((0f,1f), ToRad(-180f)).IsApproximately(( 0f,-1f))
+            && rot((0f,1f), ToRad( -90f)).IsApproximately((-1f, 0f))
+            && rot((0f,1f),          0f ).IsApproximately(( 0f, 1f))
+            && rot((0f,1f), ToRad(  90f)).IsApproximately(( 1f, 0f))
+            && rot((0f,1f), ToRad( 180f)).IsApproximately(( 0f,-1f))
+            && rot((0f,1f), ToRad( 270f)).IsApproximately((-1f, 0f))
+            && rot((0f,1f), ToRad( 360f)).IsApproximately(( 0f, 1f))
+            && rot((0f,1f), ToRad( 450f)).IsApproximately(( 1f, 0f))
 
-            && rot((0, 1), ToRad(-405)).IsApproximately((-SQRT2_RCP, SQRT2_RCP))
-            && rot((0, 1), ToRad(-315)).IsApproximately(( SQRT2_RCP, SQRT2_RCP))
-            && rot((0, 1), ToRad(-225)).IsApproximately(( SQRT2_RCP,-SQRT2_RCP))
-            && rot((0, 1), ToRad(-135)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP))
-            && rot((0, 1), ToRad( -45)).IsApproximately((-SQRT2_RCP, SQRT2_RCP))
-            && rot((0, 1), ToRad(  45)).IsApproximately(( SQRT2_RCP, SQRT2_RCP))
-            && rot((0, 1), ToRad( 135)).IsApproximately(( SQRT2_RCP,-SQRT2_RCP))
-            && rot((0, 1), ToRad( 225)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP))
-            && rot((0, 1), ToRad( 315)).IsApproximately((-SQRT2_RCP, SQRT2_RCP))
-            && rot((0, 1), ToRad( 405)).IsApproximately(( SQRT2_RCP, SQRT2_RCP))
+            && rot((0f,1f), ToRad(-405f)).IsApproximately((-SQRT2_RCP, SQRT2_RCP))
+            && rot((0f,1f), ToRad(-315f)).IsApproximately(( SQRT2_RCP, SQRT2_RCP))
+            && rot((0f,1f), ToRad(-225f)).IsApproximately(( SQRT2_RCP,-SQRT2_RCP))
+            && rot((0f,1f), ToRad(-135f)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP))
+            && rot((0f,1f), ToRad( -45f)).IsApproximately((-SQRT2_RCP, SQRT2_RCP))
+            && rot((0f,1f), ToRad(  45f)).IsApproximately(( SQRT2_RCP, SQRT2_RCP))
+            && rot((0f,1f), ToRad( 135f)).IsApproximately(( SQRT2_RCP,-SQRT2_RCP))
+            && rot((0f,1f), ToRad( 225f)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP))
+            && rot((0f,1f), ToRad( 315f)).IsApproximately((-SQRT2_RCP, SQRT2_RCP))
+            && rot((0f,1f), ToRad( 405f)).IsApproximately(( SQRT2_RCP, SQRT2_RCP))
         );
 
         RESULT("vec2 rot(P, Pivot, Theta)", true
-            && rot((2, 3), (2, 2),         0 ).IsApproximately((2, 3))
-            && rot((2, 3), (2, 2), ToRad( 90)).IsApproximately((3, 2))
-            && rot((2, 3), (2, 2), ToRad(180)).IsApproximately((2, 1))
-            && rot((2, 3), (2, 2), ToRad(270)).IsApproximately((1, 2))
-            && rot((2, 3), (2, 2), ToRad(360)).IsApproximately((2, 3))
+            && rot((2f,3f), (2f,2f),         0f ).IsApproximately((2f, 3f))
+            && rot((2f,3f), (2f,2f), ToRad( 90f)).IsApproximately((3f, 2f))
+            && rot((2f,3f), (2f,2f), ToRad(180f)).IsApproximately((2f, 1f))
+            && rot((2f,3f), (2f,2f), ToRad(270f)).IsApproximately((1f, 2f))
+            && rot((2f,3f), (2f,2f), ToRad(360f)).IsApproximately((2f, 3f))
         );
 
         //======================================================================================================================================================
         RESULT("vec3 pch(P,        Theta)", true
-            && pch((0, 0,-2),         0 ).IsApproximately((0, 0,-2))
-            && pch((0, 0,-2), ToRad( 90)).IsApproximately((0,-2, 0))
-            && pch((0, 0,-2), ToRad(180)).IsApproximately((0, 0, 2))
-            && pch((0, 0,-2), ToRad(270)).IsApproximately((0, 2, 0))
-            && pch((0, 0,-2), ToRad(360)).IsApproximately((0, 0,-2))
+            && pch((0f, 0f,-2f),         0f ).IsApproximately((0f, 0f,-2f))
+            && pch((0f, 0f,-2f), ToRad( 90f)).IsApproximately((0f,-2f, 0f))
+            && pch((0f, 0f,-2f), ToRad(180f)).IsApproximately((0f, 0f, 2f))
+            && pch((0f, 0f,-2f), ToRad(270f)).IsApproximately((0f, 2f, 0f))
+            && pch((0f, 0f,-2f), ToRad(360f)).IsApproximately((0f, 0f,-2f))
         );
 
         RESULT("vec3 pch(P, Pivot, Theta)", true
-            && pch((3, 3, 1), (3, 3, 3),         0 ).IsApproximately(( 3, 3, 1))
-            && pch((3, 3, 1), (3, 3, 3), ToRad( 90)).IsApproximately(( 3, 1, 3))
-            && pch((3, 3, 1), (3, 3, 3), ToRad(180)).IsApproximately(( 3, 3, 5))
-            && pch((3, 3, 1), (3, 3, 3), ToRad(270)).IsApproximately(( 3, 5, 3))
-            && pch((3, 3, 1), (3, 3, 3), ToRad(360)).IsApproximately(( 3, 3, 1))
+            && pch((3f, 3f, 1f), (3f, 3f, 3f),         0f ).IsApproximately(( 3f, 3f, 1f))
+            && pch((3f, 3f, 1f), (3f, 3f, 3f), ToRad( 90f)).IsApproximately(( 3f, 1f, 3f))
+            && pch((3f, 3f, 1f), (3f, 3f, 3f), ToRad(180f)).IsApproximately(( 3f, 3f, 5f))
+            && pch((3f, 3f, 1f), (3f, 3f, 3f), ToRad(270f)).IsApproximately(( 3f, 5f, 3f))
+            && pch((3f, 3f, 1f), (3f, 3f, 3f), ToRad(360f)).IsApproximately(( 3f, 3f, 1f))
         );
 
         //======================================================================================================================================================
         RESULT("vec3 yaw(P,        Theta)", true
-            && yaw((0, 0,-2),         0 ).IsApproximately(( 0, 0,-2))
-            && yaw((0, 0,-2), ToRad( 90)).IsApproximately(( 2, 0, 0))
-            && yaw((0, 0,-2), ToRad(180)).IsApproximately(( 0, 0, 2))
-            && yaw((0, 0,-2), ToRad(270)).IsApproximately((-2, 0, 0))
-            && yaw((0, 0,-2), ToRad(360)).IsApproximately(( 0, 0,-2))
+            && yaw((0f, 0f,-2f),         0f ).IsApproximately(( 0f, 0f,-2f))
+            && yaw((0f, 0f,-2f), ToRad( 90f)).IsApproximately(( 2f, 0f, 0f))
+            && yaw((0f, 0f,-2f), ToRad(180f)).IsApproximately(( 0f, 0f, 2f))
+            && yaw((0f, 0f,-2f), ToRad(270f)).IsApproximately((-2f, 0f, 0f))
+            && yaw((0f, 0f,-2f), ToRad(360f)).IsApproximately(( 0f, 0f,-2f))
         );
 
         RESULT("vec3 yaw(P, Pivot, Theta)", true
-            && yaw((3, 3, 1), (3, 3, 3),         0 ).IsApproximately(( 3, 3, 1))
-            && yaw((3, 3, 1), (3, 3, 3), ToRad( 90)).IsApproximately(( 5, 3, 3))
-            && yaw((3, 3, 1), (3, 3, 3), ToRad(180)).IsApproximately(( 3, 3, 5))
-            && yaw((3, 3, 1), (3, 3, 3), ToRad(270)).IsApproximately(( 1, 3, 3))
-            && yaw((3, 3, 1), (3, 3, 3), ToRad(360)).IsApproximately(( 3, 3, 1))
+            && yaw((3f, 3f, 1f), (3f, 3f, 3f),         0f ).IsApproximately(( 3f, 3f, 1f))
+            && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad( 90f)).IsApproximately(( 5f, 3f, 3f))
+            && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad(180f)).IsApproximately(( 3f, 3f, 5f))
+            && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad(270f)).IsApproximately(( 1f, 3f, 3f))
+            && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad(360f)).IsApproximately(( 3f, 3f, 1f))
         );
 
         //======================================================================================================================================================
         RESULT("vec3 rol(P,        Theta)", true
-            && rol((0, 2, 0),         0 ).IsApproximately(( 0, 2, 0))
-            && rol((0, 2, 0), ToRad( 90)).IsApproximately(( 2, 0, 0))
-            && rol((0, 2, 0), ToRad(180)).IsApproximately(( 0,-2, 0))
-            && rol((0, 2, 0), ToRad(270)).IsApproximately((-2, 0, 0))
-            && rol((0, 2, 0), ToRad(360)).IsApproximately(( 0, 2, 0))
+            && rol((0f, 2f, 0f),         0f ).IsApproximately(( 0f, 2f, 0f))
+            && rol((0f, 2f, 0f), ToRad( 90f)).IsApproximately(( 2f, 0f, 0f))
+            && rol((0f, 2f, 0f), ToRad(180f)).IsApproximately(( 0f,-2f, 0f))
+            && rol((0f, 2f, 0f), ToRad(270f)).IsApproximately((-2f, 0f, 0f))
+            && rol((0f, 2f, 0f), ToRad(360f)).IsApproximately(( 0f, 2f, 0f))
         );
 
         RESULT("vec3 rol(P, Pivot, Theta)", true
-            && rol((3, 5, 3), (3, 3, 3),         0 ).IsApproximately(( 3, 5, 3))
-            && rol((3, 5, 3), (3, 3, 3), ToRad( 90)).IsApproximately(( 5, 3, 3))
-            && rol((3, 5, 3), (3, 3, 3), ToRad(180)).IsApproximately(( 3, 1, 3))
-            && rol((3, 5, 3), (3, 3, 3), ToRad(270)).IsApproximately(( 1, 3, 3))
-            && rol((3, 5, 3), (3, 3, 3), ToRad(360)).IsApproximately(( 3, 5, 3))
+            && rol((3f, 5f, 3f), (3f, 3f, 3f),         0f ).IsApproximately(( 3f, 5f, 3f))
+            && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad( 90f)).IsApproximately(( 5f, 3f, 3f))
+            && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad(180f)).IsApproximately(( 3f, 1f, 3f))
+            && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad(270f)).IsApproximately(( 1f, 3f, 3f))
+            && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad(360f)).IsApproximately(( 3f, 5f, 3f))
         );
 
         //======================================================================================================================================================
         RESULT("vec3 rot(P,        Axis, Theta)", true
-            && rot((0, 2, 0), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),         0 ).IsApproximately(( 0, 2, 0))
-            && rot((0, 2, 0), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad(120)).IsApproximately(( 2, 0, 0))
-            && rot((0, 2, 0), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad(240)).IsApproximately(( 0, 0, 2))
-            && rot((0, 2, 0), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad(360)).IsApproximately(( 0, 2, 0))
+            && rot((0f,2f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),          0f ).IsApproximately((0f,2f,0f))
+            && rot((0f,2f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad( 120f)).IsApproximately((2f,0f,0f))
+            && rot((0f,2f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad( 240f)).IsApproximately((0f,0f,2f))
+            && rot((0f,2f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad( 360f)).IsApproximately((0f,2f,0f))
 
-            && rot((0, 2, 0), (SQRT2_RCP, 0, SQRT2_RCP), ToRad(-270)).IsApproximately(( SQRT2, 0,-SQRT2))
-            && rot((0, 2, 0), (SQRT2_RCP, 0, SQRT2_RCP), ToRad( -90)).IsApproximately((-SQRT2, 0, SQRT2))
-            && rot((0, 2, 0), (SQRT2_RCP, 0, SQRT2_RCP), ToRad(  90)).IsApproximately(( SQRT2, 0,-SQRT2))
-            && rot((0, 2, 0), (SQRT2_RCP, 0, SQRT2_RCP), ToRad( 270)).IsApproximately((-SQRT2, 0, SQRT2))
+            && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(-270f)).IsApproximately(( SQRT2, 0f,-SQRT2))
+            && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad( -90f)).IsApproximately((-SQRT2, 0f, SQRT2))
+            && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  90f)).IsApproximately(( SQRT2, 0f,-SQRT2))
+            && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad( 270f)).IsApproximately((-SQRT2, 0f, SQRT2))
 
-            && rot((0, 1, 0), (SQRT2_RCP, 0, SQRT2_RCP), ToRad(  45)).IsApproximately((0.5f,SQRT2_RCP,-0.5f))
-            && rot((0, 1, 0), (SQRT2_RCP, 0, SQRT2_RCP), ToRad(  45)).length.IsApproximately(1)
+            && rot((0f,1f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f))       .IsApproximately((0.5f,SQRT2_RCP,-0.5f))
+            && rot((0f,1f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f)).length.IsApproximately(1f)
 
-            && rot((0, 2, 0), (SQRT2_RCP, 0, SQRT2_RCP), ToRad(  45)).IsApproximately((1,SQRT2,-1))
-            && rot((0, 2, 0), (SQRT2_RCP, 0, SQRT2_RCP), ToRad(  45)).length.IsApproximately(2)
+            && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f))       .IsApproximately((1f,SQRT2,-1f))
+            && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f)).length.IsApproximately(2f)
         );
 
         RESULT("vec3 rot(P, Pivot, Axis, Theta)", true
-            && rot((0, 5, 0), (0, 3, 0), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),         0 ).IsApproximately(( 0, 5, 0))
-            && rot((0, 5, 0), (0, 3, 0), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad(120)).IsApproximately(( 2, 3, 0))
-            && rot((0, 5, 0), (0, 3, 0), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad(240)).IsApproximately(( 0, 3, 2))
-            && rot((0, 5, 0), (0, 3, 0), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad(360)).IsApproximately(( 0, 5, 0))
+            && rot((0f,5f,0f), (0f,3f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),         0f ).IsApproximately((0f,5f,0f))
+            && rot((0f,5f,0f), (0f,3f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad(120f)).IsApproximately((2f,3f,0f))
+            && rot((0f,5f,0f), (0f,3f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad(240f)).IsApproximately((0f,3f,2f))
+            && rot((0f,5f,0f), (0f,3f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad(360f)).IsApproximately((0f,5f,0f))
         );
 
         //======================================================================================================================================================
         RESULT("vec3 rot(P,        ThetaVec)", true
-            && rot(( 0, 1,   0), (        0,         0,         0)).IsApproximately((        0,        1,        0))
-            && rot(( 0, 1,   0), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately(( TWOTHIRD,-ONETHIRD, TWOTHIRD)) //  180 along diagonal axis
-            && rot(( 0, 2,   0), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)).IsApproximately((        0,        2,        0)) //  360 along diagonal axis
+            && rot((0f,1f,  0f), (       0f,        0f,        0f)).IsApproximately((        0f,        1f,        0f))
+            && rot((0f,1f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately(( TWO_THIRD,-ONE_THIRD, TWO_THIRD)) //  180 along diagonal axis
+            && rot((0f,2f,  0f), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)).IsApproximately((        0f,        2f,        0f)) //  360 along diagonal axis
 
-            && rot(( 0, 1,   0), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).length.IsApproximately(1)
-            && rot(( 0, 2,   0), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).length.IsApproximately(2)
-            && rot(( 0, 0,  PI), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).length.IsApproximately(PI)
-            && rot(( 0, 0, PI2), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)).length.IsApproximately(PI2)
-            && rot(( 0, 0, PI3), (PI3/SQRT3, PI3/SQRT3, PI3/SQRT3)).length.IsApproximately(PI3)
-            && rot(( 0, 0, PI4), (PI4/SQRT3, PI4/SQRT3, PI4/SQRT3)).length.IsApproximately(PI4)
+            && rot((  1f,  0f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).length.IsApproximately(1f)
+            && rot((  0f,  2f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).length.IsApproximately(2f)
+            && rot((  0f,  0f,  3f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).length.IsApproximately(3f)
+            && rot(( PI ,  0f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).length.IsApproximately(PI)
+            && rot((  0f, PI2,  0f), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)).length.IsApproximately(PI2)
+            && rot((  0f,  0f, PI3), (PI3/SQRT3, PI3/SQRT3, PI3/SQRT3)).length.IsApproximately(PI3)
+            && rot(( PI4,  0f,  0f), (PI4/SQRT3, PI4/SQRT3, PI4/SQRT3)).length.IsApproximately(PI4)
 
-            && rot((-SQRT2_RCP, 0, SQRT2_RCP), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately(( SQRT2_RCP, 0,-SQRT2_RCP)) //  180 along diagonal axis
-            && rot((-SQRT2_RCP, 0, SQRT2_RCP), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)).IsApproximately((-SQRT2_RCP, 0, SQRT2_RCP)) //  360 along diagonal axis
+            && rot((-SQRT2_RCP, 0f, SQRT2_RCP), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately(( SQRT2_RCP, 0f,-SQRT2_RCP)) //  180 along diagonal axis
+            && rot((-SQRT2_RCP, 0f, SQRT2_RCP), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)).IsApproximately((-SQRT2_RCP, 0f, SQRT2_RCP)) //  360 along diagonal axis
 
-            && rot(( 0, 0, 1), ( PI/SQRT2, 0, PI/SQRT2)).IsApproximately(( 1, 0, 0)) //  180 along diagonal-ish axis
-            && rot(( 0, 0, 1), (-PI/SQRT2, 0,-PI/SQRT2)).IsApproximately(( 1, 0, 0)) //  180 along diagonal-ish axis
-            && rot(( 0, 0, 1), (-PI/SQRT2, 0, PI/SQRT2)).IsApproximately((-1, 0, 0)) //  180 along diagonal-ish axis
-            && rot(( 0, 0, 1), ( PI/SQRT2, 0,-PI/SQRT2)).IsApproximately((-1, 0, 0)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), ( PI/SQRT2, 0f, PI/SQRT2)).IsApproximately(( 1f, 0f, 0f)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), (-PI/SQRT2, 0f,-PI/SQRT2)).IsApproximately(( 1f, 0f, 0f)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), (-PI/SQRT2, 0f, PI/SQRT2)).IsApproximately((-1f, 0f, 0f)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), ( PI/SQRT2, 0f,-PI/SQRT2)).IsApproximately((-1f, 0f, 0f)) //  180 along diagonal-ish axis
 
-            && rot(( 0, 0, 1), ( 0, PI/SQRT2, PI/SQRT2)).IsApproximately(( 0, 1, 0)) //  180 along diagonal-ish axis
-            && rot(( 0, 0, 1), ( 0,-PI/SQRT2,-PI/SQRT2)).IsApproximately(( 0, 1, 0)) //  180 along diagonal-ish axis
-            && rot(( 0, 0, 1), ( 0,-PI/SQRT2, PI/SQRT2)).IsApproximately(( 0,-1, 0)) //  180 along diagonal-ish axis
-            && rot(( 0, 0, 1), ( 0, PI/SQRT2,-PI/SQRT2)).IsApproximately(( 0,-1, 0)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), ( 0f, PI/SQRT2, PI/SQRT2)).IsApproximately(( 0f, 1f, 0f)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), ( 0f,-PI/SQRT2,-PI/SQRT2)).IsApproximately(( 0f, 1f, 0f)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), ( 0f,-PI/SQRT2, PI/SQRT2)).IsApproximately(( 0f,-1f, 0f)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), ( 0f, PI/SQRT2,-PI/SQRT2)).IsApproximately(( 0f,-1f, 0f)) //  180 along diagonal-ish axis
 
-            && rot(( 0, 0, 1), ( PI/SQRT2, PI/SQRT2, 0)).IsApproximately(( 0, 0,-1)) //  180 along diagonal-ish axis
-            && rot(( 0, 0, 1), (-PI/SQRT2,-PI/SQRT2, 0)).IsApproximately(( 0, 0,-1)) //  180 along diagonal-ish axis
-            && rot(( 0, 0, 1), (-PI/SQRT2, PI/SQRT2, 0)).IsApproximately(( 0, 0,-1)) //  180 along diagonal-ish axis
-            && rot(( 0, 0, 1), ( PI/SQRT2,-PI/SQRT2, 0)).IsApproximately(( 0, 0,-1)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), ( PI/SQRT2, PI/SQRT2, 0f)).IsApproximately(( 0f, 0f,-1f)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), (-PI/SQRT2,-PI/SQRT2, 0f)).IsApproximately(( 0f, 0f,-1f)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), (-PI/SQRT2, PI/SQRT2, 0f)).IsApproximately(( 0f, 0f,-1f)) //  180 along diagonal-ish axis
+            && rot((0f,0f,1f), ( PI/SQRT2,-PI/SQRT2, 0f)).IsApproximately(( 0f, 0f,-1f)) //  180 along diagonal-ish axis
 
-            && rot(( 0, 0, 1), ( PIH/SQRT2, 0, PIH/SQRT2)).IsApproximately(( 0.5f     , SQRT2_RCP, 0.5f)) //  90 along diagonal-ish axis
-            && rot(( 0, 0, 1), (-PIH/SQRT2, 0,-PIH/SQRT2)).IsApproximately(( 0.5f     ,-SQRT2_RCP, 0.5f)) //  90 along diagonal-ish axis
-            && rot(( 0, 0, 1), (-PIH/SQRT2, 0, PIH/SQRT2)).IsApproximately((-0.5f     ,-SQRT2_RCP, 0.5f)) //  90 along diagonal-ish axis
-            && rot(( 0, 0, 1), ( PIH/SQRT2, 0,-PIH/SQRT2)).IsApproximately((-0.5f     , SQRT2_RCP, 0.5f)) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), ( PIH/SQRT2, 0f, PIH/SQRT2)).IsApproximately(( 0.5f     , SQRT2_RCP, 0.5f)) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), (-PIH/SQRT2, 0f,-PIH/SQRT2)).IsApproximately(( 0.5f     ,-SQRT2_RCP, 0.5f)) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), (-PIH/SQRT2, 0f, PIH/SQRT2)).IsApproximately((-0.5f     ,-SQRT2_RCP, 0.5f)) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), ( PIH/SQRT2, 0f,-PIH/SQRT2)).IsApproximately((-0.5f     , SQRT2_RCP, 0.5f)) //  90 along diagonal-ish axis
 
-            && rot(( 0, 0, 1), ( 0, PIH/SQRT2, PIH/SQRT2)).IsApproximately((-SQRT2_RCP, 0.5f     , 0.5f)) //  90 along diagonal-ish axis
-            && rot(( 0, 0, 1), ( 0,-PIH/SQRT2,-PIH/SQRT2)).IsApproximately(( SQRT2_RCP, 0.5f     , 0.5f)) //  90 along diagonal-ish axis
-            && rot(( 0, 0, 1), ( 0,-PIH/SQRT2, PIH/SQRT2)).IsApproximately(( SQRT2_RCP,-0.5f     , 0.5f)) //  90 along diagonal-ish axis
-            && rot(( 0, 0, 1), ( 0, PIH/SQRT2,-PIH/SQRT2)).IsApproximately((-SQRT2_RCP,-0.5f     , 0.5f)) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), ( 0f, PIH/SQRT2, PIH/SQRT2)).IsApproximately((-SQRT2_RCP, 0.5f     , 0.5f)) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), ( 0f,-PIH/SQRT2,-PIH/SQRT2)).IsApproximately(( SQRT2_RCP, 0.5f     , 0.5f)) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), ( 0f,-PIH/SQRT2, PIH/SQRT2)).IsApproximately(( SQRT2_RCP,-0.5f     , 0.5f)) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), ( 0f, PIH/SQRT2,-PIH/SQRT2)).IsApproximately((-SQRT2_RCP,-0.5f     , 0.5f)) //  90 along diagonal-ish axis
 
-            && rot(( 0, 0, 1), ( PIH/SQRT2, PIH/SQRT2, 0)).IsApproximately((-SQRT2_RCP, SQRT2_RCP, 0f  )) //  90 along diagonal-ish axis
-            && rot(( 0, 0, 1), (-PIH/SQRT2,-PIH/SQRT2, 0)).IsApproximately(( SQRT2_RCP,-SQRT2_RCP, 0f  )) //  90 along diagonal-ish axis
-            && rot(( 0, 0, 1), (-PIH/SQRT2, PIH/SQRT2, 0)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP, 0f  )) //  90 along diagonal-ish axis
-            && rot(( 0, 0, 1), ( PIH/SQRT2,-PIH/SQRT2, 0)).IsApproximately(( SQRT2_RCP, SQRT2_RCP, 0f  )) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), ( PIH/SQRT2, PIH/SQRT2, 0f)).IsApproximately((-SQRT2_RCP, SQRT2_RCP, 0.0f)) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), (-PIH/SQRT2,-PIH/SQRT2, 0f)).IsApproximately(( SQRT2_RCP,-SQRT2_RCP, 0.0f)) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), (-PIH/SQRT2, PIH/SQRT2, 0f)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP, 0.0f)) //  90 along diagonal-ish axis
+            && rot((0f,0f,1f), ( PIH/SQRT2,-PIH/SQRT2, 0f)).IsApproximately(( SQRT2_RCP, SQRT2_RCP, 0.0f)) //  90 along diagonal-ish axis
         );
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         RESULT("vec3 rot(P, Pivot, ThetaVec)", true
-            && rot((5,6,5), (5,5,5), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately((5+TWOTHIRD         ,5-ONETHIRD         ,5+TWOTHIRD         ))
-            && rot((5,7,5), (5,5,5), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately((5+TWOTHIRD+TWOTHIRD,5-ONETHIRD-ONETHIRD,5+TWOTHIRD+TWOTHIRD))
+            && rot((5f,6f,5f), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately((5f+TWO_THIRD          ,5f-ONE_THIRD          ,5f+TWO_THIRD          ))
+            && rot((5f,7f,5f), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately((5f+TWO_THIRD+TWO_THIRD,5f-ONE_THIRD-ONE_THIRD,5f+TWO_THIRD+TWO_THIRD))
 
-            && rot((5,6,5), (5,5,5), (PIH/SQRT2,         0, PIH/SQRT2)).IsApproximately((5+SQRT2_RCP        ,5                  ,5-SQRT2_RCP        ))
+            && rot((5f,6f,5f), (5f,5f,5f), (PIH/SQRT2,        0f, PIH/SQRT2)).IsApproximately((5f+SQRT2_RCP          ,5f                    ,5f-SQRT2_RCP          ))
 
-            && (rot((5,6,5    ), (5,5,5), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5,5,5)).length.IsApproximately(1)
-            && (rot((5,7,5    ), (5,5,5), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5,5,5)).length.IsApproximately(2)
-            && (rot((5,5,5+PI ), (5,5,5), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5,5,5)).length.IsApproximately(PI)
-            && (rot((5,5,5+PI2), (5,5,5), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)) - (5,5,5)).length.IsApproximately(PI2)
-            && (rot((5,5,5+PI3), (5,5,5), (PI3/SQRT3, PI3/SQRT3, PI3/SQRT3)) - (5,5,5)).length.IsApproximately(PI3)
-            && (rot((5,5,5+PI4), (5,5,5), (PI4/SQRT3, PI4/SQRT3, PI4/SQRT3)) - (5,5,5)).length.IsApproximately(PI4)
+            && (rot((5f,6f,5f    ), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5f,5f,5f)).length.IsApproximately(1f)
+            && (rot((5f,7f,5f    ), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5f,5f,5f)).length.IsApproximately(2f)
+            && (rot((5f,5f,5f+PI ), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5f,5f,5f)).length.IsApproximately(PI)
+            && (rot((5f,5f,5f+PI2), (5f,5f,5f), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)) - (5f,5f,5f)).length.IsApproximately(PI2)
+            && (rot((5f,5f,5f+PI3), (5f,5f,5f), (PI3/SQRT3, PI3/SQRT3, PI3/SQRT3)) - (5f,5f,5f)).length.IsApproximately(PI3)
+            && (rot((5f,5f,5f+PI4), (5f,5f,5f), (PI4/SQRT3, PI4/SQRT3, PI4/SQRT3)) - (5f,5f,5f)).length.IsApproximately(PI4)
         );
 
         //======================================================================================================================================================

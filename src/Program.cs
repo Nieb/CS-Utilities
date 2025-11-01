@@ -1,16 +1,18 @@
 ﻿
-
 namespace UtilityTest;
 internal static partial class Program {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     static void Main(string[] args) {
-        //Test__Float();
-        //Test__Intrinsics();
+        _ = args;
+        #if false
+            Test__Float();
 
-        //Gen__TurboColor();
+            //Test__Intrinsics();
 
-        #if true
+            //Gen__TurboColor();
+
+        #else
             PRINTC("                                  ~~~ START ~~~");
             Time Time = new();
 
@@ -31,7 +33,6 @@ internal static partial class Program {
             Test__Vector_Interpolation();
             Test__Vector_Miscellaneous();
             Test__Vector_Rotation();
-
 
             Test___();
 

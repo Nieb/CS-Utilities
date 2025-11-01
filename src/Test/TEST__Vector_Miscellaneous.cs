@@ -7,25 +7,106 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        RESULT("vec2 PredictiveAim()", true
-            //&&
-            //PredictiveAim(
-            //    (1f, 3f), (SQRT2_RCP, -SQRT2_RCP),
-            //    (1f, 1f), (0f, 0f),
-            //    SQRT2_RCP
-            //).IsApproximately((2f, 2f))
+        RESULT("Bisect(vec2, vec2)", true
+            && Bisect((1f, 0f), (0f, 1f)).IsApproximately(( SQRT2_RCP, SQRT2_RCP))
+            && Bisect((0f, 1f), (1f, 0f)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP))
+
+            && Bisect(( SQRT2_RCP,-SQRT2_RCP), ( SQRT2_RCP, SQRT2_RCP)).IsApproximately(( 1f, 0f))
+            && Bisect((-SQRT2_RCP,-SQRT2_RCP), (-SQRT2_RCP, SQRT2_RCP)).IsApproximately(( 1f, 0f))
+
+            && Bisect((-SQRT2_RCP, SQRT2_RCP), (-SQRT2_RCP,-SQRT2_RCP)).IsApproximately((-1f, 0f))
+            && Bisect(( SQRT2_RCP, SQRT2_RCP), ( SQRT2_RCP,-SQRT2_RCP)).IsApproximately((-1f, 0f))
+
+            && Bisect(( SQRT2_RCP, SQRT2_RCP), (-SQRT2_RCP, SQRT2_RCP)).IsApproximately(( 0f, 1f))
+            && Bisect(( SQRT2_RCP,-SQRT2_RCP), (-SQRT2_RCP,-SQRT2_RCP)).IsApproximately(( 0f, 1f))
+
+            && Bisect((-SQRT2_RCP, SQRT2_RCP), ( SQRT2_RCP, SQRT2_RCP)).IsApproximately(( 0f,-1f))
+            && Bisect((-SQRT2_RCP,-SQRT2_RCP), ( SQRT2_RCP,-SQRT2_RCP)).IsApproximately(( 0f,-1f))
         );
+
+        //######################################################################################################################################################
+        //######################################################################################################################################################
         {
-            vec2 A = PredictiveAim(
-                (1f, 1f), (SQRT2_RCP, -SQRT2_RCP),
-                (1f, 3f), (SQRT2_RCP, -SQRT2_RCP),
-                1f
+            vec2 Z = (0f, 0f);
+            vec2 A = (0f, 1f);
+            vec2 B = (-sin(PI2/3f),cos(PI2/3f));
+            vec2 C = (-sin(PI4/3f),cos(PI4/3f));
+
+            RESULT("Barycentric()", true
+                && Barycentric(Z,  A,B,C).IsApproximately((ONE_THIRD, ONE_THIRD, ONE_THIRD))
+                && Barycentric(Z,  C,A,B).IsApproximately((ONE_THIRD, ONE_THIRD, ONE_THIRD))
+                && Barycentric(Z,  B,C,A).IsApproximately((ONE_THIRD, ONE_THIRD, ONE_THIRD))
+
+                && Barycentric(Z+3f,  A+3f,B+3f,C+3f).IsApproximately((ONE_THIRD, ONE_THIRD, ONE_THIRD))
+                && Barycentric(Z-3f,  A-3f,B-3f,C-3f).IsApproximately((ONE_THIRD, ONE_THIRD, ONE_THIRD))
+
+                && Barycentric(A,  A,B,C).IsApproximately((1f, 0f, 0f))
+                && Barycentric(B,  A,B,C).IsApproximately((0f, 1f, 0f))
+                && Barycentric(C,  A,B,C).IsApproximately((0f, 0f, 1f))
+
+                && Barycentric(A/4f,  A,B,C).IsApproximately((2/4f, 1/4f, 1/4f))
+                && Barycentric(B/4f,  A,B,C).IsApproximately((1/4f, 2/4f, 1/4f))
+                && Barycentric(C/4f,  A,B,C).IsApproximately((1/4f, 1/4f, 2/4f))
+
+                && Barycentric(A/3f,  A,B,C).IsApproximately((5/9f, 2/9f, 2/9f))
+                && Barycentric(B/3f,  A,B,C).IsApproximately((2/9f, 5/9f, 2/9f))
+                && Barycentric(C/3f,  A,B,C).IsApproximately((2/9f, 2/9f, 5/9f))
+
+                && Barycentric(A/2f,  A,B,C).IsApproximately((4/6f, 1/6f, 1/6f))
+                && Barycentric(B/2f,  A,B,C).IsApproximately((1/6f, 4/6f, 1/6f))
+                && Barycentric(C/2f,  A,B,C).IsApproximately((1/6f, 1/6f, 4/6f))
+
+                && Barycentric(A*0.75f,  A,B,C).IsApproximately((10/12f,  1/12f,  1/12f))
+                && Barycentric(B*0.75f,  A,B,C).IsApproximately(( 1/12f, 10/12f,  1/12f))
+                && Barycentric(C*0.75f,  A,B,C).IsApproximately(( 1/12f,  1/12f, 10/12f))
             );
+
+            #if false
+                PRINT("");
+                PRINT($"    {Barycentric(Z,  A,B,C):0.000}");
+                PRINT($"    {Barycentric(Z,  A,B,C):0.000}");
+                PRINT("");
+                PRINT($"    {Barycentric(A*0.25f,  A,B,C):0.000}");
+                PRINT($"    {Barycentric(B*0.25f,  A,B,C):0.000}");
+                PRINT($"    {Barycentric(C*0.25f,  A,B,C):0.000}");
+                PRINT("");
+                PRINT($"    {Barycentric(A*0.50f,  A,B,C):0.000}");
+                PRINT($"    {Barycentric(B*0.50f,  A,B,C):0.000}");
+                PRINT($"    {Barycentric(C*0.50f,  A,B,C):0.000}");
+                PRINT("");
+                PRINT($"    {Barycentric(A*0.75f,  A,B,C):0.000}");
+                PRINT($"    {Barycentric(B*0.75f,  A,B,C):0.000}");
+                PRINT($"    {Barycentric(C*0.75f,  A,B,C):0.000}");
+                PRINT("");
+                PRINT($"    {Barycentric(A*ONE_THIRD,  A,B,C):0.000}");
+                PRINT($"    {Barycentric(B*ONE_THIRD,  A,B,C):0.000}");
+                PRINT($"    {Barycentric(C*ONE_THIRD,  A,B,C):0.000}");
+                PRINT("");
+            #endif
+
+        }
+        //######################################################################################################################################################
+        //######################################################################################################################################################
+        {
+            //vec2 A = PredictiveAim(
+            //    (1f, 1f), (SQRT2_RCP, -SQRT2_RCP),
+            //    (1f, 3f), (SQRT2_RCP, -SQRT2_RCP),
+            //    1f
+            //);
             //vec2 B = PredictiveAim(
             //    (1f, 3f), (SQRT2_RCP, -SQRT2_RCP),
             //    (1f, 1f), (0f, 0f),
             //    1f
             //);
+
+            RESULT("vec2 PredictiveAim()", true
+                //&&
+                //PredictiveAim(
+                //    (1f, 3f), (SQRT2_RCP, -SQRT2_RCP),
+                //    (1f, 1f), (0f, 0f),
+                //    SQRT2_RCP
+                //).IsApproximately((2f, 2f))
+            );
 
             //PRINT("");
             //PRINT($"result  == {A:0}");
@@ -33,7 +114,6 @@ internal static partial class Program {
             //PRINT($"result  == {B:0}");
             //PRINT("");
         }
-
         //######################################################################################################################################################
         //######################################################################################################################################################
         RESULT("SphericalDistance(vec2, vec2)", true
@@ -62,8 +142,8 @@ internal static partial class Program {
             && SphericalDistance((  0f, PIH),( PIH,  0f)).IsApproximately(PIH)
 
             && SphericalDistance(( PIQ,  0f),( PIQ, PI )).IsApproximately(PIH)
-            && SphericalDistance(( PIQ,  0f),(-PIQ, PI )).IsApproximately(3.140902f) //PI)      Fix Precision...
-            && SphericalDistance((-PIQ,  0f),( PIQ, PI )).IsApproximately(3.140902f) //PI)          3.1415927
+            && SphericalDistance(( PIQ,  0f),(-PIQ, PI )).IsApproximately(3.140902f) //PI)      Fix Precision?
+            && SphericalDistance((-PIQ,  0f),( PIQ, PI )).IsApproximately(3.140902f) //PI)        3.1415927f
             && SphericalDistance((-PIQ,  0f),(-PIQ, PI )).IsApproximately(PIH)
         );
 
@@ -93,14 +173,13 @@ internal static partial class Program {
 
             System.Text.StringBuilder SB = new();
 
-            int iPch = 0, iYaw = 0;
             if (!FAIL) {
-                for (iPch = -Steps/2; iPch <= Steps/2; ++iPch) {
-                    for (iYaw = 0; iYaw <= Steps*2; ++iYaw) {
+                for     (int iPch = -Steps/2; iPch <= Steps/2; ++iPch) {
+                    for (int iYaw =        0; iYaw <= Steps*2; ++iYaw) {
                         B.x = (float)(((double)iPch/(double)Steps) * 3.14159265358979323846264338327950288419716939937511);
                         B.y = (float)(((double)iYaw/(double)Steps) * 3.14159265358979323846264338327950288419716939937511);
                         D = SphericalDistance(A, B);
-                        //FAIL = D != 0f;
+                        //FAIL = (D != 0f);
                         //if (FAIL) break;
 
                         //SB.Append($"  [{iPch,3}, {iYaw,3}]({B.x,6:0.000},{B.y,6:0.000}) {D:0.000}");
@@ -112,14 +191,7 @@ internal static partial class Program {
                 }
             }
 
-            PRINTC(SB.ToString());
-
-
-            //PRINT($"""
-            //  FAIL == {FAIL}
-            //  [{iPch}, {iYaw}]  {B}  {D}
-            //""");
-
+            PRINT(SB.ToString());
         }
         #endif
 
