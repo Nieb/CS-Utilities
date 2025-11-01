@@ -41,7 +41,7 @@ internal static partial class Program {static void Test___() {  //PRINT("\n[BLAR
     //PRINT($"                       vec4: {System.Runtime.InteropServices.Marshal.SizeOf(typeof(vec4)),2} bytes"); //  Use the SizeOf<T> overload instead.
 
     //PRINT($"                       vec2: {sizeof(vec2),2} bytes"); //  Structs do not have a predefined size...
-    //PRINT($"                       vec3: {sizeof(vec3),2} bytes"); //  auto-struct-padding is dependent on:
+    //PRINT($"                       vec3: {sizeof(vec3),2} bytes"); //  struct auto-padding is dependent upon:
     //PRINT($"                       vec4: {sizeof(vec4),2} bytes"); //     platform allocation-size, allocation-addressing, bus-width,  etc.
 #endif
 
@@ -80,7 +80,7 @@ internal static partial class Program {static void Test___() {  //PRINT("\n[BLAR
     }
 
 #endif
-#if true
+#if false
     {
         for (int i = 2; i < 32; ++i) {
             PRINT($"""

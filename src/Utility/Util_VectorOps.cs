@@ -52,9 +52,9 @@ internal static partial class VEC {
     //      wrap( A, LowerBounds, UpperBounds )
     //
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 wrap(v1 A, v1 L, v1 U) {v1 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0f) ? Domain : 0f);}
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 wrap(v2 A, v1 L, v1 U) {v1 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0f) ? Domain : 0f);}
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 wrap(v3 A, v1 L, v1 U) {v1 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0f) ? Domain : 0f);}
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 wrap(v4 A, v1 L, v1 U) {v1 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0f) ? Domain : 0f);}
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 wrap(v2 A, v1 L, v1 U) => new v2(wrap(A.x, L, U), wrap(A.y, L, U));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 wrap(v3 A, v1 L, v1 U) => new v3(wrap(A.x, L, U), wrap(A.y, L, U), wrap(A.z, L, U));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 wrap(v4 A, v1 L, v1 U) => new v4(wrap(A.x, L, U), wrap(A.y, L, U), wrap(A.z, L, U), wrap(A.w, L, U));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -113,7 +113,7 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                                 "Fractional" Part
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 fract(v1 A) => (A - System.MathF.Truncate(A));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 fract(v1 A) => (A - System.MathF.Floor(A));
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 fract(v2 A) => new v2(fract(A.x), fract(A.y));
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 fract(v3 A) => new v3(fract(A.x), fract(A.y), fract(A.z));
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 fract(v4 A) => new v4(fract(A.x), fract(A.y), fract(A.z), fract(A.w));
@@ -137,7 +137,7 @@ internal static partial class VEC {
     //==========================================================================================================================================================
     //                                                                    "Complement"              Complimentary Inverse
 
-  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 cmp(v2 A) => 1f-A;
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 cmp(v1 A) => 1f-A;
   //[Impl(AggressiveInlining)] internal static v2 cmp(v2 A) => new v2(1f-A.x, 1f-A.y);
   //[Impl(AggressiveInlining)] internal static v3 cmp(v3 A) => new v3(1f-A.x, 1f-A.y, 1f-A.z);
   //[Impl(AggressiveInlining)] internal static v4 cmp(v4 A) => new v4(1f-A.x, 1f-A.y, 1f-A.z, 1f-A.w);
