@@ -30,7 +30,7 @@ global using static Utility.VEC_Rotation;
     global using uptr = nuint;  //  System.UIntPtr                  Depends on platform (computed at runtime)           Unsigned 32-bit or 64-bit integer
 #endif
 #if false
-    global using  b8 = bool;    //...
+    global using  b8 = bool;    //  ...
 #endif
 #if false
     global using  i8 = sbyte;   //  System.SByte                                  -128 to 127                             Signed 8-bit integer
@@ -51,6 +51,13 @@ global using static Utility.VEC_Rotation;
     global using f32 = float;   //  System.Single
     global using f64 = double;  //  System.Double
 #endif
+#if false
+    global using v1 = float;
+    global using v2 = Utility.VEC.vec2;
+    global using v3 = Utility.VEC.vec3;
+    global using v4 = Utility.VEC.vec4;
+#endif
+
 #if false
     global using vec2 = System.Numerics.Vector2;
     global using vec3 = System.Numerics.Vector3;
