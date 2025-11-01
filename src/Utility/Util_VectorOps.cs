@@ -1,9 +1,9 @@
+
 namespace Utility;
 using v1 = float;
 using v2 = vec2;
 using v3 = vec3;
 using v4 = vec4;
-
 internal static partial class VEC {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -23,10 +23,10 @@ internal static partial class VEC {
 
     //==========================================================================================================================================================
     //                                                                   "Average" of 3
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 avg(v1 A, v1 B, v1 C) => (A+B+C) * ONETHIRD;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 avg(v2 A, v2 B, v2 C) => (A+B+C) * ONETHIRD;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 avg(v3 A, v3 B, v3 C) => (A+B+C) * ONETHIRD;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 avg(v4 A, v4 B, v4 C) => (A+B+C) * ONETHIRD;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 avg(v1 A, v1 B, v1 C) => (A+B+C) * ONE_THIRD;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 avg(v2 A, v2 B, v2 C) => (A+B+C) * ONE_THIRD;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 avg(v3 A, v3 B, v3 C) => (A+B+C) * ONE_THIRD;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 avg(v4 A, v4 B, v4 C) => (A+B+C) * ONE_THIRD;
 
     //==========================================================================================================================================================
     //                                                                   "Average" of 4
@@ -38,8 +38,8 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                                      "Clamp"
-    //            *Inclusive*  *Inclusive*
-    //  clamp( A, LowerBounds, UpperBounds )
+    //                *Inclusive*  *Inclusive*
+    //      clamp( A, LowerBounds, UpperBounds )
     //
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 clamp(v1 A, v1 L = 0f, v1 U = 1f) => (A <= L) ? L : (A >= U) ? U : A;
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 clamp(v2 A, v1 L = 0f, v1 U = 1f) => new v2(clamp(A.x, L, U), clamp(A.y, L, U));
@@ -48,13 +48,13 @@ internal static partial class VEC {
 
     //==========================================================================================================================================================
     //                                                                       "Wrap"
-    //           *Inclusive*  *Exclusive*
-    //  wrap( A, LowerBounds, UpperBounds )
+    //               *Inclusive*  *Exclusive*
+    //      wrap( A, LowerBounds, UpperBounds )
     //
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 wrap(v1 A, v1 L, v1 U) { v1 Domain = U-L; A = (A-L) % Domain; return A+L + ((A < 0f) ? Domain : 0f); }
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 wrap(v2 A, v1 L, v1 U) { v1 Domain = U-L; A = (A-L) % Domain; return A+L + ((A < 0f) ? Domain : 0f); }
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 wrap(v3 A, v1 L, v1 U) { v1 Domain = U-L; A = (A-L) % Domain; return A+L + ((A < 0f) ? Domain : 0f); }
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 wrap(v4 A, v1 L, v1 U) { v1 Domain = U-L; A = (A-L) % Domain; return A+L + ((A < 0f) ? Domain : 0f); }
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 wrap(v1 A, v1 L, v1 U) {v1 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0f) ? Domain : 0f);}
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 wrap(v2 A, v1 L, v1 U) {v1 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0f) ? Domain : 0f);}
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 wrap(v3 A, v1 L, v1 U) {v1 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0f) ? Domain : 0f);}
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 wrap(v4 A, v1 L, v1 U) {v1 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0f) ? Domain : 0f);}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -64,31 +64,38 @@ internal static partial class VEC {
 
     //==========================================================================================================================================================
     //                                                                   "Dot" Product
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 dot(v2 A      ) => (A.x*A.x + A.y*A.y);           //  dot(A) == dot(A,A) == Squared-Length of A.
+    //
+    //  dot(A) == dot(A,A) == Squared-Length of A.
+    //
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 dot(v2 A      ) => (A.x*A.x + A.y*A.y);
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 dot(v2 A, v2 B) => (A.x*B.x + A.y*B.y);
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 dot(v3 A      ) => (A.x*A.x + A.y*A.y + A.z*A.z); //  dot(A) == dot(A,A) == Squared-Length of A.
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 dot(v3 A      ) => (A.x*A.x + A.y*A.y + A.z*A.z);
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 dot(v3 A, v3 B) => (A.x*B.x + A.y*B.y + A.z*B.z);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                                     "Distance"
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 distance(v1 A, v1 B) =>      abs(B - A);
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 distance(v2 A, v2 B) => sqrt(dot(B - A));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 distance(v3 A, v3 B) => sqrt(dot(B - A));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 distance(v1 A, v1 B) =>    abs(B - A);
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 distance(v2 A, v2 B) => length(B - A);
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 distance(v3 A, v3 B) => length(B - A);
 
     //==========================================================================================================================================================
     //                                                                      "Length"
-    #if USE_METHOD_LENGTH || false
-        [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 length(v1 A) => abs(A);
-        [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 length(v2 A) => sqrt(A.x*A.x + A.y*A.y);
-        [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 length(v3 A) => sqrt(A.x*A.x + A.y*A.y + A.z*A.z);
-    #endif
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 length(v1 A) => abs(A);
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 length(v2 A) => sqrt(A.x*A.x + A.y*A.y);
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 length(v3 A) => sqrt(A.x*A.x + A.y*A.y + A.z*A.z);
+
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 length(v1 X, v1 Y)       => sqrt(X*X + Y*Y);
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 length(v1 X, v1 Y, v1 Z) => sqrt(X*X + Y*Y + Z*Z);
 
     //==========================================================================================================================================================
     //                                                                    "Normalize"
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 normalize(v2 A) => (A == 0f) ? A : A/sqrt(A.x*A.x + A.y*A.y);
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 normalize(v3 A) => (A == 0f) ? A : A/sqrt(A.x*A.x + A.y*A.y + A.z*A.z);
+
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 normalize(v1 X, v1 Y)       {v2 A = new (X,Y);   return (A == 0f) ? A : A/sqrt(A.x*A.x + A.y*A.y);}
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 normalize(v1 X, v1 Y, v1 Z) {v3 A = new (X,Y,Z); return (A == 0f) ? A : A/sqrt(A.x*A.x + A.y*A.y + A.z*A.z);}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -99,32 +106,49 @@ internal static partial class VEC {
     //      https://registry.khronos.org/OpenGL-Refpages/gl4/html/fma.xhtml
     //
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 fma(v1 A, v1 B, v1 C) => System.MathF.FusedMultiplyAdd(A, B, C);
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 fma(v2 A, v2 B, v2 C) => new v2(fma(A.x, B.x, C.x), fma(A.y, B.y, C.y));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 fma(v3 A, v3 B, v3 C) => new v3(fma(A.x, B.x, C.x), fma(A.y, B.y, C.y), fma(A.z, B.z, C.z));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 fma(v4 A, v4 B, v4 C) => new v4(fma(A.x, B.x, C.x), fma(A.y, B.y, C.y), fma(A.z, B.z, C.z), fma(A.w, B.w, C.w));
+    [Impl(AggressiveInlining)] internal static v2 fma(v2 A, v2 B, v2 C) => new v2(fma(A.x, B.x, C.x), fma(A.y, B.y, C.y));
+    [Impl(AggressiveInlining)] internal static v3 fma(v3 A, v3 B, v3 C) => new v3(fma(A.x, B.x, C.x), fma(A.y, B.y, C.y), fma(A.z, B.z, C.z));
+    [Impl(AggressiveInlining)] internal static v4 fma(v4 A, v4 B, v4 C) => new v4(fma(A.x, B.x, C.x), fma(A.y, B.y, C.y), fma(A.z, B.z, C.z), fma(A.w, B.w, C.w));
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //                                                                 "Fractional" Part
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 fract(v1 A) => (A - System.MathF.Truncate(A));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 fract(v2 A) => new v2(fract(A.x), fract(A.y));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 fract(v3 A) => new v3(fract(A.x), fract(A.y), fract(A.z));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 fract(v4 A) => new v4(fract(A.x), fract(A.y), fract(A.z), fract(A.w));
+
+    //==========================================================================================================================================================
+    //                                                              "Truncate" or Integer Part
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 trunc(v1 A) => System.MathF.Truncate(A);
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 trunc(v2 A) => new v2(trunc(A.x), trunc(A.y));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 trunc(v3 A) => new v3(trunc(A.x), trunc(A.y), trunc(A.z));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 trunc(v4 A) => new v4(trunc(A.x), trunc(A.y), trunc(A.z), trunc(A.w));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                                      "Invert"                Additive Inverse
 
-    //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 inv(v2 A) => new vec2(-A.x, -A.y);
-
-    //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 inv(v3 A) => new vec3(-A.x, -A.y, -A.z);
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 inv(v1 A) => -A;
+  //[Impl(AggressiveInlining)] internal static v2 inv(v2 A) => new v2(-A.x, -A.y);
+  //[Impl(AggressiveInlining)] internal static v3 inv(v3 A) => new v3(-A.x, -A.y, -A.z);
+  //[Impl(AggressiveInlining)] internal static v4 inv(v4 A) => new v4(-A.x, -A.y, -A.z, -A.w);
 
     //==========================================================================================================================================================
     //                                                                    "Complement"              Complimentary Inverse
 
-    //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 cmp(v2 A) => new vec2(1f-A.x, 1f-A.y);
-
-    //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 cmp(v3 A) => new vec3(1f-A.x, 1f-A.y, 1f-A.z);
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 cmp(v2 A) => 1f-A;
+  //[Impl(AggressiveInlining)] internal static v2 cmp(v2 A) => new v2(1f-A.x, 1f-A.y);
+  //[Impl(AggressiveInlining)] internal static v3 cmp(v3 A) => new v3(1f-A.x, 1f-A.y, 1f-A.z);
+  //[Impl(AggressiveInlining)] internal static v4 cmp(v4 A) => new v4(1f-A.x, 1f-A.y, 1f-A.z, 1f-A.w);
 
     //==========================================================================================================================================================
     //                                                                    "Reciprocal"              Multiplicative Inverse
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 rcp(v1 A) => (A > -EPSILON && A < EPSILON) ? 0f : 1f/A;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 rcp(v2 A) => new v2(rcp(A.x), rcp(A.y));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 rcp(v3 A) => new v3(rcp(A.x), rcp(A.y), rcp(A.z));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 rcp(v4 A) => new v4(rcp(A.x), rcp(A.y), rcp(A.z), rcp(A.w));
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 rcp(v1 A) => (A > -EPSILON && A < EPSILON) ? 0f : 1f/A;
+  //[Impl(AggressiveInlining)] internal static v2 rcp(v2 A) => new v2(rcp(A.x), rcp(A.y));
+  //[Impl(AggressiveInlining)] internal static v3 rcp(v3 A) => new v3(rcp(A.x), rcp(A.y), rcp(A.z));
+  //[Impl(AggressiveInlining)] internal static v4 rcp(v4 A) => new v4(rcp(A.x), rcp(A.y), rcp(A.z), rcp(A.w));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -139,20 +163,20 @@ internal static partial class VEC {
                                                                                                                 : ((B < C) ? ((B < D) ? B : D)
                                                                                                                            : ((C < D) ? C : D));
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 min(v2 A, v1 B)             => new v2(min(A.x,B          ), min(A.y,B          ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 min(v2 A, v2 B)             => new v2(min(A.x,B.x        ), min(A.y,B.y        ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 min(v2 A, v2 B, v2 C)       => new v2(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 min(v2 A, v2 B, v2 C, v2 D) => new v2(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y));
+    [Impl(AggressiveInlining)] internal static v2 min(v2 A, v1 B)             => new v2(min(A.x,B          ), min(A.y,B          ));
+    [Impl(AggressiveInlining)] internal static v2 min(v2 A, v2 B)             => new v2(min(A.x,B.x        ), min(A.y,B.y        ));
+    [Impl(AggressiveInlining)] internal static v2 min(v2 A, v2 B, v2 C)       => new v2(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ));
+    [Impl(AggressiveInlining)] internal static v2 min(v2 A, v2 B, v2 C, v2 D) => new v2(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y));
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 min(v3 A, v1 B)             => new v3(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 min(v3 A, v3 B)             => new v3(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 min(v3 A, v3 B, v3 C)       => new v3(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 min(v3 A, v3 B, v3 C, v3 D) => new v3(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z));
+    [Impl(AggressiveInlining)] internal static v3 min(v3 A, v1 B)             => new v3(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ));
+    [Impl(AggressiveInlining)] internal static v3 min(v3 A, v3 B)             => new v3(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ));
+    [Impl(AggressiveInlining)] internal static v3 min(v3 A, v3 B, v3 C)       => new v3(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ));
+    [Impl(AggressiveInlining)] internal static v3 min(v3 A, v3 B, v3 C, v3 D) => new v3(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z));
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 min(v4 A, v1 B)             => new v4(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ), min(A.w,B          ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 min(v4 A, v4 B)             => new v4(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ), min(A.w,B.w        ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 min(v4 A, v4 B, v4 C)       => new v4(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ), min(A.w,B.w,C.w    ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 min(v4 A, v4 B, v4 C, v4 D) => new v4(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z), min(A.w,B.w,C.w,D.w));
+    [Impl(AggressiveInlining)] internal static v4 min(v4 A, v1 B)             => new v4(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ), min(A.w,B          ));
+    [Impl(AggressiveInlining)] internal static v4 min(v4 A, v4 B)             => new v4(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ), min(A.w,B.w        ));
+    [Impl(AggressiveInlining)] internal static v4 min(v4 A, v4 B, v4 C)       => new v4(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ), min(A.w,B.w,C.w    ));
+    [Impl(AggressiveInlining)] internal static v4 min(v4 A, v4 B, v4 C, v4 D) => new v4(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z), min(A.w,B.w,C.w,D.w));
 
     //==========================================================================================================================================================
     //                                                                  "Maximum" Value
@@ -166,43 +190,43 @@ internal static partial class VEC {
                                                                                                                 : ((B > C) ? ((B > D) ? B : D)
                                                                                                                            : ((C > D) ? C : D));
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 max(v2 A, v1 B)             => new v2(max(A.x,B          ), max(A.y,B          ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 max(v2 A, v2 B)             => new v2(max(A.x,B.x        ), max(A.y,B.y        ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 max(v2 A, v2 B, v2 C)       => new v2(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 max(v2 A, v2 B, v2 C, v2 D) => new v2(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y));
+    [Impl(AggressiveInlining)] internal static v2 max(v2 A, v1 B)             => new v2(max(A.x,B          ), max(A.y,B          ));
+    [Impl(AggressiveInlining)] internal static v2 max(v2 A, v2 B)             => new v2(max(A.x,B.x        ), max(A.y,B.y        ));
+    [Impl(AggressiveInlining)] internal static v2 max(v2 A, v2 B, v2 C)       => new v2(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ));
+    [Impl(AggressiveInlining)] internal static v2 max(v2 A, v2 B, v2 C, v2 D) => new v2(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y));
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 max(v3 A, v1 B)             => new v3(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 max(v3 A, v3 B)             => new v3(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 max(v3 A, v3 B, v3 C)       => new v3(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 max(v3 A, v3 B, v3 C, v3 D) => new v3(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z));
+    [Impl(AggressiveInlining)] internal static v3 max(v3 A, v1 B)             => new v3(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ));
+    [Impl(AggressiveInlining)] internal static v3 max(v3 A, v3 B)             => new v3(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ));
+    [Impl(AggressiveInlining)] internal static v3 max(v3 A, v3 B, v3 C)       => new v3(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ));
+    [Impl(AggressiveInlining)] internal static v3 max(v3 A, v3 B, v3 C, v3 D) => new v3(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z));
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 max(v4 A, v1 B)             => new v4(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ), max(A.w,B          ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 max(v4 A, v4 B)             => new v4(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ), max(A.w,B.w        ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 max(v4 A, v4 B, v4 C)       => new v4(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ), max(A.w,B.w,C.w    ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 max(v4 A, v4 B, v4 C, v4 D) => new v4(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z), max(A.w,B.w,C.w,D.w));
+    [Impl(AggressiveInlining)] internal static v4 max(v4 A, v1 B)             => new v4(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ), max(A.w,B          ));
+    [Impl(AggressiveInlining)] internal static v4 max(v4 A, v4 B)             => new v4(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ), max(A.w,B.w        ));
+    [Impl(AggressiveInlining)] internal static v4 max(v4 A, v4 B, v4 C)       => new v4(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ), max(A.w,B.w,C.w    ));
+    [Impl(AggressiveInlining)] internal static v4 max(v4 A, v4 B, v4 C, v4 D) => new v4(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z), max(A.w,B.w,C.w,D.w));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static float MinOf(v2 A) => min(A.x,A.y        );
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static float MinOf(v3 A) => min(A.x,A.y,A.z    );
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static float MinOf(v4 A) => min(A.x,A.y,A.z,A.w);
+    [Impl(AggressiveInlining)] internal static float MinOf(v2 A) => min(A.x,A.y        );
+    [Impl(AggressiveInlining)] internal static float MinOf(v3 A) => min(A.x,A.y,A.z    );
+    [Impl(AggressiveInlining)] internal static float MinOf(v4 A) => min(A.x,A.y,A.z,A.w);
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static float MaxOf(v2 A) => max(A.x,A.y        );
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static float MaxOf(v3 A) => max(A.x,A.y,A.z    );
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static float MaxOf(v4 A) => max(A.x,A.y,A.z,A.w);
+    [Impl(AggressiveInlining)] internal static float MaxOf(v2 A) => max(A.x,A.y        );
+    [Impl(AggressiveInlining)] internal static float MaxOf(v3 A) => max(A.x,A.y,A.z    );
+    [Impl(AggressiveInlining)] internal static float MaxOf(v4 A) => max(A.x,A.y,A.z,A.w);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                                 "Minimum" Magnitude
     //
-    //  minmag(A, B) == min(abs(A), abs(B))
+    //      minmag(A, B) == min(abs(A), abs(B))
     //
   //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 minmag(v1 A, v1 B) => System.MathF.MinMagnitude(A, B);
 
     //==========================================================================================================================================================
     //                                                                 "Maximum" Magnitude
     //
-    //  maxmag(A, B) == max(abs(A), abs(B))
+    //      maxmag(A, B) == max(abs(A), abs(B))
     //
   //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 maxmag(v1 A, v1 B) => System.MathF.MaxMagnitude(A, B);
 
@@ -210,16 +234,16 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     //                                                                      "Modulo"
     #if USE_METHOD_MOD || false
-        [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 mod(v1 A, v1 B) => (A % B);
+        [Impl(AggressiveInlining)] internal static v1 mod(v1 A, v1 B) => (A % B);
 
-        [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 mod(v2 A, v1 B) => new v2(A.x%B  , A.y%B  );
-        [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 mod(v2 A, v2 B) => new v2(A.x%B.x, A.y%B.y);
+        [Impl(AggressiveInlining)] internal static v2 mod(v2 A, v1 B) => new v2(A.x%B  , A.y%B  );
+        [Impl(AggressiveInlining)] internal static v2 mod(v2 A, v2 B) => new v2(A.x%B.x, A.y%B.y);
 
-        [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 mod(v3 A, v1 B) => new v3(A.x%B  , A.y%B  , A.z%B  );
-        [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 mod(v3 A, v3 B) => new v3(A.x%B.x, A.y%B.y, A.z%B.z);
+        [Impl(AggressiveInlining)] internal static v3 mod(v3 A, v1 B) => new v3(A.x%B  , A.y%B  , A.z%B  );
+        [Impl(AggressiveInlining)] internal static v3 mod(v3 A, v3 B) => new v3(A.x%B.x, A.y%B.y, A.z%B.z);
 
-        [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 mod(v4 A, v1 B) => new v4(A.x%B  , A.y%B  , A.z%B  , A.w%B  );
-        [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 mod(v4 A, v4 B) => new v4(A.x%B.x, A.y%B.y, A.z%B.z, A.w%B.w);
+        [Impl(AggressiveInlining)] internal static v4 mod(v4 A, v1 B) => new v4(A.x%B  , A.y%B  , A.z%B  , A.w%B  );
+        [Impl(AggressiveInlining)] internal static v4 mod(v4 A, v4 B) => new v4(A.x%B.x, A.y%B.y, A.z%B.z, A.w%B.w);
     #endif
 
     //##########################################################################################################################################################
@@ -227,11 +251,11 @@ internal static partial class VEC {
     //                                                                      "Power"
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 pow(v1 A, v1 Exp) => System.MathF.Pow(A, Exp);
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 pow(v2 A, v1 Exp) => new v2(pow(A.x, Exp  ), pow(A.y, Exp  ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 pow(v2 A, v2 Exp) => new v2(pow(A.x, Exp.x), pow(A.y, Exp.y));
+    [Impl(AggressiveInlining)] internal static v2 pow(v2 A, v1 Exp) => new v2(pow(A.x, Exp  ), pow(A.y, Exp  ));
+    [Impl(AggressiveInlining)] internal static v2 pow(v2 A, v2 Exp) => new v2(pow(A.x, Exp.x), pow(A.y, Exp.y));
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 pow(v3 A, v1 Exp) => new v3(pow(A.x, Exp  ), pow(A.y, Exp  ), pow(A.z, Exp  ));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 pow(v3 A, v3 Exp) => new v3(pow(A.x, Exp.x), pow(A.y, Exp.y), pow(A.z, Exp.z));
+    [Impl(AggressiveInlining)] internal static v3 pow(v3 A, v1 Exp) => new v3(pow(A.x, Exp  ), pow(A.y, Exp  ), pow(A.z, Exp  ));
+    [Impl(AggressiveInlining)] internal static v3 pow(v3 A, v3 Exp) => new v3(pow(A.x, Exp.x), pow(A.y, Exp.y), pow(A.z, Exp.z));
 
     //==========================================================================================================================================================
     //                                                                   "Exponential"
@@ -270,10 +294,9 @@ internal static partial class VEC {
     //
     //  Arbitrary Line version.
     //
-    //  Does not tell you if point is inbetween A & B.
-    //      SEE: PointVsLine()
+    //  dot(P-La, dAB) / dot(dAB, dAB)  ==  Distance from Line-PointA to NearestPointOnLine as multiple of dAB.
     //
-    //  dot(P-La, dAB) / dot(dAB, dAB)  ==  Distance from LinePointA to NearestPointOnLine as multiple of dAB.
+    //  Note: Does not tell you if point is inbetween A & B.  See: PointVsLine()
     //
     //      project_(  Point,  Line-PointA,  Line-PointB  )
     //
@@ -309,9 +332,7 @@ internal static partial class VEC {
 
         float K = 1f - Ratio*Ratio*(1f - Dot*Dot);
 
-        float Sqrt_K = sqrt(K);
-
-        return (K < 0f) ? new vec2(0f) :  Vn*Ratio  -  Sn*(Ratio*Dot + Sqrt_K);
+        return (K < 0f) ? new vec2(0f) :  Vn*Ratio  -  Sn*(Ratio*Dot + sqrt(K));
     }
 
     [Impl(AggressiveOptimization)]
@@ -320,9 +341,7 @@ internal static partial class VEC {
 
         float K = 1f - Ratio*Ratio*(1f - Dot*Dot);
 
-        float Sqrt_K = sqrt(K);
-
-        return (K < 0f) ? new vec3(0f) :  Vn*Ratio  -  Sn*(Ratio*Dot + Sqrt_K);
+        return (K < 0f) ? new vec3(0f) :  Vn*Ratio  -  Sn*(Ratio*Dot + sqrt(K));
     }
 
     //##########################################################################################################################################################
@@ -388,32 +407,17 @@ internal static partial class VEC {
 
     //==========================================================================================================================================================
     //                                                                   "Square Root"
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 sqrt(v1 A) =>        System.MathF.Sqrt(A);
-  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 sqrt(v2 A) => new v2(System.MathF.Sqrt(A.x), System.MathF.Sqrt(A.y));
-  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 sqrt(v3 A) => new v3(System.MathF.Sqrt(A.x), System.MathF.Sqrt(A.y), System.MathF.Sqrt(A.z));
-  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 sqrt(v4 A) => new v4(System.MathF.Sqrt(A.x), System.MathF.Sqrt(A.y), System.MathF.Sqrt(A.z), System.MathF.Sqrt(A.w));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 sqrt(v1 A) => System.MathF.Sqrt(A);
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 sqrt(v2 A) => new v2(sqrt(A.x), sqrt(A.y));
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 sqrt(v3 A) => new v3(sqrt(A.x), sqrt(A.y), sqrt(A.z));
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 sqrt(v4 A) => new v4(sqrt(A.x), sqrt(A.y), sqrt(A.z), sqrt(A.w));
 
     //==========================================================================================================================================================
     //                                                                    "Cube Root"
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 cbrt(v1 A) =>        System.MathF.Cbrt(A);
-  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 cbrt(v2 A) => new v2(System.MathF.Cbrt(A.x), System.MathF.Cbrt(A.y));
-  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 cbrt(v3 A) => new v3(System.MathF.Cbrt(A.x), System.MathF.Cbrt(A.y), System.MathF.Cbrt(A.z));
-  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 cbrt(v4 A) => new v4(System.MathF.Cbrt(A.x), System.MathF.Cbrt(A.y), System.MathF.Cbrt(A.z), System.MathF.Cbrt(A.w));
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //                                                              "Truncate" or Integer Part
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 trunc(v1 A) =>        System.MathF.Truncate(A);
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 trunc(v2 A) => new v2(System.MathF.Truncate(A.x), System.MathF.Truncate(A.y));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 trunc(v3 A) => new v3(System.MathF.Truncate(A.x), System.MathF.Truncate(A.y), System.MathF.Truncate(A.z));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 trunc(v4 A) => new v4(System.MathF.Truncate(A.x), System.MathF.Truncate(A.y), System.MathF.Truncate(A.z), System.MathF.Truncate(A.w));
-
-    //==========================================================================================================================================================
-    //                                                                 "Fractional" Part
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 fract(v1 A) =>       (A   - System.MathF.Truncate(A));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 fract(v2 A) => new v2(A.x - System.MathF.Truncate(A.x), A.y - System.MathF.Truncate(A.y));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 fract(v3 A) => new v3(A.x - System.MathF.Truncate(A.x), A.y - System.MathF.Truncate(A.y), A.z - System.MathF.Truncate(A.z));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 fract(v4 A) => new v4(A.x - System.MathF.Truncate(A.x), A.y - System.MathF.Truncate(A.y), A.z - System.MathF.Truncate(A.z), A.w - System.MathF.Truncate(A.w));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 cbrt(v1 A) => System.MathF.Cbrt(A);
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 cbrt(v2 A) => new v2(cbrt(A.x), cbrt(A.y));
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 cbrt(v3 A) => new v3(cbrt(A.x), cbrt(A.y), cbrt(A.z));
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 cbrt(v4 A) => new v4(cbrt(A.x), cbrt(A.y), cbrt(A.z), cbrt(A.w));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -485,8 +489,8 @@ internal static partial class VEC {
     //
     //  For a more precise conversion.
     //
-    //  For a quick conversion, use:  Var * TO_DEG
-    //                                Var * TO_RAD
+    //  For a quick conversion:  Var * TO_DEG
+    //                           Var * TO_RAD
     //
     internal static v1 ToDeg(v1 Radians) =>        (float)((double)Radians   * (180.0 / 3.14159265358979323846264338327950288419716939937511));
 

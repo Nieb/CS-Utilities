@@ -11,8 +11,14 @@ internal struct vec4 : System.IFormattable {
     [FieldOffset(12)] public float w;  [FieldOffset(12)] public float a;
 
     //==========================================================================================================================================================
-    public vec3 xyz {  get => new vec3(x, y, z);  set { x = value.x; y = value.y; z = value.z; }  }
-    public vec3 rgb {  get => new vec3(x, y, z);  set { x = value.x; y = value.y; z = value.z; }  }
+    public vec2 xy {  get => new vec2(x,y);  set {x = value.x; y = value.y;}  }
+    public vec2 yz {  get => new vec2(y,z);  set {y = value.x; z = value.y;}  }
+    public vec2 zw {  get => new vec2(z,w);  set {z = value.x; w = value.y;}  }
+
+    public vec2 xz {  get => new vec2(x,z);  set {x = value.x; z = value.y;}  }
+
+    public vec3 xyz {  get => new vec3(x, y, z);  set {x = value.x; y = value.y; z = value.z;}  }
+    public vec3 rgb {  get => new vec3(x, y, z);  set {x = value.x; y = value.y; z = value.z;}  }
 
     //==========================================================================================================================================================
     //  NOTE: Length is computed each time it is accessed.
@@ -20,52 +26,57 @@ internal struct vec4 : System.IFormattable {
         get => sqrt(x*x + y*y + z*z + w*w);
         set => this = (this == 0f) ? this : this*(value/sqrt(x*x + y*y + z*z + w*w));
     }
-
     public readonly float length2 => (x*x + y*y + z*z + w*w);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public vec4() {}
-    public vec4(float X, float Y, float Z, float W) { x = X;     y = Y;     z = Z;     w = W;    }
-    public vec4(vec3 XYZ                 , float W) { x = XYZ.x; y = XYZ.y; z = XYZ.z; w = W;    }
-    public vec4(float XYZ                , float W) { x = XYZ;   y = XYZ;   z = XYZ;   w = W;    }
-    public vec4(float XYZW                        ) { x = XYZW;  y = XYZW;  z = XYZW;  w = XYZW; }
+    public vec4(float X, float Y, float Z, float W) { x=X;   y=Y;   z=Z;   w=W; }
+    public vec4(float V                  , float W) { x=V;   y=V;   z=V;   w=W; }
+    public vec4(float V                           ) { x=V;   y=V;   z=V;   w=V; }
+
+    public vec4(vec3 V                   , float W) { x=V.x; y=V.y; z=V.z; w=W; }
+
+    public vec4(ivec4 V                           ) { x=(float)V.x; y=(float)V.y; z=(float)V.z;  w=(float)V.w; }
 
     //==========================================================================================================================================================
     //                                                               Tuple "Constructor"
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static implicit operator vec4( (float X, float Y, float Z, float W) t ) => new vec4(t.X, t.Y, t.Z, t.W);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static implicit operator vec4( (vec3 XYZ, float W) t                  ) => new vec4(t.XYZ.x, t.XYZ.y, t.XYZ.z, t.W);
+    [Impl(AggressiveInlining)] public static implicit operator vec4((float X, float Y, float Z, float W) t) => new vec4(  t.X,   t.Y,   t.Z, t.W);
+    [Impl(AggressiveInlining)] public static implicit operator vec4((vec3 V, float W) t)                    => new vec4(t.V.x, t.V.y, t.V.z, t.W);
+
+    //==========================================================================================================================================================
+    [Impl(AggressiveInlining)] public static implicit operator vec4(ivec4 A) => new vec4(A);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                            Has Value/Magnitude/Length
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static implicit operator bool(vec4 A) => (A.x != 0f || A.y != 0f || A.z != 0f || A.w != 0f);
+    [Impl(AggressiveInlining)] public static implicit operator bool(vec4 A) => (A.x != 0f || A.y != 0f || A.z != 0f || A.w != 0f);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //  Operators Arithmetic:  +  -  *  /  %
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator +(vec4  A, vec4  B) => new vec4(A.x+B.x, A.y+B.y, A.z+B.z, A.w+B.w);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator +(vec4  A, float B) => new vec4(A.x+B  , A.y+B  , A.z+B  , A.w+B  );
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator +(float A, vec4  B) => new vec4(A  +B.x, A  +B.y, A  +B.z, A  +B.w);
+    [Impl(AggressiveInlining)] public static vec4 operator +(vec4  A, vec4  B) => new vec4(A.x+B.x, A.y+B.y, A.z+B.z, A.w+B.w);
+    [Impl(AggressiveInlining)] public static vec4 operator +(vec4  A, float B) => new vec4(A.x+B  , A.y+B  , A.z+B  , A.w+B  );
+    [Impl(AggressiveInlining)] public static vec4 operator +(float A, vec4  B) => new vec4(A  +B.x, A  +B.y, A  +B.z, A  +B.w);
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator -(vec4  A, vec4  B) => new vec4(A.x-B.x, A.y-B.y, A.z-B.z, A.w-B.w);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator -(vec4  A, float B) => new vec4(A.x-B  , A.y-B  , A.z-B  , A.w-B  );
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator -(float A, vec4  B) => new vec4(A  -B.x, A  -B.y, A  -B.z, A  -B.w);
+    [Impl(AggressiveInlining)] public static vec4 operator -(vec4  A, vec4  B) => new vec4(A.x-B.x, A.y-B.y, A.z-B.z, A.w-B.w);
+    [Impl(AggressiveInlining)] public static vec4 operator -(vec4  A, float B) => new vec4(A.x-B  , A.y-B  , A.z-B  , A.w-B  );
+    [Impl(AggressiveInlining)] public static vec4 operator -(float A, vec4  B) => new vec4(A  -B.x, A  -B.y, A  -B.z, A  -B.w);
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator -(vec4 A)           => new vec4(   -A.x,    -A.y,    -A.z,    -A.w);
+    [Impl(AggressiveInlining)] public static vec4 operator -(vec4 A)           => new vec4(   -A.x,    -A.y,    -A.z,    -A.w);
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator *(vec4  A, vec4  B) => new vec4(A.x*B.x, A.y*B.y, A.z*B.z, A.w*B.w);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator *(vec4  A, float B) => new vec4(A.x*B  , A.y*B  , A.z*B  , A.w*B  );
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator *(float A, vec4  B) => new vec4(A  *B.x, A  *B.y, A  *B.z, A  *B.w);
+    [Impl(AggressiveInlining)] public static vec4 operator *(vec4  A, vec4  B) => new vec4(A.x*B.x, A.y*B.y, A.z*B.z, A.w*B.w);
+    [Impl(AggressiveInlining)] public static vec4 operator *(vec4  A, float B) => new vec4(A.x*B  , A.y*B  , A.z*B  , A.w*B  );
+    [Impl(AggressiveInlining)] public static vec4 operator *(float A, vec4  B) => new vec4(A  *B.x, A  *B.y, A  *B.z, A  *B.w);
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator /(vec4  A, vec4  B) => new vec4(A.x/B.x, A.y/B.y, A.z/B.z, A.w/B.w);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator /(vec4  A, float B) => new vec4(A.x/B  , A.y/B  , A.z/B  , A.w/B  );
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator /(float A, vec4  B) => new vec4(A  /B.x, A  /B.y, A  /B.z, A  /B.w);
+    [Impl(AggressiveInlining)] public static vec4 operator /(vec4  A, vec4  B) => new vec4(A.x/B.x, A.y/B.y, A.z/B.z, A.w/B.w);
+    [Impl(AggressiveInlining)] public static vec4 operator /(vec4  A, float B) => new vec4(A.x/B  , A.y/B  , A.z/B  , A.w/B  );
+    [Impl(AggressiveInlining)] public static vec4 operator /(float A, vec4  B) => new vec4(A  /B.x, A  /B.y, A  /B.z, A  /B.w);
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator %(vec4  A, vec4  B) => new vec4(A.x%B.x, A.y%B.y, A.z%B.z, A.w%B.w);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator %(vec4  A, float B) => new vec4(A.x%B  , A.y%B  , A.z%B  , A.w%B  );
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static vec4 operator %(float A, vec4  B) => new vec4(A  %B.x, A  %B.y, A  %B.z, A  %B.w);
+    [Impl(AggressiveInlining)] public static vec4 operator %(vec4  A, vec4  B) => new vec4(A.x%B.x, A.y%B.y, A.z%B.z, A.w%B.w);
+    [Impl(AggressiveInlining)] public static vec4 operator %(vec4  A, float B) => new vec4(A.x%B  , A.y%B  , A.z%B  , A.w%B  );
+    [Impl(AggressiveInlining)] public static vec4 operator %(float A, vec4  B) => new vec4(A  %B.x, A  %B.y, A  %B.z, A  %B.w);
 
     //==========================================================================================================================================================
     //  Operators Bitwise:  ~    &    |   ^    <<          >>           >>>
@@ -74,24 +85,24 @@ internal struct vec4 : System.IFormattable {
     //==========================================================================================================================================================
     //  Operators Logical:  ==  !=  <  >  <=  >=     ( ! && || )
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator ==(vec4 A, vec4  B) => (A.x == B.x && A.y == B.y && A.z == B.z && A.w == B.w);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator ==(vec4 A, float B) => (A.x == B   && A.y == B   && A.z == B   && A.w == B  );
+    [Impl(AggressiveInlining)] public static bool operator ==(vec4 A, vec4  B) => (A.x == B.x && A.y == B.y && A.z == B.z && A.w == B.w);
+    [Impl(AggressiveInlining)] public static bool operator ==(vec4 A, float B) => (A.x == B   && A.y == B   && A.z == B   && A.w == B  );
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator !=(vec4 A, vec4  B) => (A.x != B.x || A.y != B.y || A.z != B.z || A.w != B.w);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator !=(vec4 A, float B) => (A.x != B   || A.y != B   || A.z != B   || A.w != B  );
+    [Impl(AggressiveInlining)] public static bool operator !=(vec4 A, vec4  B) => (A.x != B.x || A.y != B.y || A.z != B.z || A.w != B.w);
+    [Impl(AggressiveInlining)] public static bool operator !=(vec4 A, float B) => (A.x != B   || A.y != B   || A.z != B   || A.w != B  );
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator  <(vec4 A, vec4  B) => (A.x <  B.x && A.y <  B.y && A.z <  B.z && A.w <  B.w);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator  <(vec4 A, float B) => (A.x <  B   && A.y <  B   && A.z <  B   && A.w <  B  );
+    [Impl(AggressiveInlining)] public static bool operator  <(vec4 A, vec4  B) => (A.x <  B.x && A.y <  B.y && A.z <  B.z && A.w <  B.w);
+    [Impl(AggressiveInlining)] public static bool operator  <(vec4 A, float B) => (A.x <  B   && A.y <  B   && A.z <  B   && A.w <  B  );
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator  >(vec4 A, vec4  B) => (A.x >  B.x && A.y >  B.y && A.z >  B.z && A.w >  B.w);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator  >(vec4 A, float B) => (A.x >  B   && A.y >  B   && A.z >  B   && A.w >  B  );
+    [Impl(AggressiveInlining)] public static bool operator  >(vec4 A, vec4  B) => (A.x >  B.x && A.y >  B.y && A.z >  B.z && A.w >  B.w);
+    [Impl(AggressiveInlining)] public static bool operator  >(vec4 A, float B) => (A.x >  B   && A.y >  B   && A.z >  B   && A.w >  B  );
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator <=(vec4 A, vec4  B) => (A.x <= B.x && A.y <= B.y && A.z <= B.z && A.w <= B.w);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator <=(vec4 A, float B) => (A.x <= B   && A.y <= B   && A.z <= B   && A.w <= B  );
+    [Impl(AggressiveInlining)] public static bool operator <=(vec4 A, vec4  B) => (A.x <= B.x && A.y <= B.y && A.z <= B.z && A.w <= B.w);
+    [Impl(AggressiveInlining)] public static bool operator <=(vec4 A, float B) => (A.x <= B   && A.y <= B   && A.z <= B   && A.w <= B  );
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator >=(vec4 A, vec4  B) => (A.x >= B.x && A.y >= B.y && A.z >= B.z && A.w >= B.w);
-    [Impl(AggressiveInlining|AggressiveOptimization)] public static bool operator >=(vec4 A, float B) => (A.x >= B   && A.y >= B   && A.z >= B   && A.w >= B  );
+    [Impl(AggressiveInlining)] public static bool operator >=(vec4 A, vec4  B) => (A.x >= B.x && A.y >= B.y && A.z >= B.z && A.w >= B.w);
+    [Impl(AggressiveInlining)] public static bool operator >=(vec4 A, float B) => (A.x >= B   && A.y >= B   && A.z >= B   && A.w >= B  );
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -111,15 +122,15 @@ internal struct vec4 : System.IFormattable {
     }
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining|AggressiveOptimization)] public readonly override string ToString() => $"( {this.x,9:0.000000}, {this.y,9:0.000000}, {this.z,9:0.000000}, {this.w,9:0.000000} )";
+    public readonly override string ToString() => $"({this.x,9:0.000000}, {this.y,9:0.000000}, {this.z,9:0.000000}, {this.w,9:0.000000})";
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //  Required by DotNet "object" type:
-    [Impl(AggressiveInlining|AggressiveOptimization)] public readonly override bool Equals(object obj) => false;
-    [Impl(AggressiveInlining|AggressiveOptimization)] public readonly override int GetHashCode() => 0;
+    //  Required by "object" type:
+    public readonly override bool Equals(object obj) => false;
+    public readonly override int GetHashCode() => 0;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

@@ -1,5 +1,3 @@
-using System;
-using System.Runtime.CompilerServices;
 
 namespace Utility;
 internal static class VEC_Collision2 {
@@ -24,17 +22,15 @@ internal static class VEC_Collision2 {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static bool PointVsPoint(vec2 Pa, vec2 Pb, float Tolerance) =>
-        PointVsCircle(Pa, Pb, Tolerance);
+    [Impl(AggressiveInlining)]
+    internal static bool PointVsPoint(vec2 Pa, vec2 Pb, float Tolerance) => PointVsCircle(Pa, Pb, Tolerance);
 
     //==========================================================================================================================================================
     //
     //      PointVsCircle(  Point,  CirclePosition,  CircleRadius  )
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static bool PointVsCircle(vec2 P, vec2 Cp, float Cr) =>
-        dot(P - Cp) < (Cr*Cr);
+    [Impl(AggressiveInlining)]
+    internal static bool PointVsCircle(vec2 P, vec2 Cp, float Cr) => dot(P-Cp) < (Cr*Cr);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -46,7 +42,7 @@ internal static class VEC_Collision2 {
         vec2 dAB = Lb - La;
 
         //  Distance from Line-PointA to NearestPointOnLine, as multiple of DeltaAB:
-        float Scaler = dot(dAP, dAB) / dot(dAB, dAB);
+        float Scaler = dot(dAP, dAB) / dot(dAB);
 
         //  Is ProjectedPoint going to be between Line-PointA and Line-PointB:
         #if true
@@ -55,7 +51,7 @@ internal static class VEC_Collision2 {
             if (Scaler < -T || Scaler >= 1f+T)  return false;
         #endif
 
-        return dot(dAP - dAB*Scaler) < (T*T);
+        return dot(dAP - dAB*Scaler) <= (T*T);
     }
 
     //##########################################################################################################################################################
@@ -63,17 +59,17 @@ internal static class VEC_Collision2 {
     //
     //  "Axis-Aligned-Rectangle"
     //
-    //                    RectSiz
-    //       +Y *--------@
+    //       +Y           RectSiz
+    //          *--------@
     //          |        |
     //          |        |
     //          |        |
-    //          @--------* +X
-    //   RectPos
+    //          @--------*
+    //   RectPos            +X
     //
     //      PointVsRect(  Point,  RectanglePosition,  RectangleSize  )
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Impl(AggressiveInlining)]
     internal static bool PointVsRect(vec2 P, vec2 Rp, vec2 Rs) => (
            P.x >= Rp.x
         && P.y >= Rp.y
@@ -98,7 +94,7 @@ internal static class VEC_Collision2 {
     //
     //      PointVsTriangle(  Point,  TrianglePointA,  TrianglePointB,  TrianglePointC  )
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Impl(AggressiveInlining)]
     internal static bool PointVsTriangle(vec2 P, vec2 Ta, vec2 Tb, vec2 Tc) {
         vec2 dPA = Ta - P;
         vec2 dPB = Tb - P;
@@ -132,7 +128,7 @@ internal static class VEC_Collision2 {
     //
     //      PointVsQuad(  Point,  QuadPointA,  QuadPointB,  QuadPointC,  QuadPointD  )
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Impl(AggressiveInlining)]
     internal static bool PointVsQuad(vec2 P, vec2 Qa, vec2 Qb, vec2 Qc, vec2 Qd) {
         vec2 dPA = Qa - P;
         vec2 dPB = Qb - P;
@@ -154,26 +150,33 @@ internal static class VEC_Collision2 {
     //
     internal static bool PointVsPolygon(vec2 P, vec2[] Poly) {
         #if DEBUG
-            if (Poly.Length < 3) throw new ArgumentException("Derp?");
-            if (Poly.Length < 5) throw new ArgumentException("Use PointVsTri() or PointVsQuad() for polygons with sides fewer than 5.");
+            if (Poly.Length < 3) throw new System.ArgumentException("Derp?");
+            if (Poly.Length < 5) throw new System.ArgumentException("Use PointVsTri() or PointVsQuad() for polygons with sides fewer than 5.");
         #endif
 
-        int iA, iB;
-        vec2 dPA;
-        vec2 dPB = Poly[0] - P;
+        vec2 dPA = Poly[0] - P, dPB;
         for (int i = 0; i < Poly.Length; ++i) {
-            iA = i;
-            iB = (i+1 == Poly.Length) ? 0 : i+1;
-
-            dPA = dPB;
-            dPB = Poly[iB] - P;
-
+            dPB = Poly[(i == Poly.Length-1) ? 0 : i+1] - P;
             if (dPA.x*dPB.y <= dPA.y*dPB.x)
                 return false;
+            dPA = dPB;
         }
 
         return true;
     }
+
+    //==========================================================================================================================================================
+/*
+    internal static bool PointVsPolygon(vec2 P, vec2[] Poly, int Stride = 2) {
+
+        //
+        //  Stride thru edges to increase chances of an early-out...
+        //      Maybe, only worth it on polygons with higher segment counts...
+        //
+
+        return true;
+    }
+*/
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -184,7 +187,7 @@ internal static class VEC_Collision2 {
     //
     //      RectVsRect(  Rectangle1-Position,  Rectangle1-Size,  Rectangle2-Position,  Rectangle2-Size)
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Impl(AggressiveInlining)]
     internal static bool RectVsRect(vec2 Rp1, vec2 Rs1, vec2 Rp2, vec2 Rs2) => (
            Rp1.x       <  Rp2.x+Rs2.x
         && Rp1.y       <  Rp2.y+Rs2.y
@@ -201,11 +204,8 @@ internal static class VEC_Collision2 {
     //
     //      CircleVsCircle(  Circle1-Position,  Circle1-Radius,  Circle2-Position,  Circle2-Radius  )
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static bool CircleVsCircle(vec2 Cp1, float Cr1, vec2 Cp2, float Cr2) {
-        vec2 d = Cp1 - Cp2;
-        return dot(d,d) < (Cr1*Cr1 + Cr2*Cr2);
-    }
+    [Impl(AggressiveInlining)]
+    internal static bool CircleVsCircle(vec2 Cp1, float Cr1, vec2 Cp2, float Cr2) => dot(Cp1-Cp2) <= (Cr1*Cr1 + Cr2*Cr2);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -240,7 +240,7 @@ internal static class VEC_Collision2 {
     }
 
     //==========================================================================================================================================================
-    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //[Impl(AggressiveInlining)]
     //internal static bool RectVsCircle(vec2 Rp, vec2 Rs, vec2 Cp, float Cr) => CircleVsRect(Cp, Cr, Rp, Rs);
 
     //##########################################################################################################################################################

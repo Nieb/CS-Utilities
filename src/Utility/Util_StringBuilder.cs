@@ -1,5 +1,4 @@
-using System;
-using System.Text;
+using StringBuilder = System.Text.StringBuilder;
 
 namespace Utility;
 internal static partial class STR {
@@ -8,6 +7,7 @@ internal static partial class STR {
     [Impl(AggressiveOptimization)]
     internal static int CurrentLineLength(this StringBuilder StrBldr) {
         string STR = StrBldr.ToString();
+
         int IndexOfLastNewLine = STR.LastIndexOf('\n');
 
         if (IndexOfLastNewLine == -1)

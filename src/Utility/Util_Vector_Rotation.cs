@@ -32,8 +32,10 @@ internal static class VEC_Rotation {
         float CosT = cos(Theta);
         float SinT = sin(Theta);
 
-        return new vec2( P.x*CosT - P.y*SinT,
-                         P.x*SinT + P.y*CosT );
+        return new vec2(
+            P.x*CosT - P.y*SinT,
+            P.x*SinT + P.y*CosT
+        );
     }
 
     //==========================================================================================================================================================
@@ -48,8 +50,10 @@ internal static class VEC_Rotation {
         float d_x = P.x - Pivot.x;
         float d_y = P.y - Pivot.y;
 
-        return new vec2( Pivot.x  +  d_x*CosT - d_y*SinT,
-                         Pivot.y  +  d_x*SinT + d_y*CosT );
+        return new vec2(
+            Pivot.x  +  d_x*CosT - d_y*SinT,
+            Pivot.y  +  d_x*SinT + d_y*CosT
+        );
     }
 
     //##########################################################################################################################################################
@@ -58,9 +62,24 @@ internal static class VEC_Rotation {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //
-    //
-    //
+    //                                                                      "Pitch"
+    internal static mat4 pch(float Theta) {
+        if (Theta == 0f)
+            return IDENTITY4;
+
+        Theta = -Theta; //  Theta is clockwise.
+        float CosT = cos(Theta);
+        float SinT = sin(Theta);
+
+        return new mat4(
+            1f,   0f,   0f,   0f,
+            0f, CosT,-SinT,   0f,
+            0f, SinT, CosT,   0f,
+            0f,   0f,   0f,   1f
+        );
+    }
+
+    //==========================================================================================================================================================
     internal static vec3 pch(vec3 P, float Theta) {
         if (Theta == 0f)
             return P;
@@ -97,6 +116,24 @@ internal static class VEC_Rotation {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
+    //                                                                       "Yaw"
+    internal static mat4 yaw(float Theta) {
+        if (Theta == 0f)
+            return IDENTITY4;
+
+        Theta = -Theta; //  Theta is clockwise.
+        float CosT = cos(Theta);
+        float SinT = sin(Theta);
+
+        return new mat4(
+             CosT,   0f, SinT,   0f,
+               0f,   1f,   0f,   0f,
+            -SinT,   0f, CosT,   0f,
+               0f,   0f,   0f,   1f
+        );
+    }
+
+    //==========================================================================================================================================================
     internal static vec3 yaw(vec3 P, float Theta) {
         if (Theta == 0f)
             return P;
@@ -133,6 +170,24 @@ internal static class VEC_Rotation {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
+    //                                                                       "Roll"
+    internal static mat4 rol(float Theta) {
+        if (Theta == 0f)
+            return IDENTITY4;
+
+        Theta = -Theta; //  Theta is clockwise.
+        float CosT = cos(Theta);
+        float SinT = sin(Theta);
+
+        return new mat4(
+            CosT,-SinT,   0f,   0f,
+            SinT, CosT,   0f,   0f,
+              0f,   0f,   1f,   0f,
+              0f,   0f,   0f,   1f
+        );
+    }
+
+    //==========================================================================================================================================================
     internal static vec3 rol(vec3 P, float Theta) {
         if (Theta == 0f)
             return P;
@@ -173,24 +228,47 @@ internal static class VEC_Rotation {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //
-    //  rot(vec3 P,             vec3 Axis, float Theta)  Rotate "Point", around  ZERO  , on "Axis", by "Theta".
-    //  rot(vec3 P, vec3 Pivot, vec3 Axis, float Theta)  Rotate "Point", around "Pivot", on "Axis", by "Theta".
-    //
-    //  rot(vec3 P,                        vec3  Theta)  Rotate "Point", around  ZERO  , on/by "Theta(Pitch, Yaw, Roll)".
-    //  rot(vec3 P, vec3 Pivot,            vec3  Theta)  Rotate "Point", around "Pivot", on/by "Theta(Pitch, Yaw, Roll)".
-    //
-    //      ADD 16 (12+, 4-)
-    //      MUL 21
-    //      COS 1
-    //      SIN 1
-    //
+    internal static mat4 rot(vec3 Axis, float Theta) {
+        if (Theta == 0f)
+            return IDENTITY4;
+
+        Theta = -Theta; //  Theta is clockwise.
+
+        //  DewIt:
+        float  CosT = cos(Theta);
+        float iCosT = 1f - CosT;
+        float  SinT = sin(Theta);
+
+        float Ay_iCosT = Axis.y * iCosT;
+        float Az_iCosT = Axis.z * iCosT;
+
+        float Axx_iCosT = Axis.x * Axis.x*iCosT;
+        float Axy_iCosT = Axis.x * Ay_iCosT;
+        float Axz_iCosT = Axis.x * Az_iCosT;
+
+        float Ayy_iCosT = Axis.y * Ay_iCosT;
+        float Ayz_iCosT = Axis.y * Az_iCosT;
+
+        float Azz_iCosT = Axis.z * Az_iCosT;
+
+        float Ax_SinT = Axis.x * SinT;
+        float Ay_SinT = Axis.y * SinT;
+        float Az_SinT = Axis.z * SinT;
+
+        return new mat4(
+            (Axx_iCosT +    CosT), (Axy_iCosT - Az_SinT), (Axz_iCosT + Ay_SinT), 0f,
+            (Axy_iCosT + Az_SinT), (Ayy_iCosT +    CosT), (Ayz_iCosT - Ax_SinT), 0f,
+            (Axz_iCosT - Ay_SinT), (Ayz_iCosT + Ax_SinT), (Azz_iCosT +    CosT), 0f,
+                               0f,                    0f,                    0f, 1f
+        );
+    }
+
+    //==========================================================================================================================================================
     internal static vec3 rot(vec3 P, vec3 Axis, float Theta) {
         if (Theta == 0f)
             return P;
 
-        //  'Theta' is clockwise:
-        Theta = -Theta;
+        Theta = -Theta; //  Theta is clockwise.
 
         //  DewIt:
         float  CosT = cos(Theta);
@@ -226,10 +304,9 @@ internal static class VEC_Rotation {
             return P;
 
         //  'Point' localized to 'Pivot'.
-        vec3 dPP = P - Pivot;
+        vec3 d = P - Pivot;
 
-        //  'Theta' is clockwise:
-        Theta = -Theta;
+        Theta = -Theta; //  Theta is clockwise.
 
         //  DewIt:
         float  CosT = cos(Theta);
@@ -253,9 +330,9 @@ internal static class VEC_Rotation {
         float Az_SinT = Axis.z * SinT;
 
         return new vec3(
-            Pivot.x  +  dPP.x*(Axx_iCosT +    CosT)  +  dPP.y*(Axy_iCosT - Az_SinT)  +  dPP.z*(Axz_iCosT + Ay_SinT),
-            Pivot.y  +  dPP.x*(Axy_iCosT + Az_SinT)  +  dPP.y*(Ayy_iCosT +    CosT)  +  dPP.z*(Ayz_iCosT - Ax_SinT),
-            Pivot.z  +  dPP.x*(Axz_iCosT - Ay_SinT)  +  dPP.y*(Ayz_iCosT + Ax_SinT)  +  dPP.z*(Azz_iCosT +    CosT)
+            Pivot.x  +  d.x*(Axx_iCosT +    CosT)  +  d.y*(Axy_iCosT - Az_SinT)  +  d.z*(Axz_iCosT + Ay_SinT),
+            Pivot.y  +  d.x*(Axy_iCosT + Az_SinT)  +  d.y*(Ayy_iCosT +    CosT)  +  d.z*(Ayz_iCosT - Ax_SinT),
+            Pivot.z  +  d.x*(Axz_iCosT - Ay_SinT)  +  d.y*(Ayz_iCosT + Ax_SinT)  +  d.z*(Azz_iCosT +    CosT)
         );
     }
 
@@ -264,12 +341,55 @@ internal static class VEC_Rotation {
     //
     //  https://www.desmos.com/3d/taev4ge4ks
     //
+    //      ThetaV = (Pitch, Yaw, Roll)
+    //
+    internal static mat4 rot(vec3 ThetaV) {
+        if (ThetaV == new vec3(0f))
+            return IDENTITY4;
+
+        ThetaV = -ThetaV; //  Theta is clockwise.
+
+        //  Derive rotation 'Theta' (length of ThetaV):
+        float Theta = sqrt(ThetaV.x*ThetaV.x + ThetaV.y*ThetaV.y + ThetaV.z*ThetaV.z);
+
+        //  Derive rotation 'Axis' (ThetaV normalized):
+        vec3 Axis = ThetaV * (1f / Theta);
+
+        //  DewIt:
+        float  CosT = cos(Theta);
+        float iCosT = 1f - CosT;
+        float  SinT = sin(Theta);
+
+        float Ay_iCosT = Axis.y * iCosT;
+        float Az_iCosT = Axis.z * iCosT;
+
+        float Axx_iCosT = Axis.x * Axis.x*iCosT;
+        float Axy_iCosT = Axis.x * Ay_iCosT;
+        float Axz_iCosT = Axis.x * Az_iCosT;
+
+        float Ayy_iCosT = Axis.y * Ay_iCosT;
+        float Ayz_iCosT = Axis.y * Az_iCosT;
+
+        float Azz_iCosT = Axis.z * Az_iCosT;
+
+        float Ax_SinT = Axis.x * SinT;
+        float Ay_SinT = Axis.y * SinT;
+        float Az_SinT = Axis.z * SinT;
+
+        return new mat4(
+            (Axx_iCosT +    CosT), (Axy_iCosT - Az_SinT), (Axz_iCosT + Ay_SinT), 0f,
+            (Axy_iCosT + Az_SinT), (Ayy_iCosT +    CosT), (Ayz_iCosT - Ax_SinT), 0f,
+            (Axz_iCosT - Ay_SinT), (Ayz_iCosT + Ax_SinT), (Azz_iCosT +    CosT), 0f,
+                               0f,                    0f,                    0f, 1f
+        );
+    }
+
+    //==========================================================================================================================================================
     internal static vec3 rot(vec3 P, vec3 ThetaV) {
         if (ThetaV == 0f)
             return P;
 
-        //  'Theta' is clockwise:
-        ThetaV = -ThetaV;
+        ThetaV = -ThetaV; //  Theta is clockwise.
 
         //  Derive rotation 'Theta' (length of ThetaV):
         float Theta = sqrt(ThetaV.x*ThetaV.x + ThetaV.y*ThetaV.y + ThetaV.z*ThetaV.z);
@@ -311,10 +431,9 @@ internal static class VEC_Rotation {
             return P;
 
         //  'Point' localized to 'Pivot':
-        vec3 dPP = P - Pivot;
+        vec3 d = P-Pivot;
 
-        //  'Theta' is clockwise:
-        ThetaV = -ThetaV;
+        ThetaV = -ThetaV; //  Theta is clockwise.
 
         //  Derive rotation 'Theta' (length of ThetaV):
         float Theta = sqrt(ThetaV.x*ThetaV.x + ThetaV.y*ThetaV.y + ThetaV.z*ThetaV.z);
@@ -344,9 +463,9 @@ internal static class VEC_Rotation {
         float Az_SinT = Axis.z * SinT;
 
         return new vec3(
-            Pivot.x  +  dPP.x*(Axx_iCosT +    CosT)  +  dPP.y*(Axy_iCosT - Az_SinT)  +  dPP.z*(Axz_iCosT + Ay_SinT),
-            Pivot.y  +  dPP.x*(Axy_iCosT + Az_SinT)  +  dPP.y*(Ayy_iCosT +    CosT)  +  dPP.z*(Ayz_iCosT - Ax_SinT),
-            Pivot.z  +  dPP.x*(Axz_iCosT - Ay_SinT)  +  dPP.y*(Ayz_iCosT + Ax_SinT)  +  dPP.z*(Azz_iCosT +    CosT)
+            Pivot.x  +  d.x*(Axx_iCosT +    CosT)  +  d.y*(Axy_iCosT - Az_SinT)  +  d.z*(Axz_iCosT + Ay_SinT),
+            Pivot.y  +  d.x*(Axy_iCosT + Az_SinT)  +  d.y*(Ayy_iCosT +    CosT)  +  d.z*(Ayz_iCosT - Ax_SinT),
+            Pivot.z  +  d.x*(Axz_iCosT - Ay_SinT)  +  d.y*(Ayz_iCosT + Ax_SinT)  +  d.z*(Azz_iCosT +    CosT)
         );
     }
 

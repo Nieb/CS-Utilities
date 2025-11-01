@@ -1,8 +1,4 @@
-using System;
 using System.Runtime.CompilerServices;
-
-using static Utility.FLT;
-using static Utility.VEC;
 
 namespace Utility;
 internal static class VEC_Collision3 {
@@ -108,9 +104,9 @@ internal static class VEC_Collision3 {
     //
     //  Axis-Aligned Plane.
     //
-    //      RayVsPlaneX(  Ray-Position,  Ray-Normal,    Plane-PositionX  )  Plane spans YZ.
-    //      RayVsPlaneY(  Ray-Position,  Ray-Normal,    Plane-PositionY  )  Plane spans XZ.
-    //      RayVsPlaneZ(  Ray-Position,  Ray-Normal,    Plane-PositionZ  )  Plane spans XY.
+    //      RayVsPlaneX(  Ray-Position,  Ray-Normal,    Plane-PositionX  )      Plane spans YZ.
+    //      RayVsPlaneY(  Ray-Position,  Ray-Normal,    Plane-PositionY  )      Plane spans XZ.
+    //      RayVsPlaneZ(  Ray-Position,  Ray-Normal,    Plane-PositionZ  )      Plane spans XY.
     //
     internal static float RayVsPlaneX(vec3 Rp, vec3 Rn, float Pp_x) => (Pp_x - Rp.x) / Rn.x;
     internal static float RayVsPlaneY(vec3 Rp, vec3 Rn, float Pp_y) => (Pp_y - Rp.y) / Rn.y;
@@ -131,7 +127,7 @@ internal static class VEC_Collision3 {
     //
     internal static vec4 RayVsQuadX(vec3 Rp, vec3 Rn, vec3 Rnr,    vec3 Qp, vec2 Qs) {
         float Distance = (Qp.x - Rp.x) * Rnr.x;
-        vec3 Hp = Rp + (Rn*Distance); //  HitPosition
+        vec3 Hp = Rp + (Rn*Distance);
         return (Hp.z >= Qp.z && Hp.z < Qp.z+Qs.x
             &&  Hp.y >= Qp.y && Hp.y < Qp.y+Qs.y) ? new vec4(Hp, Distance) : RAY_MISS___;
     }
@@ -144,7 +140,7 @@ internal static class VEC_Collision3 {
     //
     internal static vec4 RayVsQuadY(vec3 Rp, vec3 Rn, vec3 Rnr,    vec3 Qp, vec2 Qs) {
         float Distance = (Qp.y - Rp.y) * Rnr.y;
-        vec3 Hp = Rp + (Rn*Distance); //  HitPosition
+        vec3 Hp = Rp + (Rn*Distance);
         return (Hp.x >= Qp.x && Hp.x < Qp.x+Qs.x
             &&  Hp.z >= Qp.z && Hp.z < Qp.z+Qs.y) ? new vec4(Hp, Distance) : RAY_MISS___;
     }
@@ -157,7 +153,7 @@ internal static class VEC_Collision3 {
     //
     internal static vec4 RayVsQuadZ(vec3 Rp, vec3 Rn, vec3 Rnr,    vec3 Qp, vec2 Qs) {
         float Distance = (Qp.z - Rp.z) * Rnr.z;
-        vec3 Hp = Rp + (Rn*Distance); //  HitPosition
+        vec3 Hp = Rp + (Rn*Distance);
         return (Hp.x >= Qp.x && Hp.x < Qp.x+Qs.x
             &&  Hp.y >= Qp.y && Hp.y < Qp.y+Qs.y) ? new vec4(Hp, Distance) : RAY_MISS___;
     }
@@ -327,7 +323,7 @@ internal static class VEC_Collision3 {
 
         //  Did we hit it?
         return (DistToFrontFace > DistToBackFace) ? RAY_MISS
-             : (DistToBackFace  <             0f) ? DistToBackFace  //  Box is behind RayPos.
+             : (DistToBackFace  <             0f) ? DistToBackFace  //  Box is behind RayPos.  Though, Ray-Line does intersect.
              : (DistToFrontFace <=            0f) ? 0f              //  RayPos is inside Box.
                                                   : DistToFrontFace;
     }
@@ -360,9 +356,9 @@ internal static class VEC_Collision3 {
     internal static (vec4, int) RayVsVoxelChunk(vec3 Rp, vec3 Rn, vec3 Rnr,    vec3 Vp, ivec3 Vs, uint[] Voxel) {
         #if DEBUG || true
         {
-            int VolumeCompare = (Vs.x * Vs.y * Vs.z) - Voxel.Length;
-            if      (VolumeCompare < 0) throw new ArgumentException("Derp?  Voxel-Volume is less than Voxel.Length.");
-            else if (VolumeCompare > 0) throw new ArgumentException("Derp?  Voxel-Volume is greater than Voxel.Length.");
+            int VolumeCompare = Volume(Vs) - Voxel.Length;
+            if      (VolumeCompare < 0) throw new System.ArgumentException("Voxel-Volume is less than Voxel.Length.");
+            else if (VolumeCompare > 0) throw new System.ArgumentException("Voxel-Volume is greater than Voxel.Length.");
         }
         #endif
 

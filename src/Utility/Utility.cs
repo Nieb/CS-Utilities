@@ -5,6 +5,8 @@ global using Utility;
 global using static Utility.Casting;
 global using static Utility.Loops;
 
+global using static Utility.Random;
+
 global using static Utility.ARY;
 global using static Utility.FLT;
 global using static Utility.INT;
@@ -24,27 +26,30 @@ global using static Utility.VEC_Rotation;
 //##############################################################################################################################################################
 //##############################################################################################################################################################
 #if false
-    global using iptr = System.IntPtr;  //  nint            Depends on platform (computed at runtime)             Signed 32-bit or 64-bit integer
-    global using uptr = System.UIntPtr; //  nuint           Depends on platform (computed at runtime)           Unsigned 32-bit or 64-bit integer
+    global using iptr = nint;   //  System.IntPtr                   Depends on platform (computed at runtime)             Signed 32-bit or 64-bit integer
+    global using uptr = nuint;  //  System.UIntPtr                  Depends on platform (computed at runtime)           Unsigned 32-bit or 64-bit integer
 #endif
 #if false
-    global using  i8 = System.SByte;    //  sbyte                         -128 to 127                             Signed 8-bit integer
-    global using  u8 = System.Byte;     //  byte                             0 to 255                           Unsigned 8-bit integer
+    global using  b8 = bool;    //...
+#endif
+#if false
+    global using  i8 = sbyte;   //  System.SByte                                  -128 to 127                             Signed 8-bit integer
+    global using  u8 = byte;    //  System.Byte                                      0 to 255                           Unsigned 8-bit integer
 
-    global using i16 = System.Int16;    //  short                      -32,768 to 32,767                          Signed 16-bit integer
-    global using u16 = System.UInt16;   //  ushort                           0 to 65,535                        Unsigned 16-bit integer
+    global using i16 = short;   //  System.Int16                               -32,768 to 32,767                          Signed 16-bit integer
+    global using u16 = ushort;  //  System.UInt16                                    0 to 65,535                        Unsigned 16-bit integer
 
-    global using i32 = System.Int32;    //  int                 -2,147,483,648 to 2,147,483,647                   Signed 32-bit integer
-    global using u32 = System.UInt32;   //  uint                             0 to 4,294,967,295                 Unsigned 32-bit integer
+    global using i32 = int;     //  System.Int32                        -2,147,483,648 to 2,147,483,647                   Signed 32-bit integer
+    global using u32 = uint;    //  System.UInt32                                    0 to 4,294,967,295                 Unsigned 32-bit integer
 
-    global using i64 = System.Int64;    //  long    -9,223,372,036,854,775,808 to  9,223,372,036,854,775,807      Signed 64-bit integer
-    global using u64 = System.UInt64;   //  ulong                            0 to 18,446,744,073,709,551,615    Unsigned 64-bit integer
+    global using i64 = long;    //  System.Int64            -9,223,372,036,854,775,808 to  9,223,372,036,854,775,807      Signed 64-bit integer
+    global using u64 = ulong;   //  System.UInt64                                    0 to 18,446,744,073,709,551,615    Unsigned 64-bit integer
 #endif
 
 //==============================================================================================================================================================
 #if false
-    global using f32 = System.Single;
-    global using f64 = System.Double;
+    global using f32 = float;   //  System.Single
+    global using f64 = double;  //  System.Double
 #endif
 #if false
     global using vec2 = System.Numerics.Vector2;
@@ -77,7 +82,6 @@ global using static System.Runtime.CompilerServices.MethodImplOptions;
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
 */
 /*
-
         Unmanaged               The method is implemented in unmanaged code.
 
         NoInlining              The method cannot be inlined.
@@ -106,5 +110,4 @@ global using static System.Runtime.CompilerServices.MethodImplOptions;
                                 Always measure performance to ensure it's helpful to apply this attribute.
 
         InternalCall            The call is internal, that is, it calls a method that's implemented within the common language runtime.
-
 */

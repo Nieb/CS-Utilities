@@ -1,17 +1,16 @@
 
-
 namespace Utility;
 internal static class FLT {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal const float FLOAT_MIN      = System.Single.MinValue;
-    internal const float FLOAT_MAX      = System.Single.MaxValue;
+    internal const float FLOAT_MIN      = float.MinValue;
+    internal const float FLOAT_MAX      = float.MaxValue;
 
-    internal const float FLOAT_NEG_INF  = System.Single.NegativeInfinity;
-    internal const float FLOAT_NEG_ZERO = System.Single.NegativeZero;
-    internal const float FLOAT_INF      = System.Single.PositiveInfinity;
+    internal const float FLOAT_NEG_INF  = float.NegativeInfinity;
+    internal const float FLOAT_NEG_ZERO = float.NegativeZero;
+    internal const float FLOAT_INF      = float.PositiveInfinity;
 
-    internal const float FLOAT_NaN      = System.Single.NaN;
+    internal const float FLOAT_NaN      = float.NaN;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

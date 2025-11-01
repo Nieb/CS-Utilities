@@ -1,5 +1,4 @@
-using System;
-using System.Runtime.CompilerServices;
+
 
 namespace Utility;
 internal static partial class VEC_Generate {
@@ -9,7 +8,7 @@ internal static partial class VEC_Generate {
     //  The starting orientations for these are designed around being practical, not "correct".
     //
     //  Theta in Radians.
-    //  Positive rotations are Clockwise.
+    //  Positive rotation is Clockwise.
     //
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -22,7 +21,7 @@ internal static partial class VEC_Generate {
     //      (270) == (-1, 0)
     //      (360) == ( 0, 1)
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Impl(AggressiveInlining)]
     internal static vec2 FromAng(float Theta) => new vec2(
         sin(Theta),
         cos(Theta)
@@ -40,13 +39,15 @@ internal static partial class VEC_Generate {
     //  Vector3  FROM  Pitch.
     //  Result on plane spanning YZ.
     //
-    //      (  0) == ( 0, 0,-1)
-    //      ( 90) == ( 0,-1, 0)
-    //      (180) == ( 0, 0, 1)
-    //      (270) == ( 0, 1, 0)
-    //      (360) == ( 0, 0,-1)
+    //      (-180) == ( 0, 0, 1)
+    //      ( -90) == ( 0, 1, 0)
+    //      (   0) == ( 0, 0,-1)
+    //      (  90) == ( 0,-1, 0)
+    //      ( 180) == ( 0, 0, 1)
+    //      ( 270) == ( 0, 1, 0)
+    //      ( 360) == ( 0, 0,-1)
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Impl(AggressiveInlining)]
     internal static vec3 FromPch(float Theta) => new vec3(
         0f,
         -sin(Theta),
@@ -64,7 +65,7 @@ internal static partial class VEC_Generate {
     //      (270) == (-1, 0, 0)
     //      (360) == ( 0, 0,-1)
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Impl(AggressiveInlining)]
     internal static vec3 FromYaw(float Theta) => new vec3(
         sin(Theta),
         0f,
@@ -82,7 +83,7 @@ internal static partial class VEC_Generate {
     //      (270) == (-1, 0, 0)
     //      (360) == ( 0, 1, 0)
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Impl(AggressiveInlining)]
     internal static vec3 FromRol(float Theta) => new vec3(
         sin(Theta),
         cos(Theta),
@@ -103,7 +104,7 @@ internal static partial class VEC_Generate {
     //      (  0,   0) == ( 0, 0,-1)
     //      ( 90,   0) == ( 0,-1, 0)
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Impl(AggressiveInlining)]
     internal static vec3 FromPchYaw(float Pch, float Yaw) {
         float CosPch = cos(Pch);
 
@@ -129,7 +130,7 @@ internal static partial class VEC_Generate {
     //      ( 0, 0, 1) == (  0,180, 0)
     //      (-1, 0, 0) == (  0,270, 0)
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Impl(AggressiveInlining)]
     internal static vec3 RotFromVec(vec3 V) {
         float Pch, Yaw;
 

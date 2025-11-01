@@ -1,6 +1,9 @@
-using System.Runtime.CompilerServices;
 
 namespace Utility;
+using v1 = float;
+using v2 = vec2;
+using v3 = vec3;
+using v4 = vec4;
 internal static class VEC_Interpolation {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -35,17 +38,16 @@ internal static class VEC_Interpolation {
     //
     //          https://registry.khronos.org/OpenGL-Refpages/gl4/html/mix.xhtml
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static float Mix(float V,   float A, float B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 Mix(v1 V, v1 A, v1 B) => A*(1f-V) + B*V;
 
-    internal static vec2  Mix(float V,   vec2  A, vec2  B) => A*(1f-V) + B*V;
-    internal static vec2  Mix(vec2  V,   vec2  A, vec2  B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 Mix(v1 V, v2 A, v2 B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 Mix(v2 V, v2 A, v2 B) => A*(1f-V) + B*V;
 
-    internal static vec3  Mix(float V,   vec3  A, vec3  B) => A*(1f-V) + B*V;
-    internal static vec3  Mix(vec3  V,   vec3  A, vec3  B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 Mix(v1 V, v3 A, v3 B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 Mix(v3 V, v3 A, v3 B) => A*(1f-V) + B*V;
 
-    internal static vec4  Mix(float V,   vec4  A, vec4  B) => A*(1f-V) + B*V;
-    internal static vec4  Mix(vec4  V,   vec4  A, vec4  B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 Mix(v1 V, v4 A, v4 B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 Mix(v4 V, v4 A, v4 B) => A*(1f-V) + B*V;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -62,29 +64,17 @@ internal static class VEC_Interpolation {
     //          :  :
     //          C..D
     //
-    internal static float BiMix(vec2 V,   float A, float B, float C, float D) {
-        vec2 iV = (1f - V);
-        return A*(iV.x*iV.y) + B*(V.x*iV.y)
-             + C*(iV.x* V.y) + D*(V.x* V.y);
-    }
+    internal static v1 BiMix(v2 V,  v1 A, v1 B, v1 C, v1 D) {v2 iV = (1f - V); return A*(iV.x*iV.y) + B*(V.x*iV.y)
+                                                                                    + C*(iV.x* V.y) + D*(V.x* V.y);}
 
-    internal static vec2 BiMix(vec2 V,   vec2 A, vec2 B, vec2 C, vec2 D) {
-        vec2 iV = (1f - V);
-        return A*(iV.x*iV.y) + B*(V.x*iV.y)
-             + C*(iV.x* V.y) + D*(V.x* V.y);
-    }
+    internal static v2 BiMix(v2 V,  v2 A, v2 B, v2 C, v2 D) {v2 iV = (1f - V); return A*(iV.x*iV.y) + B*(V.x*iV.y)
+                                                                                    + C*(iV.x* V.y) + D*(V.x* V.y);}
 
-    internal static vec3 BiMix(vec2 V,   vec3 A, vec3 B, vec3 C, vec3 D) {
-        vec2 iV = (1f - V);
-        return A*(iV.x*iV.y) + B*(V.x*iV.y)
-             + C*(iV.x* V.y) + D*(V.x* V.y);
-    }
+    internal static v3 BiMix(v2 V,  v3 A, v3 B, v3 C, v3 D) {v2 iV = (1f - V); return A*(iV.x*iV.y) + B*(V.x*iV.y)
+                                                                                    + C*(iV.x* V.y) + D*(V.x* V.y);}
 
-    internal static vec4 BiMix(vec2 V,   vec4 A, vec4 B, vec4 C, vec4 D) {
-        vec2 iV = (1f - V);
-        return A*(iV.x*iV.y) + B*(V.x*iV.y)
-             + C*(iV.x* V.y) + D*(V.x* V.y);
-    }
+    internal static v4 BiMix(v2 V,  v4 A, v4 B, v4 C, v4 D) {v2 iV = (1f - V); return A*(iV.x*iV.y) + B*(V.x*iV.y)
+                                                                                    + C*(iV.x* V.y) + D*(V.x* V.y);}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -97,31 +87,31 @@ internal static class VEC_Interpolation {
     //
     //  OUTPUT: A..B
     //
-    internal static float SmoothMix(float V,   float A, float B) {
-        float dAB = B - A;
-        float LinStep = clamp((V*dAB) / dAB);
-        float SmoStep = LinStep*LinStep * (3f - 2f*LinStep);
+    internal static v1 SmoothMix(v1 V,   v1 A, v1 B) {
+        v1 dAB = B - A;
+        v1 LinStep = clamp((V*dAB) / dAB);
+        v1 SmoStep = LinStep*LinStep * (3f - 2f*LinStep);
         return A*(1f-SmoStep) + B*SmoStep;
     }
 
-    internal static vec2 SmoothMix(float V,   vec2 A, vec2 B) {
-        vec2 dAB = B - A;
-        vec2 LinStep = clamp((V*dAB) / dAB);
-        vec2 SmoStep = LinStep*LinStep * (3f - 2f*LinStep);
+    internal static v2 SmoothMix(v1 V,   v2 A, v2 B) {
+        v2 dAB = B - A;
+        v2 LinStep = clamp((V*dAB) / dAB);
+        v2 SmoStep = LinStep*LinStep * (3f - 2f*LinStep);
         return A*(1f-SmoStep) + B*SmoStep;
     }
 
-    internal static vec3 SmoothMix(float V,   vec3 A, vec3 B) {
-        vec3 dAB = B - A;
-        vec3 LinStep = clamp((V*dAB) / dAB);
-        vec3 SmoStep = LinStep*LinStep * (3f - 2f*LinStep);
+    internal static v3 SmoothMix(v1 V,   v3 A, v3 B) {
+        v3 dAB = B - A;
+        v3 LinStep = clamp((V*dAB) / dAB);
+        v3 SmoStep = LinStep*LinStep * (3f - 2f*LinStep);
         return A*(1f-SmoStep) + B*SmoStep;
     }
 
-    internal static vec4 SmoothMix(float V,   vec4 A, vec4 B) {
-        vec4 dAB = B - A;
-        vec4 LinStep = clamp((V*dAB) / dAB);
-        vec4 SmoStep = LinStep*LinStep * (3f - 2f*LinStep);
+    internal static v4 SmoothMix(v1 V,   v4 A, v4 B) {
+        v4 dAB = B - A;
+        v4 LinStep = clamp((V*dAB) / dAB);
+        v4 SmoStep = LinStep*LinStep * (3f - 2f*LinStep);
         return A*(1f-SmoStep) + B*SmoStep;
     }
 
@@ -136,25 +126,23 @@ internal static class VEC_Interpolation {
     //
     //  OUTPUT: A..B
     //
-    internal static vec2 Slerp(float V,   vec2 A, vec2 B) {
+    internal static v2 Clerp(v1 V,   v2 A, v2 B) {
         float ThetaAB = acos( dot(A,B) );
         float SinT = sin(ThetaAB);
         float iV = (1f - V);
 
         A *= sin(ThetaAB * iV) / SinT;
         B *= sin(ThetaAB *  V) / SinT;
-
         return A + B;
     }
 
-    internal static vec3 Slerp(float V,   vec3 A, vec3 B) {
+    internal static v3 Slerp(v1 V,   v3 A, v3 B) {
         float ThetaAB = acos( dot(A,B) );
         float SinT = sin(ThetaAB);
         float iV = (1f - V);
 
         A *= sin(ThetaAB * iV) / SinT;
         B *= sin(ThetaAB *  V) / SinT;
-
         return A + B;
     }
 
@@ -174,53 +162,41 @@ internal static class VEC_Interpolation {
     //
     //    GLSL: step(Edge, X);
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static float Step(float V, float T) => (V < T) ? 0f : 1f;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 Step(v1 V, v1 T) => (V < T) ? 0f : 1f;
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static vec2 Step(vec2 V, float T) => new vec2( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f );
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static vec2 Step(vec2 V, vec2  T) => new vec2( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f );
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 Step(v2 V, v1 T) => new v2( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f );
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 Step(v2 V, v2 T) => new v2( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f );
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static vec3 Step(vec3 V, float T) => new vec3( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f,  (V.z < T  ) ? 0f : 1f );
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static vec3 Step(vec3 V, vec3  T) => new vec3( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f,  (V.z < T.z) ? 0f : 1f );
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 Step(v3 V, v1 T) => new v3( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f,  (V.z < T  ) ? 0f : 1f );
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 Step(v3 V, v3 T) => new v3( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f,  (V.z < T.z) ? 0f : 1f );
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static vec4 Step(vec4 V, float T) => new vec4( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f,  (V.z < T  ) ? 0f : 1f,  (V.w < T  ) ? 0f : 1f );
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static vec4 Step(vec4 V, vec4  T) => new vec4( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f,  (V.z < T.z) ? 0f : 1f,  (V.w < T.w) ? 0f : 1f );
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 Step(v4 V, v1 T) => new v4( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f,  (V.z < T  ) ? 0f : 1f,  (V.w < T  ) ? 0f : 1f );
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 Step(v4 V, v4 T) => new v4( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f,  (V.z < T.z) ? 0f : 1f,  (V.w < T.w) ? 0f : 1f );
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                               "Linear Interpolation"
     //  LinearStep(
-    //      V: any      Value to weight between A and B.
+    //      V: any      Value to weigh between A and B.
     //      A: any      ...
     //      B: any      ...
     //  )
     //
     //  OUTPUT: 0..1
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static float LinearStep(float V,   float A, float B) => clamp((V-A) / (B-A));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 LinearStep(v1 V, v1 A, v1 B) => clamp((V-A) / (B-A));
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static vec2  LinearStep(float V,   vec2  A, vec2  B) => clamp((V-A) / (B-A));
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static vec2  LinearStep(vec2  V,   vec2  A, vec2  B) => clamp((V-A) / (B-A));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 LinearStep(v1 V, v2 A, v2 B) => clamp((V-A) / (B-A));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 LinearStep(v2 V, v2 A, v2 B) => clamp((V-A) / (B-A));
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static vec3  LinearStep(float V,   vec3  A, vec3  B) => clamp((V-A) / (B-A));
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static vec3  LinearStep(vec3  V,   vec3  A, vec3  B) => clamp((V-A) / (B-A));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 LinearStep(v1 V, v3 A, v3 B) => clamp((V-A) / (B-A));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 LinearStep(v3 V, v3 A, v3 B) => clamp((V-A) / (B-A));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                               "Hermite Interpolation"
     //  SmoothStep(
-    //      V: any      Value to weight between A and B.
+    //      V: any      Value to weigh between A and B.
     //      A: any      ...
     //      B: any      ...
     //  )
@@ -235,23 +211,23 @@ internal static class VEC_Interpolation {
     //  -2*(x^3) + 3*(x^2)
     //   x*x * (-2*x + 3)
     //
-    internal static float SmoothStep(float V)                     {  V = clamp(V);              return V*V * (3f - 2f*V);  }
-    internal static float SmoothStep(float V,   float A, float B) {  V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);  }
+    internal static v1 SmoothStep(v1 V)               {V = clamp(V);              return V*V * (3f - 2f*V);}
+    internal static v1 SmoothStep(v1 V,   v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
 
-    internal static vec2  SmoothStep(vec2  V)                     {  V = clamp(V);              return V*V * (3f - 2f*V);  }
-    internal static vec2  SmoothStep(vec2  V,   vec2  A, vec2  B) {  V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);  }
-    internal static vec2  SmoothStep(vec2  V,   float A, float B) {  V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);  }
-  //internal static vec2  SmoothStep(float V,   vec2  A, vec2  B) {  V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);  }
+    internal static v2 SmoothStep(v2 V)               {V = clamp(V);              return V*V * (3f - 2f*V);}
+    internal static v2 SmoothStep(v2 V,   v2 A, v2 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
+    internal static v2 SmoothStep(v2 V,   v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
+  //internal static v2 SmoothStep(v1 V,   v2 A, v2 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
 
-    internal static vec3  SmoothStep(vec3  V)                     {  V = clamp(V);              return V*V * (3f - 2f*V);  }
-    internal static vec3  SmoothStep(vec3  V,   vec3  A, vec3  B) {  V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);  }
-    internal static vec3  SmoothStep(vec3  V,   float A, float B) {  V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);  }
-  //internal static vec3  SmoothStep(float V,   vec3  A, vec3  B) {  V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);  }
+    internal static v3 SmoothStep(v3 V)               {V = clamp(V);              return V*V * (3f - 2f*V);}
+    internal static v3 SmoothStep(v3 V,   v3 A, v3 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
+    internal static v3 SmoothStep(v3 V,   v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
+  //internal static v3 SmoothStep(v1 V,   v3 A, v3 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
 
     //==========================================================================================================================================================
     //
     //  SharpStep(
-    //      V: any      Value to weight between A and B.
+    //      V: any      Value to weigh between A and B.
     //      A: any      ...
     //      B: any      ...
     //  )
@@ -269,21 +245,21 @@ internal static class VEC_Interpolation {
     //          Or, in a way, more inline with the sharp/abrupt bends of LinearStep,
     //          albeit with a shorter middle transition than LinearStep (the part around 0.5).
     //
-    internal static float SharpStep(float V)                     {  V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);  }
-    internal static float SharpStep(float V,   float A, float B) {  V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);  }
+    internal static v1 SharpStep(v1 V)             {V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v1 SharpStep(v1 V, v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);}
 
-    internal static vec2  SharpStep(vec2  V)                     {  V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);  }
-    internal static vec2  SharpStep(vec2  V,   vec2  A, vec2  B) {  V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);  }
-    internal static vec2  SharpStep(vec2  V,   float A, float B) {  V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);  }
+    internal static v2 SharpStep(v2 V)             {V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v2 SharpStep(v2 V, v2 A, v2 B) {V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v2 SharpStep(v2 V, v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);}
 
-    internal static vec3  SharpStep(vec3  V)                     {  V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);  }
-    internal static vec3  SharpStep(vec3  V,   vec3  A, vec3  B) {  V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);  }
-    internal static vec3  SharpStep(vec3  V,   float A, float B) {  V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);  }
+    internal static v3 SharpStep(v3 V)             {V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v3 SharpStep(v3 V, v3 A, v3 B) {V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v3 SharpStep(v3 V, v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);}
 
     //==========================================================================================================================================================
     //
     //  SharperStep(
-    //      V: any      Value to weight between A and B.
+    //      V: any      Value to weigh between A and B.
     //      A: any      ...
     //      B: any      ...
     //  )
@@ -292,7 +268,7 @@ internal static class VEC_Interpolation {
     //
     //  AKA: "SmoothestStep()"
     //
-    internal static float SharperStep(float V,   float A, float B) {
+    internal static v1 SharperStep(v1 V,   v1 A, v1 B) {
         if (B == A)
             return (V > B) ? 1f : 0f;
 

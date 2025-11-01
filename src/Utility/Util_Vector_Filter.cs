@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+
 
 namespace Utility;
 internal static partial class VEC_Filter {
@@ -12,14 +12,11 @@ internal static partial class VEC_Filter {
     //
     //    out: 0 to 1
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static float HardLimit(float V, float T) {
-        return (V > T) ? T : V;
-    }
+    [Impl(AggressiveInlining)] internal static float HardLimit(float V, float T) => (V > T) ? T : V;
 
     //==========================================================================================================================================================
     //
-    //  "Rational-Decay based Soft-Limiter"
+    //  "Rational Decay based Soft-Limiter"
     //
     //      https://www.desmos.com/calculator/cs73ninsvh
     //
@@ -33,11 +30,12 @@ internal static partial class VEC_Filter {
             return V;
         } else {
             float  TT = T * T;
-            float iTT = 1f - T;  iTT *= iTT;
-
+            float iTT = 1f - T;    iTT *= iTT;
             return 1f - iTT/(iTT + V - TT);
         }
     }
+
+    [Impl(AggressiveInlining)] internal static vec3 SoftLimit(vec3 V, float T) => new vec3(SoftLimit(V.x, T), SoftLimit(V.y, T), SoftLimit(V.z, T));
 
     //==========================================================================================================================================================
     //
@@ -69,7 +67,6 @@ internal static partial class VEC_Filter {
     //
     //      "Localized Limiter" ?
     //      "Localized Amp" ?
-    //  Δ
     //
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private const float Filter_BlendScale = 256f;
@@ -79,7 +76,7 @@ internal static partial class VEC_Filter {
     internal static float AmpThresh_v3(float V, float T, float M) {
         float d = V - T;
 
-        float blend = 1f/(1f + pow(2f, -d * Filter_BlendScale));
+        float blend = 1f/(1f + pow(2f,-d*Filter_BlendScale));
 
         return (d > 0f) ? T + Mix(blend, d, d*M)
                         : V;
@@ -116,23 +113,28 @@ internal static partial class VEC_Filter {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //              |- - - - - - - F - - - - - - -|  R
+    //  https://www.desmos.com/calculator/7vp20jpmdc
+    //
+    //  While the principle is similar, it's not really a "notch" anymore, more of a controlled "bell-curve"/"decay"/"falloff"/"s-curve" function.
+    //
+    //              |- - - - - - -'F'- - - - - - -| 'R'
     //      |                                        |
-    //  Y=1 +--------____                            V
-    //      |            ----
-    //                       ---
-    //      |                   --
-    //                            -
-    //      |                      -
-    //                              --
-    //      |                         ---
-    //                                   ----____
+    //  Y=1 +--------____                            |
+    //      |            ----                        |
+    //                       ---                     |
+    //      |                   --                   |
+    //                            -                  |
+    //      |                      -                 |
+    //                              --               |
+    //      |                         ---            |
+    //                                   ----____    V
     //  Y=0 +                                    ------------------------
-    //    X=0
+    //    X=0                                       X=n
     //
-    //  R^(-(x/R)^F);
+    //      Notch(  x,  Radius, Falloff  )
     //
-    internal static float Notch(float x, float R, float F) => pow(R,-pow(x/R,F));
+    [Impl(AggressiveInlining)]
+    internal static float Notch(float x, float R, float F) => pow(R, -pow(x/R, F));
 
     //==========================================================================================================================================================
     //
@@ -140,17 +142,7 @@ internal static partial class VEC_Filter {
     //
     //      Notch(  x,  Delta, Position, Radius, Falloff  )
     //
-    internal static float Notch(float x, float d, float P, float R, float F) {
-        float Result;
-
-        Result = abs(x - P) / R;
-
-        Result = pow(Result, F);
-
-        Result = 1f + d * pow(R, -Result);
-
-        return Result;
-    }
+    internal static float Notch(float x, float d, float P, float R, float F) => 1f + d*pow(R, -pow(abs(x-P)/R, F));
 
     //==========================================================================================================================================================
     //

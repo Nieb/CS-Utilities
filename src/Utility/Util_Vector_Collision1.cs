@@ -1,5 +1,4 @@
 
-
 #if false
 namespace Utility;
 internal static class VEC_Collision1 {
@@ -15,22 +14,20 @@ internal static class VEC_Collision1 {
     //          -2        -1         0         1         2
     //
     //      However, with Float, it is often best to be inclusive of the thresholds.
+    //          For example, to avoid passing through the seams/edges of a triangle-mesh.
     //
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal static bool PointVsRange(float Point_Pos,
-                                      float Range_Pos, float Range_Len) => (      // Length must be positive.
-            Point_Pos >= Range_Pos
-        &&  Point_Pos <  Range_Pos+Range_Len
-    );
+    //
+    //      PointVsRange(  Point,  Range-Position, Range-Size  )
+    //
+    internal static bool PointVsRange(float P,  float Rp, float Rs) => (P >= Rp  &&  P < Rp+Rs);
 
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    internal static bool RangeVsRange(float Range1_Pos, float Range1_Len,
-                                      float Range2_Pos, float Range2_Len) => (    // Length must be positive.
-            Range1_Pos < Range2_Pos+Range2_Len
-        &&  Range2_Pos < Range1_Pos+Range1_Len
-    );
+    //==========================================================================================================================================================
+    //
+    //      RangeVsRange(  Range-Position, Range-Size,  Range-Position, Range-Size  )
+    //
+    internal static bool RangeVsRange(float Rp1, float Rs1,  float Rp2, float Rs2) => (Rp1 < Rp2+Rs2  &&  Rp2 < Rp1+Rs1);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
