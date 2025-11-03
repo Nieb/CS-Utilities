@@ -198,6 +198,34 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
+        RESULT("pow() exp() log()", true
+            && exp(     log  (0.44f)    ).IsApproximately(0.44f)
+
+            && pow( 2f, log2 (0.44f)    ).IsApproximately(0.44f)
+            && pow(10f, log10(0.44f)    ).IsApproximately(0.44f)
+
+            && pow( 7f, log  (0.44f, 7f)).IsApproximately(0.44f)
+        );
+
+        #if false
+        {
+            float x = 0.44f;
+
+            PRINT($"""
+
+                           x = {x}
+
+                    log(x)   =  {log(x)}
+                exp(log(x))  =  {exp(log(x))}
+
+                    log2(x)  =  {log2(x)}
+                exp(log2(x)) =  {pow(2f,log2(x)):0.00}
+
+            """);
+        }
+        #endif
+
+        //======================================================================================================================================================
         RESULT("round(A, RoundTo)", true
             && round(-2.0f, 0.5f) == -2.0f
             && round(-1.9f, 0.5f) == -2.0f
@@ -223,31 +251,31 @@ internal static partial class Program {
 
             && round(-0.2f, 0.5f) == -0.0f
             && round(-0.1f, 0.5f) == -0.0f
-            && round( 0.0f, 0.5f) == 0.0f
-            && round( 0.1f, 0.5f) == 0.0f
-            && round( 0.2f, 0.5f) == 0.0f
+            && round( 0.0f, 0.5f) ==  0.0f
+            && round( 0.1f, 0.5f) ==  0.0f
+            && round( 0.2f, 0.5f) ==  0.0f
 
-            && round( 0.3f, 0.5f) == 0.5f
-            && round( 0.4f, 0.5f) == 0.5f
-            && round( 0.5f, 0.5f) == 0.5f
-            && round( 0.6f, 0.5f) == 0.5f
-            && round( 0.7f, 0.5f) == 0.5f
+            && round( 0.3f, 0.5f) ==  0.5f
+            && round( 0.4f, 0.5f) ==  0.5f
+            && round( 0.5f, 0.5f) ==  0.5f
+            && round( 0.6f, 0.5f) ==  0.5f
+            && round( 0.7f, 0.5f) ==  0.5f
 
-            && round( 0.8f, 0.5f) == 1.0f
-            && round( 0.9f, 0.5f) == 1.0f
-            && round( 1.0f, 0.5f) == 1.0f
-            && round( 1.1f, 0.5f) == 1.0f
-            && round( 1.2f, 0.5f) == 1.0f
+            && round( 0.8f, 0.5f) ==  1.0f
+            && round( 0.9f, 0.5f) ==  1.0f
+            && round( 1.0f, 0.5f) ==  1.0f
+            && round( 1.1f, 0.5f) ==  1.0f
+            && round( 1.2f, 0.5f) ==  1.0f
 
-            && round( 1.3f, 0.5f) == 1.5f
-            && round( 1.4f, 0.5f) == 1.5f
-            && round( 1.5f, 0.5f) == 1.5f
-            && round( 1.6f, 0.5f) == 1.5f
-            && round( 1.7f, 0.5f) == 1.5f
+            && round( 1.3f, 0.5f) ==  1.5f
+            && round( 1.4f, 0.5f) ==  1.5f
+            && round( 1.5f, 0.5f) ==  1.5f
+            && round( 1.6f, 0.5f) ==  1.5f
+            && round( 1.7f, 0.5f) ==  1.5f
 
-            && round( 1.8f, 0.5f) == 2.0f
-            && round( 1.9f, 0.5f) == 2.0f
-            && round( 2.0f, 0.5f) == 2.0f
+            && round( 1.8f, 0.5f) ==  2.0f
+            && round( 1.9f, 0.5f) ==  2.0f
+            && round( 2.0f, 0.5f) ==  2.0f
         );
 
         //======================================================================================================================================================

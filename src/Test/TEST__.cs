@@ -26,13 +26,15 @@ internal static partial class Program {static void Test___() {  //PRINT("\n[BLAR
     PRINT("");
     PRINT($"                       vec2: {System.Runtime.InteropServices.Marshal.SizeOf<vec2>(),2} bytes");
     PRINT($"                      ivec2: {System.Runtime.InteropServices.Marshal.SizeOf<ivec2>(),2} bytes");
+    PRINT("");
     PRINT($"                       vec3: {System.Runtime.InteropServices.Marshal.SizeOf<vec3>(),2} bytes");
     PRINT($"                      ivec3: {System.Runtime.InteropServices.Marshal.SizeOf<ivec3>(),2} bytes");
+    PRINT("");
     PRINT($"                       vec4: {System.Runtime.InteropServices.Marshal.SizeOf<vec4>(),2} bytes");
     PRINT($"                      ivec4: {System.Runtime.InteropServices.Marshal.SizeOf<ivec4>(),2} bytes");
-    PRINT("");
     PRINT($"                      bvec4: {System.Runtime.InteropServices.Marshal.SizeOf<bvec4>(),2} bytes");
-  //PRINT($"                      bvec8: {System.Runtime.InteropServices.Marshal.SizeOf<bvec8>(),2} bytes");
+    PRINT("");
+    PRINT($"                      bvec8: {System.Runtime.InteropServices.Marshal.SizeOf<bvec8>(),2} bytes");
     PRINT("");
     PRINT($"                       mat4: {System.Runtime.InteropServices.Marshal.SizeOf<mat4>(),2} bytes");
 
@@ -43,6 +45,16 @@ internal static partial class Program {static void Test___() {  //PRINT("\n[BLAR
     //PRINT($"                       vec2: {sizeof(vec2),2} bytes"); //  Structs do not have a predefined size...
     //PRINT($"                       vec3: {sizeof(vec3),2} bytes"); //  struct auto-padding is dependent upon:
     //PRINT($"                       vec4: {sizeof(vec4),2} bytes"); //     platform allocation-size, allocation-addressing, bus-width,  etc.
+#endif
+
+#if false
+    PRINT($"\n\n{BAR}\n{BAR}");
+    DebugStruct(typeof(vec2));
+    DebugStruct(typeof(ivec2));
+    DebugStruct(typeof(vec3));
+    DebugStruct(typeof(ivec3));
+    DebugStruct(typeof(vec4));
+    DebugStruct(typeof(ivec4));
 #endif
 
 #if false

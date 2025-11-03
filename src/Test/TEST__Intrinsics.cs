@@ -4,8 +4,7 @@ using System.Runtime.Intrinsics.X86;
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Intrinsics() {
-        PRINT(
-            $"""
+            PRINT($"""
 
             [Intrinsics]
                 Vector128.IsHardwareAccelerated: {System.Runtime.Intrinsics.Vector128.IsHardwareAccelerated}
@@ -28,22 +27,18 @@ internal static partial class Program {
                  Avx512 F   : {Avx512F      .IsSupported,-5}  X64: {Avx512F      .X64.IsSupported,-5}  VL: {Avx512F        .VL.IsSupported}
                  Avx512 Vbmi: {Avx512Vbmi   .IsSupported,-5}  X64: {Avx512Vbmi   .X64.IsSupported,-5}  VL: {Avx512Vbmi     .VL.IsSupported}
 
-            """
-        );
+            """);
         #if false
-        PRINT(
-            $"""
+            PRINT($"""
                      Avx10v1: {Avx10v1      .IsSupported,-5}  X64: {Avx10v1      .X64.IsSupported}
                 Avx10v1.V512: {Avx10v1.V512 .IsSupported,-5}  X64: {Avx10v1.V512 .X64.IsSupported}
 
                      AvxVnni: {AvxVnni      .IsSupported,-5}  X64: {AvxVnni      .X64.IsSupported}
 
-            """
-        );
+            """);9
         #endif
         #if true
-        PRINT(
-            $"""
+            PRINT($"""
                          Aes: {Aes          .IsSupported,-5}  X64: {Aes          .X64.IsSupported}
 
                         Bmi1: {Bmi1         .IsSupported,-5}  X64: {Bmi1         .X64.IsSupported}
@@ -59,8 +54,7 @@ internal static partial class Program {
 
                 X86Serialize: {X86Serialize .IsSupported,-5}  X64: {X86Serialize .X64.IsSupported}
 
-            """
-        );
+            """);
         #endif
     }
 }

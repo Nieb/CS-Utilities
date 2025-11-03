@@ -3,18 +3,21 @@ namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector() {
         PRINT("\n[Utility.VEC]");
-        //PRINT($"{}");
 
         //======================================================================================================================================================
-        #if false
-            PRINT($"\n\n{BAR}\n{BAR}");
-            DebugStruct(typeof(vec2));
-            DebugStruct(typeof(ivec2));
-            DebugStruct(typeof(vec3));
-            DebugStruct(typeof(ivec3));
-            DebugStruct(typeof(vec4));
-            DebugStruct(typeof(ivec4));
-        #endif
+        RESULT(" vec2 is  8 bytes", System.Runtime.InteropServices.Marshal.SizeOf<vec2>()  ==  8);
+        RESULT("ivec2 is  8 bytes", System.Runtime.InteropServices.Marshal.SizeOf<ivec2>() ==  8);
+
+        RESULT(" vec3 is 12 bytes", System.Runtime.InteropServices.Marshal.SizeOf<vec3>()  == 12);
+        RESULT("ivec3 is 12 bytes", System.Runtime.InteropServices.Marshal.SizeOf<ivec3>() == 12);
+
+        RESULT(" vec4 is 16 bytes", System.Runtime.InteropServices.Marshal.SizeOf<vec4>()  == 16);
+        RESULT("ivec4 is 16 bytes", System.Runtime.InteropServices.Marshal.SizeOf<ivec4>() == 16);
+
+        RESULT("bvec4 is  4 bytes", System.Runtime.InteropServices.Marshal.SizeOf<bvec4>() ==  4);
+        RESULT("bvec8 is  8 bytes", System.Runtime.InteropServices.Marshal.SizeOf<bvec8>() ==  8);
+
+        RESULT(" mat4 is 64 bytes", System.Runtime.InteropServices.Marshal.SizeOf<mat4>()  == 64);
 
         //======================================================================================================================================================
         RESULT("iVec2 has Value/Magnitude/Length", true
@@ -92,28 +95,27 @@ internal static partial class Program {
 
         //======================================================================================================================================================
         #if false
-
             PRINT($"");
             PRINT($"{BitCast.ToFloat(0x3EAAAAABu):F98}");
-            PRINT($"{ONETHIRD:F98}");
+            PRINT($"{ONE_THIRD:F98}");
             PRINT($"");
             PRINT($"{IntToBinaryString(0x3EAAAAABu)}");
-            PRINT($"{IntToBinaryString(BitCast.ToUint(ONETHIRD))}");
+            PRINT($"{IntToBinaryString(BitCast.ToUint(ONE_THIRD))}");
             PRINT($"");
             PRINT($"");
             PRINT($"{BitCast.ToFloat(0x3F2AAAABu):F98}");
-            PRINT($"{TWOTHIRD:F98}");
+            PRINT($"{TWO_THIRD:F98}");
             PRINT($"{IntToBinaryString(0x3F2AAAABu)}");
-            PRINT($"{IntToBinaryString(BitCast.ToUint(TWOTHIRD))}");
+            PRINT($"{IntToBinaryString(BitCast.ToUint(TWO_THIRD))}");
             PRINT($"");
             PRINT($"");
             PRINT($"");
             PRINT($"{0.000000000000123456f:F98}");
-
         #endif
+
         //======================================================================================================================================================
         #if false
-
+        {
             bvec4 A = 0xFF_CC_99_33u;
             PRINT($"");
             PRINT($"    A: {A:x}");
@@ -147,8 +149,9 @@ internal static partial class Program {
 
             //uint S = 0b_0101_0101; // = 0x55 =  85
             //uint Z = 0b_1010_1010; // = 0xAA = 170
-
+        }
         #endif
+
         //======================================================================================================================================================
     }
 }

@@ -62,12 +62,11 @@ internal static partial class Program {
                 (24.1f,25.1f), (26.1f,27.1f), (28.1f,29.1f), (30.1f,31.1f)
             };
             float[] B = A.ToFloatArray();
-            //B[15] = 99f;
 
             bool Result = true;
             for (int i = 0; i < A.Length; ++i) {
-                Result = Result && (A[i].x == B[i*2  ]);
-                Result = Result && (A[i].y == B[i*2+1]);
+                Result = Result && (A[i].x == B[i*2    ]);
+                Result = Result && (A[i].y == B[i*2 + 1]);
             }
             RESULT("Vec2[].ToFloatArray()", Result);
         }
@@ -81,7 +80,6 @@ internal static partial class Program {
                 (36.1f,37.1f,38.1f), (39.1f,40.1f,41.1f), (42.1f,43.1f,44.1f), (45.1f,46.1f,47.1f)
             };
             float[] B = A.ToFloatArray();
-            //B[15] = 99f;
 
             bool Result = true;
             for (int i = 0; i < A.Length; ++i) {
@@ -101,14 +99,13 @@ internal static partial class Program {
                 (48.1f,49.1f,50.1f,51.1f), (52.1f,53.1f,54.1f,55.1f), (56.1f,57.1f,58.1f,59.1f), (60.1f,61.1f,62.1f,63.1f)
             };
             float[] B = A.ToFloatArray();
-            //B[15] = 99f;
 
             bool Result = true;
             for (int i = 0; i < A.Length; ++i) {
-                Result = Result && (A[i].x == B[i*4  ]);
-                Result = Result && (A[i].y == B[i*4+1]);
-                Result = Result && (A[i].z == B[i*4+2]);
-                Result = Result && (A[i].w == B[i*4+3]);
+                Result = Result && (A[i].x == B[i*4    ]);
+                Result = Result && (A[i].y == B[i*4 + 1]);
+                Result = Result && (A[i].z == B[i*4 + 2]);
+                Result = Result && (A[i].w == B[i*4 + 3]);
             }
             RESULT("Vec4[].ToFloatArray()", Result);
         }

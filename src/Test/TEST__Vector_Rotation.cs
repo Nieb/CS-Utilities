@@ -103,10 +103,10 @@ internal static partial class Program {
             && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad( 270f)).IsApproximately((-SQRT2, 0f, SQRT2))
 
             && rot((0f,1f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f))       .IsApproximately((0.5f,SQRT2_RCP,-0.5f))
-            && rot((0f,1f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f)).length.IsApproximately(1f)
+            && length(rot((0f,1f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f))).IsApproximately(1f)
 
             && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f))       .IsApproximately((1f,SQRT2,-1f))
-            && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f)).length.IsApproximately(2f)
+            && length(rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f))).IsApproximately(2f)
         );
 
         RESULT("vec3 rot(P, Pivot, Axis, Theta)", true
@@ -122,13 +122,13 @@ internal static partial class Program {
             && rot((0f,1f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately(( TWO_THIRD,-ONE_THIRD, TWO_THIRD)) //  180 along diagonal axis
             && rot((0f,2f,  0f), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)).IsApproximately((        0f,        2f,        0f)) //  360 along diagonal axis
 
-            && rot((  1f,  0f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).length.IsApproximately(1f)
-            && rot((  0f,  2f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).length.IsApproximately(2f)
-            && rot((  0f,  0f,  3f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).length.IsApproximately(3f)
-            && rot(( PI ,  0f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).length.IsApproximately(PI)
-            && rot((  0f, PI2,  0f), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)).length.IsApproximately(PI2)
-            && rot((  0f,  0f, PI3), (PI3/SQRT3, PI3/SQRT3, PI3/SQRT3)).length.IsApproximately(PI3)
-            && rot(( PI4,  0f,  0f), (PI4/SQRT3, PI4/SQRT3, PI4/SQRT3)).length.IsApproximately(PI4)
+            && length(rot((  1f,  0f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3))).IsApproximately(1f)
+            && length(rot((  0f,  2f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3))).IsApproximately(2f)
+            && length(rot((  0f,  0f,  3f), (PI /SQRT3, PI /SQRT3, PI /SQRT3))).IsApproximately(3f)
+            && length(rot(( PI ,  0f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3))).IsApproximately(PI)
+            && length(rot((  0f, PI2,  0f), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3))).IsApproximately(PI2)
+            && length(rot((  0f,  0f, PI3), (PI3/SQRT3, PI3/SQRT3, PI3/SQRT3))).IsApproximately(PI3)
+            && length(rot(( PI4,  0f,  0f), (PI4/SQRT3, PI4/SQRT3, PI4/SQRT3))).IsApproximately(PI4)
 
             && rot((-SQRT2_RCP, 0f, SQRT2_RCP), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately(( SQRT2_RCP, 0f,-SQRT2_RCP)) //  180 along diagonal axis
             && rot((-SQRT2_RCP, 0f, SQRT2_RCP), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)).IsApproximately((-SQRT2_RCP, 0f, SQRT2_RCP)) //  360 along diagonal axis
@@ -171,12 +171,12 @@ internal static partial class Program {
 
             && rot((5f,6f,5f), (5f,5f,5f), (PIH/SQRT2,        0f, PIH/SQRT2)).IsApproximately((5f+SQRT2_RCP          ,5f                    ,5f-SQRT2_RCP          ))
 
-            && (rot((5f,6f,5f    ), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5f,5f,5f)).length.IsApproximately(1f)
-            && (rot((5f,7f,5f    ), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5f,5f,5f)).length.IsApproximately(2f)
-            && (rot((5f,5f,5f+PI ), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5f,5f,5f)).length.IsApproximately(PI)
-            && (rot((5f,5f,5f+PI2), (5f,5f,5f), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)) - (5f,5f,5f)).length.IsApproximately(PI2)
-            && (rot((5f,5f,5f+PI3), (5f,5f,5f), (PI3/SQRT3, PI3/SQRT3, PI3/SQRT3)) - (5f,5f,5f)).length.IsApproximately(PI3)
-            && (rot((5f,5f,5f+PI4), (5f,5f,5f), (PI4/SQRT3, PI4/SQRT3, PI4/SQRT3)) - (5f,5f,5f)).length.IsApproximately(PI4)
+            && length(rot((5f,6f,5f    ), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5f,5f,5f)).IsApproximately(1f)
+            && length(rot((5f,7f,5f    ), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5f,5f,5f)).IsApproximately(2f)
+            && length(rot((5f,5f,5f+PI ), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)) - (5f,5f,5f)).IsApproximately(PI)
+            && length(rot((5f,5f,5f+PI2), (5f,5f,5f), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)) - (5f,5f,5f)).IsApproximately(PI2)
+            && length(rot((5f,5f,5f+PI3), (5f,5f,5f), (PI3/SQRT3, PI3/SQRT3, PI3/SQRT3)) - (5f,5f,5f)).IsApproximately(PI3)
+            && length(rot((5f,5f,5f+PI4), (5f,5f,5f), (PI4/SQRT3, PI4/SQRT3, PI4/SQRT3)) - (5f,5f,5f)).IsApproximately(PI4)
         );
 
         //======================================================================================================================================================

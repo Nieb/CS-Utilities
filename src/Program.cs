@@ -5,15 +5,16 @@ internal static partial class Program {
     //##########################################################################################################################################################
     static void Main(string[] args) {
         _ = args;
+
         #if false
             Test__Float();
-
             //Test__Intrinsics();
-
             //Gen__TurboColor();
 
         #else
-            PRINTC("                                  ~~~ START ~~~");
+            //PRINT($"LineNumber: {LINE_NUMBER()}");
+
+            PRINTC($"                                  ~~~ START ~~~");
             Time Time = new();
 
             Test__Integer();
@@ -37,7 +38,7 @@ internal static partial class Program {
             Test___();
 
             Time.Update();
-            PRINT("\n                                 ~~~ FINISH ~~~");
+            PRINT($"\n                                 ~~~ FINISH ~~~");
             PRINT($"\n                                   {Time.SinceStart,10:0.0000000}\n");
         #endif
     }
