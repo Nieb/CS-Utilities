@@ -11,19 +11,11 @@ internal struct vec2 : System.IFormattable {
     //==========================================================================================================================================================
     public vec2 yx {  get => new vec2(y,x);  set {x = value.y; y = value.x;}  }
 
-    //==========================================================================================================================================================
-    //  NOTE: Length is computed each time it is accessed.
-    public float length {
-        get => sqrt(x*x + y*y);
-        set => this = (this == 0f) ? this : this*(value/sqrt(x*x + y*y));
-    }
-    public readonly float length2 => (x*x + y*y);
-
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public vec2() {}
+    public vec2(float XY        ) { x=XY;         y=XY;         }
     public vec2(float X, float Y) { x=X;          y=Y;          }
-    public vec2(float V         ) { x=V;          y=V;          }
 
     public vec2(ivec2 V         ) { x=(float)V.x; y=(float)V.y; }
 
@@ -32,7 +24,7 @@ internal struct vec2 : System.IFormattable {
     [Impl(AggressiveInlining)] public static implicit operator vec2( (float X, float Y) t ) => new vec2(t.X, t.Y);
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] public static implicit operator vec2( ivec2 A ) => new vec2(A);
+    [Impl(AggressiveInlining)] public static implicit operator vec2(ivec2 A) => new vec2(A);        //  Directly assign 'ivec2' to 'vec2'.
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

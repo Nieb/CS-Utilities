@@ -1,9 +1,5 @@
 
 namespace Utility;
-using v1 = float;
-using v2 = vec2;
-using v3 = vec3;
-using v4 = vec4;
 internal static partial class VEC {
     //#pragma warning disable CS0219 //  "The variable '...' is assigned but is never used"
     //##########################################################################################################################################################

@@ -1,9 +1,5 @@
 
 namespace Utility;
-using v1 = float;
-using v2 = vec2;
-using v3 = vec3;
-using v4 = vec4;
 internal static class VEC_Interpolation {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -15,7 +11,7 @@ internal static class VEC_Interpolation {
     //      https://www.desmos.com/calculator/5fe71775ae
     //
     //
-    //  Note:  Order of parameters differs from GLSL.  Also, TitleCase.
+    //  NOTE:  Order of parameters differs from GLSL.  Also, TitleCase.
     //
     //
     //##########################################################################################################################################################
@@ -120,8 +116,8 @@ internal static class VEC_Interpolation {
     //                                                          "Spherical Linear Interpolation"
     //  Slerp(
     //      V: 0..1     Weighted position between A and B.
-    //      A: any      ...
-    //      B: any      ...
+    //      A: any      Position of Circle/Sphere (normalized).
+    //      B: any      Position of Circle/Sphere (normalized).
     //  )
     //
     //  OUTPUT: A..B
@@ -177,28 +173,28 @@ internal static class VEC_Interpolation {
     //##########################################################################################################################################################
     //                                                               "Linear Interpolation"
     //  LinearStep(
-    //      V: any      Value to weigh between A and B.
-    //      A: any      ...
-    //      B: any      ...
+    //      V: any      Value to weigh between L and U.
+    //      L: any      LowerBounds
+    //      U: any      UpperBounds
     //  )
     //
     //  OUTPUT: 0..1
     //
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 LinearStep(v1 V, v1 A, v1 B) => clamp((V-A) / (B-A));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 LinearStep(v1 V, v1 L, v1 U) => clamp((V-L) / (U-L));
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 LinearStep(v1 V, v2 A, v2 B) => clamp((V-A) / (B-A));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 LinearStep(v2 V, v2 A, v2 B) => clamp((V-A) / (B-A));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 LinearStep(v1 V, v2 L, v2 U) => clamp((V-L) / (U-L));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 LinearStep(v2 V, v2 L, v2 U) => clamp((V-L) / (U-L));
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 LinearStep(v1 V, v3 A, v3 B) => clamp((V-A) / (B-A));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 LinearStep(v3 V, v3 A, v3 B) => clamp((V-A) / (B-A));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 LinearStep(v1 V, v3 L, v3 U) => clamp((V-L) / (U-L));
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 LinearStep(v3 V, v3 L, v3 U) => clamp((V-L) / (U-L));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                               "Hermite Interpolation"
     //  SmoothStep(
-    //      V: any      Value to weigh between A and B.
-    //      A: any      ...
-    //      B: any      ...
+    //      V: any      Value to weigh between L and U.
+    //      L: any      LowerBounds
+    //      U: any      UpperBounds
     //  )
     //
     //  OUTPUT: 0..1
@@ -212,24 +208,24 @@ internal static class VEC_Interpolation {
     //   x*x * (-2*x + 3)
     //
     internal static v1 SmoothStep(v1 V)               {V = clamp(V);              return V*V * (3f - 2f*V);}
-    internal static v1 SmoothStep(v1 V,   v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
+    internal static v1 SmoothStep(v1 V,   v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
 
     internal static v2 SmoothStep(v2 V)               {V = clamp(V);              return V*V * (3f - 2f*V);}
-    internal static v2 SmoothStep(v2 V,   v2 A, v2 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
-    internal static v2 SmoothStep(v2 V,   v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
-  //internal static v2 SmoothStep(v1 V,   v2 A, v2 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
+    internal static v2 SmoothStep(v2 V,   v2 L, v2 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
+    internal static v2 SmoothStep(v2 V,   v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
+  //internal static v2 SmoothStep(v1 V,   v2 L, v2 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
 
     internal static v3 SmoothStep(v3 V)               {V = clamp(V);              return V*V * (3f - 2f*V);}
-    internal static v3 SmoothStep(v3 V,   v3 A, v3 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
-    internal static v3 SmoothStep(v3 V,   v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
-  //internal static v3 SmoothStep(v1 V,   v3 A, v3 B) {V = clamp((V-A) / (B-A));  return V*V * (3f - 2f*V);}
+    internal static v3 SmoothStep(v3 V,   v3 L, v3 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
+    internal static v3 SmoothStep(v3 V,   v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
+  //internal static v3 SmoothStep(v1 V,   v3 L, v3 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
 
     //==========================================================================================================================================================
     //
     //  SharpStep(
-    //      V: any      Value to weigh between A and B.
-    //      A: any      ...
-    //      B: any      ...
+    //      V: any      Value to weigh between L and U.
+    //      L: any      LowerBounds
+    //      U: any      UpperBounds
     //  )
     //
     //  OUTPUT: 0..1
@@ -246,33 +242,31 @@ internal static class VEC_Interpolation {
     //          albeit with a shorter middle transition than LinearStep (the part around 0.5).
     //
     internal static v1 SharpStep(v1 V)             {V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);}
-    internal static v1 SharpStep(v1 V, v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v1 SharpStep(v1 V, v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
 
     internal static v2 SharpStep(v2 V)             {V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);}
-    internal static v2 SharpStep(v2 V, v2 A, v2 B) {V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);}
-    internal static v2 SharpStep(v2 V, v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v2 SharpStep(v2 V, v2 L, v2 U) {V = clamp((V-L) / (U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v2 SharpStep(v2 V, v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
 
     internal static v3 SharpStep(v3 V)             {V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);}
-    internal static v3 SharpStep(v3 V, v3 A, v3 B) {V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);}
-    internal static v3 SharpStep(v3 V, v1 A, v1 B) {V = clamp((V-A) / (B-A));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v3 SharpStep(v3 V, v3 L, v3 U) {V = clamp((V-L) / (U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v3 SharpStep(v3 V, v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
 
     //==========================================================================================================================================================
     //
     //  SharperStep(
-    //      V: any      Value to weigh between A and B.
-    //      A: any      ...
-    //      B: any      ...
+    //      V: any      Value to weigh between L and U.
+    //      L: any      LowerBounds
+    //      U: any      UpperBounds
     //  )
     //
     //  OUTPUT: 0..1
     //
     //  AKA: "SmoothestStep()"
+    //      SmoothStep() is the smoothest step.  :P
     //
-    internal static v1 SharperStep(v1 V,   v1 A, v1 B) {
-        if (B == A)
-            return (V > B) ? 1f : 0f;
-
-        V = clamp((V-A) / (B-A));
+    internal static v1 SharperStep(v1 V,   v1 L, v1 U) {
+        V = clamp((V-L) / (U-L));
 
         float VV   = V   * V;
         float VVV  = VV  * V;

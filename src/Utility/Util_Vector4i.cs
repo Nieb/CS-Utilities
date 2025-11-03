@@ -5,27 +5,27 @@ namespace Utility;
 internal struct ivec4 : System.IFormattable {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [FieldOffset( 0)] public int x;  [FieldOffset( 0)] public int r;
-    [FieldOffset( 4)] public int y;  [FieldOffset( 4)] public int g;
-    [FieldOffset( 8)] public int z;  [FieldOffset( 8)] public int b;
-    [FieldOffset(12)] public int w;  [FieldOffset(12)] public int a;
+    [FieldOffset( 0)] public int x;         [FieldOffset( 0)] public int r;
+    [FieldOffset( 4)] public int y;         [FieldOffset( 4)] public int g;
+    [FieldOffset( 8)] public int z;         [FieldOffset( 8)] public int b;
+    [FieldOffset(12)] public int w;         [FieldOffset(12)] public int a;
 
     //==========================================================================================================================================================
-    public ivec2 xy {  get => new ivec2(x, y);  set {x = value.x; y = value.y;}  }
-    public ivec2 xz {  get => new ivec2(x, z);  set {x = value.x; z = value.y;}  }
-    public ivec2 yz {  get => new ivec2(y, z);  set {y = value.x; z = value.y;}  }
-    public ivec2 zw {  get => new ivec2(z, w);  set {z = value.x; w = value.y;}  }
+    [FieldOffset( 0)] public ivec3 xyz;     [FieldOffset( 0)] public ivec3 rgb;
 
-    public ivec3 xyz {  get => new ivec3(x, y, z);  set {x = value.x; y = value.y; z = value.z;}  }
-    public ivec3 rgb {  get => new ivec3(x, y, z);  set {x = value.x; y = value.y; z = value.z;}  }
+    [FieldOffset( 0)] public ivec2 xy;
+    [FieldOffset( 4)] public ivec2 yz;
+    [FieldOffset( 8)] public ivec2 zw;
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    public ivec2 xz {  get => new ivec2(x, z);  set {x = value.x; z = value.y;}  }
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public ivec4() {}
-
-    public ivec4(int X, int Y, int Z, int W) { x = X;     y = Y;     z = Z;     w = W;    }
-    public ivec4(int XYZ            , int W) { x = XYZ;   y = XYZ;   z = XYZ;   w = W;    }
     public ivec4(int XYZW                  ) { x = XYZW;  y = XYZW;  z = XYZW;  w = XYZW; }
+    public ivec4(int XYZ            , int W) { x = XYZ;   y = XYZ;   z = XYZ;   w = W;    }
+    public ivec4(int X, int Y, int Z, int W) { x = X;     y = Y;     z = Z;     w = W;    }
 
     public ivec4(ivec3 XYZ          , int W) { x = XYZ.x; y = XYZ.y; z = XYZ.z; w = W;    }
 

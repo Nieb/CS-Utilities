@@ -14,20 +14,6 @@ internal static class FLT {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //
-    //  Use-of "float" identifier restricted.
-    //
-    #if false
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] internal static float flt(byte   A) => (float)A;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] internal static float flt(short  A) => (float)A;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] internal static float flt(int    A) => (float)A;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] internal static float flt(uint   A) => (float)A;
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] internal static float flt(double A) => (float)A;
-    #endif
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static float BitDec(float A) => System.MathF.BitDecrement(A);
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static float BitInc(float A) => System.MathF.BitIncrement(A);
 

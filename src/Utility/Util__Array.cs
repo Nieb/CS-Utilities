@@ -48,13 +48,11 @@ internal static class ARY {
     //  Generic version.
     //  Works on Arrays, Lists, Strings, etc.
     //
-    #if false
-        [Impl(AggressiveInlining|AggressiveOptimization)]
-        internal static int  count<T>(this System.Collections.Generic.IEnumerable<T> Enmrbl) => (Enmrbl == null) ?  0 : System.Linq.Enumerable.Count(Enmrbl);
-
-        [Impl(AggressiveInlining|AggressiveOptimization)]
-        internal static int length<T>(this System.Collections.Generic.IEnumerable<T> Enmrbl) => (Enmrbl == null) ? -1 : System.Linq.Enumerable.Count(Enmrbl) - 1;
-    #endif
+    //[Impl(AggressiveInlining|AggressiveOptimization)]
+    //internal static int  count<T>(this System.Collections.Generic.IEnumerable<T> Enmrbl) => (Enmrbl == null) ?  0 : System.Linq.Enumerable.Count(Enmrbl);
+    //
+    //[Impl(AggressiveInlining|AggressiveOptimization)]
+    //internal static int length<T>(this System.Collections.Generic.IEnumerable<T> Enmrbl) => (Enmrbl == null) ? -1 : System.Linq.Enumerable.Count(Enmrbl) - 1;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

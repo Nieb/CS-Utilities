@@ -1,10 +1,50 @@
 //##############################################################################################################################################################
 //##############################################################################################################################################################
+//global using  b8 = bool;    //  System.Boolean
+
+//==============================================================================================================================================================
+global using  i8 = sbyte;   //  System.SByte                                  -128 to 127                             Signed  8-bit integer
+global using  u8 =  byte;   //  System.Byte                                      0 to 255                           Unsigned  8-bit integer
+
+global using i16 =  short;  //  System.Int16                               -32,768 to 32,767                          Signed 16-bit integer
+global using u16 = ushort;  //  System.UInt16                                    0 to 65,535                        Unsigned 16-bit integer
+
+global using i32 =  int;    //  System.Int32                        -2,147,483,648 to 2,147,483,647                   Signed 32-bit integer
+global using u32 = uint;    //  System.UInt32                                    0 to 4,294,967,295                 Unsigned 32-bit integer
+
+global using i64 =  long;   //  System.Int64            -9,223,372,036,854,775,808 to  9,223,372,036,854,775,807      Signed 64-bit integer
+global using u64 = ulong;   //  System.UInt64                                    0 to 18,446,744,073,709,551,615    Unsigned 64-bit integer
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+global using f32 = float;   //  System.Single
+
+global using f64 = double;  //  System.Double
+
+//==============================================================================================================================================================
+global using  v1 = float;
+global using  v2 = Utility.vec2;
+global using  v3 = Utility.vec3;
+global using  v4 = Utility.vec4;
+
+//==============================================================================================================================================================
+//global using iptr = nint;   //  System.IntPtr                   Depends on platform (computed at runtime)             Signed 32-bit or 64-bit integer
+//global using uptr = nuint;  //  System.UIntPtr                  Depends on platform (computed at runtime)           Unsigned 32-bit or 64-bit integer
+
+/*
+    global using vec2 = System.Numerics.Vector2;
+    global using vec3 = System.Numerics.Vector3;
+    global using vec4 = System.Numerics.Vector4;
+
+    global using mat4 = System.Numerics.Matrix4;
+*/
+
+//##############################################################################################################################################################
+//##############################################################################################################################################################
 global using Utility;
 
 global using static Utility.Casting;
 global using static Utility.Loops;
-
+global using static Utility.Miscellaneous;
 global using static Utility.Random;
 
 global using static Utility.ARY;
@@ -25,50 +65,7 @@ global using static Utility.VEC_Rotation;
 
 //##############################################################################################################################################################
 //##############################################################################################################################################################
-#if false
-    global using iptr = nint;   //  System.IntPtr                   Depends on platform (computed at runtime)             Signed 32-bit or 64-bit integer
-    global using uptr = nuint;  //  System.UIntPtr                  Depends on platform (computed at runtime)           Unsigned 32-bit or 64-bit integer
-#endif
-#if false
-    global using  b8 = bool;    //  ...
-#endif
-#if false
-    global using  i8 = sbyte;   //  System.SByte                                  -128 to 127                             Signed 8-bit integer
-    global using  u8 = byte;    //  System.Byte                                      0 to 255                           Unsigned 8-bit integer
-
-    global using i16 = short;   //  System.Int16                               -32,768 to 32,767                          Signed 16-bit integer
-    global using u16 = ushort;  //  System.UInt16                                    0 to 65,535                        Unsigned 16-bit integer
-
-    global using i32 = int;     //  System.Int32                        -2,147,483,648 to 2,147,483,647                   Signed 32-bit integer
-    global using u32 = uint;    //  System.UInt32                                    0 to 4,294,967,295                 Unsigned 32-bit integer
-
-    global using i64 = long;    //  System.Int64            -9,223,372,036,854,775,808 to  9,223,372,036,854,775,807      Signed 64-bit integer
-    global using u64 = ulong;   //  System.UInt64                                    0 to 18,446,744,073,709,551,615    Unsigned 64-bit integer
-#endif
-
-//==============================================================================================================================================================
-#if false
-    global using f32 = float;   //  System.Single
-    global using f64 = double;  //  System.Double
-#endif
-#if false
-    global using v1 = float;
-    global using v2 = Utility.VEC.vec2;
-    global using v3 = Utility.VEC.vec3;
-    global using v4 = Utility.VEC.vec4;
-#endif
-
-#if false
-    global using vec2 = System.Numerics.Vector2;
-    global using vec3 = System.Numerics.Vector3;
-    global using vec4 = System.Numerics.Vector4;
-
-    global using mat4 = System.Numerics.Matrix4;
-#endif
-
-//##############################################################################################################################################################
-//##############################################################################################################################################################
-//                                                               Method Implementation Options
+//                                                                   Method Implementation
 
 global using Impl = System.Runtime.CompilerServices.MethodImplAttribute;
 global using static System.Runtime.CompilerServices.MethodImplOptions;
@@ -89,20 +86,36 @@ global using static System.Runtime.CompilerServices.MethodImplOptions;
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
 */
 /*
+    MethodImplOptions
+
         Unmanaged               The method is implemented in unmanaged code.
+
+
+        ForwardRef              The method is declared, but its implementation is provided elsewhere.
+
+
+        InternalCall            The call is internal, that is, it calls a method that's implemented within the common language runtime.
+
+
+        PreserveSig             The method signature is exported exactly as declared.
+
+
+        Synchronized            The method can be executed by only one thread at a time.
+
+                                Static methods lock on the type, whereas
+                                instance methods lock on the instance.
+
+                                Only one thread can execute in any of the instance functions,
+                                and only one thread can execute in any of a class's static functions.
+
 
         NoInlining              The method cannot be inlined.
                                 Inlining is an optimization by which a method call is replaced with the method body.
 
-        ForwardRef              The method is declared, but its implementation is provided elsewhere.
 
-        Synchronized            The method can be executed by only one thread at a time.
-                                Static methods lock on the type, whereas instance methods lock on the instance.
-                                Only one thread can execute in any of the instance functions, and only one thread can execute in any of a class's static functions.
+        NoOptimization          The method is not optimized by the just-in-time (JIT) compiler
+                                or by native code generation (see Ngen.exe) when debugging possible code generation problems.
 
-        NoOptimization          The method is not optimized by the just-in-time (JIT) compiler or by native code generation (see Ngen.exe) when debugging possible code generation problems.
-
-        PreserveSig             The method signature is exported exactly as declared.
 
         AggressiveInlining      The method should be inlined if possible.
                                 Unnecessary use of this attribute can reduce performance.
@@ -110,11 +123,13 @@ global using static System.Runtime.CompilerServices.MethodImplOptions;
                                 Always measure performance to ensure it's helpful to apply this attribute.
 
         AggressiveOptimization  The method contains code that should always be optimized for performance.
-                                It's rarely appropriate to use this attribute.
-                                Methods that apply this attribute bypass the first tier of tiered compilation and therefore don't benefit from optimizations that rely on tiered compilation.
+
+                                Methods that apply this attribute bypass the first tier of tiered compilation
+                                and therefore don't benefit from optimizations that rely on tiered compilation.
+
                                 Those optimizations include dynamic PGO and optimizations based on initialized classes.
+
+                                It's rarely appropriate to use this attribute.
                                 Use of this attribute may also increase memory use.
                                 Always measure performance to ensure it's helpful to apply this attribute.
-
-        InternalCall            The call is internal, that is, it calls a method that's implemented within the common language runtime.
 */

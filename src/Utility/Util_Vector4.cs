@@ -5,37 +5,29 @@ namespace Utility;
 internal struct vec4 : System.IFormattable {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [FieldOffset( 0)] public float x;  [FieldOffset( 0)] public float r;
-    [FieldOffset( 4)] public float y;  [FieldOffset( 4)] public float g;
-    [FieldOffset( 8)] public float z;  [FieldOffset( 8)] public float b;
-    [FieldOffset(12)] public float w;  [FieldOffset(12)] public float a;
+    [FieldOffset( 0)] public float x;       [FieldOffset( 0)] public float r;
+    [FieldOffset( 4)] public float y;       [FieldOffset( 4)] public float g;
+    [FieldOffset( 8)] public float z;       [FieldOffset( 8)] public float b;
+    [FieldOffset(12)] public float w;       [FieldOffset(12)] public float a;
 
     //==========================================================================================================================================================
-    public vec2 xy {  get => new vec2(x,y);  set {x = value.x; y = value.y;}  }
-    public vec2 yz {  get => new vec2(y,z);  set {y = value.x; z = value.y;}  }
-    public vec2 zw {  get => new vec2(z,w);  set {z = value.x; w = value.y;}  }
+    [FieldOffset( 0)] public vec3 xyz;      [FieldOffset( 0)] public vec3 rgb;
 
+    [FieldOffset( 0)] public vec2 xy;
+    [FieldOffset( 4)] public vec2 yz;
+    [FieldOffset( 8)] public vec2 zw;
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
     public vec2 xz {  get => new vec2(x,z);  set {x = value.x; z = value.y;}  }
-
-    public vec3 xyz {  get => new vec3(x, y, z);  set {x = value.x; y = value.y; z = value.z;}  }
-    public vec3 rgb {  get => new vec3(x, y, z);  set {x = value.x; y = value.y; z = value.z;}  }
-
-    //==========================================================================================================================================================
-    //  NOTE: Length is computed each time it is accessed.
-    public float length {
-        get => sqrt(x*x + y*y + z*z + w*w);
-        set => this = (this == 0f) ? this : this*(value/sqrt(x*x + y*y + z*z + w*w));
-    }
-    public readonly float length2 => (x*x + y*y + z*z + w*w);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public vec4() {}
-    public vec4(float X, float Y, float Z, float W) { x=X;   y=Y;   z=Z;   w=W; }
-    public vec4(float V                  , float W) { x=V;   y=V;   z=V;   w=W; }
-    public vec4(float V                           ) { x=V;   y=V;   z=V;   w=V; }
+    public vec4(float XYZW                        ) { x=XYZW; y=XYZW; z=XYZW; w=XYZW; }
+    public vec4(float XYZ                , float W) { x=XYZ;  y=XYZ;  z=XYZ;  w=W;    }
+    public vec4(float X, float Y, float Z, float W) { x=X;    y=Y;    z=Z;    w=W;    }
 
-    public vec4(vec3 V                   , float W) { x=V.x; y=V.y; z=V.z; w=W; }
+    public vec4(vec3 V                   , float W) { x=V.x;  y=V.y;  z=V.z;  w=W;    }
 
     public vec4(ivec4 V                           ) { x=(float)V.x; y=(float)V.y; z=(float)V.z;  w=(float)V.w; }
 
@@ -45,7 +37,7 @@ internal struct vec4 : System.IFormattable {
     [Impl(AggressiveInlining)] public static implicit operator vec4((vec3 V, float W) t)                    => new vec4(t.V.x, t.V.y, t.V.z, t.W);
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] public static implicit operator vec4(ivec4 A) => new vec4(A);
+    [Impl(AggressiveInlining)] public static implicit operator vec4(ivec4 A) => new vec4(A);        //  Directly assign 'ivec4' to 'vec4'.
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

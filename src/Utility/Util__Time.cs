@@ -27,8 +27,7 @@ internal struct Time {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public Time() {
-        this.Delta   = 0f;
-        this.Seconds = 0f;
+        this.Delta = 0f;
 
       //this.Cos = new vec4();
       //this.Sin = new vec4();
@@ -36,6 +35,7 @@ internal struct Time {
         this.PrevFrame = 0d;
         this.ThisFrame = 0d;
 
+        this.Seconds = 0f;
         this.Minutes = 0;
         this.Hours   = 0;
 
@@ -52,8 +52,7 @@ internal struct Time {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //internal void Update(double Speed = 1d) {
-    internal void Update() {
+    internal void Update() { //(double Speed = 1d) {
         this.ThisFrame = this.Timer.Elapsed.TotalSeconds;
 
         if (this.ThisFrame >= 60d) {    //  Maintain "Time.Delta" float32-precision to: ~0.000_001 Seconds (1 MicroSecond)

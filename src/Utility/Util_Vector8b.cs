@@ -30,8 +30,8 @@ internal struct bvec8 {
     [Impl(AggressiveInlining)] public static implicit operator bool(bvec8 A) => (A.L != 0L);
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] public static implicit operator bvec8(ulong A) => new bvec8(A);   //  Directly assign 'ulong' to 'bvec'.
-    [Impl(AggressiveInlining)] public static implicit operator ulong(bvec8 A) => A.L;            //  Directly assign 'bvec' to 'ulong'.
+    [Impl(AggressiveInlining)] public static implicit operator bvec8(ulong A) => new bvec8(A);   //  Directly assign 'ulong' to 'bvec8'.
+    [Impl(AggressiveInlining)] public static implicit operator ulong(bvec8 A) => A.L;            //  Directly assign 'bvec8' to 'ulong'.
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

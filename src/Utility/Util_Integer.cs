@@ -30,12 +30,12 @@ internal static class INT {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //  Note:  Does not check for overflow.    -(-2_147_483_648)
+    //  NOTE:  Does not check for overflow.    -(-2_147_483_648)
     //
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static sbyte abs(sbyte A) => (sbyte)((A >= 0) ? A : -A);
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static short abs(short A) => (short)((A >= 0) ? A : -A);
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static   int abs(  int A) =>         (A >= 0) ? A : -A;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static  long abs( long A) =>         (A >= 0) ? A : -A;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static sbyte abs(sbyte A) =>  i8((A >= 0) ? A : -A);
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static short abs(short A) => i16((A >= 0) ? A : -A);
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static   int abs(  int A) =>     (A >= 0) ? A : -A;
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static  long abs( long A) =>     (A >= 0) ? A : -A;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

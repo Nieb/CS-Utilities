@@ -5,21 +5,49 @@ namespace Utility;
 internal struct mat4 {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
+    //
+    //                                          |       Col X           Col Y           Col Z           Col W
+    //                                  --------+-------------------------------------------------------------------
+    //                                          |
+    //                                    Row X |   [ 0] [0,0] XX   [ 1] [1,0] YX   [ 2] [2,0] ZX   [ 3] [3,0] WX
+    //                                          |
+    //                  [i] [x,y] **      Row Y |   [ 4] [0,1] XY   [ 5] [1,1] YY   [ 6] [2,1] ZY   [ 7] [3,1] WY
+    //                                          |
+    //                   [Col, Row]       Row Z |   [ 8] [0,2] XZ   [ 9] [1,2] YZ   [10] [2,2] ZZ   [11] [3,2] WZ
+    //                                          |
+    //                                    Row W |   [12] [0,3] XW   [13] [1,3] YW   [14] [2,3] ZW   [15] [3,3] WW
+    //                                          |
+    //
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     [FieldOffset( 0)] public float xx;  [FieldOffset( 4)] public float yx;  [FieldOffset( 8)] public float zx;  [FieldOffset(12)] public float wx;
     [FieldOffset(16)] public float xy;  [FieldOffset(20)] public float yy;  [FieldOffset(24)] public float zy;  [FieldOffset(28)] public float wy;
     [FieldOffset(32)] public float xz;  [FieldOffset(36)] public float yz;  [FieldOffset(40)] public float zz;  [FieldOffset(44)] public float wz;
     [FieldOffset(48)] public float xw;  [FieldOffset(52)] public float yw;  [FieldOffset(56)] public float zw;  [FieldOffset(60)] public float ww;
 
     //==========================================================================================================================================================
-    //[FieldOffset(0)] private fixed float index[16];
-    //#if DEBUG
-    //    public readonly float this[int i]        => (i < 0 || i > 15)                  ? throw new System.IndexOutOfRangeException() : this.index[i];
-    //    public readonly float this[int x, int y] => (x < 0 || x > 3 || y < 0 || y > 3) ? throw new System.IndexOutOfRangeException() : this.index[x + 4*y];
-    //#else
-    //    public readonly float this[int i]        => this.index[i];
-    //    public readonly float this[int x, int y] => this.index[x + 4*y];
-    //#endif
+    public vec4 Col0 {  get => new vec4(xx, xy, xz, xw);  set {xx=value.x; xy=value.y; xz=value.z; xw=value.w;}  }
+    public vec4 Col1 {  get => new vec4(yx, yy, yz, yw);  set {yx=value.x; yy=value.y; yz=value.z; yw=value.w;}  }
+    public vec4 Col2 {  get => new vec4(zx, zy, zz, zw);  set {zx=value.x; zy=value.y; zz=value.z; zw=value.w;}  }
+    public vec4 Col3 {  get => new vec4(wx, wy, wz, ww);  set {wx=value.x; wy=value.y; wz=value.z; ww=value.w;}  }
 
+    public vec4 ColX {  get => new vec4(xx, xy, xz, xw);  set {xx=value.x; xy=value.y; xz=value.z; xw=value.w;}  }
+    public vec4 ColY {  get => new vec4(yx, yy, yz, yw);  set {yx=value.x; yy=value.y; yz=value.z; yw=value.w;}  }
+    public vec4 ColZ {  get => new vec4(zx, zy, zz, zw);  set {zx=value.x; zy=value.y; zz=value.z; zw=value.w;}  }
+    public vec4 ColW {  get => new vec4(wx, wy, wz, ww);  set {wx=value.x; wy=value.y; wz=value.z; ww=value.w;}  }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    [FieldOffset( 0)] public vec4 Row0;
+    [FieldOffset(16)] public vec4 Row1;
+    [FieldOffset(32)] public vec4 Row2;
+    [FieldOffset(48)] public vec4 Row3;
+
+    [FieldOffset( 0)] public vec4 RowX;
+    [FieldOffset(16)] public vec4 RowY;
+    [FieldOffset(32)] public vec4 RowZ;
+    [FieldOffset(48)] public vec4 RowW;
+
+    //==========================================================================================================================================================
     public float this[int i] {
         get {
             switch (i) {
@@ -41,6 +69,7 @@ internal struct mat4 {
         }
     }
 
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
     public float this[int x, int y] {
         get {
             switch (y) {
@@ -62,6 +91,16 @@ internal struct mat4 {
         }
     }
 
+    //[FieldOffset(0)] private fixed float index[16];
+    //#if DEBUG
+    //    public readonly float this[int i]        => (i < 0 || i > 15)                  ? throw new System.IndexOutOfRangeException() : this.index[i];
+    //    public readonly float this[int x, int y] => (x < 0 || x > 3 || y < 0 || y > 3) ? throw new System.IndexOutOfRangeException() : this.index[x + 4*y];
+    //#else
+    //    public readonly float this[int i]        => this.index[i];
+    //    public readonly float this[int x, int y] => this.index[x + 4*y];
+    //#endif
+
+
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public mat4() {
@@ -69,6 +108,13 @@ internal struct mat4 {
         xy = 0f; yy = 1f; zy = 0f; wy = 0f;
         xz = 0f; yz = 0f; zz = 1f; wz = 0f;
         xw = 0f; yw = 0f; zw = 0f; ww = 1f;
+    }
+
+    public mat4(float V) {
+        xx = V; yx = V; zx = V; wx = V;
+        xy = V; yy = V; zy = V; wy = V;
+        xz = V; yz = V; zz = V; wz = V;
+        xw = V; yw = V; zw = V; ww = V;
     }
 
     public mat4(float XX, float YX, float ZX, float WX,
@@ -113,22 +159,6 @@ internal struct mat4 {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //
-    //  Result = (Mat * Vec);
-    //
-    //          |
-    //       Vx |  Mxx  Myx  Mzx  Mwx
-    //          |  +    +    +    +
-    //       Vy |  Mxy  Myy  Mzy  Mwy
-    //          |  +    +    +    +
-    //       Vz |  Mxz  Myz  Mzz  Mwz
-    //          |  +    +    +    +
-    //       Vw |  Mxw  Myw  Mzw  Mww
-    //      ----+----------------------
-    //          |  Rx   Ry   Rz   Rw
-    //
-
-    //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    //
     //  Result = (Vec * Mat);
     //
     //         Vx      Vy      Vz      Vw   |
@@ -162,6 +192,22 @@ internal struct mat4 {
                                                                   V.x*M.xy + V.y*M.yy + V.z*M.zy,
                                                                   V.x*M.xz + V.y*M.yz + V.z*M.zz);
     #endif
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    //
+    //  Result = (Mat * Vec);
+    //
+    //          |
+    //       Vx |  Mxx  Myx  Mzx  Mwx
+    //          |  +    +    +    +
+    //       Vy |  Mxy  Myy  Mzy  Mwy
+    //          |  +    +    +    +
+    //       Vz |  Mxz  Myz  Mzz  Mwz
+    //          |  +    +    +    +
+    //       Vw |  Mxw  Myw  Mzw  Mww
+    //      ----+----------------------
+    //          |  Rx   Ry   Rz   Rw
+    //
 
     //==========================================================================================================================================================
     //  Operators Bitwise:  ~    &    |   ^    <<          >>           >>>

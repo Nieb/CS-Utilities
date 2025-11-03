@@ -19,10 +19,13 @@ namespace Utility;
 internal static partial class STR {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //  Generate String:
+    //                                                                  Generate String
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static string DateTimeStamp() => DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffffff");
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static string DateTimeStamp() => DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static string DateStamp()     => DateTime.Now.ToString("yyyy-MM-dd");
+  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static string TimeStamp()     => DateTime.Now.ToString("HH:mm:ss");
+
+    [Impl(AggressiveInlining|AggressiveOptimization)] internal static string DateTimeStamp() => DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffffff");
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static string TimeStamp()     => DateTime.Now.ToString("HH:mm:ss.ffffff");
 
     [Impl(AggressiveInlining|AggressiveOptimization)] internal static string DateTimeStamp_() => DateTime.Now.ToString("yyyy-MM-dd__HH.mm.ss.fff");
@@ -31,17 +34,21 @@ internal static partial class STR {
     internal static string RandomDigits(int Count) {
         if (Count <= 0)
             return "";
+
         //lock (ThreadLock) {
         //    Thread.Sleep(66);
+
             string Result = "";
-            for (int i = 0; i < Count; i++)    Result += RandomByte(0, 9).ToString();
+            for (int i = 0; i < Count; i++)
+                Result += RandomByte(0,9).ToString();
+
             return Result;
         //}
     }
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //  Convert FROM String:
+    //                                                                Convert FROM String
     //==========================================================================================================================================================
     [Impl(AggressiveInlining|AggressiveOptimization)]
     internal static bool ToBool(this string STR) {

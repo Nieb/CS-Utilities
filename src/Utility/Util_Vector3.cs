@@ -10,19 +10,12 @@ internal struct vec3 : System.IFormattable {
     [FieldOffset(8)] public float z;    [FieldOffset(8)] public float b;
 
     //==========================================================================================================================================================
-    public vec2 xy {  get => new vec2(x,y);  set {x = value.x; y = value.y;}  }
+    [FieldOffset(0)] public vec2 xy;
+    [FieldOffset(4)] public vec2 yz;
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
     public vec2 xz {  get => new vec2(x,z);  set {x = value.x; z = value.y;}  }
-
-    public vec2 yz {  get => new vec2(y,z);  set {y = value.x; z = value.y;}  }
     public vec2 zy {  get => new vec2(z,y);  set {z = value.x; y = value.y;}  }
-
-    //==========================================================================================================================================================
-    //  NOTE: Length is computed each time it is accessed.
-    public float length {
-        get => sqrt(x*x + y*y + z*z);
-        set => this = (this == 0f) ? this : this*(value/sqrt(x*x + y*y + z*z));
-    }
-    public readonly float length2 => (x*x + y*y + z*z);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -42,7 +35,7 @@ internal struct vec3 : System.IFormattable {
     [Impl(AggressiveInlining)] public static implicit operator vec3( (vec2 V, float z) t ) => new vec3(t.V.x, t.V.y, t.z);
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] public static implicit operator vec3( ivec3 A ) => new vec3(A);
+    [Impl(AggressiveInlining)] public static implicit operator vec3(ivec3 A) => new vec3(A);        //  Directly assign 'ivec3' to 'vec3'.
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
