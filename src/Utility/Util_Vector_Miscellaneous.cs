@@ -11,7 +11,7 @@ internal static partial class VEC_Miscellaneous {
     //          B     M            M
     //           \   /              \
     //            \ /                \
-    //             o------A           o------A
+    //             o-----A            o-----A
     //                               /
     //                              /
     //                             B

@@ -1,6 +1,4 @@
 
-
-
 namespace Utility;
 internal static class VEC_Rotation {
     //##########################################################################################################################################################
@@ -329,10 +327,15 @@ internal static class VEC_Rotation {
         float Ay_SinT = Axis.y * SinT;
         float Az_SinT = Axis.z * SinT;
 
-        return new vec3(
-            Pivot.x  +  d.x*(Axx_iCosT +    CosT)  +  d.y*(Axy_iCosT - Az_SinT)  +  d.z*(Axz_iCosT + Ay_SinT),
-            Pivot.y  +  d.x*(Axy_iCosT + Az_SinT)  +  d.y*(Ayy_iCosT +    CosT)  +  d.z*(Ayz_iCosT - Ax_SinT),
-            Pivot.z  +  d.x*(Axz_iCosT - Ay_SinT)  +  d.y*(Ayz_iCosT + Ax_SinT)  +  d.z*(Azz_iCosT +    CosT)
+        //return new vec3(
+        //    Pivot.x  +  d.x*(Axx_iCosT +    CosT)  +  d.y*(Axy_iCosT - Az_SinT)  +  d.z*(Axz_iCosT + Ay_SinT),
+        //    Pivot.y  +  d.x*(Axy_iCosT + Az_SinT)  +  d.y*(Ayy_iCosT +    CosT)  +  d.z*(Ayz_iCosT - Ax_SinT),
+        //    Pivot.z  +  d.x*(Axz_iCosT - Ay_SinT)  +  d.y*(Ayz_iCosT + Ax_SinT)  +  d.z*(Azz_iCosT +    CosT)
+        //);
+        return Pivot + new vec3(
+            d.x*(Axx_iCosT +    CosT)  +  d.y*(Axy_iCosT - Az_SinT)  +  d.z*(Axz_iCosT + Ay_SinT),
+            d.x*(Axy_iCosT + Az_SinT)  +  d.y*(Ayy_iCosT +    CosT)  +  d.z*(Ayz_iCosT - Ax_SinT),
+            d.x*(Axz_iCosT - Ay_SinT)  +  d.y*(Ayz_iCosT + Ax_SinT)  +  d.z*(Azz_iCosT +    CosT)
         );
     }
 

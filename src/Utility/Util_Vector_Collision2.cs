@@ -14,6 +14,7 @@ internal static class VEC_Collision2 {
     //
     //             @         P < 0
     //
+    [Impl(AggressiveInlining)]
     internal static float WhichSideOfLine(vec2 P, vec2 La, vec2 Lb) => cross(P-La, Lb-La);
 
     //##########################################################################################################################################################
@@ -154,11 +155,14 @@ internal static class VEC_Collision2 {
             if (Poly.Length < 5) throw new System.ArgumentException("Use PointVsTri() or PointVsQuad() for polygons with sides fewer than 5.");
         #endif
 
-        vec2 dPA = Poly[0] - P, dPB;
+        vec2 dPA = Poly[0] - P;
+        vec2 dPB;
         for (int i = 0; i < Poly.Length; ++i) {
-            dPB = Poly[(i == Poly.Length-1) ? 0 : i+1] - P;
+            dPB = Poly[(i+1 > Poly.Length) ? 0 : i+1] - P;
+
             if (dPA.x*dPB.y <= dPA.y*dPB.x)
                 return false;
+
             dPA = dPB;
         }
 
@@ -223,10 +227,9 @@ internal static class VEC_Collision2 {
         float R_Bm = Rp.y;        // "Rectangle Bottom"
         float R_Tp = Rp.y + Rs.y; // "Rectangle Top"
 
-        if      (C_Lf >  R_Rt  ||  C_Bm > R_Tp  ||  C_Rt < R_Lf  ||  C_Tp < R_Bm) return false;     //  7   @@ 21 ops  &  3 branches
-
-        if      (Cp.y >= R_Bm  &&  Cp.y < R_Tp  &&  C_Lf < R_Rt  &&  C_Rt > R_Lf) return true;      //  7
-        else if (Cp.x >= R_Lf  &&  Cp.x < R_Rt  &&  C_Bm < R_Tp  &&  C_Tp > R_Bm) return true;      //  7   @@ Get rid of these???
+        //if      (C_Lf >  R_Rt  ||  C_Bm > R_Tp  ||  C_Rt < R_Lf  ||  C_Tp < R_Bm) return false;     //  7   @@ 21 ops  &  3 branches
+        //if      (Cp.y >= R_Bm  &&  Cp.y < R_Tp  &&  C_Lf < R_Rt  &&  C_Rt > R_Lf) return true;      //  7
+        //else if (Cp.x >= R_Lf  &&  Cp.x < R_Rt  &&  C_Bm < R_Tp  &&  C_Tp > R_Bm) return true;      //  7   @@ Get rid of these???
 
         float d_x = (Cp.x < R_Lf) ? Cp.x - R_Lf
                   : (Cp.x > R_Rt) ? Cp.x - R_Rt
@@ -271,11 +274,23 @@ internal static class VEC_Collision2 {
     //
     internal static bool LineVsRect(vec2 La, vec2 Lb, vec2 Rp, vec2 Rs) {
         vec2 dL1 = Lb - La;
-        vec2 L0 = ((dL1.x < 0f) ? Lb.x : La.x, (dL1.y < 0f) ? Lb.y : La.y);
-        vec2 L1 = ((dL1.x < 0f) ? La.x : Lb.x, (dL1.y < 0f) ? La.y : Lb.y);
+        vec2 L0 = (
+            (dL1.x < 0f) ? Lb.x : La.x,
+            (dL1.y < 0f) ? Lb.y : La.y
+        );
+        vec2 L1 = (
+            (dL1.x < 0f) ? La.x : Lb.x,
+            (dL1.y < 0f) ? La.y : Lb.y
+        );
 
-        vec2 R0 = ((Rs.x < 0f) ? Rp.x+Rs.x : Rp.x, (Rs.y < 0f) ? Rp.y+Rs.y : Rp.y);
-        vec2 R1 = ((Rs.x < 0f) ? Rp.x : Rp.x+Rs.x, (Rs.y < 0f) ? Rp.y : Rp.y+Rs.y);
+        vec2 R0 = (
+            (Rs.x < 0f) ? Rp.x+Rs.x : Rp.x,
+            (Rs.y < 0f) ? Rp.y+Rs.y : Rp.y
+        );
+        vec2 R1 = (
+            (Rs.x < 0f) ? Rp.x : Rp.x+Rs.x,
+            (Rs.y < 0f) ? Rp.y : Rp.y+Rs.y
+        );
         Rs = R1 - R0;
 
         //  Is Area-of-Line over Area-of-Rectangle?
@@ -318,7 +333,7 @@ internal static class VEC_Collision2 {
             if ((r >= 0f && r <= 1f) && (s >= 0f && s <= 1f)) return true;
         }
 
-        //  The function will never make it here.
+        //  The function will never make it here...
         dL2 = (0f, -Rs.y);
         d = cross(dL1, dL2);
         if (d != 0f) {
@@ -360,7 +375,7 @@ internal static class VEC_Collision2 {
         //  CirclePos projected on to Line:
         vec2 Pp = La + dAB*Scaler;
 
-        //  Is ProjectedPoint in Circle?
+        //  Is ProjectedPoint inside Circle?
         vec2 dPC = Pp - Cp;
         if (dot(dPC, dPC) <= CrCr)
             return true;

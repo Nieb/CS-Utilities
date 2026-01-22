@@ -25,33 +25,30 @@ global using  v1 = float;
 global using  v2 = Utility.vec2;
 global using  v3 = Utility.vec3;
 global using  v4 = Utility.vec4;
+/*
+    global using vec2 = System.Numerics.Vector2;
+    global using vec3 = System.Numerics.Vector3;
+    global using vec4 = System.Numerics.Vector4;
+    global using mat4 = System.Numerics.Matrix4;
+*/
 
 //==============================================================================================================================================================
 //global using iptr = nint;   //  System.IntPtr                   Depends on platform (computed at runtime)             Signed 32-bit or 64-bit integer
 //global using uptr = nuint;  //  System.UIntPtr                  Depends on platform (computed at runtime)           Unsigned 32-bit or 64-bit integer
 
-/*
-    global using vec2 = System.Numerics.Vector2;
-    global using vec3 = System.Numerics.Vector3;
-    global using vec4 = System.Numerics.Vector4;
-
-    global using mat4 = System.Numerics.Matrix4;
-*/
-
 //##############################################################################################################################################################
 //##############################################################################################################################################################
 global using Utility;
 
+global using static Utility.Array;
 global using static Utility.Casting;
 global using static Utility.Loops;
 global using static Utility.Miscellaneous;
 global using static Utility.Random;
 
-global using static Utility.ARY;
 global using static Utility.FLT;
 global using static Utility.INT;
 global using static Utility.STR;
-
 global using static Utility.VEC;
 global using static Utility.VEC_Color;
 global using static Utility.VEC_Collision2;

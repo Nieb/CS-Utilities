@@ -22,24 +22,23 @@ internal static class Random {
     //                  *Inclusive*  *Inclusive*
     //      RandomType( LowerBounds, UpperBounds );
     //
-    internal static  byte RandomByte ( byte L=MIN_BYTE ,  byte U=MAX_BYTE ) => ClampToByte (R.Next     (i32(L), i32(U)+1));
-    internal static short RandomShort(short L=MIN_SHORT, short U=MAX_SHORT) => ClampToShort(R.Next     (i32(L), i32(U)+1));
-    internal static   int RandomInt  (  int L=MIN_INT  ,   int U=MAX_INT  ) => ClampToInt  (R.NextInt64(i64(L), i64(U)+1));
+    internal static  byte RandomByte ( byte L=MIN_U8 ,  byte U=MAX_U8 ) => ClampToByte (R.Next     (i32(L), i32(U)+1));
+    internal static short RandomShort(short L=MIN_I16, short U=MAX_I16) => ClampToShort(R.Next     (i32(L), i32(U)+1));
+    internal static   int RandomInt  (  int L=MIN_I32,   int U=MAX_I32) => ClampToInt  (R.NextInt64(i64(L), i64(U)+1));
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    internal static  uint RandomUint ( uint L=MIN_UINT ,  uint U=MAX_UINT ) => ClampToUint (R.NextInt64(i64(L), i64(U)+1));
+    internal static  uint RandomUint ( uint L=MIN_U32,  uint U=MAX_U32) => ClampToUint (R.NextInt64(i64(L), i64(U)+1));
 
     //==========================================================================================================================================================
     //
     //  Fill byte[] array with random values.
     //
     //      byte[] MyArray = new byte[256];
-    //      MyArray.RandomBytes();
+    //      MyArray.Randomize();
     //
-    internal static void RandomBytes(this byte[] A) => R.NextBytes(A);
+    internal static void Randomize(this byte[] A) => R.NextBytes(A);
 
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
+    //==========================================================================================================================================================
     //
     //      -1.0 to 1.0
     //       0.0 to 1.0
@@ -53,7 +52,7 @@ internal static class Random {
     internal static vec3  Random3()  => normalize(new vec3(Random1() ,Random1() ,Random1() ));
     internal static vec3  Random3u() => normalize(new vec3(Random1u(),Random1u(),Random1u()));
 
-    //==========================================================================================================================================================
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //
     //  Pitch  RotX  -->   Latitude(South –90  +90 North)  -->  TextureCoord Y|V
     //  Yaw    RotY  -->  Longitude(West -180 +180 East )  -->  TextureCoord X|U

@@ -3,39 +3,39 @@ namespace Utility;
 internal static class INT {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal const sbyte  MIN_SBYTE  =                       -128;
-    internal const sbyte  MAX_SBYTE  =                        127;
+    internal const sbyte  MIN_I8  =                       -128;     internal const sbyte  MIN_SBYTE  = MIN_I8;
+    internal const sbyte  MAX_I8  =                        127;     internal const sbyte  MAX_SBYTE  = MAX_I8;
 
-    internal const short  MIN_SHORT  =                    -32_768;
-    internal const short  MAX_SHORT  =                     32_767;
+    internal const short  MIN_I16 =                    -32_768;     internal const short  MIN_SHORT  = MIN_I16;
+    internal const short  MAX_I16 =                     32_767;     internal const short  MAX_SHORT  = MAX_I16;
 
-    internal const int    MIN_INT    =             -2_147_483_648; // -2^31      -0x_8000_0000
-    internal const int    MAX_INT    =              2_147_483_647; //  2^31 - 1   0x_7FFF_FFFF
+    internal const int    MIN_I32 =             -2_147_483_648;     internal const int    MIN_INT    = MIN_I32;
+    internal const int    MAX_I32 =              2_147_483_647;     internal const int    MAX_INT    = MAX_I32;
 
-    internal const long   MIN_LONG   = -9_223_372_036_854_775_808;
-    internal const long   MAX_LONG   =  9_223_372_036_854_775_807;
+    internal const long   MIN_I64 = -9_223_372_036_854_775_808;     internal const long   MIN_LONG   = MIN_I64;
+    internal const long   MAX_I64 =  9_223_372_036_854_775_807;     internal const long   MAX_LONG   = MAX_I64;
 
-    internal const byte   MIN_BYTE   =                          0;
-    internal const byte   MAX_BYTE   =                        255;
+    internal const byte   MIN_U8  =                          0;     internal const byte   MIN_BYTE   = MIN_U8;
+    internal const byte   MAX_U8  =                        255;     internal const byte   MAX_BYTE   = MAX_U8;
 
-    internal const ushort MIN_USHORT =                          0;
-    internal const ushort MAX_USHORT =                     65_535;
+    internal const ushort MIN_U16 =                          0;     internal const ushort MIN_USHORT = MIN_U16;
+    internal const ushort MAX_U16 =                     65_535;     internal const ushort MAX_USHORT = MAX_U16;
 
-    internal const uint   MIN_UINT   =                          0; //  2^32      0x_FFFF_FFFF
-    internal const uint   MAX_UINT   =              4_294_967_295; //  2^32      0x_FFFF_FFFF
+    internal const uint   MIN_U32 =                          0;     internal const uint   MIN_UINT   = MIN_U32;
+    internal const uint   MAX_U32 =              4_294_967_295;     internal const uint   MAX_UINT   = MAX_U32;
 
-    internal const ulong  MIN_ULONG  =                          0;
-    internal const ulong  MAX_ULONG  = 18_446_744_073_709_551_615;
+    internal const ulong  MIN_U64 =                          0;     internal const ulong  MIN_ULONG  = MIN_U64;
+    internal const ulong  MAX_U64 = 18_446_744_073_709_551_615;     internal const ulong  MAX_ULONG  = MAX_U64;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //
+    //                                                                  "Absolute" Value
     //  NOTE:  Does not check for overflow.    -(-2_147_483_648)
     //
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static sbyte abs(sbyte A) =>  i8((A >= 0) ? A : -A);
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static short abs(short A) => i16((A >= 0) ? A : -A);
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static   int abs(  int A) =>     (A >= 0) ? A : -A;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static  long abs( long A) =>     (A >= 0) ? A : -A;
+    [Impl(AggressiveInlining)] internal static sbyte abs(sbyte A) =>  i8((A >= 0) ? A : -A);
+    [Impl(AggressiveInlining)] internal static short abs(short A) => i16((A >= 0) ? A : -A);
+    [Impl(AggressiveInlining)] internal static   int abs(  int A) =>     (A >= 0) ? A : -A;
+    [Impl(AggressiveInlining)] internal static  long abs( long A) =>     (A >= 0) ? A : -A;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -43,53 +43,56 @@ internal static class INT {
     //                *Inclusive*  *Inclusive*
     //      clamp( A, LowerBounds, UpperBounds )
     //
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static  sbyte clamp( sbyte A,  sbyte L,  sbyte U) => (A < L) ? L : (A > U) ? U : A;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static   byte clamp(  byte A,   byte L,   byte U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static  sbyte clamp( sbyte A,  sbyte L,  sbyte U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static   byte clamp(  byte A,   byte L,   byte U) => (A < L) ? L : (A > U) ? U : A;
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static  short clamp( short A,  short L,  short U) => (A < L) ? L : (A > U) ? U : A;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static ushort clamp(ushort A, ushort L, ushort U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static  short clamp( short A,  short L,  short U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static ushort clamp(ushort A, ushort L, ushort U) => (A < L) ? L : (A > U) ? U : A;
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static    int clamp(   int A,    int L,    int U) => (A < L) ? L : (A > U) ? U : A;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static   uint clamp(  uint A,   uint L,   uint U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static    int clamp(   int A,    int L,    int U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static   uint clamp(  uint A,   uint L,   uint U) => (A < L) ? L : (A > U) ? U : A;
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static   long clamp(  long A,   long L,   long U) => (A < L) ? L : (A > U) ? U : A;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static  ulong clamp( ulong A,  ulong L,  ulong U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static   long clamp(  long A,   long L,   long U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static  ulong clamp( ulong A,  ulong L,  ulong U) => (A < L) ? L : (A > U) ? U : A;
 
     //==========================================================================================================================================================
     //                                                                       "Wrap"
     //               *Inclusive*  *Exclusive*
     //      wrap( A, LowerBounds, UpperBounds )
+    //      wrap( A,              UpperBounds )     LowerBounds == 0
     //
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static int wrap(int A, int L, int U) {int Range = U-L;  A = (A-L) % Range;  return A+L + ((A < 0) ? Range : 0);}
+    [Impl(AggressiveInlining)] internal static int wrap(int A, int L, int U) {int Range = U-L;  A = (A-L) % Range;  return A+L + ((A < 0) ? Range : 0);}
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static int wrap(int A,        int U) {                  A = (A    %    U);  return A   + ((A < 0) ?     U : 0);}
+    [Impl(AggressiveInlining)] internal static int wrap(int A,        int U) {                  A = (A    %    U);  return A   + ((A < 0) ?     U : 0);}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static int min(int A, int B)               => (A < B) ? A : B;
+    //                                                                  "Minimum" Value
+    [Impl(AggressiveInlining)] internal static int min(int A, int B)               => (A < B) ? A : B;
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static int min(int A, int B, int C)        => (A < B) ? ((A < C) ? A : C)
-                                                                                                                     : ((B < C) ? B : C);
+    [Impl(AggressiveInlining)] internal static int min(int A, int B, int C)        => (A < B) ? ((A < C) ? A : C)
+                                                                                              : ((B < C) ? B : C);
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static int min(int A, int B, int C, int D) => (A < B) ? ((A < C) ? ((A < D) ? A : D)
-                                                                                                                                : ((C < D) ? C : D))
-                                                                                                                     : ((B < C) ? ((B < D) ? B : D)
-                                                                                                                                : ((C < D) ? C : D));
+    [Impl(AggressiveInlining)] internal static int min(int A, int B, int C, int D) => (A < B) ? ((A < C) ? ((A < D) ? A : D)
+                                                                                                         : ((C < D) ? C : D))
+                                                                                              : ((B < C) ? ((B < D) ? B : D)
+                                                                                                         : ((C < D) ? C : D));
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static int max(int A, int B)               => (A > B) ? A : B;
+    //                                                                  "Maximum" Value
+    [Impl(AggressiveInlining)] internal static int max(int A, int B)               => (A > B) ? A : B;
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static int max(int A, int B, int C)        => (A > B) ? ((A > C) ? A : C)
-                                                                                                                     : ((B > C) ? B : C);
+    [Impl(AggressiveInlining)] internal static int max(int A, int B, int C)        => (A > B) ? ((A > C) ? A : C)
+                                                                                              : ((B > C) ? B : C);
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static int max(int A, int B, int C, int D) => (A > B) ? ((A > C) ? ((A > D) ? A : D)
-                                                                                                                                : ((C > D) ? C : D))
-                                                                                                                     : ((B > C) ? ((B > D) ? B : D)
-                                                                                                                                : ((C > D) ? C : D));
+    [Impl(AggressiveInlining)] internal static int max(int A, int B, int C, int D) => (A > B) ? ((A > C) ? ((A > D) ? A : D)
+                                                                                                         : ((C > D) ? C : D))
+                                                                                              : ((B > C) ? ((B > D) ? B : D)
+                                                                                                         : ((C > D) ? C : D));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [Impl(AggressiveOptimization)]
+    //                                                                      "Power"
     internal static int pow(int x, int pow) {
         int EKS;
         switch ((uint)pow) {

@@ -6,16 +6,12 @@ internal struct mat4 {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //                                          |       Col X           Col Y           Col Z           Col W
+    //                                          |       Col 0           Col 1           Col 2           Col 3
     //                                  --------+-------------------------------------------------------------------
-    //                                          |
-    //                                    Row X |   [ 0] [0,0] XX   [ 1] [1,0] YX   [ 2] [2,0] ZX   [ 3] [3,0] WX
-    //                                          |
-    //                  [i] [x,y] **      Row Y |   [ 4] [0,1] XY   [ 5] [1,1] YY   [ 6] [2,1] ZY   [ 7] [3,1] WY
-    //                                          |
-    //                   [Col, Row]       Row Z |   [ 8] [0,2] XZ   [ 9] [1,2] YZ   [10] [2,2] ZZ   [11] [3,2] WZ
-    //                                          |
-    //                                    Row W |   [12] [0,3] XW   [13] [1,3] YW   [14] [2,3] ZW   [15] [3,3] WW
+    //                                    Row 0 |   [ 0] [0,0] XX   [ 1] [1,0] YX   [ 2] [2,0] ZX   [ 3] [3,0] WX
+    //                  [i] [x,y] **      Row 1 |   [ 4] [0,1] XY   [ 5] [1,1] YY   [ 6] [2,1] ZY   [ 7] [3,1] WY
+    //                   [Col, Row]       Row 2 |   [ 8] [0,2] XZ   [ 9] [1,2] YZ   [10] [2,2] ZZ   [11] [3,2] WZ
+    //                                    Row 3 |   [12] [0,3] XW   [13] [1,3] YW   [14] [2,3] ZW   [15] [3,3] WW
     //                                          |
     //
     //##########################################################################################################################################################
@@ -104,27 +100,27 @@ internal struct mat4 {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public mat4() {
-        xx = 1f; yx = 0f; zx = 0f; wx = 0f;
-        xy = 0f; yy = 1f; zy = 0f; wy = 0f;
-        xz = 0f; yz = 0f; zz = 1f; wz = 0f;
-        xw = 0f; yw = 0f; zw = 0f; ww = 1f;
+        xx=1f; yx=0f; zx=0f; wx=0f;
+        xy=0f; yy=1f; zy=0f; wy=0f;
+        xz=0f; yz=0f; zz=1f; wz=0f;
+        xw=0f; yw=0f; zw=0f; ww=1f;
     }
 
     public mat4(float V) {
-        xx = V; yx = V; zx = V; wx = V;
-        xy = V; yy = V; zy = V; wy = V;
-        xz = V; yz = V; zz = V; wz = V;
-        xw = V; yw = V; zw = V; ww = V;
+        xx=V; yx=V; zx=V; wx=V;
+        xy=V; yy=V; zy=V; wy=V;
+        xz=V; yz=V; zz=V; wz=V;
+        xw=V; yw=V; zw=V; ww=V;
     }
 
     public mat4(float XX, float YX, float ZX, float WX,
                 float XY, float YY, float ZY, float WY,
                 float XZ, float YZ, float ZZ, float WZ,
                 float XW, float YW, float ZW, float WW) {
-        xx = XX; yx = YX; zx = ZX; wx = WX;
-        xy = XY; yy = YY; zy = ZY; wy = WY;
-        xz = XZ; yz = YZ; zz = ZZ; wz = WZ;
-        xw = XW; yw = YW; zw = ZW; ww = WW;
+        xx=XX; yx=YX; zx=ZX; wx=WX;
+        xy=XY; yy=YY; zy=ZY; wy=WY;
+        xz=XZ; yz=YZ; zz=ZZ; wz=WZ;
+        xw=XW; yw=YW; zw=ZW; ww=WW;
     }
 
     //##########################################################################################################################################################
@@ -132,25 +128,21 @@ internal struct mat4 {
     //  Operators Arithmetic:  +  -  *  /  %
 
     public static mat4 operator *(mat4 A, mat4 B) => new mat4(
-        // Row X
         A.xx*B.xx + A.yx*B.xy + A.zx*B.xz + A.wx*B.xw,  // XX = dot( A.RowX, B.ColX )
         A.xx*B.yx + A.yx*B.yy + A.zx*B.yz + A.wx*B.yw,  // YX = dot( A.RowX, B.ColY )
         A.xx*B.zx + A.yx*B.zy + A.zx*B.zz + A.wx*B.zw,  // ZX = dot( A.RowX, B.ColZ )
         A.xx*B.wx + A.yx*B.wy + A.zx*B.wz + A.wx*B.ww,  // WX = dot( A.RowX, B.ColW )
 
-        // Row Y
         A.xy*B.xx + A.yy*B.xy + A.zy*B.xz + A.wy*B.xw,  // XY
         A.xy*B.yx + A.yy*B.yy + A.zy*B.yz + A.wy*B.yw,  // YY
         A.xy*B.zx + A.yy*B.zy + A.zy*B.zz + A.wy*B.zw,  // ZY
         A.xy*B.wx + A.yy*B.wy + A.zy*B.wz + A.wy*B.ww,  // WY
 
-        // Row Z
         A.xz*B.xx + A.yz*B.xy + A.zz*B.xz + A.wz*B.xw,  // XZ
         A.xz*B.yx + A.yz*B.yy + A.zz*B.yz + A.wz*B.yw,  // YZ
         A.xz*B.zx + A.yz*B.zy + A.zz*B.zz + A.wz*B.zw,  // ZZ
         A.xz*B.wx + A.yz*B.wy + A.zz*B.wz + A.wz*B.ww,  // WZ
 
-        // Row W
         A.xw*B.xx + A.yw*B.xy + A.zw*B.xz + A.ww*B.xw,  // XW
         A.xw*B.yx + A.yw*B.yy + A.zw*B.yz + A.ww*B.yw,  // YW
         A.xw*B.zx + A.yw*B.zy + A.zw*B.zz + A.ww*B.zw,  // ZW

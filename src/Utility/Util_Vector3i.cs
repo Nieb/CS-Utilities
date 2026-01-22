@@ -94,9 +94,11 @@ internal struct ivec3 : System.IFormattable {
 
         int Padding = FormatStr.Length;
 
-        return $"( {this.x.ToString(FormatStr).PadLeft(Padding)}"
-             + $", {this.y.ToString(FormatStr).PadLeft(Padding)}"
-             + $", {this.z.ToString(FormatStr).PadLeft(Padding)} )";
+        string X = this.x.ToString(FormatStr).PadLeft(Padding);
+        string Y = this.y.ToString(FormatStr).PadLeft(Padding);
+        string Z = this.z.ToString(FormatStr).PadLeft(Padding);
+
+        return $"({X}, {Y}, {Z})";
     }
 
     //==========================================================================================================================================================

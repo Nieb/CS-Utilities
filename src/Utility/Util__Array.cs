@@ -1,6 +1,6 @@
 
 namespace Utility;
-internal static class ARY {
+internal static class Array {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
@@ -8,25 +8,25 @@ internal static class ARY {
     //
     //                o----|--->|
     //                0    1    2
-    //      Blarg = {"A", "B", "C"}
+    //      Blarg = ["A", "B", "C"]
     //
     //  Blarg.count()  == 3      0 is empty.
     //  Blarg.length() == 2     -1 is empty.
     //
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] internal static int  count(this  float[] A) => (A == null) ? 0 : A.Length;
-    [Impl(AggressiveInlining)] internal static int  count(this double[] A) => (A == null) ? 0 : A.Length;
+    [Impl(AggressiveInlining)] internal static int count(this  float[] A) => (A == null) ? 0 : A.Length;
+    [Impl(AggressiveInlining)] internal static int count(this double[] A) => (A == null) ? 0 : A.Length;
 
-    [Impl(AggressiveInlining)] internal static int  count(this  sbyte[] A) => (A == null) ? 0 : A.Length;
-    [Impl(AggressiveInlining)] internal static int  count(this   byte[] A) => (A == null) ? 0 : A.Length;
-    [Impl(AggressiveInlining)] internal static int  count(this  short[] A) => (A == null) ? 0 : A.Length;
-    [Impl(AggressiveInlining)] internal static int  count(this ushort[] A) => (A == null) ? 0 : A.Length;
-    [Impl(AggressiveInlining)] internal static int  count(this    int[] A) => (A == null) ? 0 : A.Length;
-    [Impl(AggressiveInlining)] internal static int  count(this   uint[] A) => (A == null) ? 0 : A.Length;
-    [Impl(AggressiveInlining)] internal static int  count(this   long[] A) => (A == null) ? 0 : A.Length;
-    [Impl(AggressiveInlining)] internal static int  count(this  ulong[] A) => (A == null) ? 0 : A.Length;
+    [Impl(AggressiveInlining)] internal static int count(this  sbyte[] A) => (A == null) ? 0 : A.Length;
+    [Impl(AggressiveInlining)] internal static int count(this   byte[] A) => (A == null) ? 0 : A.Length;
+    [Impl(AggressiveInlining)] internal static int count(this  short[] A) => (A == null) ? 0 : A.Length;
+    [Impl(AggressiveInlining)] internal static int count(this ushort[] A) => (A == null) ? 0 : A.Length;
+    [Impl(AggressiveInlining)] internal static int count(this    int[] A) => (A == null) ? 0 : A.Length;
+    [Impl(AggressiveInlining)] internal static int count(this   uint[] A) => (A == null) ? 0 : A.Length;
+    [Impl(AggressiveInlining)] internal static int count(this   long[] A) => (A == null) ? 0 : A.Length;
+    [Impl(AggressiveInlining)] internal static int count(this  ulong[] A) => (A == null) ? 0 : A.Length;
 
-    [Impl(AggressiveInlining)] internal static int  count(this  string  A) =>  A.IsVoid() ? 0 : A.Length;
+    [Impl(AggressiveInlining)] internal static int count(this  string  A) =>  A.IsVoid() ? 0 : A.Length;
 
     //==========================================================================================================================================================
     [Impl(AggressiveInlining)] internal static int length(this  float[] A) => (A == null) ? -1 : A.Length - 1;
@@ -98,16 +98,16 @@ internal static class ARY {
     //
     //      MyArray.SetFrom( ThisIndex,   Values, To, Set, Etc);
     //
-    [Impl(AggressiveInlining)] internal static void SetFrom(this  sbyte[] Dest, int I, params  sbyte[] V) => V.CopyTo(Dest, I);
-    [Impl(AggressiveInlining)] internal static void SetFrom(this   byte[] Dest, int I, params   byte[] V) => V.CopyTo(Dest, I);
+    [Impl(AggressiveInlining)] internal static void SetFrom(this  sbyte[] Dest, int I, params  sbyte[] Values) => Values.CopyTo(Dest, I);
+    [Impl(AggressiveInlining)] internal static void SetFrom(this   byte[] Dest, int I, params   byte[] Values) => Values.CopyTo(Dest, I);
 
-    [Impl(AggressiveInlining)] internal static void SetFrom(this  short[] Dest, int I, params  short[] V) => V.CopyTo(Dest, I);
-    [Impl(AggressiveInlining)] internal static void SetFrom(this ushort[] Dest, int I, params ushort[] V) => V.CopyTo(Dest, I);
+    [Impl(AggressiveInlining)] internal static void SetFrom(this  short[] Dest, int I, params  short[] Values) => Values.CopyTo(Dest, I);
+    [Impl(AggressiveInlining)] internal static void SetFrom(this ushort[] Dest, int I, params ushort[] Values) => Values.CopyTo(Dest, I);
 
-    [Impl(AggressiveInlining)] internal static void SetFrom(this    int[] Dest, int I, params    int[] V) => V.CopyTo(Dest, I);
-    [Impl(AggressiveInlining)] internal static void SetFrom(this   uint[] Dest, int I, params   uint[] V) => V.CopyTo(Dest, I);
+    [Impl(AggressiveInlining)] internal static void SetFrom(this    int[] Dest, int I, params    int[] Values) => Values.CopyTo(Dest, I);
+    [Impl(AggressiveInlining)] internal static void SetFrom(this   uint[] Dest, int I, params   uint[] Values) => Values.CopyTo(Dest, I);
 
-    [Impl(AggressiveInlining)] internal static void SetFrom(this  float[] Dest, int I, params  float[] V) => V.CopyTo(Dest, I);
+    [Impl(AggressiveInlining)] internal static void SetFrom(this  float[] Dest, int I, params  float[] Values) => Values.CopyTo(Dest, I);
 
     //==========================================================================================================================================================
     //[Impl(AggressiveInlining)] internal static void SetFrom<T>(this T[] Dest, int Index, params T[] Values) => Values.CopyTo(Dest, Index);

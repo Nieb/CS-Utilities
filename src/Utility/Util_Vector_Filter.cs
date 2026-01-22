@@ -1,5 +1,4 @@
 
-
 namespace Utility;
 internal static partial class VEC_Filter {
     //##########################################################################################################################################################
@@ -8,7 +7,7 @@ internal static partial class VEC_Filter {
     //  "Hard-Limiter"
     //
     //      V: 0 to ∞
-    //      T: 0 to 1
+    //      T: 0 to 1*
     //
     //    out: 0 to 1
     //

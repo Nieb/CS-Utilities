@@ -105,9 +105,11 @@ internal struct vec3 : System.IFormattable {
 
         int Padding = FormatStr.Length+1;
 
-        return "("+this.x.ToString(FormatStr).PadLeft(Padding)
-             +", "+this.y.ToString(FormatStr).PadLeft(Padding)
-             +", "+this.z.ToString(FormatStr).PadLeft(Padding)+")";
+        string X = this.x.ToString(FormatStr).PadLeft(Padding);
+        string Y = this.y.ToString(FormatStr).PadLeft(Padding);
+        string Z = this.z.ToString(FormatStr).PadLeft(Padding);
+
+        return $"({X}, {Y}, {Z})";
     }
 
     //==========================================================================================================================================================

@@ -90,31 +90,38 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal static readonly v1 ZERO     = 0f;
-    internal static readonly v1 ONE      = 1f;
+    internal const           v1 ZERO  = 0f;
+    internal static readonly v2 ZERO2 = new v2(0f, 0f);
+    internal static readonly v3 ZERO3 = new v3(0f, 0f, 0f);
+    internal static readonly v4 ZERO4 = new v4(0f, 0f, 0f, 0f);
+
+    //internal static v1 ZERO() => 0f;
+    //internal static v2 ZERO() => new v2(0f, 0f);
+    //internal static v3 ZERO() => new v3(0f, 0f, 0f);
+    //internal static v4 ZERO() => new v4(0f, 0f, 0f, 0f);
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    internal const           v1 ONE  = 1f;
+    internal static readonly v2 ONE2 = new v2(1f, 1f);
+    internal static readonly v3 ONE3 = new v3(1f, 1f, 1f);
+    internal static readonly v4 ONE4 = new v4(1f, 1f, 1f, 1f);
 
     //==========================================================================================================================================================
-    internal static readonly v2 ZERO2    = new v2(0f, 0f);
-    internal static readonly v2 ONE2     = new v2(1f, 1f);
-
     internal static readonly v2 AXIS2_X  = new v2(1f, 0f);
     internal static readonly v2 AXIS2_Y  = new v2(0f, 1f);
 
     internal static readonly v2 AXIS2_XY = new v2(SQRT2_RCP, SQRT2_RCP);
 
-    //==========================================================================================================================================================
-    internal static readonly v3 ZERO3     = new v3(0f, 0f, 0f);
-    internal static readonly v3 ONE3      = new v3(1f, 1f, 1f);
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    internal static readonly v3 AXIS3_X   = new v3(1f, 0f, 0f);                         // X3 = (...);
+    internal static readonly v3 AXIS3_Y   = new v3(0f, 1f, 0f);                         // Y3 = (...);
+    internal static readonly v3 AXIS3_Z   = new v3(0f, 0f, 1f);                         // Z3 = (...);
 
-    internal static readonly v3 AXIS3_X   = new v3(1f, 0f, 0f);
-    internal static readonly v3 AXIS3_Y   = new v3(0f, 1f, 0f);
-    internal static readonly v3 AXIS3_Z   = new v3(0f, 0f, 1f);
+    internal static readonly v3 AXIS3_XY  = new v3(SQRT2_RCP, SQRT2_RCP,        0f);    // XY3 = (...);
+    internal static readonly v3 AXIS3_YZ  = new v3(       0f, SQRT2_RCP, SQRT2_RCP);    // YZ3 = (...);
+    internal static readonly v3 AXIS3_XZ  = new v3(SQRT2_RCP,        0f, SQRT2_RCP);    // XZ3 = (...);
 
-    internal static readonly v3 AXIS3_XY  = new v3(SQRT2_RCP, SQRT2_RCP,        0f);
-    internal static readonly v3 AXIS3_YZ  = new v3(       0f, SQRT2_RCP, SQRT2_RCP);
-    internal static readonly v3 AXIS3_XZ  = new v3(SQRT2_RCP,        0f, SQRT2_RCP);
-
-    internal static readonly v3 AXIS3_XYZ = new v3(SQRT3_RCP, SQRT3_RCP, SQRT3_RCP);
+    internal static readonly v3 AXIS3_XYZ = new v3(SQRT3_RCP, SQRT3_RCP, SQRT3_RCP);    // XYZ3 = (...);
 
   //internal static readonly v3 LF = new v3(-1f,  0f,  0f); // Left
   //internal static readonly v3 RT = new v3( 1f,  0f,  0f); // Right
@@ -122,10 +129,6 @@ internal static partial class VEC {
   //internal static readonly v3 UP = new v3( 0f,  1f,  0f); // Up
   //internal static readonly v3 BK = new v3( 0f,  0f, -1f); // Back   Far
   //internal static readonly v3 FT = new v3( 0f,  0f,  1f); // Front  Near
-
-    //==========================================================================================================================================================
-    internal static readonly v4 ZERO4 = new v4(0f, 0f, 0f, 0f);
-    internal static readonly v4 ONE4  = new v4(1f, 1f, 1f, 1f);
 
     //==========================================================================================================================================================
     internal static readonly mat4 IDENTITY4 = new mat4(

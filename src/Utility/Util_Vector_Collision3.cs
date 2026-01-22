@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 
 namespace Utility;
 internal static class VEC_Collision3 {
@@ -17,6 +16,7 @@ internal static class VEC_Collision3 {
     //
     //      WhichSideOfPlane(  Point,  Plane-Position,  Plane-Normal  )
     //
+    [Impl(AggressiveInlining)]
     internal static float WhichSideOfPlane(vec3 Pnt, vec3 Pp, vec3 Pn) => dot(Pn, Pnt-Pp);
 
     //##########################################################################################################################################################
@@ -28,6 +28,7 @@ internal static class VEC_Collision3 {
     //
     //  PointVsSphere(  Point,  Sphere-Position,  Sphere-Radius  )
     //
+    [Impl(AggressiveInlining)]
     internal static bool PointVsSphere(vec3 P, vec3 Sp, float Sr) => dot(Sp-P) <= (Sr*Sr);
 
     //##########################################################################################################################################################
@@ -53,7 +54,7 @@ internal static class VEC_Collision3 {
     //    BoxPos           +X
     //
     //
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Impl(AggressiveInlining)]
     internal static bool PointVsBox(vec3 P, vec3 Bp, vec3 Bs) => (
            P >= Bp
         && P <= Bp+Bs
@@ -79,7 +80,7 @@ internal static class VEC_Collision3 {
     //
     //  All  RayVsSurface()  functions return:  vec4( HitPosX, HitPosY, HitPosZ, HitDistance )      **  Should these only return HitDistance ???
     //                                                                                              **  HitPos isn't always needed, and is easy to calculate:
-    //                         Surface      Ray                                                             RayPos + (RayNrm * Distance)
+    //                         Surface      Ray                                                             RayPos + (RayNrm * HitDistance)
     //      Distance < 0.0      |-->        -->  Surface is Behind Ray.
     //
     //
@@ -104,13 +105,13 @@ internal static class VEC_Collision3 {
     //
     //  Axis-Aligned Plane.
     //
-    //      RayVsPlaneX(  Ray-Position,  Ray-Normal,    Plane-PositionX  )      Plane spans YZ.
-    //      RayVsPlaneY(  Ray-Position,  Ray-Normal,    Plane-PositionY  )      Plane spans XZ.
-    //      RayVsPlaneZ(  Ray-Position,  Ray-Normal,    Plane-PositionZ  )      Plane spans XY.
+    //      RayVsPlaneX(  Ray-Position,  Ray-Normal,    Plane-Position_X  )      Plane spans ZY.
+    //      RayVsPlaneY(  Ray-Position,  Ray-Normal,    Plane-Position_Y  )      Plane spans XZ.
+    //      RayVsPlaneZ(  Ray-Position,  Ray-Normal,    Plane-Position_Z  )      Plane spans XY.
     //
-    internal static float RayVsPlaneX(vec3 Rp, vec3 Rn, float Pp_x) => (Pp_x - Rp.x) / Rn.x;
-    internal static float RayVsPlaneY(vec3 Rp, vec3 Rn, float Pp_y) => (Pp_y - Rp.y) / Rn.y;
-    internal static float RayVsPlaneZ(vec3 Rp, vec3 Rn, float Pp_z) => (Pp_z - Rp.z) / Rn.z;
+    [Impl(AggressiveInlining)] internal static float RayVsPlaneX(vec3 Rp, vec3 Rn, float Pp_x) => (Pp_x - Rp.x) / Rn.x;
+    [Impl(AggressiveInlining)] internal static float RayVsPlaneY(vec3 Rp, vec3 Rn, float Pp_y) => (Pp_y - Rp.y) / Rn.y;
+    [Impl(AggressiveInlining)] internal static float RayVsPlaneZ(vec3 Rp, vec3 Rn, float Pp_z) => (Pp_z - Rp.z) / Rn.z;
 
     //==========================================================================================================================================================
     //
@@ -121,41 +122,28 @@ internal static class VEC_Collision3 {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //  Axis-Aligned; Quad spans YZ.
+    //  Axis-Aligned.
     //
-    //      RayVsQuadX(  Ray-Position,  Ray-Normal,  Ray-NormalReciprocal,    Quad-Position,  Quad-Size  )
+    //      RayVsQuadX(  Ray-Position,  Ray-Normal,    Quad-Position,  Quad-Size  )     Quad spans ZY.
+    //      RayVsQuadY(  Ray-Position,  Ray-Normal,    Quad-Position,  Quad-Size  )     Quad spans XZ.
+    //      RayVsQuadZ(  Ray-Position,  Ray-Normal,    Quad-Position,  Quad-Size  )     Quad spans XY.
     //
-    internal static vec4 RayVsQuadX(vec3 Rp, vec3 Rn, vec3 Rnr,    vec3 Qp, vec2 Qs) {
-        float Distance = (Qp.x - Rp.x) * Rnr.x;
+    internal static float RayVsQuadX(vec3 Rp, vec3 Rn,    vec3 Qp, vec2 Qs) {
+        float Distance = (Qp.x - Rp.x) / Rn.x;
         vec3 Hp = Rp + (Rn*Distance);
-        return (Hp.z >= Qp.z && Hp.z < Qp.z+Qs.x
-            &&  Hp.y >= Qp.y && Hp.y < Qp.y+Qs.y) ? new vec4(Hp, Distance) : RAY_MISS___;
+        return (Hp.z >= Qp.z && Hp.z < Qp.z+Qs.x   &&   Hp.y >= Qp.y && Hp.y < Qp.y+Qs.y) ? Distance : RAY_MISS;
     }
 
-    //==========================================================================================================================================================
-    //
-    //  Axis-Aligned; Quad spans XZ.
-    //
-    //      RayVsQuadY(  Ray-Position,  Ray-Normal,  Ray-NormalReciprocal,    Quad-Position,  Quad-Size  )
-    //
-    internal static vec4 RayVsQuadY(vec3 Rp, vec3 Rn, vec3 Rnr,    vec3 Qp, vec2 Qs) {
-        float Distance = (Qp.y - Rp.y) * Rnr.y;
+    internal static float RayVsQuadY(vec3 Rp, vec3 Rn,    vec3 Qp, vec2 Qs) {
+        float Distance = (Qp.y - Rp.y) / Rn.y;
         vec3 Hp = Rp + (Rn*Distance);
-        return (Hp.x >= Qp.x && Hp.x < Qp.x+Qs.x
-            &&  Hp.z >= Qp.z && Hp.z < Qp.z+Qs.y) ? new vec4(Hp, Distance) : RAY_MISS___;
+        return (Hp.x >= Qp.x && Hp.x < Qp.x+Qs.x   &&   Hp.z >= Qp.z && Hp.z < Qp.z+Qs.y) ? Distance : RAY_MISS;
     }
 
-    //==========================================================================================================================================================
-    //
-    //  Axis-Aligned; Quad spans XY.
-    //
-    //      RayVsQuadZ(  Ray-Position,  Ray-Normal,  Ray-NormalReciprocal,    Quad-Position,  Quad-Size  )
-    //
-    internal static vec4 RayVsQuadZ(vec3 Rp, vec3 Rn, vec3 Rnr,    vec3 Qp, vec2 Qs) {
-        float Distance = (Qp.z - Rp.z) * Rnr.z;
+    internal static float RayVsQuadZ(vec3 Rp, vec3 Rn,    vec3 Qp, vec2 Qs) {
+        float Distance = (Qp.z - Rp.z) / Rn.z;
         vec3 Hp = Rp + (Rn*Distance);
-        return (Hp.x >= Qp.x && Hp.x < Qp.x+Qs.x
-            &&  Hp.y >= Qp.y && Hp.y < Qp.y+Qs.y) ? new vec4(Hp, Distance) : RAY_MISS___;
+        return (Hp.x >= Qp.x && Hp.x < Qp.x+Qs.x   &&   Hp.y >= Qp.y && Hp.y < Qp.y+Qs.y) ? Distance : RAY_MISS;
     }
 
     //==========================================================================================================================================================
@@ -204,6 +192,7 @@ internal static class VEC_Collision3 {
 
         //  Is Ray coplanar with Triangle Surface?
         if (Determinant == 0f)
+        //if (abs(Determinant) < EPSILON)
             return RAY_MISS;
 
         vec3 dAP = Rp - Ta;
@@ -232,17 +221,18 @@ internal static class VEC_Collision3 {
     //
     //  Geometric solution.
     //
+    //  https://www.desmos.com/calculator/zigiqzj8dm
+    //
     //      RayVsSphere(  Ray-Position,  Ray-Normal,    Sphere-Position,  Sphere-Radius  )
     //
     internal static float RayVsSphere(vec3 Rp, vec3 Rn, vec3 Sp, float Sr) {
-        vec3 dRS = Sp - Rp;
-
+        vec3  dRS  = Sp - Rp;
         float SrSr = Sr * Sr;
 
-        //  Distance from RayPos to ProjectedPoint:
+        //  Distance from  RayPos  to  ProjectedPoint:
         float sP = dot(dRS, Rn);
 
-        //  Distance from RayPos to SpherePos, squared:
+        //  Squared-distance from  RayPos  to  SpherePos:
         float sS = dot(dRS, dRS);
 
         //  Compare:
@@ -267,24 +257,24 @@ internal static class VEC_Collision3 {
     //
     //      RayVsSphere(  Ray-Position,  Ray-Normal,    Sphere-Position,  Sphere-Radius  )
     //
-    internal static vec4 RayVsSphere_(vec3 Rp, vec3 Rn, vec3 Sp, float Sr) {
-        vec3 dSR = Rp - Sp;
-
-        float a =      dot( Rn, Rn );
-        float b = 2f * dot( Rn, dSR);
-        float c =      dot(dSR, dSR) - Sr*Sr;
-
-        float Qn = sqrt(b*b - 4f*a*c);
-        float Qd = 2f * a;
-
-        float s0 = (-b - Qn) / Qd;
-        float s1 = (-b + Qn) / Qd;
-
-        vec3 HitPos0 = Rp + (Rn * s0);
-        vec3 HitPos1 = Rp + (Rn * s1);
-
-        return new vec4(HitPos0, s0);
-    }
+    //internal static vec4 RayVsSphere_(vec3 Rp, vec3 Rn, vec3 Sp, float Sr) {
+    //    vec3 dSR = Rp - Sp;
+    //
+    //    float a =      dot( Rn, Rn );
+    //    float b = 2f * dot( Rn, dSR);
+    //    float c =      dot(dSR, dSR) - Sr*Sr;
+    //
+    //    float Qn = sqrt(b*b - 4f*a*c);
+    //    float Qd = 2f * a;
+    //
+    //    float s0 = (-b - Qn) / Qd;
+    //    float s1 = (-b + Qn) / Qd;
+    //
+    //    vec3 HitPos0 = Rp + (Rn * s0);
+    //    vec3 HitPos1 = Rp + (Rn * s1);
+    //
+    //    return new vec4(HitPos0, s0);
+    //}
 
 
     //##########################################################################################################################################################
@@ -309,17 +299,17 @@ internal static class VEC_Collision3 {
         //       DistNearX  ^
         //               DistFarX
         //
-        vec3 dNear = (Bp    - Rp) / Rn; //  Note: DivByZero == -∞|∞
-        vec3 dFar  = (Bp+Bs - Rp) / Rn; //        is desired in cases where ray is coplanar with an axis-plane.
+        vec3 DistNear = (Bp    - Rp) / Rn; //  Note: DivByZero == -∞|∞
+        vec3 DistFar  = (Bp+Bs - Rp) / Rn; //        is desired in cases where ray is coplanar with an axis-plane.
 
         //  Reorient (swap) relative to RayPos:
-        (dNear.x, dFar.x) = (dNear.x > dFar.x) ? (dFar.x, dNear.x) : (dNear.x, dFar.x);
-        (dNear.y, dFar.y) = (dNear.y > dFar.y) ? (dFar.y, dNear.y) : (dNear.y, dFar.y);
-        (dNear.z, dFar.z) = (dNear.z > dFar.z) ? (dFar.z, dNear.z) : (dNear.z, dFar.z);
+        (DistNear.x, DistFar.x) = (DistNear.x > DistFar.x) ? (DistFar.x, DistNear.x) : (DistNear.x, DistFar.x);
+        (DistNear.y, DistFar.y) = (DistNear.y > DistFar.y) ? (DistFar.y, DistNear.y) : (DistNear.y, DistFar.y);
+        (DistNear.z, DistFar.z) = (DistNear.z > DistFar.z) ? (DistFar.z, DistNear.z) : (DistNear.z, DistFar.z);
 
         //  Select PlaneHits in Quadrant/Octant of Box:
-        float DistToFrontFace = max(dNear.x, dNear.y, dNear.z);
-        float DistToBackFace  = min(dFar.x , dFar.y , dFar.z );
+        float DistToFrontFace = max(DistNear.x, DistNear.y, DistNear.z);
+        float DistToBackFace  = min(DistFar.x , DistFar.y , DistFar.z );
 
         //  Did we hit it?
         return (DistToFrontFace > DistToBackFace) ? RAY_MISS
@@ -333,7 +323,7 @@ internal static class VEC_Collision3 {
     //
     //  3D Grid Traversal
     //
-    //      (vec4 Result, int HitSide) = RayVsVoxelChunk(  Ray-Position,  Ray-Normal,  Ray-NormalReciprocal,  VoxelChunk-Position,  VoxelChunk-Size,)
+    //      (vec4 Result, int HitSide) = RayVsVoxelChunk(  Ray-Position,  Ray-Normal,  Ray-NormalReciprocal,  VoxelChunk-Position,  VoxelChunk-Size,  )
     //
     //          HitSide:
     //                   X    Y              Z
@@ -353,7 +343,7 @@ internal static class VEC_Collision3 {
     //
     //      Currently, input-param RayPos must start at/within bounds of VoxelChunk....?
     //
-    internal static (vec4, int) RayVsVoxelChunk(vec3 Rp, vec3 Rn, vec3 Rnr,    vec3 Vp, ivec3 Vs, uint[] Voxel) {
+    internal static (vec4, int) RayVsVoxelChunk(vec3 Rp, vec3 Rn,    vec3 Vp, ivec3 Vs, uint[] Voxel) {
         #if DEBUG || true
         {
             int VolumeCompare = Volume(Vs) - Voxel.Length;
@@ -371,7 +361,7 @@ internal static class VEC_Collision3 {
             (Rn.y < 0f) ? -1 : 1,
             (Rn.z < 0f) ? -1 : 1
         );
-        vec3 Ray_StepDist = abs(Rnr); //abs(1f / Rn);
+        vec3 Ray_StepDist = abs(1f / Rn);
 
         ivec3 Ray_Coord = new ivec3(
             (Rn.x < 0f) ? (int)floor(Rp.x + EPSILON) : (int)floor(Rp.x - EPSILON),
@@ -395,13 +385,20 @@ internal static class VEC_Collision3 {
             else                                                                 {HitDist = Ray_Travel.z;  Ray_Travel.z += Ray_StepDist.z;  Ray_Coord.z += Ray_StepDir.z;  HitSide = 5-Ray_StepDir.z;}
 
             //  Are we still inside the bounds of the VoxelChunk?
-            bool BoundsCheck = (
+            bool InsideBounds = (
                 Ray_Coord.x >= 0 && Ray_Coord.x <= Vs.x &&
                 Ray_Coord.y >= 0 && Ray_Coord.y <= Vs.y &&
                 Ray_Coord.z >= 0 && Ray_Coord.z <= Vs.z
             );
 
-            if (BoundsCheck) {
+            if (!InsideBounds) {
+                //  We hit/exited the bounds of the VoxelChunk:
+                return (
+                    RAY_MISS___,
+                    -1
+                );
+            } else {
+
                 int iVox = Ray_Coord.x
                          + Ray_Coord.y * Vs.y
                          + Ray_Coord.z * Vs.z;
@@ -412,12 +409,6 @@ internal static class VEC_Collision3 {
                         HitSide
                     );
 
-            } else {
-                //  We hit/exited the bounds of the VoxelChunk:
-                return (
-                    RAY_MISS___,
-                    -1
-                );
             }
         }
     }

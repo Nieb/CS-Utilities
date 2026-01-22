@@ -39,7 +39,6 @@ internal struct vec2 : System.IFormattable {
     [Impl(AggressiveInlining)] public static vec2 operator +(vec2  A, float B) => new vec2(A.x+B  , A.y+B  );
     [Impl(AggressiveInlining)] public static vec2 operator +(float A, vec2  B) => new vec2(A  +B.x, A  +B.y);
 
-
     [Impl(AggressiveInlining)] public static vec2 operator -(vec2  A, vec2  B) => new vec2(A.x-B.x, A.y-B.y);
     [Impl(AggressiveInlining)] public static vec2 operator -(vec2  A, float B) => new vec2(A.x-B  , A.y-B  );
     [Impl(AggressiveInlining)] public static vec2 operator -(float A, vec2  B) => new vec2(A  -B.x, A  -B.y);
