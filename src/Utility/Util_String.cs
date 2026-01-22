@@ -21,14 +21,19 @@ internal static partial class STR {
     //##########################################################################################################################################################
     //                                                                  Generate String
     //==========================================================================================================================================================
-  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static string DateTimeStamp() => DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static string DateStamp()     => DateTime.Now.ToString("yyyy-MM-dd");
-  //[Impl(AggressiveInlining|AggressiveOptimization)] internal static string TimeStamp()     => DateTime.Now.ToString("HH:mm:ss");
+  //[Impl(AggressiveInlining)] internal static string DateTimeStamp() => DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+    [Impl(AggressiveInlining)] internal static string DateStamp()     => DateTime.Now.ToString("yyyy-MM-dd");
+  //[Impl(AggressiveInlining)] internal static string TimeStamp()     => DateTime.Now.ToString("HH:mm:ss");
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static string DateTimeStamp() => DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffffff");
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static string TimeStamp()     => DateTime.Now.ToString("HH:mm:ss.ffffff");
+    [Impl(AggressiveInlining)] internal static string DateTimeStamp() => DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffffff");
+    [Impl(AggressiveInlining)] internal static string TimeStamp()     => DateTime.Now.ToString("HH:mm:ss.ffffff");
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static string DateTimeStamp_() => DateTime.Now.ToString("yyyy-MM-dd__HH.mm.ss.fff");
+    [Impl(AggressiveInlining)] internal static string DateTimeStamp_() => DateTime.Now.ToString("yyyy-MM-dd__HH.mm.ss.fff");
+
+    //
+    //         FormatString:  "yyyy-MM-dd__HH.mm.ss.fff"
+    //
+    //[Impl(AggressiveInlining)] internal static string DateTime(string FormatString) => DateTime.Now.ToString(FormatString);
 
     //==========================================================================================================================================================
     internal static string RandomDigits(int Count) {
@@ -50,7 +55,7 @@ internal static partial class STR {
     //##########################################################################################################################################################
     //                                                                Convert FROM String
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining|AggressiveOptimization)]
+    [Impl(AggressiveInlining)]
     internal static bool ToBool(this string STR) {
         if (STR.IsVoid())
             return false;
@@ -64,7 +69,7 @@ internal static partial class STR {
     }
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining|AggressiveOptimization)]
+    [Impl(AggressiveInlining)]
     internal static DateTime ToDateTime(this string STR) {
         if (STR.IsVoid())
             return DateTime.MinValue;
@@ -77,7 +82,7 @@ internal static partial class STR {
     }
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining|AggressiveOptimization)]
+    [Impl(AggressiveInlining)]
     internal static IPAddress ToIpAddress(this string STR) {
         if (STR.IsVoid())
             return new IPAddress(0);
@@ -100,7 +105,6 @@ internal static partial class STR {
     //      Blarg["H"]   == "1.414"
     //      Blarg["i"]   == "0"
     //
-    [Impl(AggressiveOptimization)]
     internal static NameValueCollection ToNameValueCollection(this string STR) {
         if (STR.IsVoid())
             return null;
@@ -123,7 +127,6 @@ internal static partial class STR {
     //##########################################################################################################################################################
     //  Convert TO String:
     //==========================================================================================================================================================
-    [Impl(AggressiveOptimization)]
     internal static string ByteArrayToString(byte[] ByteArr, int BytesPerLine = 16, string Delimiter = " ") {
         if (ByteArr == null)
             return "NULL";
@@ -143,7 +146,6 @@ internal static partial class STR {
     }
 
     //==========================================================================================================================================================
-    [Impl(AggressiveOptimization)]
     internal static string EnumerableToString<T>(IEnumerable<T> Enmrbl, int ItemsPerLine = 0, int ItemPadding = 0, int LineIndent = 0, string ItemDelimiter = ", ", string LineDelimiter = "\n") {
         if (Enmrbl == null)
             return "";
@@ -206,7 +208,6 @@ internal static partial class STR {
     //##########################################################################################################################################################
     //  String Is <Something>:
     //==========================================================================================================================================================
-    [Impl(AggressiveOptimization)]
     internal static bool IsNumeric(this string STR, bool Signed = false, bool Fractional = false) {
         if (STR.IsVoid())
             return false;
@@ -288,7 +289,7 @@ internal static partial class STR {
     //  Better:
     //      "blarg".IsVoid()
     //
-    [Impl(AggressiveInlining|AggressiveOptimization)]
+    [Impl(AggressiveInlining)]
     internal static bool IsVoid(this string STR) {
         if (STR == null)
             return true;
@@ -307,7 +308,6 @@ internal static partial class STR {
     //
     //      "blarg".ContainsAny( {"ugh", "arg"} ) == TRUE
     //
-    [Impl(AggressiveOptimization)]
     internal static bool ContainsAny(this string STR, string[] OfThese) {
         return OfThese.Any(x => STR.Contains(x));
     }
@@ -316,7 +316,6 @@ internal static partial class STR {
     //
     //      "blarg".ContainsAny_GetMatches( {"bla", "ugh", "arg"} ) == {"bla", "arg"}
     //
-    [Impl(AggressiveOptimization)]
     internal static string[] ContainsAny_GetMatches(this string STR, string[] OfThese) {
         return OfThese.Where(x => STR.Contains(x))
                       .ToArray();
@@ -329,7 +328,6 @@ internal static partial class STR {
     //
     //      "blarg\nblarg\nblarg".Indent() == "    blarg\n    blarg\n    blarg"
     //
-    [Impl(AggressiveOptimization)]
     internal static string Indent(this string STR, int IndentSize = 4, char IndentWith = ' ') {
         string Indent = new String(IndentWith, IndentSize);
 
@@ -354,7 +352,6 @@ internal static partial class STR {
     //
     //      "blargblargblarg".InsertEvery(5, ", ") == "blarg, blarg, blarg"
     //
-    [Impl(AggressiveOptimization)]
     internal static string InsertEvery(this string STR, uint nChars, string InsertMe, bool NotAtEnd = true) {
         return Regex.Replace(
             STR,
@@ -371,7 +368,6 @@ internal static partial class STR {
     //      "blarg".Pad(-10) == "     blarg"
     //      "blarg".Pad( 10) == "blarg     "
     //
-    [Impl(AggressiveOptimization)]
     internal static string Pad(this string STR, int PadSize, char PadWith = ' ') {
         if (STR.IsVoid())
             return new String(PadWith, PadSize);
@@ -402,7 +398,6 @@ internal static partial class STR {
     //
     //      "blarg\nblarg\nblarg".Prepend(" ~~ ") == " ~~ blarg\n ~~ blarg\n ~~ blarg"
     //
-    [Impl(AggressiveOptimization)]
     internal static string Prepend(this string STR, string PrependWith) {
         if (STR.IsVoid())
             return PrependWith;
@@ -425,7 +420,6 @@ internal static partial class STR {
     //
     //      "blarg".Repeat(3) == "blargblargblarg"
     //
-    [Impl(AggressiveOptimization)]
     internal static string Repeat(this string STR, int Count) {
         return (Count <= 0 || STR == null || STR == "") ? ""
              : (Count == 1)                             ? STR
@@ -436,7 +430,6 @@ internal static partial class STR {
     //
     //      "blarg BLARG bLaRg".ToTitleCase() == "Blarg Blarg Blarg"
     //
-    [Impl(AggressiveOptimization)]
     internal static string ToTitleCase(this string STR) {
         if (STR.IsVoid())
             return "";

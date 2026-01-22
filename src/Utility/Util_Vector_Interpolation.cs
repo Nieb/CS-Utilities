@@ -34,16 +34,16 @@ internal static class VEC_Interpolation {
     //
     //          https://registry.khronos.org/OpenGL-Refpages/gl4/html/mix.xhtml
     //
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 Mix(v1 V, v1 A, v1 B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining)] internal static v1 Mix(v1 V, v1 A, v1 B) => A*(1f-V) + B*V;
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 Mix(v1 V, v2 A, v2 B) => A*(1f-V) + B*V;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 Mix(v2 V, v2 A, v2 B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining)] internal static v2 Mix(v1 V, v2 A, v2 B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining)] internal static v2 Mix(v2 V, v2 A, v2 B) => A*(1f-V) + B*V;
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 Mix(v1 V, v3 A, v3 B) => A*(1f-V) + B*V;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 Mix(v3 V, v3 A, v3 B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining)] internal static v3 Mix(v1 V, v3 A, v3 B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining)] internal static v3 Mix(v3 V, v3 A, v3 B) => A*(1f-V) + B*V;
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 Mix(v1 V, v4 A, v4 B) => A*(1f-V) + B*V;
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 Mix(v4 V, v4 A, v4 B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining)] internal static v4 Mix(v1 V, v4 A, v4 B) => A*(1f-V) + B*V;
+    [Impl(AggressiveInlining)] internal static v4 Mix(v4 V, v4 A, v4 B) => A*(1f-V) + B*V;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -158,16 +158,16 @@ internal static class VEC_Interpolation {
     //
     //    GLSL: step(Edge, X);
     //
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 Step(v1 V, v1 T) => (V < T) ? 0f : 1f;
+    [Impl(AggressiveInlining)] internal static v1 Step(v1 V, v1 T) => (V < T) ? 0f : 1f;
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 Step(v2 V, v1 T) => new v2( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f );
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 Step(v2 V, v2 T) => new v2( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f );
+    [Impl(AggressiveInlining)] internal static v2 Step(v2 V, v1 T) => new v2( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f );
+    [Impl(AggressiveInlining)] internal static v2 Step(v2 V, v2 T) => new v2( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f );
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 Step(v3 V, v1 T) => new v3( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f,  (V.z < T  ) ? 0f : 1f );
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 Step(v3 V, v3 T) => new v3( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f,  (V.z < T.z) ? 0f : 1f );
+    [Impl(AggressiveInlining)] internal static v3 Step(v3 V, v1 T) => new v3( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f,  (V.z < T  ) ? 0f : 1f );
+    [Impl(AggressiveInlining)] internal static v3 Step(v3 V, v3 T) => new v3( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f,  (V.z < T.z) ? 0f : 1f );
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 Step(v4 V, v1 T) => new v4( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f,  (V.z < T  ) ? 0f : 1f,  (V.w < T  ) ? 0f : 1f );
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v4 Step(v4 V, v4 T) => new v4( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f,  (V.z < T.z) ? 0f : 1f,  (V.w < T.w) ? 0f : 1f );
+    [Impl(AggressiveInlining)] internal static v4 Step(v4 V, v1 T) => new v4( (V.x < T  ) ? 0f : 1f,  (V.y < T  ) ? 0f : 1f,  (V.z < T  ) ? 0f : 1f,  (V.w < T  ) ? 0f : 1f );
+    [Impl(AggressiveInlining)] internal static v4 Step(v4 V, v4 T) => new v4( (V.x < T.x) ? 0f : 1f,  (V.y < T.y) ? 0f : 1f,  (V.z < T.z) ? 0f : 1f,  (V.w < T.w) ? 0f : 1f );
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -180,13 +180,13 @@ internal static class VEC_Interpolation {
     //
     //  OUTPUT: 0..1
     //
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v1 LinearStep(v1 V, v1 L, v1 U) => clamp((V-L) / (U-L));
+    [Impl(AggressiveInlining)] internal static v1 LinearStep(v1 V, v1 L, v1 U) => clamp((V-L) / (U-L));
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 LinearStep(v1 V, v2 L, v2 U) => clamp((V-L) / (U-L));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v2 LinearStep(v2 V, v2 L, v2 U) => clamp((V-L) / (U-L));
+    [Impl(AggressiveInlining)] internal static v2 LinearStep(v1 V, v2 L, v2 U) => clamp((V-L) / (U-L));
+    [Impl(AggressiveInlining)] internal static v2 LinearStep(v2 V, v2 L, v2 U) => clamp((V-L) / (U-L));
 
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 LinearStep(v1 V, v3 L, v3 U) => clamp((V-L) / (U-L));
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static v3 LinearStep(v3 V, v3 L, v3 U) => clamp((V-L) / (U-L));
+    [Impl(AggressiveInlining)] internal static v3 LinearStep(v1 V, v3 L, v3 U) => clamp((V-L) / (U-L));
+    [Impl(AggressiveInlining)] internal static v3 LinearStep(v3 V, v3 L, v3 U) => clamp((V-L) / (U-L));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

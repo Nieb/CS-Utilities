@@ -14,8 +14,8 @@ internal static class FLT {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static float BitDec(float A) => System.MathF.BitDecrement(A);
-    [Impl(AggressiveInlining|AggressiveOptimization)] internal static float BitInc(float A) => System.MathF.BitIncrement(A);
+    [Impl(AggressiveInlining)] internal static float BitDec(float A) => System.MathF.BitDecrement(A);
+    [Impl(AggressiveInlining)] internal static float BitInc(float A) => System.MathF.BitIncrement(A);
 
     //public static float operator --(float operand) => System.MathF.BitDecrement(A);
     //public static float operator ++(float operand) => System.MathF.BitIncrement(A);

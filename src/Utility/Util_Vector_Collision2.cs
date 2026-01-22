@@ -158,7 +158,7 @@ internal static class VEC_Collision2 {
         vec2 dPA = Poly[0] - P;
         vec2 dPB;
         for (int i = 0; i < Poly.Length; ++i) {
-            dPB = Poly[(i+1 > Poly.Length) ? 0 : i+1] - P;
+            dPB = Poly[(i+1 >= Poly.Length) ? 0 : i+1] - P;
 
             if (dPA.x*dPB.y <= dPA.y*dPB.x)
                 return false;
