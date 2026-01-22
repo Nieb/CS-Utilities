@@ -102,10 +102,10 @@ internal static partial class Program {
             && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  90f)).IsApproximately(( SQRT2, 0f,-SQRT2))
             && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad( 270f)).IsApproximately((-SQRT2, 0f, SQRT2))
 
-            && rot((0f,1f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f))       .IsApproximately((0.5f,SQRT2_RCP,-0.5f))
+            &&        rot((0f,1f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f)) .IsApproximately((0.5f,SQRT2_RCP,-0.5f))
             && length(rot((0f,1f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f))).IsApproximately(1f)
 
-            && rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f))       .IsApproximately((1f,SQRT2,-1f))
+            &&        rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f)) .IsApproximately((1f,SQRT2,-1f))
             && length(rot((0f,2f,0f), (SQRT2_RCP,        0f, SQRT2_RCP), ToRad(  45f))).IsApproximately(2f)
         );
 

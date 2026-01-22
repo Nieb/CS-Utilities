@@ -18,7 +18,7 @@ internal static partial class Program {
             bool Ex2 = false;  try {float Test = A[-1, 0];}  catch (System.IndexOutOfRangeException) {Ex2 = true;}
             bool Ex3 = false;  try {float Test = A[ 0, 4];}  catch (System.IndexOutOfRangeException) {Ex3 = true;}
 
-            RESULT("mat4", true
+            RESULT("mat4 [i] [x,y]", true
                 &&  A.xx   ==  1f  &&  A.yx   ==  2f &&  A.zx   ==  3f  &&  A.wx   ==  4f
                 &&  A.xy   ==  5f  &&  A.yy   ==  6f &&  A.zy   ==  7f  &&  A.wy   ==  8f
                 &&  A.xz   ==  9f  &&  A.yz   == 10f &&  A.zz   == 11f  &&  A.wz   == 12f
@@ -39,43 +39,6 @@ internal static partial class Program {
         }
 
         //======================================================================================================================================================
-        #if false
-        {
-            /*
-                void main() {
-                    vec4 POS = vec4(aPos, 1.0) * ToScale * ToWorld;
-
-                    FragPos     = aPos;
-                    FragViewPos = POS.xyz;
-                    FragNrm     = aNrm;
-                  //FragNrm     = normalize(aNrm * mat3(ToWorld));                  //  why doesn't this work...?
-                  //FragNrm     = normalize(aNrm * transpose(mat3(ToWorld)));       //  what is transpose accomplishing...?
-                    FragUV      = aTexUV;
-                  //FragClr     = aClr;
-
-                    //gl_Position = POS;
-                    gl_Position = POS * ToView * ToPerspective;
-                }
-            */
-
-            //vec2 Pnt = ( 3f, 0f);
-            //vec2 Nrm = (-1f, 0f);
-            //PRINT($"Pnt: {Pnt}  {rot(Pnt, PIH)}");
-            //PRINT($"Nrm: {Nrm}  {rot(Nrm, PIH)}");
-
-            vec3 Pnt = ( 3f, 0f, 0f);
-            vec3 Nrm = (-1f, 0f, 0f);
-
-            vec3 Axis = ( 0f, 0f, 1f);
-            mat4 mRot = rot(Axis, PIH);
-
-            PRINT($"\nPnt: {Pnt:0}\n       Rot: {rot(Pnt, Axis, PIH):0.000}\n    MatRot: {(Pnt * mRot):0.000}");
-            PRINT($"\nNrm: {Nrm:0}\n       Rot: {rot(Nrm, Axis, PIH):0.000}\n    MatRot: {(Nrm * mRot):0.000}");
-        }
-        #endif
-
-        //######################################################################################################################################################
-        //######################################################################################################################################################
         {
             mat4 A = new mat4(0f);
             A.Col0 = new vec4( 1f,  5f,  9f, 13f);
@@ -97,7 +60,7 @@ internal static partial class Program {
                 13f, 14f, 15f, 16f
             );
 
-            RESULT("mat4.Col*", true
+            RESULT("mat4 Col*", true
                 &&  A == C
                 &&  B == C
             );
@@ -124,7 +87,7 @@ internal static partial class Program {
                 13f, 14f, 15f, 16f
             );
 
-            RESULT("mat4.Row*", true
+            RESULT("mat4 Row*", true
                 &&  A == C
                 &&  B == C
             );

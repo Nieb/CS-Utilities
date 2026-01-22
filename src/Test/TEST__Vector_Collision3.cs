@@ -91,7 +91,7 @@ internal static partial class Program {
             && PointVsBox((-1.0000001f,-1.9999999f,-1.9999999f), (-2f,-2f,-2f), (1f,1f,1f)) == true
             && PointVsBox((-1.9999999f,-1.0000001f,-1.9999999f), (-2f,-2f,-2f), (1f,1f,1f)) == true
 
-            //  Inverted box == false, always.
+            //  Inverted-box == false   Always
             //      Impossible for a Point to be both:
             //          > Box_MinBounds
             //              AND
@@ -213,10 +213,6 @@ internal static partial class Program {
         //PRINT($"{1f-SQRT3_RCP}");
         //PRINT($"{new vec3(SQRT3_RCP, SQRT3_RCP, SQRT3_RCP).Length}");
         //PRINT($"{distance((-1,-1,-1), (1,1,1))}");
-
-        //======================================================================================================================================================
-        RESULT("RayVsSphere__Analytic()", true
-        );
 
         //======================================================================================================================================================
 

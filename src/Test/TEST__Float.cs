@@ -9,15 +9,6 @@ internal static partial class Program {
         PRINT($"""
 
         [FLOAT]
-            NaN == NaN:  {FLOAT_NaN == FLOAT_NaN}
-            NaN != NaN:  {FLOAT_NaN != FLOAT_NaN}
-
-            Inf == Inf:  {FLOAT_INF == FLOAT_INF}
-            Inf != Inf:  {FLOAT_INF != FLOAT_INF}
-
-             -0 ==   0:  {FLOAT_NEG_ZERO == 0f}
-             -0 !=   0:  {FLOAT_NEG_ZERO != 0f}
-
                           |  !=  |   <  <=  |  ==  |  >=   >
             --------------+------+----------+------+----------
               -1      -0  |  {b(-1f != FLOAT_NEG_ZERO)}  |  {b(-1f < FLOAT_NEG_ZERO)}  {b(-1f <= FLOAT_NEG_ZERO)}  |  {b(-1f == FLOAT_NEG_ZERO)}  |  {b(-1f >= FLOAT_NEG_ZERO)}  {b(-1f > FLOAT_NEG_ZERO)}
@@ -41,6 +32,24 @@ internal static partial class Program {
                1     Inf  |  {b( 1f !=      FLOAT_INF)}  |  {b( 1f <      FLOAT_INF)}  {b( 1f <=      FLOAT_INF)}  |  {b( 1f ==      FLOAT_INF)}  |  {b( 1f >=      FLOAT_INF)}  {b( 1f >      FLOAT_INF)}
             --------------+------+----------+------+----------
 
+
+            NaN == NaN:  {FLOAT_NaN == FLOAT_NaN}
+            NaN != NaN:  {FLOAT_NaN != FLOAT_NaN}
+
+            Inf == Inf:  {FLOAT_INF == FLOAT_INF}
+            Inf != Inf:  {FLOAT_INF != FLOAT_INF}
+
+            -0  ==   0:  {FLOAT_NEG_ZERO == 0f}
+            -0  !=   0:  {FLOAT_NEG_ZERO != 0f}
+
+             Inf /   0  ==  {FLOAT_INF     / 0f}
+            -Inf /   0  ==  {FLOAT_NEG_INF / 0f}
+
+             Inf / EPS  ==  {FLOAT_INF     / EPS9}
+            -Inf / EPS  ==  {FLOAT_NEG_INF / EPS9}
+
+
+            RAY_MISS:  {RAY_MISS}
             RAY_MISS == RAY_MISS:  {RAY_MISS == RAY_MISS}
 
         """);
@@ -48,6 +57,7 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
+        #if false
         PRINT($"""
 
         [FLOAT -- Random1() Range]
@@ -57,6 +67,7 @@ internal static partial class Program {
             Random1u() => (  (float)R.Next(           0, 1_000_000+1 )  )/  1_000_000f;      1_000_000/1_000_000:  { 1_000_000f/1_000_000f,4:0.0}
 
         """);
+        #endif
 
         //######################################################################################################################################################
         //######################################################################################################################################################
