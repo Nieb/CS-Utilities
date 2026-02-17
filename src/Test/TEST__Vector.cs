@@ -5,19 +5,39 @@ internal static partial class Program {
         CONOUT("\n[Utility.VEC]");
 
         //======================================================================================================================================================
-        TEST(" vec2 is  8 bytes", System.Runtime.InteropServices.Marshal.SizeOf<vec2>()  ==  8);
+        TEST(" vec2 is  8 bytes", System.Runtime.InteropServices.Marshal.SizeOf< vec2>() ==  8);
         TEST("ivec2 is  8 bytes", System.Runtime.InteropServices.Marshal.SizeOf<ivec2>() ==  8);
 
-        TEST(" vec3 is 12 bytes", System.Runtime.InteropServices.Marshal.SizeOf<vec3>()  == 12);
+        TEST(" vec3 is 12 bytes", System.Runtime.InteropServices.Marshal.SizeOf< vec3>() == 12);
         TEST("ivec3 is 12 bytes", System.Runtime.InteropServices.Marshal.SizeOf<ivec3>() == 12);
 
-        TEST(" vec4 is 16 bytes", System.Runtime.InteropServices.Marshal.SizeOf<vec4>()  == 16);
+        TEST(" vec4 is 16 bytes", System.Runtime.InteropServices.Marshal.SizeOf< vec4>() == 16);
         TEST("ivec4 is 16 bytes", System.Runtime.InteropServices.Marshal.SizeOf<ivec4>() == 16);
 
         TEST("bvec4 is  4 bytes", System.Runtime.InteropServices.Marshal.SizeOf<bvec4>() ==  4);
         TEST("bvec8 is  8 bytes", System.Runtime.InteropServices.Marshal.SizeOf<bvec8>() ==  8);
 
         TEST(" mat4 is 64 bytes", System.Runtime.InteropServices.Marshal.SizeOf<mat4>()  == 64);
+
+        #if false
+            CONOUT($"""
+                                   bool: {sizeof(bool  ),2} bytes
+
+                                  sbyte: {sizeof(sbyte ),2} bytes       byte: {sizeof(byte  ),2} bytes
+                                  short: {sizeof(short ),2} bytes     ushort: {sizeof(ushort),2} bytes
+                                    int: {sizeof(int   ),2} bytes       uint: {sizeof(uint  ),2} bytes
+                                   long: {sizeof(long  ),2} bytes      ulong: {sizeof(ulong ),2} bytes
+
+                                  float: {sizeof(float ),2} bytes
+                                 double: {sizeof(double),2} bytes
+
+                System.Numerics.Vector2: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Vector2>(),2} bytes
+                System.Numerics.Vector3: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Vector3>(),2} bytes
+                System.Numerics.Vector4: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Vector4>(),2} bytes
+
+                System.Numerics.Matrix4: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Matrix4x4>(),2} bytes
+            """);
+        #endif
 
         //======================================================================================================================================================
         TEST("iVec2 has Value/Magnitude/Length", true
@@ -153,5 +173,41 @@ internal static partial class Program {
         #endif
 
         //======================================================================================================================================================
+
+
+        //##############################################################################################################################################################
+        //##############################################################################################################################################################
+        #if false
+
+            //CONOUT($"""
+            //""");
+
+            CONOUT($"{(uint)new bvec4(247,  31,   0, 255):X8}");
+            CONOUT($"{(uint)new bvec4(103, 255,   0, 255):X8}");
+            CONOUT($"{(uint)new bvec4(  0, 128, 255, 255):X8}");
+
+        #endif
+        #if false
+        {
+            bvec8 V = 0L;
+            V.b0=0x12; V.b1=0x34; V.b2=0x56; V.b3=0x78; V.b4=0x9A; V.b5=0xBC; V.b6=0xDE; V.b7=0xF0;
+
+            CONOUT($"""
+                B:  {V.b0:X} {V.b1:X} {V.b2:X} {V.b3:X} {V.b4:X} {V.b5:X} {V.b6:X} {V.b7:X}
+                S:  {V.s0:X}  {V.s1:X}  {V.s2:X}  {V.s3:X}
+                I:   {V.i0:X}    {V.i1:X}
+                L:     {V.L:X}
+            """);
+
+            /*
+                B:  12 34 56 78 9A BC DE F0
+                S:  1234  5678  9ABC  DEF0
+                I:   12345678    9ABCDEF0
+                L:     123456789ABCDEF0
+            */
+        }
+        #endif
+        //======================================================================================================================================================
+
     }
 }
