@@ -34,10 +34,10 @@ internal static class INT {
     //                                                                  "Absolute" Value
     //  NOTE:  Does not check for overflow.    -(-2_147_483_648)
     //
-    [Impl(AggressiveInlining)] internal static sbyte abs(sbyte A) =>  s8((A >= 0) ? A : -A);
-    [Impl(AggressiveInlining)] internal static short abs(short A) => s16((A >= 0) ? A : -A);
-    [Impl(AggressiveInlining)] internal static   int abs(  int A) =>     (A >= 0) ? A : -A;
-    [Impl(AggressiveInlining)] internal static  long abs( long A) =>     (A >= 0) ? A : -A;
+    [Impl(AggressiveInlining)] internal static  s8 abs( s8 A) =>  s8((A >= 0) ? A : -A);
+    [Impl(AggressiveInlining)] internal static s16 abs(s16 A) => s16((A >= 0) ? A : -A);
+    [Impl(AggressiveInlining)] internal static s32 abs(s32 A) =>     (A >= 0) ? A : -A;
+    [Impl(AggressiveInlining)] internal static s64 abs(s64 A) =>     (A >= 0) ? A : -A;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -45,17 +45,17 @@ internal static class INT {
     //                *Inclusive*  *Inclusive*
     //      clamp( A, LowerBounds, UpperBounds )
     //
-    [Impl(AggressiveInlining)] internal static  sbyte clamp( sbyte A,  sbyte L,  sbyte U) => (A < L) ? L : (A > U) ? U : A;
-    [Impl(AggressiveInlining)] internal static   byte clamp(  byte A,   byte L,   byte U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static  s8 clamp( s8 A,  s8 L,  s8 U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static  u8 clamp( u8 A,  u8 L,  u8 U) => (A < L) ? L : (A > U) ? U : A;
 
-    [Impl(AggressiveInlining)] internal static  short clamp( short A,  short L,  short U) => (A < L) ? L : (A > U) ? U : A;
-    [Impl(AggressiveInlining)] internal static ushort clamp(ushort A, ushort L, ushort U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static s16 clamp(s16 A, s16 L, s16 U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static u16 clamp(u16 A, u16 L, u16 U) => (A < L) ? L : (A > U) ? U : A;
 
-    [Impl(AggressiveInlining)] internal static    int clamp(   int A,    int L,    int U) => (A < L) ? L : (A > U) ? U : A;
-    [Impl(AggressiveInlining)] internal static   uint clamp(  uint A,   uint L,   uint U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static s32 clamp(s32 A, s32 L, s32 U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static u32 clamp(u32 A, u32 L, u32 U) => (A < L) ? L : (A > U) ? U : A;
 
-    [Impl(AggressiveInlining)] internal static   long clamp(  long A,   long L,   long U) => (A < L) ? L : (A > U) ? U : A;
-    [Impl(AggressiveInlining)] internal static  ulong clamp( ulong A,  ulong L,  ulong U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static s64 clamp(s64 A, s64 L, s64 U) => (A < L) ? L : (A > U) ? U : A;
+    [Impl(AggressiveInlining)] internal static u64 clamp(u64 A, u64 L, u64 U) => (A < L) ? L : (A > U) ? U : A;
 
     //==========================================================================================================================================================
     //                                                                       "Wrap"
@@ -136,53 +136,15 @@ internal static class INT {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                                      "Power"
-    internal static int pow(int x, int pow) {
-        int EKS;
-        switch ((uint)pow) {
-            case  0:                          return 1;
-            case  1:                          return x;
-            case  2:                          return x*x;
-            case  3:                          return x*x*x;
-            case  4: EKS = x*x;               return EKS*EKS;
-            case  5: EKS = x*x;               return EKS*EKS * x;
-            case  6: EKS = x*x*x;             return EKS*EKS;
-            case  7: EKS = x*x*x;             return EKS*EKS * x;
-            case  8: EKS = x*x*x*x;           return EKS*EKS;
-            case  9: EKS = x*x*x;             return EKS*EKS*EKS;
-            case 10: EKS = x*x*x*x*x;         return EKS*EKS;
-            case 11: EKS = x*x*x*x*x;         return EKS*EKS * x;
-            case 12: EKS = x*x*x*x;           return EKS*EKS*EKS;
-            case 13: EKS = x*x*x*x;           return EKS*EKS*EKS * x;
-            case 14: EKS = x*x*x*x*x*x*x;     return EKS*EKS;
-            case 15: EKS = x*x*x*x*x;         return EKS*EKS*EKS;
-            case 16: EKS = x*x*x*x;           return EKS*EKS*EKS*EKS;
-            case 17: EKS = x*x*x*x;           return EKS*EKS*EKS*EKS * x;
-            case 18: EKS = x*x*x*x*x*x;       return EKS*EKS*EKS;
-            case 19: EKS = x*x*x*x*x*x;       return EKS*EKS*EKS * x;
-            case 20: EKS = x*x*x*x*x;         return EKS*EKS*EKS*EKS;
-            case 21: EKS = x*x*x*x*x*x*x;     return EKS*EKS*EKS;
-            case 22: EKS = x*x*x*x*x*x*x;     return EKS*EKS*EKS * x;
-            case 23: EKS = x*x*x*x*x*x*x;     return EKS*EKS*EKS * x * x;
-            case 24: EKS = x*x*x*x*x*x;       return EKS*EKS*EKS*EKS;
-            case 25: EKS = x*x*x*x*x;         return EKS*EKS*EKS*EKS*EKS;
-            case 26: EKS = x*x*x*x*x;         return EKS*EKS*EKS*EKS*EKS * x;
-            case 27: EKS = x*x*x*x*x*x*x*x*x; return EKS*EKS*EKS;
-            case 28: EKS = x*x*x*x*x*x*x;     return EKS*EKS*EKS*EKS;
-            case 29: EKS = x*x*x*x*x*x*x;     return EKS*EKS*EKS*EKS * x;
-            case 30: EKS = x*x*x*x*x;         return EKS*EKS*EKS*EKS*EKS*EKS;
-            default:
-                return (x   == 0) ? 0
-                     : (x   == 1) ? 1
-                     : (x%1 == 0) ? MAX_INT
-                                  : MIN_INT;
-        }
-    }
+    [Impl(AggressiveInlining)] internal static  s8 sign( s8 A) =>  s8((A < 0) ? -1 : 1);
+    [Impl(AggressiveInlining)] internal static s16 sign(s16 A) => s16((A < 0) ? -1 : 1);
+    [Impl(AggressiveInlining)] internal static s32 sign(s32 A) =>     (A < 0) ? -1 : 1;
+    [Impl(AggressiveInlining)] internal static s64 sign(s64 A) =>     (A < 0) ? -1 : 1;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //
-    //  Note:  Doesn't handle "-" symbol.
+    //                                                                 "Trunkate" Digits
+    //  NOTE:  Doesn't handle "-" symbol.
     //
     //      trunk(12345, -2) ==   345
     //      trunk(12345,  2) == 123

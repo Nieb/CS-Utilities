@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices;
 
 namespace Utility;
 [StructLayout(LayoutKind.Explicit, Pack=4, Size=12)] //  if (Size < ActualSize): nothing happens.   if (Size > ActualSize): struct will have extra bytes (padding).

@@ -29,28 +29,30 @@ internal struct Time {
     private s64 Minutes = 0;
     private s64 Hours   = 0;
 
-    public  string HMS => $"{Hours:00}:{Minutes:00}:{Seconds:00.000000}";
+    public  string HMS   => $"{Hours:00}:{Minutes:00}:{Seconds:00}";
+    public  string HMSf  => $"{Hours:00}:{Minutes:00}:{Seconds:00.000}";
+    public  string HMSff => $"{Hours:00}:{Minutes:00}:{Seconds:00.000000}";
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    private f64  Frqncy = 0d;
-    public  s64  Frequency => Stopwatch.Frequency;         //  Ticks PerSecond.                    10,000,000      1/t == 0.000_000_1      0.1 MicroSeconds
-    public  bool IsHighRes => Stopwatch.IsHighResolution;  //                                      true
+    private f64  Freq = 0d;
+    public  s64  Frequency => Stopwatch.Frequency;         //  Ticks PerSecond.                     10,000,000      1/t == 0.000_000_1      0.1 MicroSeconds
+    public  bool IsHighRes => Stopwatch.IsHighResolution;  //                                       true
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public Time() : this(1d/24d) {}
     public Time(f64 Weight = 1d/24d) {
-        this.Delta        = 0f;
         this.Delta64      = 0d;
+        this.Delta        = 0f;
 
-        this.SinceStart   = 0f;
         this.SinceStart64 = 0d;
+        this.SinceStart   = 0f;
 
         this.DeltaAvg_Weight = Weight;
         this.DeltaAvg64 = 1d/60d;
         this.DeltaAvg   = f32(this.DeltaAvg64);
 
-        this.Frqncy = f64(Stopwatch.Frequency);
+        this.Freq = f64(Stopwatch.Frequency);
 
         this.ThisFrame = Stopwatch.GetTimestamp();
         this.PrevFrame = this.ThisFrame;
@@ -62,7 +64,7 @@ internal struct Time {
     public void Update() {
         this.ThisFrame = Stopwatch.GetTimestamp();
 
-        this.Delta64 = f64(this.ThisFrame-this.PrevFrame) / this.Frqncy;
+        this.Delta64 = f64(this.ThisFrame-this.PrevFrame) / this.Freq;
         this.Delta   = f32(this.Delta64);
 
         this.DeltaAvg64 += (this.Delta64 - this.DeltaAvg64) * DeltaAvg_Weight;

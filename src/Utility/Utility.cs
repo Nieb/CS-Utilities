@@ -48,7 +48,6 @@ global using Utility;
 
 global using static Utility.Array;
 global using static Utility.Casting;
-global using static Utility.Loops;
 global using static Utility.Miscellaneous;
 global using static Utility.Random;
 
@@ -69,16 +68,29 @@ global using static Utility.VEC_Rotation;
 
 //##############################################################################################################################################################
 //##############################################################################################################################################################
+//                                                                       Struct Layout
+
+global using StructLayout = System.Runtime.InteropServices.StructLayoutAttribute;
+global using FieldOffset  = System.Runtime.InteropServices.FieldOffsetAttribute;
+global using LayoutKind   = System.Runtime.InteropServices.LayoutKind;
+
+/*
+                    [StructLayout(LayoutKind.Sequential)]
+                    [StructLayout(LayoutKind.Explicit)]
+                    [StructLayout(LayoutKind.Auto)]
+
+                    [FieldOffset(0)]
+                    [FieldOffset(4)]
+*/
+
+//##############################################################################################################################################################
+//##############################################################################################################################################################
 //                                                                   Method Implementation
 
 global using Impl = System.Runtime.CompilerServices.MethodImplAttribute;
 global using static System.Runtime.CompilerServices.MethodImplOptions;
 
 /*
-    MethodImpl
-    Implement
-    Impl
-
     [Impl(AggressiveInlining|AggressiveOptimization)]
     [Impl(AggressiveInlining)]
     [Impl(AggressiveOptimization)]      This appears to only be relevant to CIL/JIT optimization behavior.
@@ -88,6 +100,7 @@ global using static System.Runtime.CompilerServices.MethodImplOptions;
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
 */
+
 /*
     MethodImplOptions
 

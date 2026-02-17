@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices;
 
 namespace Utility;
 [StructLayout(LayoutKind.Explicit, Pack=4)]

@@ -124,6 +124,7 @@ internal static class VEC_Interpolation {
     //  OUTPUT: A..B
     //
     internal static v2 Slerp(v1 V, v2 A, v2 B) {v1 tAB = acos(dot(A,B));  v1 SinT = sin(tAB);  return A*(sin(tAB*(1f-V))/SinT)  +  B*(sin(tAB*V)/SinT);}
+
     internal static v3 Slerp(v1 V, v3 A, v3 B) {v1 tAB = acos(dot(A,B));  v1 SinT = sin(tAB);  return A*(sin(tAB*(1f-V))/SinT)  +  B*(sin(tAB*V)/SinT);}
 
     //##########################################################################################################################################################
