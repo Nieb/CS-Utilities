@@ -3,17 +3,17 @@
 //global using  b8 = bool;    //  System.Boolean
 
 //==============================================================================================================================================================
-global using  i8 = sbyte;   //  System.SByte                                  -128 to 127                             Signed  8-bit integer
-global using  u8 =  byte;   //  System.Byte                                      0 to 255                           Unsigned  8-bit integer
+global using  s8 = sbyte;   //  System.SByte                                  -128 to 127                             Signed  8-bit Integer
+global using  u8 =  byte;   //  System.Byte                                      0 to 255                           Unsigned  8-bit Integer
 
-global using i16 =  short;  //  System.Int16                               -32,768 to 32,767                          Signed 16-bit integer
-global using u16 = ushort;  //  System.UInt16                                    0 to 65,535                        Unsigned 16-bit integer
+global using s16 =  short;  //  System.Int16                               -32,768 to 32,767                          Signed 16-bit Integer
+global using u16 = ushort;  //  System.UInt16                                    0 to 65,535                        Unsigned 16-bit Integer
 
-global using i32 =  int;    //  System.Int32                        -2,147,483,648 to 2,147,483,647                   Signed 32-bit integer
-global using u32 = uint;    //  System.UInt32                                    0 to 4,294,967,295                 Unsigned 32-bit integer
+global using s32 =  int;    //  System.Int32                        -2,147,483,648 to 2,147,483,647                   Signed 32-bit Integer
+global using u32 = uint;    //  System.UInt32                                    0 to 4,294,967,295                 Unsigned 32-bit Integer
 
-global using i64 =  long;   //  System.Int64            -9,223,372,036,854,775,808 to  9,223,372,036,854,775,807      Signed 64-bit integer
-global using u64 = ulong;   //  System.UInt64                                    0 to 18,446,744,073,709,551,615    Unsigned 64-bit integer
+global using s64 =  long;   //  System.Int64            -9,223,372,036,854,775,808 to  9,223,372,036,854,775,807      Signed 64-bit Integer
+global using u64 = ulong;   //  System.UInt64                                    0 to 18,446,744,073,709,551,615    Unsigned 64-bit Integer
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 global using f32 = float;   //  System.Single
@@ -25,6 +25,12 @@ global using  v1 = float;
 global using  v2 = Utility.vec2;
 global using  v3 = Utility.vec3;
 global using  v4 = Utility.vec4;
+
+global using iv1 = int;
+global using iv2 = Utility.ivec2;
+global using iv3 = Utility.ivec3;
+global using iv4 = Utility.ivec4;
+
 /*
     global using vec2 = System.Numerics.Vector2;
     global using vec3 = System.Numerics.Vector3;
@@ -48,14 +54,15 @@ global using static Utility.Random;
 
 global using static Utility.FLT;
 global using static Utility.INT;
+global using static Utility.INT_BitOps;
 global using static Utility.STR;
 global using static Utility.VEC;
-global using static Utility.VEC_Color;
 global using static Utility.VEC_Collision2;
 global using static Utility.VEC_Collision3;
+global using static Utility.VEC_Color;
 global using static Utility.VEC_Filter;
-global using static Utility.VEC_Geometry;
 global using static Utility.VEC_Generate;
+global using static Utility.VEC_Geometry;
 global using static Utility.VEC_Interpolation;
 global using static Utility.VEC_Miscellaneous;
 global using static Utility.VEC_Rotation;
@@ -69,14 +76,13 @@ global using static System.Runtime.CompilerServices.MethodImplOptions;
 
 /*
     MethodImpl
-    Imploy
-    Employ
     Implement
     Impl
 
     [Impl(AggressiveInlining|AggressiveOptimization)]
     [Impl(AggressiveInlining)]
-    [Impl(AggressiveOptimization)]
+    [Impl(AggressiveOptimization)]      This appears to only be relevant to CIL/JIT optimization behavior.
+                                        Native-AOT compilation always goes through optimization.
 
     [MethodImpl(MethodImplOptions.AggressiveInlining|MethodImplOptions.AggressiveOptimization)]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

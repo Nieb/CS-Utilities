@@ -19,8 +19,8 @@ internal static partial class VEC_Color {
     [Impl(AggressiveInlining)]
     internal static float sRGB_to_Lin(float C) => (C <= 0.0404482362771082f) ? (C / 12.92f) : pow((C+0.055f)/1.055f, 2.4f);
 
-    internal static vec3 sRGB_to_Lin(float R, float G, float B) => new vec3(sRGB_to_Lin(  R), sRGB_to_Lin(  G), sRGB_to_Lin(  B));
-    internal static vec3 sRGB_to_Lin(vec3 C)                    => new vec3(sRGB_to_Lin(C.r), sRGB_to_Lin(C.g), sRGB_to_Lin(C.b));
+    internal static vec3 sRGB_to_Lin(float R, float G, float B)          => new vec3(sRGB_to_Lin(  R), sRGB_to_Lin(  G), sRGB_to_Lin(  B));
+    internal static vec3 sRGB_to_Lin(vec3 C)                             => new vec3(sRGB_to_Lin(C.r), sRGB_to_Lin(C.g), sRGB_to_Lin(C.b));
 
     internal static vec4 sRGB_to_Lin(float R, float G, float B, float A) => new vec4(sRGB_to_Lin(  R), sRGB_to_Lin(  G), sRGB_to_Lin(  B),   A);
     internal static vec4 sRGB_to_Lin(vec4 C)                             => new vec4(sRGB_to_Lin(C.r), sRGB_to_Lin(C.g), sRGB_to_Lin(C.b), C.a);
@@ -29,8 +29,8 @@ internal static partial class VEC_Color {
     [Impl(AggressiveInlining)]
     internal static float Lin_to_sRGB(float C) => (C <= 0.00313066844250063f) ? (C * 12.92f) : pow(C, 1f/2.4f)*1.055f - 0.055f;
 
-    internal static vec3 Lin_to_sRGB(float R, float G, float B) => new vec3(Lin_to_sRGB(  R), Lin_to_sRGB(  G), Lin_to_sRGB(  B));
-    internal static vec3 Lin_to_sRGB(vec3 C)                    => new vec3(Lin_to_sRGB(C.r), Lin_to_sRGB(C.g), Lin_to_sRGB(C.b));
+    internal static vec3 Lin_to_sRGB(float R, float G, float B)          => new vec3(Lin_to_sRGB(  R), Lin_to_sRGB(  G), Lin_to_sRGB(  B));
+    internal static vec3 Lin_to_sRGB(vec3 C)                             => new vec3(Lin_to_sRGB(C.r), Lin_to_sRGB(C.g), Lin_to_sRGB(C.b));
 
     internal static vec4 Lin_to_sRGB(float R, float G, float B, float A) => new vec4(Lin_to_sRGB(  R), Lin_to_sRGB(  G), Lin_to_sRGB(  B),   A);
     internal static vec4 Lin_to_sRGB(vec4 C)                             => new vec4(Lin_to_sRGB(C.r), Lin_to_sRGB(C.g), Lin_to_sRGB(C.b), C.a);
@@ -58,12 +58,13 @@ internal static partial class VEC_Color {
     //  B |=====================    |
     //    +-------------------------+
     //
+    //
     //       Red Ylw Grn Cyn Blu Vlt Red
     //  Hue:  0   1   2   3   4   5   6
-    //        :   1       1       1   :
-    //        :  / \     / \     / \  :
-    //    X:  : /   \   /   \   /   \ :
-    //        :/     \ /     \ /     \:
+    //            1       1       1
+    //           / \     / \     / \
+    //    X:    /   \   /   \   /   \
+    //         /     \ /     \ /     \
     //        0       0       0       0
     //
     internal static vec3 HSV_to_RGB(float Hue, float Sat, float Val) {
@@ -113,7 +114,7 @@ internal static partial class VEC_Color {
         return new vec3(Hue, Sat, Val);
     }
 
-    internal static vec3 RGB_to_HSV(vec3 RGB) => HSV_to_RGB(RGB.r, RGB.g, RGB.b);
+    [Impl(AggressiveInlining)] internal static vec3 RGB_to_HSV(vec3 RGB) => HSV_to_RGB(RGB.r, RGB.g, RGB.b);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -123,11 +124,13 @@ internal static partial class VEC_Color {
     //  Input should be in LinearSpace.
     //
     [Impl(AggressiveInlining)]
-    internal static float ToBrightness(vec3 C) => (
-          C.r * 0.2126f
-        + C.g * 0.7152f
-        + C.b * 0.0722f
+    internal static float ToBrightness(float R, float G, float B) => (
+          R * 0.2126f
+        + G * 0.7152f
+        + B * 0.0722f
     );
+
+    [Impl(AggressiveInlining)] internal static float ToBrightness(vec3 C) => ToBrightness(C.r, C.g, C.b);
 
     //==========================================================================================================================================================
     //
@@ -135,11 +138,13 @@ internal static partial class VEC_Color {
     //
     //  Input should be in LinearSpace.
     //
-    internal static float ToLightness(vec3 C) => (
-          0.2104542553f * cbrt(0.4122214708f*C.r + 0.5363325363f*C.g + 0.0514459929f*C.b)
-        + 0.7936177850f * cbrt(0.2119034982f*C.r + 0.6806995451f*C.g + 0.1073969566f*C.b)
-        - 0.0040720468f * cbrt(0.0883024619f*C.r + 0.2817188376f*C.g + 0.6299787005f*C.b)
+    internal static float ToLightness(float R, float G, float B) => (
+          0.2104542553f * cbrt(0.4122214708f*R + 0.5363325363f*G + 0.0514459929f*B)
+        + 0.7936177850f * cbrt(0.2119034982f*R + 0.6806995451f*G + 0.1073969566f*B)
+        - 0.0040720468f * cbrt(0.0883024619f*R + 0.2817188376f*G + 0.6299787005f*B)
     );
+
+    [Impl(AggressiveInlining)] internal static float ToLightness(vec3 C) => ToLightness(C.r, C.g, C.b);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

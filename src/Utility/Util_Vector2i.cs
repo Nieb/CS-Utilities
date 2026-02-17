@@ -9,22 +9,26 @@ internal struct ivec2 : System.IFormattable {
     [FieldOffset(4)] public int y;      [FieldOffset(4)] public int v;
 
     //==========================================================================================================================================================
-    public ivec2 yx {  get => new ivec2(y,x);  set {x = value.y; y = value.x;}  }
+    public ivec2 yx {get => new ivec2(y,x);  set {x=value.y; y=value.x;}}
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    public ivec3 xy_ => new ivec3(x,y,0);
+    public ivec3 x_y => new ivec3(x,0,y);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public ivec2() {}
-    public ivec2(int V       ) { x=V; y=V; }
-    public ivec2(int X, int Y) { x=X; y=Y; }
+    public ivec2(int X, int Y) {x=X; y=Y;}
+    public ivec2(int V       ) {x=V; y=V;}
 
     //==========================================================================================================================================================
     //                                                               Tuple "Constructor"
-    [Impl(AggressiveInlining)] public static implicit operator ivec2( (int X, int Y) t ) => new ivec2(t.X, t.Y);
+    [Impl(AggressiveInlining)] public static implicit operator ivec2((int X, int Y) t) => new ivec2(t.X, t.Y);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                            Has Value/Magnitude/Length
-    [Impl(AggressiveInlining)] public static implicit operator bool(ivec2 A) => (A.x != 0 || A.y != 0);
+    [Impl(AggressiveInlining)] public static implicit operator bool(ivec2 A) => (A != 0);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -59,24 +63,24 @@ internal struct ivec2 : System.IFormattable {
     //==========================================================================================================================================================
     //  Operators Logical:  ==  !=  <  >  <=  >=     ( ! && || )
 
-    [Impl(AggressiveInlining)] public static bool operator ==(ivec2 A, ivec2 B) => (A.x == B.x && A.y == B.y);
-    [Impl(AggressiveInlining)] public static bool operator ==(ivec2 A, int   B) => (A.x == B   && A.y == B  );
+    [Impl(AggressiveInlining)] public static bool operator ==(ivec2 A, ivec2 B) => (A.x==B.x && A.y==B.y);
+    [Impl(AggressiveInlining)] public static bool operator ==(ivec2 A, int   B) => (A.x==B   && A.y==B  );
 
-    [Impl(AggressiveInlining)] public static bool operator !=(ivec2 A, ivec2 B) => (A.x != B.x || A.y != B.y);
-    [Impl(AggressiveInlining)] public static bool operator !=(ivec2 A, int   B) => (A.x != B   || A.y != B  );
+    [Impl(AggressiveInlining)] public static bool operator !=(ivec2 A, ivec2 B) => (A.x!=B.x || A.y!=B.y);
+    [Impl(AggressiveInlining)] public static bool operator !=(ivec2 A, int   B) => (A.x!=B   || A.y!=B  );
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] public static bool operator  <(ivec2 A, ivec2 B) => (A.x <  B.x && A.y <  B.y);
-    [Impl(AggressiveInlining)] public static bool operator  <(ivec2 A, int   B) => (A.x <  B   && A.y <  B  );
+    [Impl(AggressiveInlining)] public static bool operator  <(ivec2 A, ivec2 B) => (A.x< B.x && A.y< B.y);
+    [Impl(AggressiveInlining)] public static bool operator  <(ivec2 A, int   B) => (A.x< B   && A.y< B  );
 
-    [Impl(AggressiveInlining)] public static bool operator  >(ivec2 A, ivec2 B) => (A.x >  B.x && A.y >  B.y);
-    [Impl(AggressiveInlining)] public static bool operator  >(ivec2 A, int   B) => (A.x >  B   && A.y >  B  );
+    [Impl(AggressiveInlining)] public static bool operator  >(ivec2 A, ivec2 B) => (A.x> B.x && A.y> B.y);
+    [Impl(AggressiveInlining)] public static bool operator  >(ivec2 A, int   B) => (A.x> B   && A.y> B  );
 
-    [Impl(AggressiveInlining)] public static bool operator <=(ivec2 A, ivec2 B) => (A.x <= B.x && A.y <= B.y);
-    [Impl(AggressiveInlining)] public static bool operator <=(ivec2 A, int   B) => (A.x <= B   && A.y <= B  );
+    [Impl(AggressiveInlining)] public static bool operator <=(ivec2 A, ivec2 B) => (A.x<=B.x && A.y<=B.y);
+    [Impl(AggressiveInlining)] public static bool operator <=(ivec2 A, int   B) => (A.x<=B   && A.y<=B  );
 
-    [Impl(AggressiveInlining)] public static bool operator >=(ivec2 A, ivec2 B) => (A.x >= B.x && A.y >= B.y);
-    [Impl(AggressiveInlining)] public static bool operator >=(ivec2 A, int   B) => (A.x >= B   && A.y >= B  );
+    [Impl(AggressiveInlining)] public static bool operator >=(ivec2 A, ivec2 B) => (A.x>=B.x && A.y>=B.y);
+    [Impl(AggressiveInlining)] public static bool operator >=(ivec2 A, int   B) => (A.x>=B   && A.y>=B  );
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -84,22 +88,23 @@ internal struct ivec2 : System.IFormattable {
     //##########################################################################################################################################################
     public readonly string ToString(string FormatStr, System.IFormatProvider FormatProvider) {
         _ = FormatProvider;
+
         if (FormatStr.IsVoid())
             return this.ToString();
 
         int Padding = FormatStr.Length;
 
-        return $"({this.x.ToString(FormatStr).PadLeft(Padding)}, {this.y.ToString(FormatStr).PadLeft(Padding)})";
+        string X = this.x.ToString(FormatStr).PadLeft(Padding);
+        string Y = this.y.ToString(FormatStr).PadLeft(Padding);
+
+        return $"({X}, {Y})";
     }
 
     //==========================================================================================================================================================
     public readonly override string ToString() => $"({this.x,3}, {this.y,3})";
 
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //  Required by "object" type:
+    //==========================================================================================================================================================
+    //  Required by types that implement "==" or "!=" operator:
     public readonly override bool Equals(object obj) => false;
     public readonly override int GetHashCode() => 0;
 

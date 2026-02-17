@@ -34,7 +34,7 @@ internal static partial class VEC_Filter {
         }
     }
 
-    [Impl(AggressiveInlining)] internal static vec3 SoftLimit(vec3 V, float T) => new vec3(SoftLimit(V.x, T), SoftLimit(V.y, T), SoftLimit(V.z, T));
+    [Impl(AggressiveInlining)] internal static vec3 SoftLimit(vec3 V, float T) => new vec3(SoftLimit(V.x,T), SoftLimit(V.y,T), SoftLimit(V.z,T));
 
     //==========================================================================================================================================================
     //
@@ -49,15 +49,17 @@ internal static partial class VEC_Filter {
         if (V <= T) {
             return V;
         } else {
-            float iT = 1f - T;
+            float iT = 1f-T;
 
-            float A =             2f * iT;
-            //         ------------------------------
-            float B =  1f + exp((-V + T) * (2f / iT));
+            float DivN =             2f * iT;
+            //            ------------------------------
+            float DivD =  1f + exp((-V + T) * (2f / iT));
 
-            return T - iT + (A / B);
+            return T - iT + (DivN / DivD);
         }
     }
+
+    [Impl(AggressiveInlining)] internal static vec3 SoftLimit_Sigmoid(vec3 V, float T) => new vec3(SoftLimit_Sigmoid(V.x,T), SoftLimit_Sigmoid(V.y,T), SoftLimit_Sigmoid(V.z,T));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

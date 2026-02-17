@@ -26,14 +26,12 @@ internal struct bvec4 : System.IFormattable {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public bvec4() {}
-    public bvec4(uint XYZW)                      {U = XYZW;}
     public bvec4(byte X, byte Y, byte Z, byte W) {x=X; y=Y; z=Z; w=W;}
-  //public bvec4( int X,  int Y,  int Z,  int W) {x=ClampToByte(X); y=ClampToByte(Y); z=ClampToByte(Z); w=ClampToByte(W);}
+    public bvec4(uint XYZW)                      {U = XYZW;}
 
     //==========================================================================================================================================================
     //                                                               Tuple "Constructor"
-    [Impl(AggressiveInlining)] public static implicit operator bvec4( (byte X, byte Y, byte Z, byte W) t ) => new bvec4(t.X, t.Y, t.Z, t.W);
-  //[Impl(AggressiveInlining)] public static implicit operator bvec4( ( int X,  int Y,  int Z,  int W) t ) => new bvec4(t.X, t.Y, t.Z, t.W);
+    [Impl(AggressiveInlining)] public static implicit operator bvec4((byte X, byte Y, byte Z, byte W) t) => new bvec4(t.X, t.Y, t.Z, t.W);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -76,8 +74,8 @@ internal struct bvec4 : System.IFormattable {
     [Impl(AggressiveInlining)] public static bvec4 operator ^(bvec4 A, uint  B) => (A.U ^ B  );
     [Impl(AggressiveInlining)] public static bvec4 operator ^(uint  A, bvec4 B) => (A   ^ B.U);
 
-    [Impl(AggressiveInlining)] public static bvec4 operator <<(bvec4 A, int n) => (A.U << n);
-    [Impl(AggressiveInlining)] public static bvec4 operator >>(bvec4 A, int n) => (A.U >> n);
+    [Impl(AggressiveInlining)] public static bvec4 operator <<(bvec4 A, int n)  => (A.U << n);
+    [Impl(AggressiveInlining)] public static bvec4 operator >>(bvec4 A, int n)  => (A.U >> n);
 
     //==========================================================================================================================================================
     //  Operators Logical:  ==  !=  <  >  <=  >=     ( ! && || )
@@ -112,11 +110,8 @@ internal struct bvec4 : System.IFormattable {
     //==========================================================================================================================================================
     public readonly override string ToString() => $"({this.x,3}, {this.y,3}, {this.z,3}, {this.w,3})";
 
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //  Required by "object" type:
+    //==========================================================================================================================================================
+    //  Required by types that implement "==" or "!=" operator:
     public readonly override bool Equals(object obj) => false;
     public readonly override int GetHashCode() => 0;
 

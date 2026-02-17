@@ -45,17 +45,17 @@ internal static partial class VEC_Generate {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //      LINE(  A = (x,y), B = (x,y),    Segs = 2, Rds = 1f  )
+    //  Segments is per-Quadrant.
     //
     //                        0            9
-    //                    1 .-+------------+-. 8
+    //                    1 ,-+------------+-, 8
     //                     / \|            |/ \
     //                  2 +---a------------b---+ 7
     //                     \ /|            |\ /
     //                    3 *-+------------+-* 6
     //                        4            5
     //
-    //  Segments is per-Quadrant.
+    //      Polygon2_Line(  A:(x,y), B:(x,y),    Segments:2, Radius:1f  )
     //
     internal static vec2[] Polygon2_Line(vec2 A, vec2 B, int Segments, float Radius = 1f) {
         Segments = max(1, Segments);
@@ -83,10 +83,11 @@ internal static partial class VEC_Generate {
 
             for (int iSeg = 1; iSeg < Segments; ++iSeg) {
                 nP = rot(P0, ThetaStep * (float)iSeg);
-                P[   iSeg] = A + Radius*nP;
-                P[i1+iSeg] = A + Radius*new vec2(-nP.y,  nP.x);
-                P[i2+iSeg] = B + Radius*new vec2(-nP.x, -nP.y);
-                P[i3+iSeg] = B + Radius*new vec2( nP.y, -nP.x);
+
+                P[iSeg   ] = A +           nP          *Radius;
+                P[iSeg+i1] = A + new vec2(-nP.y,  nP.x)*Radius;
+                P[iSeg+i2] = B + new vec2(-nP.x, -nP.y)*Radius;
+                P[iSeg+i3] = B + new vec2( nP.y, -nP.x)*Radius;
             }
         }
 

@@ -1,91 +1,92 @@
+using Stopwatch = System.Diagnostics.Stopwatch;
 
 namespace Utility;
+//internal ref struct Time {
 internal struct Time {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal float Delta      { get; private set; }
+    public  f64 Delta64                { get; private set; }
+    public  f32 Delta                  { get; private set; }
 
-    internal float SinceStart { get; private set; }
+    public  f64 DeltaAvg_Weight = 1d/24d;
+    public  f64 DeltaAvg64             { get; private set; }
+    public  f32 DeltaAvg               { get; private set; }
 
-    //
-    //  vec4( 1 hertz, 10 hertz, 30 hertz, 60 hertz )
-    //
-  //internal vec4 Cos { get; private set; }
-  //internal vec4 Sin { get; private set; }
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+  //public  vec4 Cos                   { get; private set; } //  ( 1 hertz, 10 hertz, 30 hertz, 60 hertz )
+  //public  vec4 Sin                   { get; private set; }
 
-    //==========================================================================================================================================================
-    private double PrevFrame;
-    private double ThisFrame;
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    public  f64 SinceStart64           { get; private set; }
+    public  f32 SinceStart             { get; private set; }
 
-    private double Seconds;
-    private ulong  Minutes;
-    private ulong  Hours;
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    private s64 PrevFrame = 0;
+    private s64 ThisFrame = 0;
 
-    private System.Diagnostics.Stopwatch Timer; //  https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.stopwatch?view=net-8.0
-    private bool TimerReset;
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    private f64 Seconds = 0;
+    private s64 Minutes = 0;
+    private s64 Hours   = 0;
+
+    public  string HMS => $"{Hours:00}:{Minutes:00}:{Seconds:00.000000}";
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    private f64  Frqncy = 0d;
+    public  s64  Frequency => Stopwatch.Frequency;         //  Ticks PerSecond.                    10,000,000      1/t == 0.000_000_1      0.1 MicroSeconds
+    public  bool IsHighRes => Stopwatch.IsHighResolution;  //                                      true
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    public Time() {
-        this.Delta = 0f;
+    public Time() : this(1d/24d) {}
+    public Time(f64 Weight = 1d/24d) {
+        this.Delta        = 0f;
+        this.Delta64      = 0d;
 
-      //this.Cos = new vec4();
-      //this.Sin = new vec4();
+        this.SinceStart   = 0f;
+        this.SinceStart64 = 0d;
 
-        this.PrevFrame = 0d;
-        this.ThisFrame = 0d;
+        this.DeltaAvg_Weight = Weight;
+        this.DeltaAvg64 = 1d/60d;
+        this.DeltaAvg   = f32(this.DeltaAvg64);
 
-        this.Seconds = 0f;
-        this.Minutes = 0;
-        this.Hours   = 0;
+        this.Frqncy = f64(Stopwatch.Frequency);
 
-        this.Timer      = System.Diagnostics.Stopwatch.StartNew();
-        this.TimerReset = false;
+        this.ThisFrame = Stopwatch.GetTimestamp();
+        this.PrevFrame = this.ThisFrame;
     }
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    public override string ToString() =>
-        $"Time(  Delta: {Delta,9:0.0000000}    SinceStart: {SinceStart,11:0.0000000}    HhMmSs: {Hours:00}:{Minutes:00}:{Seconds:00.000000}  )"
-      //$"Time(  Delta: {Delta,9:0.0000000}    SinceStart: {SinceStart,9:0.0000000}    Cos: {Cos,9:0.000000}   Sin: {Sin,9:0.000000}  )"
-        + (TimerReset ? " ***" : "");
+    //public void Update(f64 Speed = 1d) {
+    public void Update() {
+        this.ThisFrame = Stopwatch.GetTimestamp();
 
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    internal void Update() { //(double Speed = 1d) {
-        this.ThisFrame = this.Timer.Elapsed.TotalSeconds;
+        this.Delta64 = f64(this.ThisFrame-this.PrevFrame) / this.Frqncy;
+        this.Delta   = f32(this.Delta64);
 
-        if (this.ThisFrame >= 60d) {    //  Maintain "Time.Delta" float32-precision to: ~0.000_001 Seconds (1 MicroSecond)
-            this.Timer.Restart();       //  Reset timer as soon as possible.
-            this.TimerReset = true;
-        } else {
-            this.TimerReset = false;
-        }
+        this.DeltaAvg64 += (this.Delta64 - this.DeltaAvg64) * DeltaAvg_Weight;
+        this.DeltaAvg    = f32(this.DeltaAvg64);
 
-        this.Delta      = (float)(this.ThisFrame - this.PrevFrame);
-      //this.Delta      = (float)((this.ThisFrame - this.PrevFrame) * Speed);
-
-        this.SinceStart = (float)( (double)(this.Hours*3600 + this.Minutes*60) + this.ThisFrame );
-      //this.SinceStart = (float)(((double)(this.Hours*3600 + this.Minutes*60) + this.ThisFrame) * Speed);
-
-      //(this.Sin.x, this.Cos.x) = ((float, float))Math.SinCos( this.ThisFrame * 0.10471975511965977462 ); //  1 hertz
-      //(this.Sin.y, this.Cos.y) = ((float, float))Math.SinCos( this.ThisFrame * 1.04719755119659774615 ); // 10 hertz  https://www.desmos.com/calculator/e4f49ebeb2
-      //(this.Sin.z, this.Cos.z) = ((float, float))Math.SinCos( this.ThisFrame * 3.14159265358979323846 ); // 30 hertz
-      //(this.Sin.w, this.Cos.w) = ((float, float))Math.SinCos( this.ThisFrame * 6.28318530717958647693 ); // 60 hertz
-
-        if (this.TimerReset) {
-            this.Seconds   = 0d;
-            this.PrevFrame = 0d;
-
-            this.Minutes += 1;
+        this.Seconds += this.Delta64;
+        if (this.Seconds >= 60d) {
+            this.Seconds -= 60d;
+            this.Minutes +=  1;
             if (this.Minutes >= 60) {
-                this.Minutes  = 0;
-                this.Hours   += 1;
+                this.Minutes -= 60;
+                this.Hours   +=  1;
             }
-        } else {
-            this.Seconds   = this.ThisFrame;
-            this.PrevFrame = this.ThisFrame;
         }
+
+        this.SinceStart64 = f64(this.Hours*3600L + this.Minutes*60L) + this.Seconds;
+        this.SinceStart   = f32(this.SinceStart64);
+
+        this.PrevFrame = this.ThisFrame;
+
+        //(this.Sin.x, this.Cos.x) = ((f32, f32))Math.SinCos(this.Seconds * 0.10471975511965977462d); //  1 hertz
+        //(this.Sin.y, this.Cos.y) = ((f32, f32))Math.SinCos(this.Seconds * 1.04719755119659774615d); // 10 hertz  https://www.desmos.com/calculator/e4f49ebeb2
+        //(this.Sin.z, this.Cos.z) = ((f32, f32))Math.SinCos(this.Seconds * 3.14159265358979323846d); // 30 hertz
+        //(this.Sin.w, this.Cos.w) = ((f32, f32))Math.SinCos(this.Seconds * 6.28318530717958647693d); // 60 hertz
     }
 
     //##########################################################################################################################################################

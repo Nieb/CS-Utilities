@@ -22,15 +22,10 @@ internal struct mat4 {
     [FieldOffset(48)] public float xw;  [FieldOffset(52)] public float yw;  [FieldOffset(56)] public float zw;  [FieldOffset(60)] public float ww;
 
     //==========================================================================================================================================================
-    public vec4 Col0 {  get => new vec4(xx, xy, xz, xw);  set {xx=value.x; xy=value.y; xz=value.z; xw=value.w;}  }
-    public vec4 Col1 {  get => new vec4(yx, yy, yz, yw);  set {yx=value.x; yy=value.y; yz=value.z; yw=value.w;}  }
-    public vec4 Col2 {  get => new vec4(zx, zy, zz, zw);  set {zx=value.x; zy=value.y; zz=value.z; zw=value.w;}  }
-    public vec4 Col3 {  get => new vec4(wx, wy, wz, ww);  set {wx=value.x; wy=value.y; wz=value.z; ww=value.w;}  }
-
-    public vec4 ColX {  get => new vec4(xx, xy, xz, xw);  set {xx=value.x; xy=value.y; xz=value.z; xw=value.w;}  }
-    public vec4 ColY {  get => new vec4(yx, yy, yz, yw);  set {yx=value.x; yy=value.y; yz=value.z; yw=value.w;}  }
-    public vec4 ColZ {  get => new vec4(zx, zy, zz, zw);  set {zx=value.x; zy=value.y; zz=value.z; zw=value.w;}  }
-    public vec4 ColW {  get => new vec4(wx, wy, wz, ww);  set {wx=value.x; wy=value.y; wz=value.z; ww=value.w;}  }
+    public vec4 Col0 {get => new vec4(xx,xy,xz,xw); set {xx=value.x; xy=value.y; xz=value.z; xw=value.w;}}
+    public vec4 Col1 {get => new vec4(yx,yy,yz,yw); set {yx=value.x; yy=value.y; yz=value.z; yw=value.w;}}
+    public vec4 Col2 {get => new vec4(zx,zy,zz,zw); set {zx=value.x; zy=value.y; zz=value.z; zw=value.w;}}
+    public vec4 Col3 {get => new vec4(wx,wy,wz,ww); set {wx=value.x; wy=value.y; wz=value.z; ww=value.w;}}
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     [FieldOffset( 0)] public vec4 Row0;
@@ -38,64 +33,18 @@ internal struct mat4 {
     [FieldOffset(32)] public vec4 Row2;
     [FieldOffset(48)] public vec4 Row3;
 
-    [FieldOffset( 0)] public vec4 RowX;
-    [FieldOffset(16)] public vec4 RowY;
-    [FieldOffset(32)] public vec4 RowZ;
-    [FieldOffset(48)] public vec4 RowW;
-
     //==========================================================================================================================================================
+    [FieldOffset(0)] private InlineArray16_Float index = default;
+
     public float this[int i] {
-        get {
-            switch (i) {
-                case  0:return xx;  case  1:return yx;  case  2:return zx;  case  3:return wx;
-                case  4:return xy;  case  5:return yy;  case  6:return zy;  case  7:return wy;
-                case  8:return xz;  case  9:return yz;  case 10:return zz;  case 11:return wz;
-                case 12:return xw;  case 13:return yw;  case 14:return zw;  case 15:return ww;
-            }
-            throw new System.IndexOutOfRangeException();
-        }
-        set {
-            switch (i) {
-                case  0:xx = value;return;  case  1:yx = value;return;  case  2:zx = value;return;  case  3:wx = value;return;
-                case  4:xy = value;return;  case  5:yy = value;return;  case  6:zy = value;return;  case  7:wy = value;return;
-                case  8:xz = value;return;  case  9:yz = value;return;  case 10:zz = value;return;  case 11:wz = value;return;
-                case 12:xw = value;return;  case 13:yw = value;return;  case 14:zw = value;return;  case 15:ww = value;return;
-            }
-            throw new System.IndexOutOfRangeException();
-        }
+        get => this.index[i];
+        set => this.index[i] = value;
     }
 
-    //----------------------------------------------------------------------------------------------------------------------------------------------------------
     public float this[int x, int y] {
-        get {
-            switch (y) {
-                case 0:switch (x) {case 0:return xx;  case 1:return yx;  case 2:return zx;  case 3:return wx;} break;
-                case 1:switch (x) {case 0:return xy;  case 1:return yy;  case 2:return zy;  case 3:return wy;} break;
-                case 2:switch (x) {case 0:return xz;  case 1:return yz;  case 2:return zz;  case 3:return wz;} break;
-                case 3:switch (x) {case 0:return xw;  case 1:return yw;  case 2:return zw;  case 3:return ww;} break;
-            }
-            throw new System.IndexOutOfRangeException();
-        }
-        set {
-            switch (y) {
-                case 0:switch (x) {case 0:xx = value;return;  case 1:yx = value;return;  case 2:zx = value;return;  case 3:wx = value;return;} break;
-                case 1:switch (x) {case 0:xy = value;return;  case 1:yy = value;return;  case 2:zy = value;return;  case 3:wy = value;return;} break;
-                case 2:switch (x) {case 0:xz = value;return;  case 1:yz = value;return;  case 2:zz = value;return;  case 3:wz = value;return;} break;
-                case 3:switch (x) {case 0:xw = value;return;  case 1:yw = value;return;  case 2:zw = value;return;  case 3:ww = value;return;} break;
-            }
-            throw new System.IndexOutOfRangeException();
-        }
+        get =>                       (x<0 || x>3 || y<0 || y>3) ? throw new System.IndexOutOfRangeException() : this.index[x + 4*y];
+        set => this.index[x + 4*y] = (x<0 || x>3 || y<0 || y>3) ? throw new System.IndexOutOfRangeException() : value;
     }
-
-    //[FieldOffset(0)] private fixed float index[16];
-    //#if DEBUG
-    //    public readonly float this[int i]        => (i < 0 || i > 15)                  ? throw new System.IndexOutOfRangeException() : this.index[i];
-    //    public readonly float this[int x, int y] => (x < 0 || x > 3 || y < 0 || y > 3) ? throw new System.IndexOutOfRangeException() : this.index[x + 4*y];
-    //#else
-    //    public readonly float this[int i]        => this.index[i];
-    //    public readonly float this[int x, int y] => this.index[x + 4*y];
-    //#endif
-
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -127,27 +76,36 @@ internal struct mat4 {
     //##########################################################################################################################################################
     //  Operators Arithmetic:  +  -  *  /  %
 
-    public static mat4 operator *(mat4 A, mat4 B) => new mat4(
-        A.xx*B.xx + A.yx*B.xy + A.zx*B.xz + A.wx*B.xw,  // XX = dot( A.RowX, B.ColX )
-        A.xx*B.yx + A.yx*B.yy + A.zx*B.yz + A.wx*B.yw,  // YX = dot( A.RowX, B.ColY )
-        A.xx*B.zx + A.yx*B.zy + A.zx*B.zz + A.wx*B.zw,  // ZX = dot( A.RowX, B.ColZ )
-        A.xx*B.wx + A.yx*B.wy + A.zx*B.wz + A.wx*B.ww,  // WX = dot( A.RowX, B.ColW )
+    #if false
+        public static mat4 operator *(mat4 A, mat4 B) => new mat4(
+            dot(A.Row0, B.Col0),  dot(A.Row0, B.Col1),  dot(A.Row0, B.Col2),  dot(A.Row0, B.Col3),
+            dot(A.Row1, B.Col0),  dot(A.Row1, B.Col1),  dot(A.Row1, B.Col2),  dot(A.Row1, B.Col3),
+            dot(A.Row2, B.Col0),  dot(A.Row2, B.Col1),  dot(A.Row2, B.Col2),  dot(A.Row2, B.Col3),
+            dot(A.Row3, B.Col0),  dot(A.Row3, B.Col1),  dot(A.Row3, B.Col2),  dot(A.Row3, B.Col3)
+        );
+    #else
+        public static mat4 operator *(mat4 A, mat4 B) => new mat4(
+            A.xx*B.xx + A.yx*B.xy + A.zx*B.xz + A.wx*B.xw,  // XX = dot( A.Row0, B.Col0 )
+            A.xx*B.yx + A.yx*B.yy + A.zx*B.yz + A.wx*B.yw,  // YX = dot( A.Row0, B.Col1 )
+            A.xx*B.zx + A.yx*B.zy + A.zx*B.zz + A.wx*B.zw,  // ZX = dot( A.Row0, B.Col2 )
+            A.xx*B.wx + A.yx*B.wy + A.zx*B.wz + A.wx*B.ww,  // WX = dot( A.Row0, B.Col3 )
 
-        A.xy*B.xx + A.yy*B.xy + A.zy*B.xz + A.wy*B.xw,  // XY
-        A.xy*B.yx + A.yy*B.yy + A.zy*B.yz + A.wy*B.yw,  // YY
-        A.xy*B.zx + A.yy*B.zy + A.zy*B.zz + A.wy*B.zw,  // ZY
-        A.xy*B.wx + A.yy*B.wy + A.zy*B.wz + A.wy*B.ww,  // WY
+            A.xy*B.xx + A.yy*B.xy + A.zy*B.xz + A.wy*B.xw,  // XY
+            A.xy*B.yx + A.yy*B.yy + A.zy*B.yz + A.wy*B.yw,  // YY
+            A.xy*B.zx + A.yy*B.zy + A.zy*B.zz + A.wy*B.zw,  // ZY
+            A.xy*B.wx + A.yy*B.wy + A.zy*B.wz + A.wy*B.ww,  // WY
 
-        A.xz*B.xx + A.yz*B.xy + A.zz*B.xz + A.wz*B.xw,  // XZ
-        A.xz*B.yx + A.yz*B.yy + A.zz*B.yz + A.wz*B.yw,  // YZ
-        A.xz*B.zx + A.yz*B.zy + A.zz*B.zz + A.wz*B.zw,  // ZZ
-        A.xz*B.wx + A.yz*B.wy + A.zz*B.wz + A.wz*B.ww,  // WZ
+            A.xz*B.xx + A.yz*B.xy + A.zz*B.xz + A.wz*B.xw,  // XZ
+            A.xz*B.yx + A.yz*B.yy + A.zz*B.yz + A.wz*B.yw,  // YZ
+            A.xz*B.zx + A.yz*B.zy + A.zz*B.zz + A.wz*B.zw,  // ZZ
+            A.xz*B.wx + A.yz*B.wy + A.zz*B.wz + A.wz*B.ww,  // WZ
 
-        A.xw*B.xx + A.yw*B.xy + A.zw*B.xz + A.ww*B.xw,  // XW
-        A.xw*B.yx + A.yw*B.yy + A.zw*B.yz + A.ww*B.yw,  // YW
-        A.xw*B.zx + A.yw*B.zy + A.zw*B.zz + A.ww*B.zw,  // ZW
-        A.xw*B.wx + A.yw*B.wy + A.zw*B.wz + A.ww*B.ww   // WW
-    );
+            A.xw*B.xx + A.yw*B.xy + A.zw*B.xz + A.ww*B.xw,  // XW
+            A.xw*B.yx + A.yw*B.yy + A.zw*B.yz + A.ww*B.yw,  // YW
+            A.xw*B.zx + A.yw*B.zy + A.zw*B.zz + A.ww*B.zw,  // ZW
+            A.xw*B.wx + A.yw*B.wy + A.zw*B.wz + A.ww*B.ww   // WW
+        );
+    #endif
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //
@@ -168,21 +126,20 @@ internal struct mat4 {
         public static vec4 operator *(vec4 V, mat4 M) => new vec4(fma(V.x,M.xx, fma(V.y,M.yx, fma(V.z,M.zx, (V.w*M.wx)))),
                                                                   fma(V.x,M.xy, fma(V.y,M.yy, fma(V.z,M.zy, (V.w*M.wy)))),
                                                                   fma(V.x,M.xz, fma(V.y,M.yz, fma(V.z,M.zz, (V.w*M.wz)))),
-                                                                  fma(V.x,M.xw, fma(V.y,M.yw, fma(V.z,M.zw, (V.w*M.ww)))));
+                                                                  fma(V.x,M.xw, fma(V.y,M.yw, fma(V.z,M.zw, (V.w*M.ww)))) );
 
         public static vec3 operator *(vec3 V, mat4 M) => new vec3(fma(V.x,M.xx, fma(V.y,M.yx, (V.z*M.zx))),
                                                                   fma(V.x,M.xy, fma(V.y,M.yy, (V.z*M.zy))),
-                                                                  fma(V.x,M.xz, fma(V.y,M.yz, (V.z*M.zz))));
-
+                                                                  fma(V.x,M.xz, fma(V.y,M.yz, (V.z*M.zz))) );
     #else
         public static vec4 operator *(vec4 V, mat4 M) => new vec4(V.x*M.xx + V.y*M.yx + V.z*M.zx + V.w*M.wx,
                                                                   V.x*M.xy + V.y*M.yy + V.z*M.zy + V.w*M.wy,
                                                                   V.x*M.xz + V.y*M.yz + V.z*M.zz + V.w*M.wz,
-                                                                  V.x*M.xw + V.y*M.yw + V.z*M.zw + V.w*M.ww);
+                                                                  V.x*M.xw + V.y*M.yw + V.z*M.zw + V.w*M.ww );
 
-        public static vec3 operator *(vec3 V, mat4 M) => new vec3(V.x*M.xx + V.y*M.yx + V.z*M.zx,
-                                                                  V.x*M.xy + V.y*M.yy + V.z*M.zy,
-                                                                  V.x*M.xz + V.y*M.yz + V.z*M.zz);
+        public static vec3 operator *(vec3 V, mat4 M) => new vec3(V.x*M.xx + V.y*M.yx + V.z*M.zx,     // + V.w*M.wx,
+                                                                  V.x*M.xy + V.y*M.yy + V.z*M.zy,     // + V.w*M.wy,
+                                                                  V.x*M.xz + V.y*M.yz + V.z*M.zz );   // + V.w*M.wz
     #endif
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -201,6 +158,7 @@ internal struct mat4 {
     //          |  Rx   Ry   Rz   Rw
     //
 
+
     //==========================================================================================================================================================
     //  Operators Bitwise:  ~    &    |   ^    <<          >>           >>>
     //                      NOT  AND  OR  XOR  SHIFT_LEFT  SHIFT_RIGHT  SHIFT_RIGHT(also shifts signed-bit)
@@ -208,32 +166,29 @@ internal struct mat4 {
     //==========================================================================================================================================================
     //  Operators Logical:  ==  !=  <  >  <=  >=     ( ! && || )
 
-    public static bool operator ==(mat4 A, mat4 B) => (A.xx==B.xx  &&  A.yx==B.yx  &&  A.zx==B.zx  &&  A.wx==B.wx  &&
-                                                       A.xy==B.xy  &&  A.yy==B.yy  &&  A.zy==B.zy  &&  A.wy==B.wy  &&
-                                                       A.xz==B.xz  &&  A.yz==B.yz  &&  A.zz==B.zz  &&  A.wz==B.wz  &&
-                                                       A.xw==B.xw  &&  A.yw==B.yw  &&  A.zw==B.zw  &&  A.ww==B.ww);
+    public static bool operator ==(mat4 A, mat4 B) => (A.xx==B.xx && A.yx==B.yx && A.zx==B.zx && A.wx==B.wx &&
+                                                       A.xy==B.xy && A.yy==B.yy && A.zy==B.zy && A.wy==B.wy &&
+                                                       A.xz==B.xz && A.yz==B.yz && A.zz==B.zz && A.wz==B.wz &&
+                                                       A.xw==B.xw && A.yw==B.yw && A.zw==B.zw && A.ww==B.ww );
 
-    public static bool operator !=(mat4 A, mat4 B) => (A.xx!=B.xx  ||  A.yx!=B.yx  ||  A.zx!=B.zx  ||  A.wx!=B.wx  ||
-                                                       A.xy!=B.xy  ||  A.yy!=B.yy  ||  A.zy!=B.zy  ||  A.wy!=B.wy  ||
-                                                       A.xz!=B.xz  ||  A.yz!=B.yz  ||  A.zz!=B.zz  ||  A.wz!=B.wz  ||
-                                                       A.xw!=B.xw  ||  A.yw!=B.yw  ||  A.zw!=B.zw  ||  A.ww!=B.ww);
+    public static bool operator !=(mat4 A, mat4 B) => (A.xx!=B.xx || A.yx!=B.yx || A.zx!=B.zx || A.wx!=B.wx ||
+                                                       A.xy!=B.xy || A.yy!=B.yy || A.zy!=B.zy || A.wy!=B.wy ||
+                                                       A.xz!=B.xz || A.yz!=B.yz || A.zz!=B.zz || A.wz!=B.wz ||
+                                                       A.xw!=B.xw || A.yw!=B.yw || A.zw!=B.zw || A.ww!=B.ww );
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public readonly override string ToString() => $"""
-        |  {xx,6:0.000}  {yx,6:0.000}  {zx,6:0.000}  {wx,6:0.000}  |
-        |  {xy,6:0.000}  {yy,6:0.000}  {zy,6:0.000}  {wy,6:0.000}  |
-        |  {xz,6:0.000}  {yz,6:0.000}  {zz,6:0.000}  {wz,6:0.000}  |
-        |  {xw,6:0.000}  {yw,6:0.000}  {zw,6:0.000}  {ww,6:0.000}  |
+        |  {xx,8:0.00000}  {yx,8:0.00000}  {zx,8:0.00000}  {wx,8:0.00000}  |
+        |  {xy,8:0.00000}  {yy,8:0.00000}  {zy,8:0.00000}  {wy,8:0.00000}  |
+        |  {xz,8:0.00000}  {yz,8:0.00000}  {zz,8:0.00000}  {wz,8:0.00000}  |
+        |  {xw,8:0.00000}  {yw,8:0.00000}  {zw,8:0.00000}  {ww,8:0.00000}  |
     """;
 
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //  Required by "object" type:
+    //==========================================================================================================================================================
+    //  Required by types that implement "==" or "!=" operator:
     public readonly override bool Equals(object obj) => false;
     public readonly override int GetHashCode() => 0;
 

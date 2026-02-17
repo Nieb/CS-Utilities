@@ -13,7 +13,6 @@ internal static partial class VEC_Blend {
     internal static v3 Blend_Screen(v3 S, v1 D) => (S+D - S*D);
     internal static v3 Blend_Screen(v1 S, v3 D) => (S+D - S*D);
 
-
     //==========================================================================================================================================================
     internal static v1 Blend_Overlay(v1 S, v1 D) => (D <= 0.5f) ?      2f*(   S)*(   D)
                                                                 : 1f - 2f*(1f-S)*(1f-D);
@@ -39,7 +38,6 @@ internal static partial class VEC_Blend {
     internal static v3 Blend_HardLight(v3 S, v1 D) => new v3(Blend_HardLight(S.r, D  ),Blend_HardLight(S.g, D  ),Blend_HardLight(S.b, D  ));
     internal static v3 Blend_HardLight(v1 S, v3 D) => new v3(Blend_HardLight(S  , D.r),Blend_HardLight(S  , D.g),Blend_HardLight(S  , D.b));
 
-
     //==========================================================================================================================================================
     internal static v1 Blend_Difference(v1 S, v1 D) => abs(D-S);
     internal static v3 Blend_Difference(v3 S, v3 D) => abs(D-S);
@@ -51,7 +49,6 @@ internal static partial class VEC_Blend {
     internal static v3 Blend_Exclusion(v3 S, v3 D) => (S+D - 2f*S*D);
     internal static v3 Blend_Exclusion(v3 S, v1 D) => (S+D - 2f*S*D);
     internal static v3 Blend_Exclusion(v1 S, v3 D) => (S+D - 2f*S*D);
-
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -69,21 +66,28 @@ internal static partial class VEC_Blend {
       Invert(S,D)             =     1-D
       Invert_RGB(S,D)         = S*(1-D)
 
-
       HardMix(S,D)            = (S+D < 1) ? 0 : 1
 
 
-      LinearDodge(S,D)        = (S+D <= 1) ?  S+D    : 1
-      LinearBurn(S,D)         = (S+D >  1) ?  S+D-1  : 0
 
+
+
+
+      LinearDodge(S,D)        = (S+D <= 1) ?  S+D    : 1
 
       ColorDodge(S,D)         = (D <= 0           ) ? 0
                                 (D >  0 and S <  1) ? min(1, D/(1-S))
                                 (D >  0 and S >= 1) ? 1
 
+
+
+      LinearBurn(S,D)         = (S+D >  1) ?  S+D-1  : 0
+
       ColorBurn(S,D)          = (D >= 1           ) ? 1
                                 (D <  1 and S >  0) ? 1 - min(1, (1-D)/S)
                                 (D <  1 and S <= 0) ? 0
+
+
 
 
 

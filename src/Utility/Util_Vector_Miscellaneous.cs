@@ -44,8 +44,8 @@ internal static partial class VEC_Miscellaneous {
 
         float Scaler = 1f / cross(dAB, dAC);
 
-        float wB = cross(dAP, dAC) * Scaler;
         float wC = cross(dAB, dAP) * Scaler;
+        float wB = cross(dAP, dAC) * Scaler;
         float wA = 1f - wB - wC;
 
         return new vec3(wA, wB, wC);
@@ -54,44 +54,48 @@ internal static partial class VEC_Miscellaneous {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
+    //  https://www.desmos.com/calculator/2uan3xr9qq
+    //
     //  Test if a Point is inside of a Triangle's CircumCircle.
     //
     //      "Tolerance" is to prevent symmetrical triangles from getting stuck in an EdgeFlip loop.
+    //          Value should be (T > 1.0) and (T < 1.1~)
     //
-    internal static bool Delaunay(vec2 P, vec2 Ta, vec2 Tb, vec2 Tc, float Tolerance = 0.001f) {
+    internal static bool Delaunay(vec2 P, vec2 Ta, vec2 Tb, vec2 Tc, float Tolerance = 1.0001f) {
         vec2 dAB = Tb-Ta;
         vec2 dAC = Tc-Ta;
 
         float Determinant = cross(dAB, dAC);
 
         vec2  Cp;   //  CircumCircle-Position
-        float CrCr; //  CircumCircle-Radius Squared
+        float CrCr; //  CircumCircle-Radius   Squared
 
         if (abs(Determinant) < EPSILON) {
             //  Triangle points are Collinear, define CircumCircle by delta between furthest points.
-            vec2 Min = min(Ta, Tb, Tc);
-            vec2 Max = max(Ta, Tb, Tc);
+            vec2 Tmin = min(Ta, Tb, Tc);
+            vec2 Tmax = max(Ta, Tb, Tc);
 
-            Cp = (Min + Max) * 0.5f;
+            Cp = (Tmin + Tmax) * 0.5f;
 
-            CrCr = dot(Cp-Min);
+            CrCr = dot(Cp-Tmin);
 
         } else {
-            //float AB_AB = dot(dAB, Ta+Tb); //  Local-space dotted with World-space sum, what is this doing???
-            //float AC_AC = dot(dAC, Ta+Tc);
-
-            float AA_BB = dot(Tb) - dot(Ta);
-            float AA_CC = dot(Tc) - dot(Ta);
+            float AB_AB = dot(dAB, Ta+Tb);
+            float AC_AC = dot(dAC, Ta+Tc);
 
             Cp = new vec2(
-                (dAC.y*AA_BB - dAB.y*AA_CC) / (2f * Determinant),
-                (dAB.x*AA_CC - dAC.x*AA_BB) / (2f * Determinant)
+                (dAC.y*AB_AB - dAB.y*AC_AC),
+                (dAB.x*AC_AC - dAC.x*AB_AB)
             );
+            Cp /= (2f * Determinant);
 
             CrCr = dot(Cp-Ta);
         }
 
-        return dot(Cp-P)+Tolerance < CrCr;
+        //  Scale Delta by Tolerance, because precision-error scales with magnitude.
+        //  Do so before squaring, because a linear value doesn't work in "squared-space".
+        //  All this to avoid a couple of pesky sqrts.  :P
+        return dot((Cp-P) * Tolerance) < CrCr;
     }
 
     //##########################################################################################################################################################
@@ -101,11 +105,41 @@ internal static partial class VEC_Miscellaneous {
     //
     //  https://www.desmos.com/3d/p8hvpd8xwz
     //
-    //  Falloff infinitely approaches zero.  AKA: "asymptotic"
+    //  Falloff infinitely approaches zero.  AKA: Asymptotic
     //
-    internal static float Gaussian(float x, float y)          => exp(-pow(x  , 2f) - pow(y  , 2f));
+    //  Result < 0.1         at radius: 1.51742712939~
+    //  Result < 0.01        at radius: 2.14596602629~
+    //  Result < 0.001       at radius: 2.62826088488~
+    //
+    //  Result < 0.0001      at radius: 3.03485425877~
+    //  Result < 0.00001     at radius: 3.39307021221~
+    //  Result < 0.000001    at radius: 3.71692218885~
+    //
+    //  Result < 0.0000001   at radius: 4.01473481702~
+    //  Result < 0.00000001  at radius: 4.29193205258~
+    //  Result < 0.000000001 at radius: 4.55228138816~
+    //
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    [Impl(AggressiveInlining)] internal static v1  Gaussian(v1 x)               => exp(-(x*x));
+    [Impl(AggressiveInlining)] internal static v1 iGaussian(v1 y)               => sqrt(-log(y));
 
-    internal static float Gaussian(float x, float y, float S) => exp(-pow(x/S, 2f) - pow(y/S, 2f));
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    [Impl(AggressiveInlining)] internal static v1  Gaussian(v1 x, v1 y)         => exp(-sq(x  ) - sq(y  ));
+    [Impl(AggressiveInlining)] internal static v1  Gaussian(v1 x, v1 y, v1 S)   => exp(-sq(x/S) - sq(y/S));
+
+    [Impl(AggressiveInlining)] internal static v1  Gaussian(v2 V)               => Gaussian(V.x, V.y);
+
+    //==========================================================================================================================================================
+    //
+    //  https://www.desmos.com/calculator/ku1ahcyzyw
+    //  https://www.desmos.com/3d/gohoq8tutz
+    //
+    //  "x * PI" gives a period of 2, instead of PI.
+    //
+    //  NOTE:   Formula undefined at zero.
+    //              Lanczos(0.0) == NaN
+    //
+    internal static v1 Lanczos(v1 x) {x = x*PI;  return (2f * sin(x) * sin(x/2f)) / (x*x);}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

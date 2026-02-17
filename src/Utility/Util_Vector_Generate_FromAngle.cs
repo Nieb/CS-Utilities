@@ -38,6 +38,7 @@ internal static partial class VEC_Generate {
     //  Vector3  FROM  Pitch.
     //  Result on plane spanning YZ.
     //
+    //
     //      (-180) == ( 0, 0, 1)
     //      ( -90) == ( 0, 1, 0)
     //      (   0) == ( 0, 0,-1)
@@ -92,7 +93,7 @@ internal static partial class VEC_Generate {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //  Vector3  FROM  Pitch & Yaw.
+    //  Vector3  FROM  (Pitch, Yaw).
     //
     //      (  0,   0) == ( 0, 0,-1)
     //      (  0,  90) == ( 1, 0, 0)
@@ -108,9 +109,9 @@ internal static partial class VEC_Generate {
         float CosPch = cos(Pch);
 
         return new vec3(
-             CosPch * sin(Yaw),
-                     -sin(Pch),
-            -CosPch * cos(Yaw)
+              CosPch * sin(Yaw),
+            -sin(Pch),
+             -CosPch * cos(Yaw)
         );
     }
 

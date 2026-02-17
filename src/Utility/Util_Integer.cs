@@ -29,11 +29,13 @@ internal static class INT {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     //                                                                  "Absolute" Value
     //  NOTE:  Does not check for overflow.    -(-2_147_483_648)
     //
-    [Impl(AggressiveInlining)] internal static sbyte abs(sbyte A) =>  i8((A >= 0) ? A : -A);
-    [Impl(AggressiveInlining)] internal static short abs(short A) => i16((A >= 0) ? A : -A);
+    [Impl(AggressiveInlining)] internal static sbyte abs(sbyte A) =>  s8((A >= 0) ? A : -A);
+    [Impl(AggressiveInlining)] internal static short abs(short A) => s16((A >= 0) ? A : -A);
     [Impl(AggressiveInlining)] internal static   int abs(  int A) =>     (A >= 0) ? A : -A;
     [Impl(AggressiveInlining)] internal static  long abs( long A) =>     (A >= 0) ? A : -A;
 
@@ -61,9 +63,14 @@ internal static class INT {
     //      wrap( A, LowerBounds, UpperBounds )
     //      wrap( A,              UpperBounds )     LowerBounds == 0
     //
-    [Impl(AggressiveInlining)] internal static int wrap(int A, int L, int U) {int Range = U-L;  A = (A-L) % Range;  return A+L + ((A < 0) ? Range : 0);}
+    [Impl(AggressiveInlining)] internal static int wrap(int A, int L, int U) {int Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0) ? Domain : 0);}
 
-    [Impl(AggressiveInlining)] internal static int wrap(int A,        int U) {                  A = (A    %    U);  return A   + ((A < 0) ?     U : 0);}
+    [Impl(AggressiveInlining)] internal static int wrap(int A,        int U) {                   A = (A    %     U);  return A   + ((A < 0) ?      U : 0);}
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    [Impl(AggressiveInlining)] internal static int prev(int i, int U) => (--i <  0) ? U-1 : i;
+
+    [Impl(AggressiveInlining)] internal static int next(int i, int U) => (++i >= U) ?   0 : i;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -78,6 +85,21 @@ internal static class INT {
                                                                                               : ((B < C) ? ((B < D) ? B : D)
                                                                                                          : ((C < D) ? C : D));
 
+    [Impl(AggressiveInlining)] internal static iv2 min(iv2 A, int B)               => new iv2(min(A.x,B          ), min(A.y,B          ));
+    [Impl(AggressiveInlining)] internal static iv2 min(iv2 A, iv2 B)               => new iv2(min(A.x,B.x        ), min(A.y,B.y        ));
+    [Impl(AggressiveInlining)] internal static iv2 min(iv2 A, iv2 B, iv2 C)        => new iv2(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ));
+    [Impl(AggressiveInlining)] internal static iv2 min(iv2 A, iv2 B, iv2 C, iv2 D) => new iv2(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y));
+
+    [Impl(AggressiveInlining)] internal static iv3 min(iv3 A, int B)               => new iv3(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ));
+    [Impl(AggressiveInlining)] internal static iv3 min(iv3 A, iv3 B)               => new iv3(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ));
+    [Impl(AggressiveInlining)] internal static iv3 min(iv3 A, iv3 B, iv3 C)        => new iv3(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ));
+    [Impl(AggressiveInlining)] internal static iv3 min(iv3 A, iv3 B, iv3 C, iv3 D) => new iv3(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z));
+
+    [Impl(AggressiveInlining)] internal static iv4 min(iv4 A, int B)               => new iv4(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ), min(A.w,B          ));
+    [Impl(AggressiveInlining)] internal static iv4 min(iv4 A, iv4 B)               => new iv4(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ), min(A.w,B.w        ));
+    [Impl(AggressiveInlining)] internal static iv4 min(iv4 A, iv4 B, iv4 C)        => new iv4(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ), min(A.w,B.w,C.w    ));
+    [Impl(AggressiveInlining)] internal static iv4 min(iv4 A, iv4 B, iv4 C, iv4 D) => new iv4(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z), min(A.w,B.w,C.w,D.w));
+
     //==========================================================================================================================================================
     //                                                                  "Maximum" Value
     [Impl(AggressiveInlining)] internal static int max(int A, int B)               => (A > B) ? A : B;
@@ -89,6 +111,28 @@ internal static class INT {
                                                                                                          : ((C > D) ? C : D))
                                                                                               : ((B > C) ? ((B > D) ? B : D)
                                                                                                          : ((C > D) ? C : D));
+
+    [Impl(AggressiveInlining)] internal static iv2 max(iv2 A, int B)               => new iv2(max(A.x,B          ), max(A.y,B          ));
+    [Impl(AggressiveInlining)] internal static iv2 max(iv2 A, iv2 B)               => new iv2(max(A.x,B.x        ), max(A.y,B.y        ));
+    [Impl(AggressiveInlining)] internal static iv2 max(iv2 A, iv2 B, iv2 C)        => new iv2(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ));
+    [Impl(AggressiveInlining)] internal static iv2 max(iv2 A, iv2 B, iv2 C, iv2 D) => new iv2(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y));
+
+    [Impl(AggressiveInlining)] internal static iv3 max(iv3 A, int B)               => new iv3(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ));
+    [Impl(AggressiveInlining)] internal static iv3 max(iv3 A, iv3 B)               => new iv3(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ));
+    [Impl(AggressiveInlining)] internal static iv3 max(iv3 A, iv3 B, iv3 C)        => new iv3(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ));
+    [Impl(AggressiveInlining)] internal static iv3 max(iv3 A, iv3 B, iv3 C, iv3 D) => new iv3(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z));
+
+    [Impl(AggressiveInlining)] internal static iv4 max(iv4 A, int B)               => new iv4(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ), max(A.w,B          ));
+    [Impl(AggressiveInlining)] internal static iv4 max(iv4 A, iv4 B)               => new iv4(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ), max(A.w,B.w        ));
+    [Impl(AggressiveInlining)] internal static iv4 max(iv4 A, iv4 B, iv4 C)        => new iv4(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ), max(A.w,B.w,C.w    ));
+    [Impl(AggressiveInlining)] internal static iv4 max(iv4 A, iv4 B, iv4 C, iv4 D) => new iv4(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z), max(A.w,B.w,C.w,D.w));
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //                                                                      "Modulo"
+    //  Based on Euclidean-Division.
+    //
+    [Impl(AggressiveInlining)] internal static int mod(int A, int B) {int R = A % B; return R + (R < 0 ? (B < 0 ? -B : B) : 0);}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -130,8 +174,8 @@ internal static class INT {
             default:
                 return (x   == 0) ? 0
                      : (x   == 1) ? 1
-                     : (x%1 == 0) ? int.MaxValue
-                                  : int.MinValue;
+                     : (x%1 == 0) ? MAX_INT
+                                  : MIN_INT;
         }
     }
 
@@ -143,7 +187,6 @@ internal static class INT {
     //      trunk(12345, -2) ==   345
     //      trunk(12345,  2) == 123
     //
-    [Impl(AggressiveOptimization)]
     internal static int trunk(int A, int Digits) {
         if (Digits == 0)
             return A;
@@ -154,7 +197,6 @@ internal static class INT {
                             : (Astr.Length <= -Digits) ? 0 : System.Convert.ToInt32(Astr.Remove(                 0, -Digits)); // Truncate Left
     }
 
-    [Impl(AggressiveOptimization)]
     internal static long trunk(long A, int Digits) {
         if (Digits == 0)
             return A;
@@ -164,34 +206,6 @@ internal static class INT {
         return (Digits > 0) ? (Astr.Length <=  Digits) ? 0 : System.Convert.ToInt64(Astr.Remove(Astr.Length-Digits,  Digits))  // Truncate Right
                             : (Astr.Length <= -Digits) ? 0 : System.Convert.ToInt64(Astr.Remove(                 0, -Digits)); // Truncate Left
     }
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    internal static uint ByteFlip(uint A) => (
-        ((A & 0xFF000000) >> 24) |
-        ((A & 0x00FF0000) >>  8) |
-        ((A & 0x0000FF00) <<  8) |
-        ((A & 0x000000FF) << 24)
-    );
-
-    internal static bvec4 ByteFlip(bvec4 A) => (
-        ((uint)A.x      ) |
-        ((uint)A.y <<  8) |
-        ((uint)A.z << 16) |
-        ((uint)A.w << 24)
-    );
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-
-    //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/bitCount.xhtml            BitCount()
-    //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/bitfieldExtract.xhtml     BitfieldExtract()
-    //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/bitfieldReverse.xhtml     BitfieldReverse()
-    //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/bitfieldInsert.xhtml      BitfieldInsert()
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

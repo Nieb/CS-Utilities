@@ -5,15 +5,14 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     const int SizeOfByteVec4 = sizeof(uint);
 
-    const int SizeOfVec2 = 2 * sizeof(float);
-    const int SizeOfVec3 = 3 * sizeof(float);
-    const int SizeOfVec4 = 4 * sizeof(float);
+    const int SizeOfVec2 =  2 * sizeof(float);
+    const int SizeOfVec3 =  3 * sizeof(float);
+    const int SizeOfVec4 =  4 * sizeof(float);
 
     const int SizeOfMat4 = 16 * sizeof(float);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [Impl(AggressiveOptimization)]
     internal static float[] ToFloatArray(this vec2[] Source) {
         int ByteCount = Source.Length * SizeOfVec2;
         float[] Result = new float[Source.Length * 2];
@@ -33,7 +32,6 @@ internal static partial class VEC {
     }
 
     //==========================================================================================================================================================
-    [Impl(AggressiveOptimization)]
     internal static float[] ToFloatArray(this vec3[] Source) {
         int ByteCount = Source.Length * SizeOfVec3;
         float[] Result = new float[Source.Length * 3];
@@ -53,7 +51,6 @@ internal static partial class VEC {
     }
 
     //==========================================================================================================================================================
-    [Impl(AggressiveOptimization)]
     internal static float[] ToFloatArray(this vec4[] Source) {
         int ByteCount = Source.Length * SizeOfVec4;
         float[] Result = new float[Source.Length * 4];
@@ -74,7 +71,6 @@ internal static partial class VEC {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [Impl(AggressiveOptimization)]
     internal static uint[] ToUintArray(this bvec4[] Source) {
         int ByteCount = Source.Length * SizeOfByteVec4;
         uint[] Result = new uint[Source.Length];
@@ -95,7 +91,6 @@ internal static partial class VEC {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [Impl(AggressiveOptimization)]
     internal static float[] ToFloatArray(this mat4 Source) {
         const int ByteCount = SizeOfMat4;
         float[] Result = new float[16];

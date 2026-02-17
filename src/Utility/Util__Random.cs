@@ -22,12 +22,12 @@ internal static class Random {
     //                  *Inclusive*  *Inclusive*
     //      RandomType( LowerBounds, UpperBounds );
     //
-    internal static  byte RandomByte ( byte L=MIN_U8 ,  byte U=MAX_U8 ) => ClampToByte (R.Next     (i32(L), i32(U)+1));
-    internal static short RandomShort(short L=MIN_I16, short U=MAX_I16) => ClampToShort(R.Next     (i32(L), i32(U)+1));
-    internal static   int RandomInt  (  int L=MIN_I32,   int U=MAX_I32) => ClampToInt  (R.NextInt64(i64(L), i64(U)+1));
+    internal static u8  RandomByte (u8  L=MIN_U8 , u8  U=MAX_U8 ) => ClampToByte (R.Next     (s32(L), s32(U)+1));
 
-    //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    internal static  uint RandomUint ( uint L=MIN_U32,  uint U=MAX_U32) => ClampToUint (R.NextInt64(i64(L), i64(U)+1));
+    internal static s16 RandomShort(s16 L=MIN_I16, s16 U=MAX_I16) => ClampToShort(R.Next     (s32(L), s32(U)+1));
+
+    internal static s32 RandomInt  (s32 L=MIN_I32, s32 U=MAX_I32) => ClampToInt  (R.NextInt64(s64(L), s64(U)+1));
+    internal static u32 RandomUint (u32 L=MIN_U32, u32 U=MAX_U32) => ClampToUint (R.NextInt64(s64(L), s64(U)+1));
 
     //==========================================================================================================================================================
     //
@@ -43,14 +43,14 @@ internal static class Random {
     //      -1.0 to 1.0
     //       0.0 to 1.0
     //
-    internal static float Random1()  => f32(R.Next(-1_000_000, 1_000_000+1))/1_000_000f;
-    internal static float Random1u() => f32(R.Next(         0, 1_000_000+1))/1_000_000f;
+    internal static v1 Random1()  => f32(R.Next(-1_000_000, 1_000_000+1))/1_000_000f;
+    internal static v1 Random1u() => f32(R.Next(         0, 1_000_000+1))/1_000_000f;
 
-    internal static vec2  Random2()  => normalize(new vec2(Random1() ,Random1() ));
-    internal static vec2  Random2u() => normalize(new vec2(Random1u(),Random1u()));
+    internal static v2 Random2()  => normalize(new vec2(Random1() ,Random1() ));
+    internal static v2 Random2u() => normalize(new vec2(Random1u(),Random1u()));
 
-    internal static vec3  Random3()  => normalize(new vec3(Random1() ,Random1() ,Random1() ));
-    internal static vec3  Random3u() => normalize(new vec3(Random1u(),Random1u(),Random1u()));
+    internal static v3 Random3()  => normalize(new vec3(Random1() ,Random1() ,Random1() ));
+    internal static v3 Random3u() => normalize(new vec3(Random1u(),Random1u(),Random1u()));
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //

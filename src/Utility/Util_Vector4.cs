@@ -18,23 +18,23 @@ internal struct vec4 : System.IFormattable {
     [FieldOffset( 8)] public vec2 zw;
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    public vec2 xz {  get => new vec2(x,z);  set {x = value.x; z = value.y;}  }
+    public vec2 xz {get => new vec2(x,z);  set {x=value.x; z=value.y;}}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public vec4() {}
-    public vec4(float XYZW                        ) { x=XYZW; y=XYZW; z=XYZW; w=XYZW; }
-    public vec4(float XYZ                , float W) { x=XYZ;  y=XYZ;  z=XYZ;  w=W;    }
-    public vec4(float X, float Y, float Z, float W) { x=X;    y=Y;    z=Z;    w=W;    }
+    public vec4(float X, float Y, float Z, float W) {x=X;    y=Y;    z=Z;    w=W;   }
+    public vec4(float XYZ                , float W) {x=XYZ;  y=XYZ;  z=XYZ;  w=W;   }
+    public vec4(float XYZW                        ) {x=XYZW; y=XYZW; z=XYZW; w=XYZW;}
 
-    public vec4(vec3 V                   , float W) { x=V.x;  y=V.y;  z=V.z;  w=W;    }
+    public vec4( vec3 V                  , float W) {x=V.x;  y=V.y;  z=V.z;  w=W;   }
 
-    public vec4(ivec4 V                           ) { x=(float)V.x; y=(float)V.y; z=(float)V.z;  w=(float)V.w; }
+    public vec4(ivec4 V                           ) {x=V.x;  y=V.y;  z=V.z;  w=V.w; }
 
     //==========================================================================================================================================================
     //                                                               Tuple "Constructor"
     [Impl(AggressiveInlining)] public static implicit operator vec4((float X, float Y, float Z, float W) t) => new vec4(  t.X,   t.Y,   t.Z, t.W);
-    [Impl(AggressiveInlining)] public static implicit operator vec4((vec3 V, float W) t)                    => new vec4(t.V.x, t.V.y, t.V.z, t.W);
+    [Impl(AggressiveInlining)] public static implicit operator vec4((vec3 V,                    float W) t) => new vec4(t.V.x, t.V.y, t.V.z, t.W);
 
     //==========================================================================================================================================================
     [Impl(AggressiveInlining)] public static implicit operator vec4(ivec4 A) => new vec4(A);        //  Directly assign 'ivec4' to 'vec4'.
@@ -42,7 +42,7 @@ internal struct vec4 : System.IFormattable {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                            Has Value/Magnitude/Length
-    [Impl(AggressiveInlining)] public static implicit operator bool(vec4 A) => (A.x != 0f || A.y != 0f || A.z != 0f || A.w != 0f);
+    [Impl(AggressiveInlining)] public static implicit operator bool(vec4 A) => (A != 0f);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -77,24 +77,24 @@ internal struct vec4 : System.IFormattable {
     //==========================================================================================================================================================
     //  Operators Logical:  ==  !=  <  >  <=  >=     ( ! && || )
 
-    [Impl(AggressiveInlining)] public static bool operator ==(vec4 A, vec4  B) => (A.x == B.x && A.y == B.y && A.z == B.z && A.w == B.w);
-    [Impl(AggressiveInlining)] public static bool operator ==(vec4 A, float B) => (A.x == B   && A.y == B   && A.z == B   && A.w == B  );
+    [Impl(AggressiveInlining)] public static bool operator ==(vec4 A, vec4  B) => (A.x==B.x && A.y==B.y && A.z==B.z && A.w==B.w);
+    [Impl(AggressiveInlining)] public static bool operator ==(vec4 A, float B) => (A.x==B   && A.y==B   && A.z==B   && A.w==B  );
 
-    [Impl(AggressiveInlining)] public static bool operator !=(vec4 A, vec4  B) => (A.x != B.x || A.y != B.y || A.z != B.z || A.w != B.w);
-    [Impl(AggressiveInlining)] public static bool operator !=(vec4 A, float B) => (A.x != B   || A.y != B   || A.z != B   || A.w != B  );
+    [Impl(AggressiveInlining)] public static bool operator !=(vec4 A, vec4  B) => (A.x!=B.x || A.y!=B.y || A.z!=B.z || A.w!=B.w);
+    [Impl(AggressiveInlining)] public static bool operator !=(vec4 A, float B) => (A.x!=B   || A.y!=B   || A.z!=B   || A.w!=B  );
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] public static bool operator  <(vec4 A, vec4  B) => (A.x <  B.x && A.y <  B.y && A.z <  B.z && A.w <  B.w);
-    [Impl(AggressiveInlining)] public static bool operator  <(vec4 A, float B) => (A.x <  B   && A.y <  B   && A.z <  B   && A.w <  B  );
+    [Impl(AggressiveInlining)] public static bool operator  <(vec4 A, vec4  B) => (A.x< B.x && A.y< B.y && A.z< B.z && A.w< B.w);
+    [Impl(AggressiveInlining)] public static bool operator  <(vec4 A, float B) => (A.x< B   && A.y< B   && A.z< B   && A.w< B  );
 
-    [Impl(AggressiveInlining)] public static bool operator  >(vec4 A, vec4  B) => (A.x >  B.x && A.y >  B.y && A.z >  B.z && A.w >  B.w);
-    [Impl(AggressiveInlining)] public static bool operator  >(vec4 A, float B) => (A.x >  B   && A.y >  B   && A.z >  B   && A.w >  B  );
+    [Impl(AggressiveInlining)] public static bool operator  >(vec4 A, vec4  B) => (A.x> B.x && A.y> B.y && A.z> B.z && A.w> B.w);
+    [Impl(AggressiveInlining)] public static bool operator  >(vec4 A, float B) => (A.x> B   && A.y> B   && A.z> B   && A.w> B  );
 
-    [Impl(AggressiveInlining)] public static bool operator <=(vec4 A, vec4  B) => (A.x <= B.x && A.y <= B.y && A.z <= B.z && A.w <= B.w);
-    [Impl(AggressiveInlining)] public static bool operator <=(vec4 A, float B) => (A.x <= B   && A.y <= B   && A.z <= B   && A.w <= B  );
+    [Impl(AggressiveInlining)] public static bool operator <=(vec4 A, vec4  B) => (A.x<=B.x && A.y<=B.y && A.z<=B.z && A.w<=B.w);
+    [Impl(AggressiveInlining)] public static bool operator <=(vec4 A, float B) => (A.x<=B   && A.y<=B   && A.z<=B   && A.w<=B  );
 
-    [Impl(AggressiveInlining)] public static bool operator >=(vec4 A, vec4  B) => (A.x >= B.x && A.y >= B.y && A.z >= B.z && A.w >= B.w);
-    [Impl(AggressiveInlining)] public static bool operator >=(vec4 A, float B) => (A.x >= B   && A.y >= B   && A.z >= B   && A.w >= B  );
+    [Impl(AggressiveInlining)] public static bool operator >=(vec4 A, vec4  B) => (A.x>=B.x && A.y>=B.y && A.z>=B.z && A.w>=B.w);
+    [Impl(AggressiveInlining)] public static bool operator >=(vec4 A, float B) => (A.x>=B   && A.y>=B   && A.z>=B   && A.w>=B  );
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -118,11 +118,8 @@ internal struct vec4 : System.IFormattable {
     //==========================================================================================================================================================
     public readonly override string ToString() => $"({this.x,9:0.000000}, {this.y,9:0.000000}, {this.z,9:0.000000}, {this.w,9:0.000000})";
 
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //  Required by "object" type:
+    //==========================================================================================================================================================
+    //  Required by types that implement "==" or "!=" operator:
     public readonly override bool Equals(object obj) => false;
     public readonly override int GetHashCode() => 0;
 
