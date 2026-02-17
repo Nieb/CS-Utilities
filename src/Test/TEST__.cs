@@ -10,6 +10,22 @@ internal static partial class Program {static void Test___() {  //PRINT("\n[BLAR
 #endif
 
 #if false
+{
+    byte A = 0b001;
+    byte B = 0b000;
+    byte C = 0b100;
+
+    byte Combination = u8(A | B | C);
+    byte        Mask = 0b111;
+    byte      Select = u8(Combination ^ Mask);
+
+    PRINT($"""
+        {IntToBinaryString(Combination)}  xor  {IntToBinaryString(Mask)}  ==  {IntToBinaryString(Select)}
+    """);
+}
+#endif
+
+#if false
     PRINT("");
     PRINT($"                       bool: {sizeof(bool  ),2} bytes");
     PRINT("");
@@ -48,6 +64,8 @@ internal static partial class Program {static void Test___() {  //PRINT("\n[BLAR
 #endif
 
 #if false
+    const string BAR = "################################################################################################################################################################";
+
     PRINT($"\n\n{BAR}\n{BAR}");
     DebugStruct(typeof(vec2));
     DebugStruct(typeof(ivec2));

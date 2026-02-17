@@ -2,8 +2,7 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__VectorArray() {
-        PRINT("\n[Utility.VEC Array]");
-        //PRINT($"{}");
+        CONOUT("\n[Utility.VEC Array]");
 
         //######################################################################################################################################################
         //######################################################################################################################################################
@@ -17,7 +16,7 @@ internal static partial class Program {
             vec3[] J = new vec3[8]; //  Arrays are allocated, then all bytes zeroed.
             float K = J[4].x;
 
-            RESULT("Array Allocation & Initialization", true
+            TEST("Array Allocation & Initialization", true
                 && J[0].x == 0f
                 && J[1].y == 0f
                 && J[2].z == 0f
@@ -39,7 +38,7 @@ internal static partial class Program {
             float[] B = A.ToFloatArray();
             B[15] = 99f;
 
-            RESULT("Mat4.ToFloatArray()", true
+            TEST("Mat4.ToFloatArray()", true
                 &&  A.xx  ==  1f  &&  A.yx  ==  2f &&  A.zx  ==  3f  &&  A.wx  ==  4f
                 &&  A.xy  ==  5f  &&  A.yy  ==  6f &&  A.zy  ==  7f  &&  A.wy  ==  8f
                 &&  A.xz  ==  9f  &&  A.yz  == 10f &&  A.zz  == 11f  &&  A.wz  == 12f
@@ -65,10 +64,10 @@ internal static partial class Program {
 
             bool Result = true;
             for (int i = 0; i < A.Length; ++i) {
-                Result = Result && (A[i].x == B[i*2    ]);
-                Result = Result && (A[i].y == B[i*2 + 1]);
+                Result = Result && (A[i].x == B[i*2    ])
+                                && (A[i].y == B[i*2 + 1]);
             }
-            RESULT("Vec2[].ToFloatArray()", Result);
+            TEST("Vec2[].ToFloatArray()", Result);
         }
 
         //======================================================================================================================================================
@@ -83,12 +82,56 @@ internal static partial class Program {
 
             bool Result = true;
             for (int i = 0; i < A.Length; ++i) {
-                Result = Result && (A[i].x == B[i*3    ]);
-                Result = Result && (A[i].y == B[i*3 + 1]);
-                Result = Result && (A[i].z == B[i*3 + 2]);
+                Result = Result && (A[i].x == B[i*3    ])
+                                && (A[i].y == B[i*3 + 1])
+                                && (A[i].z == B[i*3 + 2]);
             }
-            RESULT("Vec3[].ToFloatArray()", Result);
+            TEST("Vec3[].ToFloatArray()", Result);
         }
+
+        //------------------------------------------------------------------------------------------------------------------------------------------------------
+        /*
+        {
+            vec3[] A = new vec3[] {
+                ( 0.1f, 1.1f, 2.1f), ( 3.1f, 4.1f, 5.1f), ( 6.1f, 7.1f, 8.1f), ( 9.1f,10.1f,11.1f),
+                (12.1f,13.1f,14.1f), (15.1f,16.1f,17.1f), (18.1f,19.1f,20.1f), (21.1f,22.1f,23.1f),
+                (24.1f,25.1f,26.1f), (27.1f,28.1f,29.1f), (30.1f,31.1f,32.1f), (33.1f,34.1f,35.1f),
+                (36.1f,37.1f,38.1f), (39.1f,40.1f,41.1f), (42.1f,43.1f,44.1f), (45.1f,46.1f,47.1f)
+            };
+
+            float[] B = System.Runtime.CompilerServices.Unsafe.As<vec3[],float[]>(ref A);
+            //
+            //      A.Length == 16
+            //      B.Length == 16      should be 48...
+            //
+            CONOUT($"{A.Length}    {B.Length}");
+
+            //bool Result = true;
+            //for (int i = 0; i < A.Length; ++i) {
+            //    Result = Result && (A[i].x == B[i*3    ])
+            //                    && (A[i].y == B[i*3 + 1])
+            //                    && (A[i].z == B[i*3 + 2]);
+            //}
+            //TEST("Unsafe.As<vec3[],float[]>", Result);
+
+            unsafe {
+                fixed (vec3* pA = A) {
+                    float* pB = (float*)pA;
+                    int B_Length = A.Length * 3; //(sizeof(vec3) / sizeof(float));
+
+                    CONOUT($"{A.Length}    {B_Length}");
+
+                    bool Result = true;
+                    for (int i = 0; i < A.Length; ++i) {
+                        Result = Result && (A[i].x == pB[i*3    ])
+                                        && (A[i].y == pB[i*3 + 1])
+                                        && (A[i].z == pB[i*3 + 2]);
+                    }
+                    TEST("Vec3[]  unsafe { Pointer }  Float[]", Result);
+                }
+            }
+        }
+        */
 
         //======================================================================================================================================================
         {
@@ -102,12 +145,12 @@ internal static partial class Program {
 
             bool Result = true;
             for (int i = 0; i < A.Length; ++i) {
-                Result = Result && (A[i].x == B[i*4    ]);
-                Result = Result && (A[i].y == B[i*4 + 1]);
-                Result = Result && (A[i].z == B[i*4 + 2]);
-                Result = Result && (A[i].w == B[i*4 + 3]);
+                Result = Result && (A[i].x == B[i*4    ])
+                                && (A[i].y == B[i*4 + 1])
+                                && (A[i].z == B[i*4 + 2])
+                                && (A[i].w == B[i*4 + 3]);
             }
-            RESULT("Vec4[].ToFloatArray()", Result);
+            TEST("Vec4[].ToFloatArray()", Result);
         }
 
         //######################################################################################################################################################

@@ -6,7 +6,7 @@ internal static partial class Program {
         //######################################################################################################################################################
         #pragma warning disable 1718 // "Comparison made to same variable."
         string b(bool b) => (b ? " •" : "  "); //  ✓ ✔ ✅
-        PRINT($"""
+        CONOUT($"""
 
         [FLOAT]
                           |  !=  |   <  <=  |  ==  |  >=   >
@@ -45,8 +45,8 @@ internal static partial class Program {
              Inf /   0  ==  {FLOAT_INF     / 0f}
             -Inf /   0  ==  {FLOAT_NEG_INF / 0f}
 
-             Inf / EPS  ==  {FLOAT_INF     / EPS9}
-            -Inf / EPS  ==  {FLOAT_NEG_INF / EPS9}
+             Inf / EPS  ==  {FLOAT_INF     / EPS_9}
+            -Inf / EPS  ==  {FLOAT_NEG_INF / EPS_9}
 
 
             RAY_MISS:  {RAY_MISS}
@@ -58,13 +58,15 @@ internal static partial class Program {
         //######################################################################################################################################################
         //######################################################################################################################################################
         #if false
-        PRINT($"""
+        CONOUT($"""
 
-        [FLOAT -- Random1() Range]
-                                            *Inclusive*  *Exclusive*
-                        System.Random.Next( LowerBounds, UpperBounds );
-            Random1()  => (  (float)R.Next(  -1_000_000, 1_000_000+1 )  )/  1_000_000f;     -1_000_000/1_000_000:  {-1_000_000f/1_000_000f,4:0.0}
-            Random1u() => (  (float)R.Next(           0, 1_000_000+1 )  )/  1_000_000f;      1_000_000/1_000_000:  { 1_000_000f/1_000_000f,4:0.0}
+        [FLOAT -- Random1() Range & Precision]
+                                                       *Inclusive*  *Exclusive*
+            Random1()  => (  (float)System.Random.Next( -1_000_000, 1_000_000+1 )  )/  1_000_000f;
+            Random1u() => (  (float)System.Random.Next(          0, 1_000_000+1 )  )/  1_000_000f;
+
+                        -1_000_000/1_000_000  ==  {-1_000_000f/1_000_000f,4:0.0}
+                         1_000_000/1_000_000  ==  { 1_000_000f/1_000_000f,4:0.0}
 
         """);
         #endif

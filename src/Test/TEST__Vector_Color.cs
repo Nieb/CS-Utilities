@@ -2,11 +2,10 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector_Color() {
-        PRINT("\n[Utility.VEC -- Color]");
-        //PRINT($"{}");
+        CONOUT("\n[Utility.VEC -- Color]");
 
         //======================================================================================================================================================
-        RESULT("ByteToUnit()", true
+        TEST("ByteToUnit()", true
             && ByteToUnit(  0) == 0.0f             && ByteToUnit(  1) == 0.0039215686274f && ByteToUnit(  2) == 0.0078431372549f && ByteToUnit(  3) == 0.0117647058823f && ByteToUnit(  4) == 0.0156862745098f && ByteToUnit(  5) == 0.0196078431372f && ByteToUnit(  6) == 0.0235294117647f && ByteToUnit(  7) == 0.0274509803921f
             && ByteToUnit(  8) == 0.0313725490196f && ByteToUnit(  9) == 0.0352941176470f && ByteToUnit( 10) == 0.0392156862745f && ByteToUnit( 11) == 0.0431372549019f && ByteToUnit( 12) == 0.0470588235294f && ByteToUnit( 13) == 0.0509803921568f && ByteToUnit( 14) == 0.0549019607843f && ByteToUnit( 15) == 0.0588235294117f
             && ByteToUnit( 16) == 0.0627450980392f && ByteToUnit( 17) == 0.0666666666666f && ByteToUnit( 18) == 0.0705882352941f && ByteToUnit( 19) == 0.0745098039215f && ByteToUnit( 20) == 0.0784313725490f && ByteToUnit( 21) == 0.0823529411764f && ByteToUnit( 22) == 0.0862745098039f && ByteToUnit( 23) == 0.0901960784313f
@@ -48,7 +47,7 @@ internal static partial class Program {
             && ByteToUnit(248) == 0.9725490196078f && ByteToUnit(249) == 0.9764705882352f && ByteToUnit(250) == 0.9803921568627f && ByteToUnit(251) == 0.9843137254901f && ByteToUnit(252) == 0.9882352941176f && ByteToUnit(253) == 0.9921568627450f && ByteToUnit(254) == 0.9960784313725f && ByteToUnit(255) == 1.0f
         );
 
-        RESULT("UnitToByte()", true
+        TEST("UnitToByte()", true
             && UnitToByte(0.0f)             ==   0 && UnitToByte(0.0039215686274f) ==   1 && UnitToByte(0.0078431372549f) ==   2 && UnitToByte(0.0117647058823f) ==   3 && UnitToByte(0.0156862745098f) ==   4 && UnitToByte(0.0196078431372f) ==   5 && UnitToByte(0.0235294117647f) ==   6 && UnitToByte(0.0274509803921f) ==   7
             && UnitToByte(0.0313725490196f) ==   8 && UnitToByte(0.0352941176470f) ==   9 && UnitToByte(0.0392156862745f) ==  10 && UnitToByte(0.0431372549019f) ==  11 && UnitToByte(0.0470588235294f) ==  12 && UnitToByte(0.0509803921568f) ==  13 && UnitToByte(0.0549019607843f) ==  14 && UnitToByte(0.0588235294117f) ==  15
             && UnitToByte(0.0627450980392f) ==  16 && UnitToByte(0.0666666666666f) ==  17 && UnitToByte(0.0705882352941f) ==  18 && UnitToByte(0.0745098039215f) ==  19 && UnitToByte(0.0784313725490f) ==  20 && UnitToByte(0.0823529411764f) ==  21 && UnitToByte(0.0862745098039f) ==  22 && UnitToByte(0.0901960784313f) ==  23
@@ -91,7 +90,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("sRGB_to_Lin()", true
+        TEST("sRGB_to_Lin()", true
             && sRGB_to_Lin(0.00f) == 0.0f         && sRGB_to_Lin(0.01f) == 0.0007739938f && sRGB_to_Lin(0.02f) == 0.0015479876f && sRGB_to_Lin(0.03f) == 0.0023219814f && sRGB_to_Lin(0.04f) == 0.0030959751f && sRGB_to_Lin(0.05f) == 0.0039359396f && sRGB_to_Lin(0.06f) == 0.0048963088f && sRGB_to_Lin(0.07f) == 0.005981059f && sRGB_to_Lin(0.08f) == 0.0071944077f && sRGB_to_Lin(0.09f) == 0.008540383f
             && sRGB_to_Lin(0.10f) == 0.010022826f && sRGB_to_Lin(0.11f) == 0.011645429f  && sRGB_to_Lin(0.12f) == 0.013411746f  && sRGB_to_Lin(0.13f) == 0.015325204f  && sRGB_to_Lin(0.14f) == 0.0173891f    && sRGB_to_Lin(0.15f) == 0.01960665f   && sRGB_to_Lin(0.16f) == 0.021980947f  && sRGB_to_Lin(0.17f) == 0.02451501f  && sRGB_to_Lin(0.18f) == 0.027211785f  && sRGB_to_Lin(0.19f) == 0.030074105f
             && sRGB_to_Lin(0.20f) == 0.033104762f && sRGB_to_Lin(0.21f) == 0.036306474f  && sRGB_to_Lin(0.22f) == 0.039681915f  && sRGB_to_Lin(0.23f) == 0.043233637f  && sRGB_to_Lin(0.24f) == 0.046964195f  && sRGB_to_Lin(0.25f) == 0.05087609f   && sRGB_to_Lin(0.26f) == 0.05497173f   && sRGB_to_Lin(0.27f) == 0.059253525f && sRGB_to_Lin(0.28f) == 0.0637238f    && sRGB_to_Lin(0.29f) == 0.068384856f
@@ -105,7 +104,7 @@ internal static partial class Program {
             && sRGB_to_Lin(1.00f) == 1.0f
         );
 
-        RESULT("Lin_to_sRGB()", true
+        TEST("Lin_to_sRGB()", true
             && Lin_to_sRGB(0.0f) == 0.0f        && Lin_to_sRGB(0.01f) == 0.09985282f && Lin_to_sRGB(0.02f) == 0.15170372f && Lin_to_sRGB(0.03f) == 0.18974826f && Lin_to_sRGB(0.04f) == 0.22091633f && Lin_to_sRGB(0.05f) == 0.2478005f  && Lin_to_sRGB(0.06f) == 0.27169976f && Lin_to_sRGB(0.07f) == 0.29337204f && Lin_to_sRGB(0.08f) == 0.31330416f && Lin_to_sRGB(0.09f) == 0.33183002f
             && Lin_to_sRGB(0.1f) == 0.34919018f && Lin_to_sRGB(0.11f) == 0.3655646f  && Lin_to_sRGB(0.12f) == 0.38109183f && Lin_to_sRGB(0.13f) == 0.39588124f && Lin_to_sRGB(0.14f) == 0.41002086f && Lin_to_sRGB(0.15f) == 0.42358285f && Lin_to_sRGB(0.16f) == 0.43662703f && Lin_to_sRGB(0.17f) == 0.44920385f && Lin_to_sRGB(0.18f) == 0.4613561f  && Lin_to_sRGB(0.19f) == 0.47312063f
             && Lin_to_sRGB(0.2f) == 0.4845292f  && Lin_to_sRGB(0.21f) == 0.49560964f && Lin_to_sRGB(0.22f) == 0.5063864f  && Lin_to_sRGB(0.23f) == 0.5168811f  && Lin_to_sRGB(0.24f) == 0.5271128f  && Lin_to_sRGB(0.25f) == 0.5370987f  && Lin_to_sRGB(0.26f) == 0.5468542f  && Lin_to_sRGB(0.27f) == 0.5563933f  && Lin_to_sRGB(0.28f) == 0.56572837f && Lin_to_sRGB(0.29f) == 0.574871f
@@ -120,7 +119,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("HSV_to_RGB()", true
+        TEST("HSV_to_RGB()", true
             && RGB_to_HSV(1f, 0f, 0f).IsApproximately((0f, 1f, 1f))  &&  RGB_to_HSV(1.0f, 0.5f, 0.0f).IsApproximately((0.5f, 1f, 1f))
             && RGB_to_HSV(1f, 1f, 0f).IsApproximately((1f, 1f, 1f))  &&  RGB_to_HSV(0.5f, 1.0f, 0.0f).IsApproximately((1.5f, 1f, 1f))
 
@@ -132,7 +131,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("HSV_to_RGB()", true
+        TEST("HSV_to_RGB()", true
             && HSV_to_RGB(-6f, 1, 1).IsApproximately((1.0f, 0.0f, 0.0f))  &&  HSV_to_RGB(-5.5f, 1f, 1f).IsApproximately((1.0f, 0.5f, 0.0f))
             && HSV_to_RGB(-5f, 1, 1).IsApproximately((1.0f, 1.0f, 0.0f))  &&  HSV_to_RGB(-4.5f, 1f, 1f).IsApproximately((0.5f, 1.0f, 0.0f))
             && HSV_to_RGB(-4f, 1, 1).IsApproximately((0.0f, 1.0f, 0.0f))  &&  HSV_to_RGB(-3.5f, 1f, 1f).IsApproximately((0.0f, 1.0f, 0.5f))
@@ -156,7 +155,37 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("TurboColorMapLUT()", true
+        //TEST("Wavelength_to_RGB()", true
+        //    //
+        //);
+
+        /*
+        {
+            const float Domain = 800-350; //  450
+            float WavLen;
+            vec3 C;
+            for (int i = 255; i >= 0; --i) {
+                WavLen = 350f + (i/255f)*Domain;
+                C = Wavelength_to_RGB(WavLen);
+                CONOUT($"  {WavLen,7:0.000}nm  ->  {C}");
+            }
+        }
+        */
+
+        /*
+        for (int i = 350; i < 800; ++i) {
+            CONOUT($"  {i}nm  ->  {Wavelength_to_RGB(f32(i))}");
+        }
+        */
+
+        /*
+        CONOUT($"{Wavelength_to_RGB(619.68102768746162341399626298384233f)}");
+        CONOUT($"{Wavelength_to_RGB_(619.68102768746162341399626298384233f)}");
+        CONOUT($"{WavLen_to_SpectralColor(619.68102768746162341399626298384233f)}");
+        */
+
+        //======================================================================================================================================================
+        TEST("TurboColorMapLUT()", true
             && ColorMap.Turbo(  0f/255f) == (0.18995f,0.07176f,0.23217f) && ColorMap.Turbo(  1f/255f) == (0.19483f,0.08339f,0.26149f)
             && ColorMap.Turbo(  2f/255f) == (0.19956f,0.09498f,0.29024f) && ColorMap.Turbo(  3f/255f) == (0.20415f,0.10652f,0.31844f)
             && ColorMap.Turbo(  4f/255f) == (0.20860f,0.11802f,0.34607f) && ColorMap.Turbo(  5f/255f) == (0.21291f,0.12947f,0.37314f)
@@ -290,20 +319,20 @@ internal static partial class Program {
         //======================================================================================================================================================
         #if false
         {
-            PRINT("");
+            CONOUT("");
             vec3 C = new();
             string BLARG = "";
             for (int i = 0; i < 256; ++i) {
                 C = ColorMap_Magma( ((float)i)/255f );
                 BLARG += $"({round(C.r*255f),3},{round(C.g*255f),3},{round(C.b*255f),3},255)";
             }
-            PRINT(BLARG);
+            CONOUT(BLARG);
         }
         #endif
 
         #if false
         {
-            PRINT("");
+            CONOUT("");
             uint C = new();
             string BLARG = "        ";
             for (int i = 0; i < 256; ++i) {
@@ -315,7 +344,7 @@ internal static partial class Program {
 
                 BLARG += $"0x{C:X8},";
             }
-            PRINT(BLARG);
+            CONOUT(BLARG);
         }
         #endif
 

@@ -2,11 +2,11 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector_Generate() {
-        PRINT("\n[Utility.VEC -- Generation]");
+        CONOUT("\n[Utility.VEC -- Generation]");
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        RESULT("FromAng()", true
+        TEST("FromAng()", true
             && FromAng(        0 ).IsApproximately(( 0, 1))
             && FromAng(ToRad( 90)).IsApproximately(( 1, 0))
             && FromAng(ToRad(180)).IsApproximately(( 0,-1))
@@ -16,7 +16,7 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        RESULT("FromPch()", true
+        TEST("FromPch()", true
             && FromPch(        0 ).IsApproximately(( 0,         0,        -1))
             && FromPch(ToRad( 45)).IsApproximately(( 0,-SQRT2_RCP,-SQRT2_RCP))
             && FromPch(ToRad( 90)).IsApproximately(( 0,        -1,         0))
@@ -27,7 +27,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("FromYaw()", true
+        TEST("FromYaw()", true
             && FromYaw(        0 ).IsApproximately((        0, 0,        -1))
             && FromYaw(ToRad( 45)).IsApproximately((SQRT2_RCP, 0,-SQRT2_RCP))
             && FromYaw(ToRad( 90)).IsApproximately((        1, 0,         0))
@@ -38,7 +38,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("FromRol()", true
+        TEST("FromRol()", true
             && FromRol(        0 ).IsApproximately((        0,         1, 0))
             && FromRol(ToRad( 45)).IsApproximately((SQRT2_RCP, SQRT2_RCP, 0))
             && FromRol(ToRad( 90)).IsApproximately((        1,         0, 0))
@@ -50,7 +50,7 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        RESULT("FromPchYaw()", true
+        TEST("FromPchYaw()", true
             && FromPchYaw(ToRad(-360), 0).IsApproximately(( 0, 0,-1))
             && FromPchYaw(ToRad(-270), 0).IsApproximately(( 0,-1, 0))
             && FromPchYaw(ToRad(-180), 0).IsApproximately(( 0, 0, 1))
@@ -74,7 +74,7 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        RESULT("RotFromVec()", true
+        TEST("RotFromVec()", true
             && RotFromVec(( 0, 0,-1))                .IsApproximately((         0,         0, 0))
             && RotFromVec(( 0,-1, 0))                .IsApproximately((ToRad( 90),         0, 0))
             && RotFromVec(( 0, 0, 1))                .IsApproximately((         0,ToRad(180), 0))
@@ -102,7 +102,7 @@ internal static partial class Program {
             vec2[] Poly5 = Polygon2(5,96), Poly6  = Polygon2( 6,96), Poly7  = Polygon2( 7,96), Poly8  = Polygon2( 8,96),
                    Poly9 = Polygon2(9,96), Poly10 = Polygon2(10,96), Poly11 = Polygon2(11,96), Poly12 = Polygon2(12,96);
 
-            RESULT("Polygon2()", true
+            TEST("Polygon2()", true
                 &&  Poly5[ 0].IsRoughly((  0.0f       , 96.0f       )) &&  Poly5[ 1].IsRoughly((-91.30142556f, 29.66563145f))
                 &&  Poly5[ 2].IsRoughly((-56.42738422f,-77.66563145f)) &&  Poly5[ 3].IsRoughly(( 56.42738422f,-77.66563145f))
                 &&  Poly5[ 4].IsRoughly(( 91.30142556f, 29.66563145f))
@@ -154,7 +154,7 @@ internal static partial class Program {
             vec3[] Poly5 = Polygon3(5,96), Poly6  = Polygon3( 6,96), Poly7  = Polygon3( 7,96), Poly8  = Polygon3( 8,96),
                    Poly9 = Polygon3(9,96), Poly10 = Polygon3(10,96), Poly11 = Polygon3(11,96), Poly12 = Polygon3(12,96);
 
-            RESULT("Polygon3()", true
+            TEST("Polygon3()", true
                 &&  Poly5[ 0].IsRoughly((  0.0f       , 0f,-96.0f       )) &&  Poly5[ 1].IsRoughly((-91.30142556f, 0f,-29.66563145f))
                 &&  Poly5[ 2].IsRoughly((-56.42738422f, 0f, 77.66563145f)) &&  Poly5[ 3].IsRoughly(( 56.42738422f, 0f, 77.66563145f))
                 &&  Poly5[ 4].IsRoughly(( 91.30142556f, 0f,-29.66563145f))
@@ -210,7 +210,7 @@ internal static partial class Program {
                 STR += $"({P.x},{P.y}),";
             }
 
-            PRINT(STR);
+            CONOUT(STR);
         #endif
 
         //======================================================================================================================================================

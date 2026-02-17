@@ -2,17 +2,16 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__String() {
-        PRINT("\n[Utility.STR]");
-        //PRINT($"{}");
+        CONOUT("\n[Utility.STR]");
 
         //======================================================================================================================================================
-        RESULT("RandomDigits()", true
+        TEST("RandomDigits()", true
             && RandomDigits(5).Length      == 5
             && RandomDigits(5).IsNumeric() == true
         );
 
         //======================================================================================================================================================
-        RESULT(".ToBool()", true
+        TEST(".ToBool()", true
             && "true".ToBool() == true
             && "True".ToBool() == true
             && "TRUE".ToBool() == true
@@ -29,11 +28,11 @@ internal static partial class Program {
             && "blarg".ToBool() == false
         );
 
-        //RESULT(".ToDateTime()", true
+        //TEST(".ToDateTime()", true
         //    && "".ToDateTime() == System.DateTime.MinValue
         //);
 
-        RESULT(".ToIpAddress()", true
+        TEST(".ToIpAddress()", true
             && ""               .ToIpAddress().Equals(new System.Net.IPAddress(0))
             && " "              .ToIpAddress().Equals(new System.Net.IPAddress(0))
             && "blarg"          .ToIpAddress().Equals(new System.Net.IPAddress(0))
@@ -44,7 +43,7 @@ internal static partial class Program {
             && "255.255.255.255".ToIpAddress().Equals(new System.Net.IPAddress(new byte[] { 0xFF, 0xFF, 0xFF, 0xFF }))
         );
 
-        RESULT(".ToNameValueCollection()", true
+        TEST(".ToNameValueCollection()", true
             && "ABC=123, def=Xyz, G=456, H=1.414, i=0, ABC=789".ToNameValueCollection()["ABC"] == "123,789"
             && "ABC=123, def=Xyz, G=456, H=1.414, i=0, ABC=789".ToNameValueCollection()["def"] == "Xyz"
             && "ABC=123, def=Xyz, G=456, H=1.414, i=0, ABC=789".ToNameValueCollection()["G"]   == "456"
@@ -53,18 +52,18 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("ByteArrayToString()", true
+        TEST("ByteArrayToString()", true
             && ByteArrayToString(new byte[] { 0xFF, 0xCC, 0xAA })                                  == "FF CC AA "
             && ByteArrayToString(new byte[] { 0xFF, 0xCC, 0xAA, 0x99, 0x77, 0x55, 0x33, 0x11 }, 3) == "FF CC AA \n99 77 55 \n33 11 "
         );
 
-        RESULT("EnumerableToString()", true
+        TEST("EnumerableToString()", true
             && EnumerableToString(new string[] { "Aa", "Bb", "Cc", "Dd", "Ee", "Ff", "Gg", "Hh", "Ii" }) == "Aa, Bb, Cc, Dd, Ee, Ff, Gg, Hh, Ii"
             && EnumerableToString("AaBbCcDdEeFfGgHhIi")                                                  == "A, a, B, b, C, c, D, d, E, e, F, f, G, g, H, h, I, i"
             && EnumerableToString(new int[] { 1, 2, 3 })                                                 == "1, 2, 3"
         );
 
-        RESULT("IntToBinaryString()", true
+        TEST("IntToBinaryString()", true
             && IntToBinaryString((sbyte )                 0x7F) ==                                                                "01111111"
             && IntToBinaryString((short )               0x7FFF) ==                                                       "01111111_11111111"
             && IntToBinaryString((int   )          0x7FFF_FFFF) ==                                     "01111111_11111111_11111111_11111111"
@@ -77,7 +76,67 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT(".IsNumeric()", true
+        TEST("CommaDelimit()", true
+            && CommaDelimit(s16(-12_345)) == "-12,345"
+            && CommaDelimit(s16( -2_345)) ==  "-2,345"
+            && CommaDelimit(s16(   -345)) ==    "-345"
+            && CommaDelimit(s16(    -45)) ==     "-45"
+            && CommaDelimit(s16(      5)) ==       "5"
+            && CommaDelimit(s16(     45)) ==      "45"
+            && CommaDelimit(s16(    345)) ==     "345"
+            && CommaDelimit(s16(  2_345)) ==   "2,345"
+            && CommaDelimit(s16( 12_345)) ==  "12,345"
+
+            && CommaDelimit(u16(     9)) ==      "9"
+            && CommaDelimit(u16(    89)) ==     "89"
+            && CommaDelimit(u16(   789)) ==    "789"
+            && CommaDelimit(u16( 6_789)) ==  "6,789"
+            && CommaDelimit(u16(56_789)) == "56,789"
+
+            && CommaDelimit(-1_234_567_890) == "-1,234,567,890"
+            && CommaDelimit(  -234_567_890) ==   "-234,567,890"
+            && CommaDelimit(   -34_567_890) ==    "-34,567,890"
+            && CommaDelimit(    -4_567_890) ==     "-4,567,890"
+            && CommaDelimit(      -567_890) ==       "-567,890"
+            && CommaDelimit(       -67_890) ==        "-67,890"
+            && CommaDelimit(        -7_890) ==         "-7,890"
+            && CommaDelimit(          -890) ==           "-890"
+            && CommaDelimit(           -90) ==            "-90"
+            && CommaDelimit(             0) ==              "0"
+            && CommaDelimit(            90) ==             "90"
+            && CommaDelimit(           890) ==            "890"
+            && CommaDelimit(         7_890) ==          "7,890"
+            && CommaDelimit(        67_890) ==         "67,890"
+            && CommaDelimit(       567_890) ==        "567,890"
+            && CommaDelimit(     4_567_890) ==      "4,567,890"
+            && CommaDelimit(    34_567_890) ==     "34,567,890"
+            && CommaDelimit(   234_567_890) ==    "234,567,890"
+            && CommaDelimit( 1_234_567_890) ==  "1,234,567,890"
+
+            && CommaDelimit(            0u) ==             "0"
+            && CommaDelimit(           90u) ==            "90"
+            && CommaDelimit(          890u) ==           "890"
+            && CommaDelimit(        7_890u) ==         "7,890"
+            && CommaDelimit(       67_890u) ==        "67,890"
+            && CommaDelimit(      567_890u) ==       "567,890"
+            && CommaDelimit(    4_567_890u) ==     "4,567,890"
+            && CommaDelimit(   34_567_890u) ==    "34,567,890"
+            && CommaDelimit(  234_567_890u) ==   "234,567,890"
+            && CommaDelimit(1_234_567_890u) == "1,234,567,890"
+            && CommaDelimit(4_123_456_789u) == "4,123,456,789"
+
+            && CommaDelimit(-9_223_372_036_854_775_807L) == "-9,223,372,036,854,775,807"
+            && CommaDelimit(          -123_456_789_000L) ==           "-123,456,789,000"
+            && CommaDelimit(                         0L) ==                          "0"
+            && CommaDelimit(           123_456_789_000L) ==            "123,456,789,000"
+            && CommaDelimit( 9_223_372_036_854_775_807L) ==  "9,223,372,036,854,775,807"
+
+            && CommaDelimit(                         0UL) ==                          "0"
+            && CommaDelimit(18_446_744_073_709_551_615UL) == "18,446,744,073,709,551,615"
+        );
+
+        //======================================================================================================================================================
+        TEST(".IsNumeric()", true
             && "123".IsNumeric() == true
 
             && "-123".IsNumeric()     == false
@@ -92,7 +151,7 @@ internal static partial class Program {
             && "123 ".IsNumeric() == false
         );
 
-        RESULT(".IsValidEmailAddress()", true
+        TEST(".IsValidEmailAddress()", true
             && "user@sub.domain.top".IsValidEmailAddress()                         == true
             && "user@sub.domain.top".IsValidEmailAddress("top", "domain", "sub"  ) == true
             && "user@sub.domain.top".IsValidEmailAddress("top", "domain"         ) == true
@@ -102,7 +161,7 @@ internal static partial class Program {
             && "user@sub.domain.top".IsValidEmailAddress("blarg"                 ) == false
         );
 
-        RESULT(".IsVoid()", true
+        TEST(".IsVoid()", true
             && "blarg".IsVoid() == false
 
             && "     ".IsVoid() == true
@@ -116,39 +175,39 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT(".ContainsAny()", true
+        TEST(".ContainsAny()", true
             && "blarg".ContainsAny( new string[] {"ugh", "arg"} ) == true
         );
 
-        RESULT(".ContainsAny_GetMatches()", true
+        TEST(".ContainsAny_GetMatches()", true
             && "blarg".ContainsAny_GetMatches( new string[] {"bla", "ugh", "arg"} )[0] == "bla"
             && "blarg".ContainsAny_GetMatches( new string[] {"bla", "ugh", "arg"} )[1] == "arg"
         );
 
         //======================================================================================================================================================
-        RESULT(".Indent()", true
+        TEST(".Indent()", true
             && "blarg\nblarg\nblarg".Indent() == "    blarg\n    blarg\n    blarg"
         );
 
-        RESULT(".InsertEvery()", true
+        TEST(".InsertEvery()", true
             && "blargblargblarg".InsertEvery(5, ", ") == "blarg, blarg, blarg"
         );
 
-        RESULT(".Pad()", true
+        TEST(".Pad()", true
             && "blarg".Pad(-10) == "     blarg"
             && "blarg".Pad( 10) == "blarg     "
         );
 
-        RESULT(".Prepend()", true
+        TEST(".Prepend()", true
             && "blarg\nblarg\nblarg".Prepend(" ~~ ") == " ~~ blarg\n ~~ blarg\n ~~ blarg"
         );
 
-        RESULT(".Repeat()", true
+        TEST(".Repeat()", true
             && $"{"blarg".Repeat(3)}{"  ".Repeat(4)}{"blarg".Repeat(3)}" == "blargblargblarg        blargblargblarg"
             && $"{"blarg".Repeat(3)}{"\n".Repeat(4)}{"blarg".Repeat(3)}" == "blargblargblarg\n\n\n\nblargblargblarg"
         );
 
-        RESULT(".ToTitleCase()", true
+        TEST(".ToTitleCase()", true
             && "blarg BLARG bLaRg".ToTitleCase() == "Blarg Blarg Blarg"
         );
 

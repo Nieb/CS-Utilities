@@ -2,11 +2,10 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Integer() {
-        PRINT($"\n[Utility.INT]");
-        //PRINT($"{}");
+        CONOUT($"\n[Utility.INT]");
 
         //======================================================================================================================================================
-        RESULT("abs()", true
+        TEST("abs()", true
             && abs(-2) == 2
             && abs(-1) == 1
             && abs( 0) == 0
@@ -15,7 +14,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("clamp()", true
+        TEST("clamp()", true
             &&    clamp(-8, -5, -3) == -5    &&    clamp(-8, -2,  3) == -2    &&    clamp(-8,  1,  5) ==  1
             &&    clamp(-7, -5, -3) == -5    &&    clamp(-7, -2,  3) == -2    &&    clamp(-7,  1,  5) ==  1
             &&    clamp(-6, -5, -3) == -5    &&    clamp(-6, -2,  3) == -2    &&    clamp(-6,  1,  5) ==  1
@@ -35,7 +34,7 @@ internal static partial class Program {
             &&    clamp( 8, -5, -3) == -3    &&    clamp( 8, -2,  3) ==  3    &&    clamp( 8,  1,  5) ==  5
         );
 
-        RESULT("wrap(int, Lower, Upper)", true
+        TEST("wrap(int, Lower, Upper)", true
             &&    wrap(-8, 0, 4) == 0    &&    wrap(-8, -2, 2) ==  0    &&    wrap(-8, -6, -2) == -4
             &&    wrap(-7, 0, 4) == 1    &&    wrap(-7, -2, 2) ==  1    &&    wrap(-7, -6, -2) == -3
             &&    wrap(-6, 0, 4) == 2    &&    wrap(-6, -2, 2) == -2    &&    wrap(-6, -6, -2) == -6
@@ -55,7 +54,7 @@ internal static partial class Program {
             &&    wrap( 8, 0, 4) == 0    &&    wrap( 8, -2, 2) ==  0    &&    wrap( 8, -6, -2) == -4
         );
 
-        RESULT("wrap(int, Upper)", true
+        TEST("wrap(int, Upper)", true
             &&    wrap(-8, 4) == 0    &&    wrap(-8, 5) == 2
             &&    wrap(-7, 4) == 1    &&    wrap(-7, 5) == 3
             &&    wrap(-6, 4) == 2    &&    wrap(-6, 5) == 4
@@ -76,7 +75,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("min()", true
+        TEST("min()", true
             && min(-2,  2) == -2
             && min(-1,  1) == -1
             && min(-1, -1) == -1
@@ -95,7 +94,7 @@ internal static partial class Program {
             && min(2,3,4,1) == 1
         );
 
-        RESULT("max()", true
+        TEST("max()", true
             && max(-2,  2) ==  2
             && max(-1,  1) ==  1
             && max(-1, -1) == -1
@@ -115,7 +114,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("pow(int, int)", true
+        TEST("pow(int, int)", true
             && pow(2,  0) ==             1
             && pow(2,  1) ==             2
             && pow(2,  2) ==             4
@@ -150,7 +149,7 @@ internal static partial class Program {
         );
 
         #if false
-            PRINT($"""
+            CONOUT($"""
                 pow(2,  0) == {pow(2,  0),11} ==           1
                 pow(2,  1) == {pow(2,  1),11} ==           2
                 pow(2,  2) == {pow(2,  2),11} ==           4
@@ -194,7 +193,7 @@ internal static partial class Program {
 
 
         //======================================================================================================================================================
-        RESULT("trunk()", true
+        TEST("trunk()", true
             && trunk((int)          2147483647, -2) == (int)            47483647
             && trunk((int)          2147483647,  2) == (int)          21474836
             && trunk((long)9223372036854775807, -2) == (long)  23372036854775807

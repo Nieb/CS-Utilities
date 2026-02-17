@@ -2,12 +2,11 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector_Collision3() {
-        PRINT("\n[Utility.VEC -- Collision3]");
-        //PRINT($"{}");
+        CONOUT("\n[Utility.VEC -- Collision3]");
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        RESULT("WhichSideOfPlane()", true
+        TEST("WhichSideOfPlane()", true
             && WhichSideOfPlane((4f,5f,6f), (1f,2f,3f), (SQRT3_RCP,SQRT3_RCP,SQRT3_RCP)) >  0f
             && WhichSideOfPlane((6f,3f,0f), (3f,3f,3f), (SQRT3_RCP,SQRT3_RCP,SQRT3_RCP)) == 0f
             && WhichSideOfPlane((1f,2f,3f), (4f,5f,6f), (SQRT3_RCP,SQRT3_RCP,SQRT3_RCP)) <  0f
@@ -15,7 +14,7 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        RESULT("PointVsSphere()", true
+        TEST("PointVsSphere()", true
             && PointVsSphere((1f,1f,1f), (1f,1f,1f), 1f) == true
             && PointVsSphere((1f,1f,2f), (1f,1f,1f), 1f) == true
             && PointVsSphere((1f,2f,1f), (1f,1f,1f), 1f) == true
@@ -40,7 +39,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("PointVsBox()", true
+        TEST("PointVsBox()", true
             && PointVsBox((1f,1f,1f), (1f,1f,1f), (1f,1f,1f)) == true
             && PointVsBox((2f,2f,2f), (1f,1f,1f), (1f,1f,1f)) == true
 
@@ -101,7 +100,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("PointVsCylinder()", true
+        TEST("PointVsCylinder()", true
             && PointVsCylinder(      (1f, 1f, 1f),    (1f ,0f ,1f), 1f, 2f) == true
             && PointVsCylinder(      (1f, 2f, 1f),    (1f ,0f ,1f), 1f, 2f) == true
             && PointVsCylinder(      (1f, 0f, 1f),    (1f ,0f ,1f), 1f, 2f) == true
@@ -115,7 +114,7 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        RESULT("RayVsPlaneX()", true
+        TEST("RayVsPlaneX()", true
             && RayVsPlaneX((2f,2f,2f), ( 1f, 0f, 0f), 1f) == -1f        //(1f,2f,2f,-1f)
             && RayVsPlaneX((2f,2f,2f), (-1f, 0f, 0f), 1f) ==  1f        //(1f,2f,2f, 1f)
             && RayVsPlaneX((2f,2f,2f), ( 0f, 1f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
@@ -124,7 +123,7 @@ internal static partial class Program {
             && RayVsPlaneX((2f,2f,2f), ( 0f, 0f,-1f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
         );
 
-        RESULT("RayVsPlaneY()", true
+        TEST("RayVsPlaneY()", true
             && RayVsPlaneY((2f,2f,2f), ( 1f, 0f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
             && RayVsPlaneY((2f,2f,2f), (-1f, 0f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
             && RayVsPlaneY((2f,2f,2f), ( 0f, 1f, 0f), 1f) == -1f        //(2f,1f,2f,-1f)
@@ -133,7 +132,7 @@ internal static partial class Program {
             && RayVsPlaneY((2f,2f,2f), ( 0f, 0f,-1f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
         );
 
-        RESULT("RayVsPlaneZ()", true
+        TEST("RayVsPlaneZ()", true
             && RayVsPlaneZ((2f,2f,2f), ( 1f, 0f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
             && RayVsPlaneZ((2f,2f,2f), (-1f, 0f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
             && RayVsPlaneZ((2f,2f,2f), ( 0f, 1f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
@@ -143,18 +142,18 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        //RESULT("RayVsPlane()", true
+        //TEST("RayVsPlane()", true
         //    && RayVsPlane(vec3 Rp, vec3 Rn, vec3 Pp, vec3 Pn)
         //);
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        //RESULT("RayVsTriangle()", true
+        //TEST("RayVsTriangle()", true
         //    && RayVsTriangle(vec3 Rp, vec3 Rn, vec3 Ta, vec3 Tb, vec3 Tc, bool BackFaceTest)
         //);
 
         //======================================================================================================================================================
-        RESULT("RayVsBox()", true
+        TEST("RayVsBox()", true
             && RayVsBox((1.5f, 1.5f, 5.0f),(        0f,        0f,       -1f),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(3f)              //(1.5f, 1.5f, 2.0f, 3f)
 
             && RayVsBox((0.0f, 0.0f, 2.5f),( SQRT3_RCP, SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)           //(1.0f, 1.0f, 1.5f, SQRT3)
@@ -170,7 +169,7 @@ internal static partial class Program {
             && RayVsBox((3.5f, 3.5f, 3.0f),(-SQRT3_RCP,-SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3 * 1.5f)    //(2.0f, 2.0f, 1.5f, SQRT3 * 1.5f)
         );
         /*
-        UtilityTest.Program.PRINT(
+        UtilityTest.Program.CONOUT(
             $"""
 
             RAYvsBOX    Rp: {Rp:0.000}    Rn: {Rn:0.000}    Rnr: {Rnr:0.000}    Bp: {Bp:0.000}    Bs: {Bs:0.000}
@@ -195,7 +194,7 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        RESULT("RayVsSphere()", true
+        TEST("RayVsSphere()", true
             && RayVsSphere((-1,-1,-1), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 1, 1, 1), 1) != RAY_MISS
             && RayVsSphere((-1,-1,-1), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 1, 1, 1), 1).IsApproximately(SQRT3 + SQRT3 - 1f)  //((1f-SQRT3_RCP, 1f-SQRT3_RCP, 1f-SQRT3_RCP, SQRT3+SQRT3-1f))
 
@@ -203,16 +202,25 @@ internal static partial class Program {
             && RayVsSphere(( 4,-1, 4), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 6, 1, 6), 1).IsApproximately(SQRT3 + SQRT3 - 1f)  //((6f-SQRT3_RCP, 1f-SQRT3_RCP, 6f-SQRT3_RCP, SQRT3+SQRT3-1f))
         );
 
-        //PRINT($"{RayVsSphere((-1,-1,-1), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 1, 1, 1), 1)}");
-        //PRINT($"{(1f-SQRT3_RCP, 1f-SQRT3_RCP, 1f-SQRT3_RCP, SQRT3+SQRT3-1f)}");
+        //CONOUT($"{RayVsSphere((-1,-1,-1), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 1, 1, 1), 1)}");
+        //CONOUT($"{(1f-SQRT3_RCP, 1f-SQRT3_RCP, 1f-SQRT3_RCP, SQRT3+SQRT3-1f)}");
 
-        //PRINT($"{RayVsSphere(( 4,-1, 4), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 6, 1, 6), 1)}");
-        //PRINT($"{(4f-SQRT3_RCP, 1f-SQRT3_RCP, 6f-SQRT3_RCP, SQRT3+SQRT3-1f)}");
+        //CONOUT($"{RayVsSphere(( 4,-1, 4), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 6, 1, 6), 1)}");
+        //CONOUT($"{(4f-SQRT3_RCP, 1f-SQRT3_RCP, 6f-SQRT3_RCP, SQRT3+SQRT3-1f)}");
 
-        //PRINT($"{SQRT3_RCP}");
-        //PRINT($"{1f-SQRT3_RCP}");
-        //PRINT($"{new vec3(SQRT3_RCP, SQRT3_RCP, SQRT3_RCP).Length}");
-        //PRINT($"{distance((-1,-1,-1), (1,1,1))}");
+        //CONOUT($"{SQRT3_RCP}");
+        //CONOUT($"{1f-SQRT3_RCP}");
+        //CONOUT($"{new vec3(SQRT3_RCP, SQRT3_RCP, SQRT3_RCP).Length}");
+        //CONOUT($"{distance((-1,-1,-1), (1,1,1))}");
+
+        //for (int i = -13; i <= 13; ++i) {
+        //    CONOUT(
+        //        $"  {RayVsSphere((i/12f,0f,1f), (0f,0f,-1f),   (0f,0f,0f), 1f),-11}" +
+        //        $"  {RayVsSphere((i/12f,0f,2f), (0f,0f,-1f),   (0f,0f,0f), 1f),-11}" +
+        //        $"  {RayVsSphere((i/ 6f,0f,5f), (0f,0f,-1f),   (0f,0f,0f), 2f),-11}" +
+        //        $"  {RayVsSphere((i/12f,0f,9f), (0f,0f,-1f),   (0f,0f,0f), 1f),-11}"
+        //    );
+        //}
 
         //======================================================================================================================================================
 
@@ -224,10 +232,10 @@ internal static partial class Program {
         //    }
         //);
 
-        //PRINT($"{HitPos}");
-        //PRINT($"{HitSide}");
+        //CONOUT($"{HitPos}");
+        //CONOUT($"{HitSide}");
 
-        //RESULT("RayVsVoxelChunk()", true
+        //TEST("RayVsVoxelChunk()", true
         //    && HitPos  == (1,0,0,1)
         //    && HitSide == 1
         //);

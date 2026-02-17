@@ -12,9 +12,9 @@ internal static partial class Program {
             //Gen__TurboColor();
 
         #else
-            //PRINT($"LineNumber: {LINE_NUMBER()}");
+            //CONOUT($"LineNumber: {LINE_NUMBER()}");
 
-            PRINTC($"                                  ~~~ START ~~~");
+            CONOUTC($"                                  ~~~ START ~~~");
             Time Time = new();
 
             Test__Integer();
@@ -38,8 +38,8 @@ internal static partial class Program {
             Test___();
 
             Time.Update();
-            PRINT($"\n                                 ~~~ FINISH ~~~");
-            PRINT($"\n                                   {Time.SinceStart,10:0.0000000}\n");
+            CONOUT($"\n                                 ~~~ FINISH ~~~");
+            CONOUT($"\n                                   {Time.SinceStart64:N12}\n");
         #endif
     }
     //##########################################################################################################################################################

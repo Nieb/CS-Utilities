@@ -2,20 +2,19 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__VectorBasicOps() {
-        PRINT("\n[Utility.VEC Ops]");
-        //PRINT($"{}");
+        CONOUT("\n[Utility.VEC Ops]");
 
         //======================================================================================================================================================
-        RESULT("abs()", true
-            &&    abs(-2f) == 2f    &&    abs((-2f,-2f)) == (2f,2f)    &&    abs((-2f,-2f,-2f)) == (2f,2f,2f)    &&    abs((-2f,-2f,-2f,-2f)) == (2f,2f,2f,2f)
-            &&    abs(-1f) == 1f    &&    abs((-1f,-1f)) == (1f,1f)    &&    abs((-1f,-1f,-1f)) == (1f,1f,1f)    &&    abs((-1f,-1f,-1f,-1f)) == (1f,1f,1f,1f)
-            &&    abs( 0f) == 0f    &&    abs(( 0f, 0f)) == (0f,0f)    &&    abs(( 0f, 0f, 0f)) == (0f,0f,0f)    &&    abs(( 0f, 0f, 0f, 0f)) == (0f,0f,0f,0f)
-            &&    abs( 1f) == 1f    &&    abs(( 1f, 1f)) == (1f,1f)    &&    abs(( 1f, 1f, 1f)) == (1f,1f,1f)    &&    abs(( 1f, 1f, 1f, 1f)) == (1f,1f,1f,1f)
-            &&    abs( 2f) == 2f    &&    abs(( 2f, 2f)) == (2f,2f)    &&    abs(( 2f, 2f, 2f)) == (2f,2f,2f)    &&    abs(( 2f, 2f, 2f, 2f)) == (2f,2f,2f,2f)
+        TEST("abs()", true
+            &&    abs(-2.5f) == 2.5f    &&    abs((-2.5f,-2.5f)) == (2.5f,2.5f)    &&    abs((-2.5f,-2.5f,-2.5f)) == (2.5f,2.5f,2.5f)    &&    abs((-2.5f,-2.5f,-2.5f,-2.5f)) == (2.5f,2.5f,2.5f,2.5f)
+            &&    abs(-1.5f) == 1.5f    &&    abs((-1.5f,-1.5f)) == (1.5f,1.5f)    &&    abs((-1.5f,-1.5f,-1.5f)) == (1.5f,1.5f,1.5f)    &&    abs((-1.5f,-1.5f,-1.5f,-1.5f)) == (1.5f,1.5f,1.5f,1.5f)
+            &&    abs( 0.5f) == 0.5f    &&    abs(( 0.5f, 0.5f)) == (0.5f,0.5f)    &&    abs(( 0.5f, 0.5f, 0.5f)) == (0.5f,0.5f,0.5f)    &&    abs(( 0.5f, 0.5f, 0.5f, 0.5f)) == (0.5f,0.5f,0.5f,0.5f)
+            &&    abs( 1.5f) == 1.5f    &&    abs(( 1.5f, 1.5f)) == (1.5f,1.5f)    &&    abs(( 1.5f, 1.5f, 1.5f)) == (1.5f,1.5f,1.5f)    &&    abs(( 1.5f, 1.5f, 1.5f, 1.5f)) == (1.5f,1.5f,1.5f,1.5f)
+            &&    abs( 2.5f) == 2.5f    &&    abs(( 2.5f, 2.5f)) == (2.5f,2.5f)    &&    abs(( 2.5f, 2.5f, 2.5f)) == (2.5f,2.5f,2.5f)    &&    abs(( 2.5f, 2.5f, 2.5f, 2.5f)) == (2.5f,2.5f,2.5f,2.5f)
         );
 
         //======================================================================================================================================================
-        RESULT("avg()", true
+        TEST("avg()", true
             && avg(0f,1f      ) == 0.5f
             && avg(0f,1f,2f   ) == 1.0f
             && avg(0f,1f,2f,3f) == 1.5f
@@ -30,7 +29,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("clamp()", true
+        TEST("clamp()", true
             && clamp(-3f, -1f, 1f) == -1f
             && clamp(-2f, -1f, 1f) == -1f
             && clamp(-1f, -1f, 1f) == -1f
@@ -40,7 +39,7 @@ internal static partial class Program {
             && clamp( 3f, -1f, 1f) ==  1f
         );
 
-        RESULT("wrap()", true
+        TEST("wrap()", true
             && wrap(-8f, 0f, 4f) == 0f
             && wrap(-7f, 0f, 4f) == 1f
             && wrap(-6f, 0f, 4f) == 2f
@@ -61,38 +60,39 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("distance(A,B)", true
-            && distance((-1f, -1f), ( 1f,  1f)) == (2f * SQRT2)
-            && distance(( 1f,  1f), (-1f, -1f)) == (2f * SQRT2)
+        TEST("distance(A,B)", true
+            && distance((-1f, -1f), ( 1f,  1f)) == (2f * SQRT2)   &&   distance(( 1f,  1f), (-1f, -1f)) == (2f * SQRT2)
+            && distance((-1f,  1f), ( 1f, -1f)) == (2f * SQRT2)   &&   distance(( 1f, -1f), (-1f,  1f)) == (2f * SQRT2)
 
-            && distance((-1f,  1f), ( 1f, -1f)) == (2f * SQRT2)
-            && distance(( 1f, -1f), (-1f,  1f)) == (2f * SQRT2)
-
-            && distance((-1f, -1f, -1f), ( 1f,  1f,  1f)) == (2f * SQRT3)
-            && distance(( 1f,  1f,  1f), (-1f, -1f, -1f)) == (2f * SQRT3)
-
-            && distance((-1f, -1f,  1f), ( 1f,  1f, -1f)) == (2f * SQRT3)
-            && distance(( 1f,  1f, -1f), (-1f, -1f,  1f)) == (2f * SQRT3)
-
-            && distance((-1f,  1f, -1f), ( 1f, -1f,  1f)) == (2f * SQRT3)
-            && distance(( 1f, -1f,  1f), (-1f,  1f, -1f)) == (2f * SQRT3)
-
-            && distance(( 1f, -1f, -1f), (-1f,  1f,  1f)) == (2f * SQRT3)
-            && distance((-1f,  1f,  1f), ( 1f, -1f, -1f)) == (2f * SQRT3)
+            && distance((-1f, -1f, -1f), ( 1f,  1f,  1f)) == (2f * SQRT3)   &&   distance(( 1f,  1f,  1f), (-1f, -1f, -1f)) == (2f * SQRT3)
+            && distance((-1f, -1f,  1f), ( 1f,  1f, -1f)) == (2f * SQRT3)   &&   distance(( 1f,  1f, -1f), (-1f, -1f,  1f)) == (2f * SQRT3)
+            && distance((-1f,  1f, -1f), ( 1f, -1f,  1f)) == (2f * SQRT3)   &&   distance(( 1f, -1f,  1f), (-1f,  1f, -1f)) == (2f * SQRT3)
+            && distance(( 1f, -1f, -1f), (-1f,  1f,  1f)) == (2f * SQRT3)   &&   distance((-1f,  1f,  1f), ( 1f, -1f, -1f)) == (2f * SQRT3)
         );
 
         //======================================================================================================================================================
-        RESULT("fract(A)", true
-            && fract( 123.456f).IsRoughly(   0.456f)
+        TEST("fract(A)", true
             && fract(-123.456f).IsRoughly(1f-0.456f)
+            && fract( 123.456f).IsRoughly(   0.456f)
         );
-        RESULT("trunc(A)", true
-            && trunc( 123.456f).IsRoughly( 123f)
-            && trunc(-123.456f).IsRoughly(-123f)
+
+        TEST("trunc(A)", true
+            && trunc(-12345.67890f).IsApproximately(-12345f)
+            && trunc( -1234.56789f).IsApproximately( -1234f)
+            && trunc(  -123.45678f).IsApproximately(  -123f)
+            && trunc(   -12.34567f).IsApproximately(   -12f)
+            && trunc(    -1.23456f).IsApproximately(    -1f)
+            && trunc(    -0.12345f).IsApproximately(    -0f)
+            && trunc(     0.12345f).IsApproximately(     0f)
+            && trunc(     1.23456f).IsApproximately(     1f)
+            && trunc(    12.34567f).IsApproximately(    12f)
+            && trunc(   123.45678f).IsApproximately(   123f)
+            && trunc(  1234.56789f).IsApproximately(  1234f)
+            && trunc( 12345.67890f).IsApproximately( 12345f)
         );
 
         //======================================================================================================================================================
-        RESULT("normalize(A)", true
+        TEST("normalize(A)", true
             && normalize((-5f, -5f)) == (-SQRT2_RCP,-SQRT2_RCP)
             && normalize((-1f, -1f)) == (-SQRT2_RCP,-SQRT2_RCP)
             && normalize(( 1f,  1f)) == ( SQRT2_RCP, SQRT2_RCP)
@@ -105,7 +105,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("min(A,B)", true
+        TEST("min(A,B)", true
             && min(-2f,  2f) == -2f
             && min(-1f,  1f) == -1f
             && min(-1f, -1f) == -1f
@@ -114,7 +114,7 @@ internal static partial class Program {
             && min( 1f, -1f) == -1f
             && min( 2f, -2f) == -2f
         );
-        RESULT("min(A,B,C)", true
+        TEST("min(A,B,C)", true
             && min(1f,2f,3f) == 1f
             && min(1f,3f,2f) == 1f
             && min(2f,1f,3f) == 1f
@@ -123,7 +123,7 @@ internal static partial class Program {
             && min(3f,2f,1f) == 1f
             && min(5f,5f,5f) == 5f
         );
-        RESULT("min(A,B,C,D)", true
+        TEST("min(A,B,C,D)", true
             && min(1f,2f,3f,4f) == 1f
             && min(1f,2f,4f,3f) == 1f
             && min(1f,3f,2f,4f) == 1f
@@ -151,7 +151,7 @@ internal static partial class Program {
             && min(7f,7f,7f,7f) == 7f
         );
 
-        RESULT("max(A,B)", true
+        TEST("max(A,B)", true
             && max(-2f,  2f) ==  2f
             && max(-1f,  1f) ==  1f
             && max(-1f, -1f) == -1f
@@ -160,7 +160,7 @@ internal static partial class Program {
             && max( 1f, -1f) ==  1f
             && max( 2f, -2f) ==  2f
         );
-        RESULT("max(A,B,C)", true
+        TEST("max(A,B,C)", true
             && max(1f,2f,3f) == 3f
             && max(1f,3f,2f) == 3f
             && max(2f,1f,3f) == 3f
@@ -169,7 +169,7 @@ internal static partial class Program {
             && max(3f,2f,1f) == 3f
             && max(5f,5f,5f) == 5f
         );
-        RESULT("max(A,B,C,D)", true
+        TEST("max(A,B,C,D)", true
             && max(1f,2f,3f,4f) == 4f
             && max(1f,2f,4f,3f) == 4f
             && max(1f,3f,2f,4f) == 4f
@@ -198,20 +198,51 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        RESULT("pow() exp() log()", true
-            && exp(     log  (0.44f)    ).IsApproximately(0.44f)
+        TEST("mod(A,B)", true
+            && mod(-8f,2f)==0f && mod(-8f,-2f)==0f   &&   mod(-8f,3f)==1f && mod(-8f,-3f)==1f   &&   mod(-8f,4f)==0f && mod(-8f,-4f)==0f   &&   mod(-8f,5f)==2f && mod(-8f,-5f)==2f
+            && mod(-7f,2f)==1f && mod(-7f,-2f)==1f   &&   mod(-7f,3f)==2f && mod(-7f,-3f)==2f   &&   mod(-7f,4f)==1f && mod(-7f,-4f)==1f   &&   mod(-7f,5f)==3f && mod(-7f,-5f)==3f
+            && mod(-6f,2f)==0f && mod(-6f,-2f)==0f   &&   mod(-6f,3f)==0f && mod(-6f,-3f)==0f   &&   mod(-6f,4f)==2f && mod(-6f,-4f)==2f   &&   mod(-6f,5f)==4f && mod(-6f,-5f)==4f
+            && mod(-5f,2f)==1f && mod(-5f,-2f)==1f   &&   mod(-5f,3f)==1f && mod(-5f,-3f)==1f   &&   mod(-5f,4f)==3f && mod(-5f,-4f)==3f   &&   mod(-5f,5f)==0f && mod(-5f,-5f)==0f
+            && mod(-4f,2f)==0f && mod(-4f,-2f)==0f   &&   mod(-4f,3f)==2f && mod(-4f,-3f)==2f   &&   mod(-4f,4f)==0f && mod(-4f,-4f)==0f   &&   mod(-4f,5f)==1f && mod(-4f,-5f)==1f
+            && mod(-3f,2f)==1f && mod(-3f,-2f)==1f   &&   mod(-3f,3f)==0f && mod(-3f,-3f)==0f   &&   mod(-3f,4f)==1f && mod(-3f,-4f)==1f   &&   mod(-3f,5f)==2f && mod(-3f,-5f)==2f
+            && mod(-2f,2f)==0f && mod(-2f,-2f)==0f   &&   mod(-2f,3f)==1f && mod(-2f,-3f)==1f   &&   mod(-2f,4f)==2f && mod(-2f,-4f)==2f   &&   mod(-2f,5f)==3f && mod(-2f,-5f)==3f
+            && mod(-1f,2f)==1f && mod(-1f,-2f)==1f   &&   mod(-1f,3f)==2f && mod(-1f,-3f)==2f   &&   mod(-1f,4f)==3f && mod(-1f,-4f)==3f   &&   mod(-1f,5f)==4f && mod(-1f,-5f)==4f
 
-            && pow( 2f, log2 (0.44f)    ).IsApproximately(0.44f)
+            && mod( 0f,2f)==0f && mod( 0f,-2f)==0f   &&   mod( 0f,3f)==0f && mod( 0f,-3f)==0f   &&   mod( 0f,4f)==0f && mod( 0f,-4f)==0f   &&   mod( 0f,5f)==0f && mod( 0f,-5f)==0f
+
+            && mod( 1f,2f)==1f && mod( 1f,-2f)==1f   &&   mod( 1f,3f)==1f && mod( 1f,-3f)==1f   &&   mod( 1f,4f)==1f && mod( 1f,-4f)==1f   &&   mod( 1f,5f)==1f && mod( 1f,-5f)==1f
+            && mod( 2f,2f)==0f && mod( 2f,-2f)==0f   &&   mod( 2f,3f)==2f && mod( 2f,-3f)==2f   &&   mod( 2f,4f)==2f && mod( 2f,-4f)==2f   &&   mod( 2f,5f)==2f && mod( 2f,-5f)==2f
+            && mod( 3f,2f)==1f && mod( 3f,-2f)==1f   &&   mod( 3f,3f)==0f && mod( 3f,-3f)==0f   &&   mod( 3f,4f)==3f && mod( 3f,-4f)==3f   &&   mod( 3f,5f)==3f && mod( 3f,-5f)==3f
+            && mod( 4f,2f)==0f && mod( 4f,-2f)==0f   &&   mod( 4f,3f)==1f && mod( 4f,-3f)==1f   &&   mod( 4f,4f)==0f && mod( 4f,-4f)==0f   &&   mod( 4f,5f)==4f && mod( 4f,-5f)==4f
+            && mod( 5f,2f)==1f && mod( 5f,-2f)==1f   &&   mod( 5f,3f)==2f && mod( 5f,-3f)==2f   &&   mod( 5f,4f)==1f && mod( 5f,-4f)==1f   &&   mod( 5f,5f)==0f && mod( 5f,-5f)==0f
+            && mod( 6f,2f)==0f && mod( 6f,-2f)==0f   &&   mod( 6f,3f)==0f && mod( 6f,-3f)==0f   &&   mod( 6f,4f)==2f && mod( 6f,-4f)==2f   &&   mod( 6f,5f)==1f && mod( 6f,-5f)==1f
+            && mod( 7f,2f)==1f && mod( 7f,-2f)==1f   &&   mod( 7f,3f)==1f && mod( 7f,-3f)==1f   &&   mod( 7f,4f)==3f && mod( 7f,-4f)==3f   &&   mod( 7f,5f)==2f && mod( 7f,-5f)==2f
+            && mod( 8f,2f)==0f && mod( 8f,-2f)==0f   &&   mod( 8f,3f)==2f && mod( 8f,-3f)==2f   &&   mod( 8f,4f)==0f && mod( 8f,-4f)==0f   &&   mod( 8f,5f)==3f && mod( 8f,-5f)==3f
+        );
+
+        //for (int i = -9; i <= 9; ++i) {
+        //    CONOUT(
+        //        $"    {mod(i,2f)} {mod(i,-2f)} {i%2f,2} {i%-2f,2}" +
+        //        $"    {mod(i,3f)} {mod(i,-3f)} {i%3f,2} {i%-3f,2}" +
+        //        $"    {mod(i,4f)} {mod(i,-4f)} {i%4f,2} {i%-4f,2}" +
+        //        $"    {mod(i,5f)} {mod(i,-5f)} {i%5f,2} {i%-5f,2}"
+        //    );
+        //}
+
+        //======================================================================================================================================================
+        TEST("pow() exp() log()", true
+            && exp(       log(0.44f)    ).IsApproximately(0.44f)
+
+            && pow( 2f,  log2(0.44f)    ).IsApproximately(0.44f)
             && pow(10f, log10(0.44f)    ).IsApproximately(0.44f)
 
-            && pow( 7f, log  (0.44f, 7f)).IsApproximately(0.44f)
+            && pow( 7f,   log(0.44f, 7f)).IsApproximately(0.44f)
         );
 
         #if false
         {
             float x = 0.44f;
-
-            PRINT($"""
+            CONOUT($"""
 
                            x = {x}
 
@@ -226,56 +257,24 @@ internal static partial class Program {
         #endif
 
         //======================================================================================================================================================
-        RESULT("round(A, RoundTo)", true
-            && round(-2.0f, 0.5f) == -2.0f
-            && round(-1.9f, 0.5f) == -2.0f
-            && round(-1.8f, 0.5f) == -2.0f
+        TEST("round(A, RoundTo)", true
+            && round(-2.2f, 0.5f) == -2.0f  && round(-0.7f, 0.5f) == -0.5f  && round( 0.8f, 0.5f) ==  1.0f
+            && round(-2.1f, 0.5f) == -2.0f  && round(-0.6f, 0.5f) == -0.5f  && round( 0.9f, 0.5f) ==  1.0f
+            && round(-2.0f, 0.5f) == -2.0f  && round(-0.5f, 0.5f) == -0.5f  && round( 1.0f, 0.5f) ==  1.0f
+            && round(-1.9f, 0.5f) == -2.0f  && round(-0.4f, 0.5f) == -0.5f  && round( 1.1f, 0.5f) ==  1.0f
+            && round(-1.8f, 0.5f) == -2.0f  && round(-0.3f, 0.5f) == -0.5f  && round( 1.2f, 0.5f) ==  1.0f
 
-            && round(-1.7f, 0.5f) == -1.5f
-            && round(-1.6f, 0.5f) == -1.5f
-            && round(-1.5f, 0.5f) == -1.5f
-            && round(-1.4f, 0.5f) == -1.5f
-            && round(-1.3f, 0.5f) == -1.5f
+            && round(-1.7f, 0.5f) == -1.5f  && round(-0.2f, 0.5f) == -0.0f  && round( 1.3f, 0.5f) ==  1.5f
+            && round(-1.6f, 0.5f) == -1.5f  && round(-0.1f, 0.5f) == -0.0f  && round( 1.4f, 0.5f) ==  1.5f
+            && round(-1.5f, 0.5f) == -1.5f  && round( 0.0f, 0.5f) ==  0.0f  && round( 1.5f, 0.5f) ==  1.5f
+            && round(-1.4f, 0.5f) == -1.5f  && round( 0.1f, 0.5f) ==  0.0f  && round( 1.6f, 0.5f) ==  1.5f
+            && round(-1.3f, 0.5f) == -1.5f  && round( 0.2f, 0.5f) ==  0.0f  && round( 1.7f, 0.5f) ==  1.5f
 
-            && round(-1.2f, 0.5f) == -1.0f
-            && round(-1.1f, 0.5f) == -1.0f
-            && round(-1.0f, 0.5f) == -1.0f
-            && round(-0.9f, 0.5f) == -1.0f
-            && round(-0.8f, 0.5f) == -1.0f
-
-            && round(-0.7f, 0.5f) == -0.5f
-            && round(-0.6f, 0.5f) == -0.5f
-            && round(-0.5f, 0.5f) == -0.5f
-            && round(-0.4f, 0.5f) == -0.5f
-            && round(-0.3f, 0.5f) == -0.5f
-
-            && round(-0.2f, 0.5f) == -0.0f
-            && round(-0.1f, 0.5f) == -0.0f
-            && round( 0.0f, 0.5f) ==  0.0f
-            && round( 0.1f, 0.5f) ==  0.0f
-            && round( 0.2f, 0.5f) ==  0.0f
-
-            && round( 0.3f, 0.5f) ==  0.5f
-            && round( 0.4f, 0.5f) ==  0.5f
-            && round( 0.5f, 0.5f) ==  0.5f
-            && round( 0.6f, 0.5f) ==  0.5f
-            && round( 0.7f, 0.5f) ==  0.5f
-
-            && round( 0.8f, 0.5f) ==  1.0f
-            && round( 0.9f, 0.5f) ==  1.0f
-            && round( 1.0f, 0.5f) ==  1.0f
-            && round( 1.1f, 0.5f) ==  1.0f
-            && round( 1.2f, 0.5f) ==  1.0f
-
-            && round( 1.3f, 0.5f) ==  1.5f
-            && round( 1.4f, 0.5f) ==  1.5f
-            && round( 1.5f, 0.5f) ==  1.5f
-            && round( 1.6f, 0.5f) ==  1.5f
-            && round( 1.7f, 0.5f) ==  1.5f
-
-            && round( 1.8f, 0.5f) ==  2.0f
-            && round( 1.9f, 0.5f) ==  2.0f
-            && round( 2.0f, 0.5f) ==  2.0f
+            && round(-1.2f, 0.5f) == -1.0f  && round( 0.3f, 0.5f) ==  0.5f  && round( 1.8f, 0.5f) ==  2.0f
+            && round(-1.1f, 0.5f) == -1.0f  && round( 0.4f, 0.5f) ==  0.5f  && round( 1.9f, 0.5f) ==  2.0f
+            && round(-1.0f, 0.5f) == -1.0f  && round( 0.5f, 0.5f) ==  0.5f  && round( 2.0f, 0.5f) ==  2.0f
+            && round(-0.9f, 0.5f) == -1.0f  && round( 0.6f, 0.5f) ==  0.5f  && round( 2.1f, 0.5f) ==  2.0f
+            && round(-0.8f, 0.5f) == -1.0f  && round( 0.7f, 0.5f) ==  0.5f  && round( 2.2f, 0.5f) ==  2.0f
         );
 
         //======================================================================================================================================================

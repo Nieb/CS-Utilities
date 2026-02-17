@@ -2,12 +2,11 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector_Miscellaneous() {
-        PRINT("\n[Utility.VEC -- Miscellaneous]");
-        //PRINT($"{}");
+        CONOUT("\n[Utility.VEC -- Miscellaneous]");
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        RESULT("Bisect(vec2, vec2)", true
+        TEST("Bisect(vec2, vec2)", true
             && Bisect((1f, 0f), (0f, 1f)).IsApproximately(( SQRT2_RCP, SQRT2_RCP))
             && Bisect((0f, 1f), (1f, 0f)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP))
 
@@ -32,7 +31,7 @@ internal static partial class Program {
             vec2 B = (-sin(PI2/3f),cos(PI2/3f));
             vec2 C = (-sin(PI4/3f),cos(PI4/3f));
 
-            RESULT("Barycentric()", true
+            TEST("Barycentric()", true
                 && Barycentric(Z,  A,B,C).IsApproximately((ONE_THIRD, ONE_THIRD, ONE_THIRD))
                 && Barycentric(Z,  C,A,B).IsApproximately((ONE_THIRD, ONE_THIRD, ONE_THIRD))
                 && Barycentric(Z,  B,C,A).IsApproximately((ONE_THIRD, ONE_THIRD, ONE_THIRD))
@@ -62,26 +61,26 @@ internal static partial class Program {
             );
 
             #if false
-                PRINT("");
-                PRINT($"    {Barycentric(Z,  A,B,C):0.000}");
-                PRINT($"    {Barycentric(Z,  A,B,C):0.000}");
-                PRINT("");
-                PRINT($"    {Barycentric(A*0.25f,  A,B,C):0.000}");
-                PRINT($"    {Barycentric(B*0.25f,  A,B,C):0.000}");
-                PRINT($"    {Barycentric(C*0.25f,  A,B,C):0.000}");
-                PRINT("");
-                PRINT($"    {Barycentric(A*0.50f,  A,B,C):0.000}");
-                PRINT($"    {Barycentric(B*0.50f,  A,B,C):0.000}");
-                PRINT($"    {Barycentric(C*0.50f,  A,B,C):0.000}");
-                PRINT("");
-                PRINT($"    {Barycentric(A*0.75f,  A,B,C):0.000}");
-                PRINT($"    {Barycentric(B*0.75f,  A,B,C):0.000}");
-                PRINT($"    {Barycentric(C*0.75f,  A,B,C):0.000}");
-                PRINT("");
-                PRINT($"    {Barycentric(A*ONE_THIRD,  A,B,C):0.000}");
-                PRINT($"    {Barycentric(B*ONE_THIRD,  A,B,C):0.000}");
-                PRINT($"    {Barycentric(C*ONE_THIRD,  A,B,C):0.000}");
-                PRINT("");
+                CONOUT("");
+                CONOUT($"    {Barycentric(Z,  A,B,C):0.000}");
+                CONOUT($"    {Barycentric(Z,  A,B,C):0.000}");
+                CONOUT("");
+                CONOUT($"    {Barycentric(A*0.25f,  A,B,C):0.000}");
+                CONOUT($"    {Barycentric(B*0.25f,  A,B,C):0.000}");
+                CONOUT($"    {Barycentric(C*0.25f,  A,B,C):0.000}");
+                CONOUT("");
+                CONOUT($"    {Barycentric(A*0.50f,  A,B,C):0.000}");
+                CONOUT($"    {Barycentric(B*0.50f,  A,B,C):0.000}");
+                CONOUT($"    {Barycentric(C*0.50f,  A,B,C):0.000}");
+                CONOUT("");
+                CONOUT($"    {Barycentric(A*0.75f,  A,B,C):0.000}");
+                CONOUT($"    {Barycentric(B*0.75f,  A,B,C):0.000}");
+                CONOUT($"    {Barycentric(C*0.75f,  A,B,C):0.000}");
+                CONOUT("");
+                CONOUT($"    {Barycentric(A*ONE_THIRD,  A,B,C):0.000}");
+                CONOUT($"    {Barycentric(B*ONE_THIRD,  A,B,C):0.000}");
+                CONOUT($"    {Barycentric(C*ONE_THIRD,  A,B,C):0.000}");
+                CONOUT("");
             #endif
 
         }
@@ -99,7 +98,7 @@ internal static partial class Program {
             //    1f
             //);
 
-            RESULT("vec2 PredictiveAim()", true
+            TEST("vec2 PredictiveAim()", true
                 //&&
                 //PredictiveAim(
                 //    (1f, 3f), (SQRT2_RCP, -SQRT2_RCP),
@@ -108,15 +107,15 @@ internal static partial class Program {
                 //).IsApproximately((2f, 2f))
             );
 
-            //PRINT("");
-            //PRINT($"result  == {A:0}");
-            //PRINT("");
-            //PRINT($"result  == {B:0}");
-            //PRINT("");
+            //CONOUT("");
+            //CONOUT($"result  == {A:0}");
+            //CONOUT("");
+            //CONOUT($"result  == {B:0}");
+            //CONOUT("");
         }
         //######################################################################################################################################################
         //######################################################################################################################################################
-        RESULT("SphericalDistance(vec2, vec2)", true
+        TEST("SphericalDistance(vec2, vec2)", true
             && SphericalDistance((  0f,  0f),( PIQ,  0f)).IsApproximately(PIQ)
             && SphericalDistance((  0f,  0f),( PIH,  0f)).IsApproximately(PIH)
             && SphericalDistance((  0f,  0f),( PI ,  0f)).IsApproximately(PI)
@@ -148,7 +147,7 @@ internal static partial class Program {
         );
 
         #if false
-            PRINT($"""
+            CONOUT($"""
 
                 PIH == {PIH:0.00000000}
                 PI  == {PI:0.00000000}
@@ -191,12 +190,18 @@ internal static partial class Program {
                 }
             }
 
-            PRINT(SB.ToString());
+            CONOUT(SB.ToString());
         }
         #endif
 
         //======================================================================================================================================================
-        RESULT("SphericalDistance(vec3, vec3)", true
+
+
+        //CONOUT($"{Lanczos(0f)}");
+
+
+        //======================================================================================================================================================
+        TEST("SphericalDistance(vec3, vec3)", true
             && SphericalDistance(( 1f, 0f, 0f),( 1f, 0f, 0f)).IsApproximately(0f)
             && SphericalDistance(( 0f, 1f, 0f),( 0f, 1f, 0f)).IsApproximately(0f)
             && SphericalDistance(( 0f, 0f, 1f),( 0f, 0f, 1f)).IsApproximately(0f)
@@ -233,7 +238,7 @@ internal static partial class Program {
         );
 
         #if false
-            PRINT($"""
+            CONOUT($"""
 
                 PIH == {PIH:0.00000000}
                 PI  == {PI:0.00000000}
@@ -258,7 +263,7 @@ internal static partial class Program {
         #endif
 
         #if false
-            PRINT($"""
+            CONOUT($"""
 
                 PIH == {PIH:0.00000000}
                 PI  == {PI:0.00000000}
