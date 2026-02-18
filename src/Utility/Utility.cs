@@ -47,13 +47,13 @@ global using iv4 = Utility.ivec4;
 global using Utility;
 
 global using static Utility.Array;
+global using static Utility.BitOps;
 global using static Utility.Casting;
 global using static Utility.Miscellaneous;
 global using static Utility.Random;
 
 global using static Utility.FLT;
 global using static Utility.INT;
-global using static Utility.INT_BitOps;
 global using static Utility.STR;
 global using static Utility.VEC;
 global using static Utility.VEC_Collision2;

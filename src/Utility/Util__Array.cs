@@ -3,6 +3,8 @@ namespace Utility;
 internal static class Array {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     [System.Runtime.CompilerServices.InlineArray( 2)] internal struct  InlineArray2_Float {private float i;}
     [System.Runtime.CompilerServices.InlineArray( 3)] internal struct  InlineArray3_Float {private float i;}
     [System.Runtime.CompilerServices.InlineArray( 4)] internal struct  InlineArray4_Float {private float i;}
@@ -10,6 +12,8 @@ internal static class Array {
     [System.Runtime.CompilerServices.InlineArray(12)] internal struct InlineArray12_Float {private float i;}
     [System.Runtime.CompilerServices.InlineArray(16)] internal struct InlineArray16_Float {private float i;}
 
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
@@ -27,6 +31,27 @@ internal static class Array {
     [Impl(AggressiveInlining)] internal static bool IsVoid(this f32[] A) => (A?.Length ?? 0) == 0;   //(A == null || A.Length == 0);
     [Impl(AggressiveInlining)] internal static bool IsVoid(this f64[] A) => (A?.Length ?? 0) == 0;
 
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //
+    //  Get previous/next Element via provided index, with Array.Length wrapping.
+    //
+    //      Blarg.prev(i)       Equivalent to:  Blarg.prev(i,1)
+    //      Blarg.next(i)       Equivalent to:  Blarg.next(i,1)
+    //
+    //      Blarg.prev(i,2)
+    //      Blarg.next(i,2)
+    //
+    [Impl(AggressiveInlining)] internal static T prev<T>(this T[] A, int i)           => A[(   --i <         0) ?      A.Length - 1 : i];
+    [Impl(AggressiveInlining)] internal static T next<T>(this T[] A, int i)           => A[(   ++i >= A.Length) ?                 0 : i];
+
+    [Impl(AggressiveInlining)] internal static T prev<T>(this T[] A, int i, int Step) => A[(i-Step <         0) ? i-Step + A.Length : i-Step];
+    [Impl(AggressiveInlining)] internal static T next<T>(this T[] A, int i, int Step) => A[(i+Step >= A.Length) ? i+Step - A.Length : i+Step];
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
@@ -74,7 +99,7 @@ internal static class Array {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //      MyArray.Clear();
+    //      Blarg.Clear();
     //
     [Impl(AggressiveInlining)] internal static void Clear(this  s8[] A) => System.Array.Clear(A);
     [Impl(AggressiveInlining)] internal static void Clear(this  u8[] A) => System.Array.Clear(A);
@@ -93,8 +118,8 @@ internal static class Array {
     //  This only works when used upon the original ref from the originating scope.
     //  Also, there must be no additional references elsewhere.
     //
-    //      Delete(ref MyArray);
-    //      DeleteAndCollect(ref MyArray); ...
+    //      Delete(ref Blarg);
+    //      DeleteAndCollect(ref Blarg); ...
     //
     [Impl(AggressiveInlining)] internal static void Delete(ref  s8[] A) {A = null; System.GC.Collect(); System.GC.WaitForPendingFinalizers();}
     [Impl(AggressiveInlining)] internal static void Delete(ref  u8[] A) {A = null; System.GC.Collect(); System.GC.WaitForPendingFinalizers();}
@@ -108,7 +133,7 @@ internal static class Array {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //      MyArray.Fill( WithThisValue );
+    //      Blarg.Fill( WithThisValue );
     //
     [Impl(AggressiveInlining)] internal static void Fill(this  s8[] A,  s8 V) => System.Array.Fill(A, V);
     [Impl(AggressiveInlining)] internal static void Fill(this  u8[] A,  u8 V) => System.Array.Fill(A, V);
@@ -128,7 +153,7 @@ internal static class Array {
     //
     //  Array must be one-dimensional.
     //
-    //      MyArray.Resize( ItemCount );
+    //      Blarg.Resize( ItemCount );
     //
     [Impl(AggressiveInlining)] internal static void Resize(this  s8[] A, int Size) => System.Array.Resize(ref A, (Size<0) ? 0 : Size);
     [Impl(AggressiveInlining)] internal static void Resize(this  u8[] A, int Size) => System.Array.Resize(ref A, (Size<0) ? 0 : Size);
@@ -143,9 +168,9 @@ internal static class Array {
     //##########################################################################################################################################################
     //
     //  This would be better, but alas...
-    //      MyArray[i] = [Values, To, Set, Etc];
+    //      Blarg[i] = [Values, To, Set, Etc];
     //
-    //      MyArray.SetFrom(i,   Values, To, Set, Etc);
+    //      Blarg.SetFrom(i,   Values, To, Set, Etc);
     //
     [Impl(AggressiveInlining)] internal static void SetFrom(this  s8[] A, int FromHere, params  s8[] B) => B.CopyTo(A, FromHere);
     [Impl(AggressiveInlining)] internal static void SetFrom(this  u8[] A, int FromHere, params  u8[] B) => B.CopyTo(A, FromHere);
@@ -169,6 +194,8 @@ internal static class Array {
     //
     //      DoThing([..existingArray, 4, 5]);
     //
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
 }

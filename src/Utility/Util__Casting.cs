@@ -18,14 +18,14 @@ internal static class Casting {
       //[Impl(AggressiveInlining)] public static implicit operator Data32(u32 A) => new Data32(A); //  Directly assign 'u32' to 'Data32'.
     }
 
-    [Impl(AggressiveInlining)] internal static f32 BitCast_to_F32(s32 I) => new Data32(I).F;
-    [Impl(AggressiveInlining)] internal static f32 BitCast_to_F32(u32 U) => new Data32(U).F;
+    [Impl(AggressiveInlining)] internal static f32 BitCast_ToF32(s32 I) => new Data32(I).F;
+    [Impl(AggressiveInlining)] internal static f32 BitCast_ToF32(u32 U) => new Data32(U).F;
 
-    [Impl(AggressiveInlining)] internal static s32 BitCast_to_I32(f32 F) => new Data32(F).I;
-    [Impl(AggressiveInlining)] internal static s32 BitCast_to_I32(u32 U) => new Data32(U).I;
+    [Impl(AggressiveInlining)] internal static s32 BitCast_ToI32(f32 F) => new Data32(F).I;
+    [Impl(AggressiveInlining)] internal static s32 BitCast_ToI32(u32 U) => new Data32(U).I;
 
-    [Impl(AggressiveInlining)] internal static u32 BitCast_to_U32(f32 F) => new Data32(F).U;
-    [Impl(AggressiveInlining)] internal static u32 BitCast_to_U32(s32 I) => new Data32(I).U;
+    [Impl(AggressiveInlining)] internal static u32 BitCast_ToU32(f32 F) => new Data32(F).U;
+    [Impl(AggressiveInlining)] internal static u32 BitCast_ToU32(s32 I) => new Data32(I).U;
 
     //==========================================================================================================================================================
     [StructLayout(LayoutKind.Explicit, Pack=4)]
@@ -41,14 +41,14 @@ internal static class Casting {
       //[Impl(AggressiveInlining)] public static implicit operator Data64(u64 A) => new Data64(A); //  Directly assign 'u64' to 'Data64'.
     }
 
-    [Impl(AggressiveInlining)] internal static f64 BitCast_to_F64(s64 I) => new Data64(I).F;
-    [Impl(AggressiveInlining)] internal static f64 BitCast_to_F64(u64 U) => new Data64(U).F;
+    [Impl(AggressiveInlining)] internal static f64 BitCast_ToF64(s64 I) => new Data64(I).F;
+    [Impl(AggressiveInlining)] internal static f64 BitCast_ToF64(u64 U) => new Data64(U).F;
 
-    [Impl(AggressiveInlining)] internal static s64 BitCast_to_I64(f64 F) => new Data64(F).I;
-    [Impl(AggressiveInlining)] internal static s64 BitCast_to_I64(u64 U) => new Data64(U).I;
+    [Impl(AggressiveInlining)] internal static s64 BitCast_ToI64(f64 F) => new Data64(F).I;
+    [Impl(AggressiveInlining)] internal static s64 BitCast_ToI64(u64 U) => new Data64(U).I;
 
-    [Impl(AggressiveInlining)] internal static u64 BitCast_to_U64(f64 F) => new Data64(F).U;
-    [Impl(AggressiveInlining)] internal static u64 BitCast_to_U64(s64 I) => new Data64(I).U;
+    [Impl(AggressiveInlining)] internal static u64 BitCast_ToU64(f64 F) => new Data64(F).U;
+    [Impl(AggressiveInlining)] internal static u64 BitCast_ToU64(s64 I) => new Data64(I).U;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

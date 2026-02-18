@@ -63,14 +63,27 @@ internal static class INT {
     //      wrap( A, LowerBounds, UpperBounds )
     //      wrap( A,              UpperBounds )     LowerBounds == 0
     //
-    [Impl(AggressiveInlining)] internal static int wrap(int A, int L, int U) {int Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0) ? Domain : 0);}
+    [Impl(AggressiveInlining)] internal static s32 wrap(s32 A, s32 L, s32 U) {s32 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0) ? Domain : 0);}
+    [Impl(AggressiveInlining)] internal static s32 wrap(s32 A,        s32 U) {                   A = (A    %     U);  return A   + ((A < 0) ?      U : 0);}
 
-    [Impl(AggressiveInlining)] internal static int wrap(int A,        int U) {                   A = (A    %     U);  return A   + ((A < 0) ?      U : 0);}
+    [Impl(AggressiveInlining)] internal static s64 wrap(s64 A, s64 L, s64 U) {s64 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0) ? Domain : 0);}
+    [Impl(AggressiveInlining)] internal static s64 wrap(s64 A,        s64 U) {                   A = (A    %     U);  return A   + ((A < 0) ?      U : 0);}
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] internal static int prev(int i, int U) => (--i <  0) ? U-1 : i;
+    //
+    //  Get previous/next Index, with Array.Length wrapping.
+    //
+    //      Blarg[ prev(i, Blarg.Length) ]      Equivalent to:  Blarg[ prev(i, 1, Blarg.Length) ]
+    //      Blarg[ next(i, Blarg.Length) ]      Equivalent to:  Blarg[ next(i, 1, Blarg.Length) ]
+    //
+    //      Blarg[ prev(i, 2, Blarg.Length) ]
+    //      Blarg[ next(i, 2, Blarg.Length) ]
+    //
+    [Impl(AggressiveInlining)] internal static int prev(int i,           int U) => (--i <  0) ? U-1 : i;
+    [Impl(AggressiveInlining)] internal static int next(int i,           int U) => (++i >= U) ?   0 : i;
 
-    [Impl(AggressiveInlining)] internal static int next(int i, int U) => (++i >= U) ?   0 : i;
+    [Impl(AggressiveInlining)] internal static int prev(int i, int Step, int U) => (i-Step <  0) ? i-Step + U : i-Step;
+    [Impl(AggressiveInlining)] internal static int next(int i, int Step, int U) => (i+Step >= U) ? i+Step - U : i+Step;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

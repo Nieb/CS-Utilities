@@ -103,6 +103,7 @@ internal static partial class VEC_Miscellaneous {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
+    //  https://www.desmos.com/calculator/mqajs8tfgd
     //  https://www.desmos.com/3d/p8hvpd8xwz
     //
     //  Falloff infinitely approaches zero.  AKA: Asymptotic
@@ -120,14 +121,14 @@ internal static partial class VEC_Miscellaneous {
     //  Result < 0.000000001 at radius: 4.55228138816~
     //
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] internal static v1  Gaussian(v1 x)               => exp(-(x*x));
-    [Impl(AggressiveInlining)] internal static v1 iGaussian(v1 y)               => sqrt(-log(y));
+    [Impl(AggressiveInlining)] internal static v1  Gaussian(v1 x)             => exp(-(x*x));
+    [Impl(AggressiveInlining)] internal static v1 iGaussian(v1 y)             => sqrt(-log(y));
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] internal static v1  Gaussian(v1 x, v1 y)         => exp(-sq(x  ) - sq(y  ));
-    [Impl(AggressiveInlining)] internal static v1  Gaussian(v1 x, v1 y, v1 S)   => exp(-sq(x/S) - sq(y/S));
+    [Impl(AggressiveInlining)] internal static v1  Gaussian(v1 x, v1 y)       => exp(-  (x*x) -   (y*y));
+    [Impl(AggressiveInlining)] internal static v1  Gaussian(v1 x, v1 y, v1 S) => exp(-sq(x/S) - sq(y/S));
 
-    [Impl(AggressiveInlining)] internal static v1  Gaussian(v2 V)               => Gaussian(V.x, V.y);
+    [Impl(AggressiveInlining)] internal static v1  Gaussian(v2 V)             => Gaussian(V.x, V.y);
 
     //==========================================================================================================================================================
     //
@@ -140,6 +141,9 @@ internal static partial class VEC_Miscellaneous {
     //              Lanczos(0.0) == NaN
     //
     internal static v1 Lanczos(v1 x) {x = x*PI;  return (2f * sin(x) * sin(x/2f)) / (x*x);}
+
+    //==========================================================================================================================================================
+    internal static v1 Sigmoid(v1 x) => 1f / (1f + exp(-x));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
