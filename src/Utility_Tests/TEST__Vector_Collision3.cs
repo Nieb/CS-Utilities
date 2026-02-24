@@ -1,5 +1,5 @@
 
-namespace UtilityTest;
+namespace TEST;
 internal static partial class Program {
     static void Test__Vector_Collision3() {
         CONOUT("\n[Utility.VEC -- Collision3]");

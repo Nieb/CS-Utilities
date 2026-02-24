@@ -1,10 +1,10 @@
 
-namespace UtilityTest;
+namespace TEST;
 internal static partial class Program {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //      UtilityTest.Program.CONOUT($"");
+    //      TEST.Program.CONOUT($"");
     //
     internal static void CONOUT (string PrintMe) => System.Console.WriteLine(PrintMe);
     internal static void CONOUTC(string PrintMe) => System.Console.Write    (PrintMe);
@@ -12,16 +12,8 @@ internal static partial class Program {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     internal static void TEST(string TestLabel, bool Result) {
-        #if false
-            System.Console.WriteLine(
-                $"{TestLabel,32}: " + (Result ? "Pass" : "FAIL")
-            );
-        #else
-            if (Result == false)
-                System.Console.WriteLine(
-                    $"{TestLabel,32}: FAIL"
-                );
-        #endif
+        if (!Result) System.Console.WriteLine($"    {TestLabel,32}: FAIL");
+      //else         System.Console.WriteLine($"    {TestLabel,32}: Pass");
     }
 
     //##########################################################################################################################################################

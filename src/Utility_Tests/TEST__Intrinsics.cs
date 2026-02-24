@@ -1,7 +1,7 @@
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 
-namespace UtilityTest;
+namespace TEST;
 internal static partial class Program {
     static void Test__Intrinsics() {
             CONOUT($"""

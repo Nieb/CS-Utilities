@@ -1,5 +1,5 @@
 
-namespace UtilityTest;
+namespace TEST;
 internal static partial class Program {
     static void Test__Vector_Collision2() {
         CONOUT("\n[Utility.VEC -- Collision2]");
@@ -41,9 +41,9 @@ internal static partial class Program {
         );
 
         //------------------------------------------------------------------------------------------------------------------------------------------------------
-        TEST("PointVsBounds2()", true
-            && PointVsBounds2((1.5f, 0.9f), (1f,1f), (2f,2f)) == false
-            && PointVsBounds2((1.5f, 1.1f), (1f,1f), (2f,2f)) == true
+        TEST("PointVsBounds(vec2)", true
+            && PointVsBounds((1.5f, 0.9f), (1f,1f), (2f,2f)) == false
+            && PointVsBounds((1.5f, 1.1f), (1f,1f), (2f,2f)) == true
         );
 
         //======================================================================================================================================================

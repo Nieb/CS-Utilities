@@ -1,5 +1,5 @@
 
-namespace UtilityTest;
+namespace TEST;
 internal static partial class Program {
     static void Test__VectorArray() {
         CONOUT("\n[Utility.VEC Array]");

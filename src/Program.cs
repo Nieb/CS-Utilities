@@ -1,5 +1,5 @@
 ﻿
-namespace UtilityTest;
+namespace TEST;
 internal static partial class Program {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -7,15 +7,21 @@ internal static partial class Program {
         _ = args;
 
         #if false
-            Test__Float();
+            //Test__Float32_Comparison();
+            //Test__Float32_Random1();
+            //Test__Float32_BaseTenPrecision();
+            Test__Float64_BaseTenPrecision();
+
             //Test__Intrinsics();
+
             //Gen__TurboColor();
 
         #else
             //CONOUT($"LineNumber: {LINE_NUMBER()}");
 
-            CONOUTC($"                                  ~~~ START ~~~");
+            CONOUTC($"                                 ~~~ START ~~~");
             Time Time = new();
+            Time.Update();
 
             Test__Integer();
 
@@ -39,7 +45,7 @@ internal static partial class Program {
 
             Time.Update();
             CONOUT($"\n                                 ~~~ FINISH ~~~");
-            CONOUT($"\n                                   {Time.SinceStart64:N12}\n");
+            CONOUT($"\n                                   {Time.Delta64:N12}\n");
         #endif
     }
     //##########################################################################################################################################################
