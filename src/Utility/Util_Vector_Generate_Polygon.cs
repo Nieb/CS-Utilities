@@ -4,7 +4,7 @@ internal static partial class VEC_Generate {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //  Generate array of points of a regular polygon.
+    //  Generate an array of points of a regular polygon.
     //
     //  Point weinding is anti-clockwise.
     //  Though, using a negative radius will reverse the order.
@@ -36,7 +36,7 @@ internal static partial class VEC_Generate {
 
         for (int i = 0; i < Sides; ++i) {
             float rad = -i * (PI2/Sides);
-            Polygon[i] = new vec3(sin(rad)*Radius, 0f, -cos(rad)*Radius);
+            Polygon[i] = new vec3(sin(rad)*Radius, 0f, cos(rad)*Radius);
         }
 
         return Polygon;

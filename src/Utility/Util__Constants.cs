@@ -1,12 +1,55 @@
 
 namespace Utility;
-internal static partial class VEC {
+internal static class Constants {
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    internal const s8  MIN_s8           =                       -128,           MIN_SBYTE  = MIN_s8;
+    internal const s8  MAX_s8           =                        127,           MAX_SBYTE  = MAX_s8;
+
+    internal const s16 MIN_s16          =                    -32_768,           MIN_SHORT  = MIN_s16;
+    internal const s16 MAX_s16          =                     32_767,           MAX_SHORT  = MAX_s16;
+
+    internal const s32 MIN_s32          =             -2_147_483_648,           MIN_INT    = MIN_s32;
+    internal const s32 MAX_s32          =              2_147_483_647,           MAX_INT    = MAX_s32;
+
+    internal const s64 MIN_s64          = -9_223_372_036_854_775_808,           MIN_LONG   = MIN_s64;
+    internal const s64 MAX_s64          =  9_223_372_036_854_775_807,           MAX_LONG   = MAX_s64;
+
+    internal const u8  MIN_u8           =                          0,           MIN_BYTE   = MIN_u8;
+    internal const u8  MAX_u8           =                        255,           MAX_BYTE   = MAX_u8;
+
+    internal const u16 MIN_u16          =                          0,           MIN_USHORT = MIN_u16;
+    internal const u16 MAX_u16          =                     65_535,           MAX_USHORT = MAX_u16;
+
+    internal const u32 MIN_u32          =                          0,           MIN_UINT   = MIN_u32;
+    internal const u32 MAX_u32          =              4_294_967_295,           MAX_UINT   = MAX_u32;
+
+    internal const u64 MIN_u64          =                          0,           MIN_ULONG  = MIN_u64;
+    internal const u64 MAX_u64          = 18_446_744_073_709_551_615,           MAX_ULONG  = MAX_u64;
+
+    //==========================================================================================================================================================
+    internal const f32 MIN_f32          = float.MinValue,                       MIN_FLOAT  = MIN_f32;
+    internal const f32 MAX_f32          = float.MaxValue,                       MAX_FLOAT  = MAX_f32;
+
+    internal const f64 MIN_f64          = double.MinValue,                      MIN_DOUBLE = MIN_f64;
+    internal const f64 MAX_f64          = double.MaxValue,                      MAX_DOUBLE = MAX_f64;
+
+    internal const f32 FLOAT_NEG_INF    = float.NegativeInfinity;
+    internal const f32 FLOAT_NEG_ZERO   = float.NegativeZero;
+    internal const f32 FLOAT_INF        = float.PositiveInfinity;
+
+    internal const f32 FLOAT_NaN        = float.NaN;
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     internal const float EPS_9 = 0.000000001f;
     internal const float EPS_8 = 0.00000001f;
     internal const float EPS_7 = 0.0000001f;
-    internal const float EPS_6 = 0.000001f;                 internal const float EPSILON = EPS_6,   EPS = EPS_6;
+    internal const float EPS_6 = 0.000001f,                 EPSILON = EPS_6,    EPS = EPS_6;
     internal const float EPS_5 = 0.00001f;
     internal const float EPS_4 = 0.0001f;
     internal const float EPS_3 = 0.001f;
@@ -17,6 +60,7 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     internal const float  ONE_TWELFTH =  0.08333333333333333333333333333333333333333333333333f;      //  1 / 12
     internal const float  ONE_NINTH   =  0.11111111111111111111111111111111111111111111111111f;      //  1 /  9
+    internal const float  ONE_SEVENTH =  0.14285714285714285714285714285714285714285714285714f;      //  1 /  7
     internal const float  ONE_SIXTH   =  0.16666666666666666666666666666666666666666666666666f;      //  1 /  6
 
     internal const float  ONE_THIRD   =  0.33333333333333333333333333333333333333333333333333f;      //  1 / 3
@@ -41,26 +85,41 @@ internal static partial class VEC {
   //internal const float TWO_SQRT3   =  0.26794919243112270647255365849412763305719474618962f;      //  2 - sqrt(3)
 
     //==========================================================================================================================================================
-    internal const float PIE         =  0.39269908169872415480783042290993786052464617492189f;      //  pi / 8   (Radians ==  22.5 Degrees)
-    internal const float PIQ         =  0.78539816339744830961566084581987572104929234984378f;      //  pi / 4   (Radians ==  45   Degrees)
-    internal const float PIH         =  1.57079632679489661923132169163975144209858469968755f;      //  pi / 2   (Radians ==  90   Degrees)
+    internal const float PIE         =  0.39269908169872415480783042290993786052464617492189f;      //   pi / 8     (  22.5 Degrees)
+    internal const float PIQ         =  0.78539816339744830961566084581987572104929234984378f;      //   pi / 4     (  45   Degrees)
+    internal const float PIH         =  1.57079632679489661923132169163975144209858469968755f;      //   pi / 2     (  90   Degrees)
 
-    internal const float PI          =  3.14159265358979323846264338327950288419716939937511f;      //  pi       (Radians == 180   Degrees)
-  //internal const float PI_4_3      =  4.18879020478639098461685784437267051226289253250014f;      //  pi * 4/3
-    internal const float PI1H        =  4.71238898038468985769396507491925432629575409906266f;      //  pi * 3/2 (Radians == 270   Degrees)
-    internal const float PI2         =  6.28318530717958647692528676655900576839433879875021f;      //  pi * 2   (Radians == 360   Degrees)   SurfaceArea of Unit-HemiSphere.  (2pi * r * h)
-  //internal const float TAU         =  6.28318530717958647692528676655900576839433879875021f;      //
-    internal const float PI3         =  9.42477796076937971538793014983850865259150819812532f;      //  pi * 3   (Radians == 540   Degrees)
-    internal const float PI4         = 12.56637061435917295385057353311801153678867759750042f;      //  pi * 4   (Radians == 720   Degrees)   SurfaceArea of Unit-Sphere.      (4pi * r^2)
-    internal const float PI5         = 15.70796326794896619231321691639751442098584699687553f;      //  pi * 5
-    internal const float PI6         = 18.84955592153875943077586029967701730518301639625063f;      //  pi * 6
-    internal const float PI7         = 21.99114857512855266923850368295652018938018579562574f;      //  pi * 7
-    internal const float PI8         = 25.13274122871834590770114706623602307357735519500085f;      //  pi * 8
+    internal const float PI          =  3.14159265358979323846264338327950288419716939937511f;      //   pi         ( 180   Degrees)
+    internal const float PI_43       =  4.18879020478639098461685784437267051226289253250014f;      //  4pi / 3     ( 240   Degrees)    Unit-Sphere     Volume
+    internal const float PI1H        =  4.71238898038468985769396507491925432629575409906266f;      //  3pi / 2     ( 270   Degrees)
+    internal const float PI2         =  6.28318530717958647692528676655900576839433879875021f;      //  2pi         ( 360   Degrees)    Unit-HemiSphere SurfaceArea
+    internal const float PI3         =  9.42477796076937971538793014983850865259150819812532f;      //  3pi         ( 540   Degrees)
+    internal const float PI4         = 12.56637061435917295385057353311801153678867759750042f;      //  4pi         ( 720   Degrees)    Unit-Sphere     SurfaceArea
+    internal const float PI5         = 15.70796326794896619231321691639751442098584699687553f;      //  5pi
+    internal const float PI6         = 18.84955592153875943077586029967701730518301639625063f;      //  6pi
+    internal const float PI7         = 21.99114857512855266923850368295652018938018579562574f;      //  7pi
+    internal const float PI8         = 25.13274122871834590770114706623602307357735519500085f;      //  8pi
 
     internal const float PI_RCP      =  0.31830988618379067153776752674502872406891929148091f;      //  1 /  pi
     internal const float PI2_RCP     =  0.15915494309189533576888376337251436203445964574046f;      //  1 / 2pi
     internal const float PI3_RCP     =  0.10610329539459689051258917558167624135630643049364f;      //  1 / 3pi
     internal const float PI4_RCP     =  0.07957747154594766788444188168625718101722982287023f;      //  1 / 4pi
+
+    //==========================================================================================================================================================
+  //internal const float TAUs        =  0.39269908169872415480783042290993786052464617492189f;      //   T / 16     (  22.5 Degrees)
+  //internal const float TAUe        =  0.78539816339744830961566084581987572104929234984378f;      //   T /  8     (  45   Degrees)
+  //internal const float TAUq        =  1.57079632679489661923132169163975144209858469968755f;      //   T /  4     (  90   Degrees)
+  //internal const float TAUh        =  3.14159265358979323846264338327950288419716939937511f;      //   T /  2     ( 180   Degrees)
+  //internal const float TAU_23      =  4.18879020478639098461685784437267051226289253250014f;      //  2T /  3     ( 240   Degrees)    Unit-Sphere Volume
+  //internal const float TAU_34      =  4.71238898038468985769396507491925432629575409906266f;      //  3T /  4     ( 270   Degrees)
+
+  //internal const float TAU         =  6.28318530717958647692528676655900576839433879875021f;      //   T          ( 360   Degrees)    Unit-Circle Circumference
+  //internal const float TAU2        = 12.56637061435917295385057353311801153678867759750042f;      //  2T          ( 720   Degrees)    Unit-Sphere SurfaceArea
+  //internal const float TAU3        = 18.84955592153875943077586029967701730518301639625063f;      //  3T          (1080   Degrees)
+  //internal const float TAU4        = 25.13274122871834590770114706623602307357735519500085f;      //  4T          (1440   Degrees)
+
+  //internal const float TAU_RCP     =  0.15915494309189533576888376337251436203445964574046f;      //  1  /  T
+  //internal const float TAU2_RCP    =  0.07957747154594766788444188168625718101722982287023f;      //  1  / 2T
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -68,12 +127,12 @@ internal static partial class VEC {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal const float PHI        =   1.61803398874989484820458683436563811772030917980576f;      //  (1+sqrt(5)) / 2                       Golden Ratio.
+    internal const float PHI        =   1.61803398874989484820458683436563811772030917980576f;      //  (1+sqrt(5)) / 2                 Golden Ratio.
     internal const float PHI_RCP    =   0.61803398874989484820458683436563811772030917980576f;      //    1 / PHI
 
     internal const float PI2_PHI    =   3.88322207745093315469373125992539191526933978769210f;      //  2pi / PHI
 
-    internal const float PHI_RAD    =   2.39996322972865332223155550663361385312499901105812f;      //   pi * (3-sqrt(5))                     Golden Angle.
+    internal const float PHI_RAD    =   2.39996322972865332223155550663361385312499901105812f;      //   pi * (3-sqrt(5))               Golden Angle.
     internal const float PHI_DEG    = 137.50776405003785464634873962837027762068869526992537f;      //  180 * (3-sqrt(5))
 
     //##########################################################################################################################################################

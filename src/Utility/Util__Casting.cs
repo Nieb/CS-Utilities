@@ -18,14 +18,14 @@ internal static class Casting {
       //[Impl(AggressiveInlining)] public static implicit operator Data32(u32 A) => new Data32(A); //  Directly assign 'u32' to 'Data32'.
     }
 
-    [Impl(AggressiveInlining)] internal static f32 BitCast_ToF32(s32 I) => new Data32(I).F;
-    [Impl(AggressiveInlining)] internal static f32 BitCast_ToF32(u32 U) => new Data32(U).F;
+    [Impl(AggressiveInlining)] internal static f32 BitCast_f32(s32 I) => new Data32(I).F;
+    [Impl(AggressiveInlining)] internal static f32 BitCast_f32(u32 U) => new Data32(U).F;
 
-    [Impl(AggressiveInlining)] internal static s32 BitCast_ToI32(f32 F) => new Data32(F).I;
-    [Impl(AggressiveInlining)] internal static s32 BitCast_ToI32(u32 U) => new Data32(U).I;
+    [Impl(AggressiveInlining)] internal static s32 BitCast_s32(f32 F) => new Data32(F).I;
+    [Impl(AggressiveInlining)] internal static s32 BitCast_s32(u32 U) => new Data32(U).I;
 
-    [Impl(AggressiveInlining)] internal static u32 BitCast_ToU32(f32 F) => new Data32(F).U;
-    [Impl(AggressiveInlining)] internal static u32 BitCast_ToU32(s32 I) => new Data32(I).U;
+    [Impl(AggressiveInlining)] internal static u32 BitCast_u32(f32 F) => new Data32(F).U;
+    [Impl(AggressiveInlining)] internal static u32 BitCast_u32(s32 I) => new Data32(I).U;
 
     //==========================================================================================================================================================
     [StructLayout(LayoutKind.Explicit, Pack=4)]
@@ -41,14 +41,14 @@ internal static class Casting {
       //[Impl(AggressiveInlining)] public static implicit operator Data64(u64 A) => new Data64(A); //  Directly assign 'u64' to 'Data64'.
     }
 
-    [Impl(AggressiveInlining)] internal static f64 BitCast_ToF64(s64 I) => new Data64(I).F;
-    [Impl(AggressiveInlining)] internal static f64 BitCast_ToF64(u64 U) => new Data64(U).F;
+    [Impl(AggressiveInlining)] internal static f64 BitCast_f64(s64 I) => new Data64(I).F;
+    [Impl(AggressiveInlining)] internal static f64 BitCast_f64(u64 U) => new Data64(U).F;
 
-    [Impl(AggressiveInlining)] internal static s64 BitCast_ToI64(f64 F) => new Data64(F).I;
-    [Impl(AggressiveInlining)] internal static s64 BitCast_ToI64(u64 U) => new Data64(U).I;
+    [Impl(AggressiveInlining)] internal static s64 BitCast_s64(f64 F) => new Data64(F).I;
+    [Impl(AggressiveInlining)] internal static s64 BitCast_s64(u64 U) => new Data64(U).I;
 
-    [Impl(AggressiveInlining)] internal static u64 BitCast_ToU64(f64 F) => new Data64(F).U;
-    [Impl(AggressiveInlining)] internal static u64 BitCast_ToU64(s64 I) => new Data64(I).U;
+    [Impl(AggressiveInlining)] internal static u64 BitCast_u64(f64 F) => new Data64(F).U;
+    [Impl(AggressiveInlining)] internal static u64 BitCast_u64(s64 I) => new Data64(I).U;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -57,22 +57,19 @@ internal static class Casting {
     //
     //  All BYTE,SHORT operations result in an INT.  :(
     //
-    //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] internal static s16 ClampToShort (s32 A) => (s16)clamp(A, (s32)MIN_I16, (s32)MAX_I16);
+    [Impl(AggressiveInlining)] internal static  u8 ClampToByte  (s32 A) =>  (u8)clamp(A, (s32)MIN_u8 , (s32)MAX_u8 );
 
-    [Impl(AggressiveInlining)] internal static s32 ClampToInt   (s64 A) => (s32)clamp(A, (s64)MIN_I32, (s64)MAX_I32);
+    [Impl(AggressiveInlining)] internal static s16 ClampToShort (s32 A) => (s16)clamp(A, (s32)MIN_s16, (s32)MAX_s16);
+    [Impl(AggressiveInlining)] internal static u16 ClampToUshort(s32 A) => (u16)clamp(A, (s32)MIN_u16, (s32)MAX_u16);
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] internal static  u8 ClampToByte  (s32 A) =>  (u8)clamp(A,  0, (s32)MAX_BYTE);
+    [Impl(AggressiveInlining)] internal static s32 ClampToInt   (s64 A) => (s32)clamp(A, (s64)MIN_s32, (s64)MAX_s32);
 
-    [Impl(AggressiveInlining)] internal static u16 ClampToUshort(s32 A) => (u16)clamp(A,  0, (s32)MAX_U16);
-
-    [Impl(AggressiveInlining)] internal static u32 ClampToUint  (s32 A) => (u32)clamp(A,  0,      MAX_I32);
-    [Impl(AggressiveInlining)] internal static u32 ClampToUint  (s64 A) => (u32)clamp(A, 0L, (s64)MAX_U32);
+    [Impl(AggressiveInlining)] internal static u32 ClampToUint  (s32 A) => (u32)clamp(A, (s32)MIN_u32,      MAX_s32);
+    [Impl(AggressiveInlining)] internal static u32 ClampToUint  (s64 A) => (u32)clamp(A, (s64)MIN_u32, (s64)MAX_u32);
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] internal static s16      ClampToShort(f32 A) => (s16)      clamp(A, (f32)MIN_I16, (f32)MAX_I16);
-    [Impl(AggressiveInlining)] internal static s16 RoundClampToShort(f32 A) => (s16)round(clamp(A, (f32)MIN_I16, (f32)MAX_I16));
+    [Impl(AggressiveInlining)] internal static s16 ClampToShort(f32 A) => (s16)round(clamp(A, (f32)MIN_s16, (f32)MAX_s16));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -88,7 +85,6 @@ internal static class Casting {
     //      type(value);
     //      type(expres / sion);
     //
-    //==========================================================================================================================================================
     [Impl(AggressiveInlining)] internal static  s8  s8( u8 A) =>  (s8)A;        [Impl(AggressiveInlining)] internal static  u8  u8( s8 A) =>  (u8)A;
     [Impl(AggressiveInlining)] internal static  s8  s8(s16 A) =>  (s8)A;        [Impl(AggressiveInlining)] internal static  u8  u8(s16 A) =>  (u8)A;
     [Impl(AggressiveInlining)] internal static  s8  s8(u16 A) =>  (s8)A;        [Impl(AggressiveInlining)] internal static  u8  u8(u16 A) =>  (u8)A;

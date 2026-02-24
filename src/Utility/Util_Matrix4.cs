@@ -26,7 +26,6 @@ internal struct mat4 {
     public vec4 Col2 {get => new vec4(zx,zy,zz,zw); set {zx=value.x; zy=value.y; zz=value.z; zw=value.w;}}
     public vec4 Col3 {get => new vec4(wx,wy,wz,ww); set {wx=value.x; wy=value.y; wz=value.z; ww=value.w;}}
 
-    //----------------------------------------------------------------------------------------------------------------------------------------------------------
     [FieldOffset( 0)] public vec4 Row0;
     [FieldOffset(16)] public vec4 Row1;
     [FieldOffset(32)] public vec4 Row2;
@@ -74,7 +73,10 @@ internal struct mat4 {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //  Operators Arithmetic:  +  -  *  /  %
-
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    //
+    //      Result = (Mat * Mat)
+    //
     #if false
         public static mat4 operator *(mat4 A, mat4 B) => new mat4(
             dot(A.Row0, B.Col0),  dot(A.Row0, B.Col1),  dot(A.Row0, B.Col2),  dot(A.Row0, B.Col3),
@@ -84,42 +86,40 @@ internal struct mat4 {
         );
     #else
         public static mat4 operator *(mat4 A, mat4 B) => new mat4(
-            A.xx*B.xx + A.yx*B.xy + A.zx*B.xz + A.wx*B.xw,  // XX = dot( A.Row0, B.Col0 )
-            A.xx*B.yx + A.yx*B.yy + A.zx*B.yz + A.wx*B.yw,  // YX = dot( A.Row0, B.Col1 )
-            A.xx*B.zx + A.yx*B.zy + A.zx*B.zz + A.wx*B.zw,  // ZX = dot( A.Row0, B.Col2 )
-            A.xx*B.wx + A.yx*B.wy + A.zx*B.wz + A.wx*B.ww,  // WX = dot( A.Row0, B.Col3 )
+            XX: A.xx*B.xx + A.yx*B.xy + A.zx*B.xz + A.wx*B.xw,  //  dot( A.Row0, B.Col0 )
+            YX: A.xx*B.yx + A.yx*B.yy + A.zx*B.yz + A.wx*B.yw,  //  dot( A.Row0, B.Col1 )
+            ZX: A.xx*B.zx + A.yx*B.zy + A.zx*B.zz + A.wx*B.zw,  //  dot( A.Row0, B.Col2 )
+            WX: A.xx*B.wx + A.yx*B.wy + A.zx*B.wz + A.wx*B.ww,  //  dot( A.Row0, B.Col3 )
 
-            A.xy*B.xx + A.yy*B.xy + A.zy*B.xz + A.wy*B.xw,  // XY
-            A.xy*B.yx + A.yy*B.yy + A.zy*B.yz + A.wy*B.yw,  // YY
-            A.xy*B.zx + A.yy*B.zy + A.zy*B.zz + A.wy*B.zw,  // ZY
-            A.xy*B.wx + A.yy*B.wy + A.zy*B.wz + A.wy*B.ww,  // WY
+            XY: A.xy*B.xx + A.yy*B.xy + A.zy*B.xz + A.wy*B.xw,
+            YY: A.xy*B.yx + A.yy*B.yy + A.zy*B.yz + A.wy*B.yw,
+            ZY: A.xy*B.zx + A.yy*B.zy + A.zy*B.zz + A.wy*B.zw,
+            WY: A.xy*B.wx + A.yy*B.wy + A.zy*B.wz + A.wy*B.ww,
 
-            A.xz*B.xx + A.yz*B.xy + A.zz*B.xz + A.wz*B.xw,  // XZ
-            A.xz*B.yx + A.yz*B.yy + A.zz*B.yz + A.wz*B.yw,  // YZ
-            A.xz*B.zx + A.yz*B.zy + A.zz*B.zz + A.wz*B.zw,  // ZZ
-            A.xz*B.wx + A.yz*B.wy + A.zz*B.wz + A.wz*B.ww,  // WZ
+            XZ: A.xz*B.xx + A.yz*B.xy + A.zz*B.xz + A.wz*B.xw,
+            YZ: A.xz*B.yx + A.yz*B.yy + A.zz*B.yz + A.wz*B.yw,
+            ZZ: A.xz*B.zx + A.yz*B.zy + A.zz*B.zz + A.wz*B.zw,
+            WZ: A.xz*B.wx + A.yz*B.wy + A.zz*B.wz + A.wz*B.ww,
 
-            A.xw*B.xx + A.yw*B.xy + A.zw*B.xz + A.ww*B.xw,  // XW
-            A.xw*B.yx + A.yw*B.yy + A.zw*B.yz + A.ww*B.yw,  // YW
-            A.xw*B.zx + A.yw*B.zy + A.zw*B.zz + A.ww*B.zw,  // ZW
-            A.xw*B.wx + A.yw*B.wy + A.zw*B.wz + A.ww*B.ww   // WW
+            XW: A.xw*B.xx + A.yw*B.xy + A.zw*B.xz + A.ww*B.xw,
+            YW: A.xw*B.yx + A.yw*B.yy + A.zw*B.yz + A.ww*B.yw,
+            ZW: A.xw*B.zx + A.yw*B.zy + A.zw*B.zz + A.ww*B.zw,
+            WW: A.xw*B.wx + A.yw*B.wy + A.zw*B.wz + A.ww*B.ww
         );
     #endif
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //
-    //  Result = (Vec * Mat);
-    //
-    //         Vx      Vy      Vz      Vw   |
-    //      --------------------------------+------
-    //         Mxx  +  Myx  +  Mzx  +  Mwx  |  Rx
-    //                                      |
-    //         Mxy  +  Myy  +  Mzy  +  Mwy  |  Ry
-    //                                      |
-    //         Mxz  +  Myz  +  Mzz  +  Mwz  |  Rz
-    //                                      |
-    //         Mxw  +  Myw  +  Mzw  +  Mww  |  Rw
-    //                                      |
+    //                                     Vx    Vy    Vz    Vw   |
+    //                                  --------------------------+----
+    //                                     Mxx + Myx + Mzx + Mwx  | Rx
+    //                                                            |
+    //                                     Mxy + Myy + Mzy + Mwy  | Ry
+    //      Result = (Vec * Mat)                                  |
+    //                                     Mxz + Myz + Mzz + Mwz  | Rz
+    //                                                            |
+    //                                     Mxw + Myw + Mzw + Mww  | Rw
+    //                                                            |
     //
     #if false
         public static vec4 operator *(vec4 V, mat4 M) => new vec4(fma(V.x,M.xx, fma(V.y,M.yx, fma(V.z,M.zx, (V.w*M.wx)))),
@@ -136,27 +136,43 @@ internal struct mat4 {
                                                                   V.x*M.xz + V.y*M.yz + V.z*M.zz + V.w*M.wz,
                                                                   V.x*M.xw + V.y*M.yw + V.z*M.zw + V.w*M.ww );
 
-        public static vec3 operator *(vec3 V, mat4 M) => new vec3(V.x*M.xx + V.y*M.yx + V.z*M.zx,     // + V.w*M.wx,
-                                                                  V.x*M.xy + V.y*M.yy + V.z*M.zy,     // + V.w*M.wy,
-                                                                  V.x*M.xz + V.y*M.yz + V.z*M.zz );   // + V.w*M.wz
+        public static vec3 operator *(vec3 V, mat4 M) => new vec3(V.x*M.xx + V.y*M.yx + V.z*M.zx,   // + V.w*M.wx,
+                                                                  V.x*M.xy + V.y*M.yy + V.z*M.zy,   // + V.w*M.wy,
+                                                                  V.x*M.xz + V.y*M.yz + V.z*M.zz ); // + V.w*M.wz );
     #endif
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //
-    //  Result = (Mat * Vec);
+    //                                      |
+    //                                   Vx |  Mxx  Myx  Mzx  Mwx
+    //                                      |  +    +    +    +
+    //                                   Vy |  Mxy  Myy  Mzy  Mwy
+    //      Result = (Mat * Vec)            |  +    +    +    +
+    //                                   Vz |  Mxz  Myz  Mzz  Mwz
+    //                                      |  +    +    +    +
+    //                                   Vw |  Mxw  Myw  Mzw  Mww
+    //                                  ----+----------------------
+    //                                      |  Rx   Ry   Rz   Rw
     //
-    //          |
-    //       Vx |  Mxx  Myx  Mzx  Mwx
-    //          |  +    +    +    +
-    //       Vy |  Mxy  Myy  Mzy  Mwy
-    //          |  +    +    +    +
-    //       Vz |  Mxz  Myz  Mzz  Mwz
-    //          |  +    +    +    +
-    //       Vw |  Mxw  Myw  Mzw  Mww
-    //      ----+----------------------
-    //          |  Rx   Ry   Rz   Rw
-    //
+    #if false
+        public static vec4 operator *(mat4 M, vec4 V) => new vec4(fma(V.x,M.xx, fma(V.x,M.xy, fma(V.x,M.xz, (V.x*M.xw)))),
+                                                                  fma(V.y,M.yx, fma(V.y,M.yy, fma(V.y,M.yz, (V.y*M.yw)))),
+                                                                  fma(V.z,M.zx, fma(V.z,M.zy, fma(V.z,M.zz, (V.z*M.zw)))),
+                                                                  fma(V.w,M.wx, fma(V.w,M.wy, fma(V.w,M.wz, (V.w*M.ww)))) );
 
+        public static vec3 operator *(mat4 M, vec3 V) => new vec3(fma(V.x,M.xx, fma(V.x,M.xy, (V.x,M.xz))),
+                                                                  fma(V.y,M.yx, fma(V.y,M.yy, (V.y,M.yz))),
+                                                                  fma(V.z,M.zx, fma(V.z,M.zy, (V.z,M.zz))) );
+    #else
+        public static vec4 operator *(mat4 M, vec4 V) => new vec4(V.x*M.xx + V.x*M.xy + V.x*M.xz + V.x*M.xw,
+                                                                  V.y*M.yx + V.y*M.yy + V.y*M.yz + V.y*M.yw,
+                                                                  V.z*M.zx + V.z*M.zy + V.z*M.zz + V.z*M.zw,
+                                                                  V.w*M.wx + V.w*M.wy + V.w*M.wz + V.w*M.ww );
+
+        public static vec3 operator *(mat4 M, vec3 V) => new vec3(V.x*M.xx + V.x*M.xy + V.x*M.xz,   //+ V.x*M.xw,
+                                                                  V.y*M.yx + V.y*M.yy + V.y*M.yz,   //+ V.y*M.yw,
+                                                                  V.z*M.zx + V.z*M.zy + V.z*M.zz ); //+ V.z*M.zw );
+    #endif
 
     //==========================================================================================================================================================
     //  Operators Bitwise:  ~    &    |   ^    <<          >>           >>>

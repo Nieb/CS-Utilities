@@ -1,54 +1,11 @@
 //##############################################################################################################################################################
 //##############################################################################################################################################################
-//global using  b8 = bool;    //  System.Boolean
-
-//==============================================================================================================================================================
-global using  s8 = sbyte;   //  System.SByte                                  -128 to 127                             Signed  8-bit Integer
-global using  u8 =  byte;   //  System.Byte                                      0 to 255                           Unsigned  8-bit Integer
-
-global using s16 =  short;  //  System.Int16                               -32,768 to 32,767                          Signed 16-bit Integer
-global using u16 = ushort;  //  System.UInt16                                    0 to 65,535                        Unsigned 16-bit Integer
-
-global using s32 =  int;    //  System.Int32                        -2,147,483,648 to 2,147,483,647                   Signed 32-bit Integer
-global using u32 = uint;    //  System.UInt32                                    0 to 4,294,967,295                 Unsigned 32-bit Integer
-
-global using s64 =  long;   //  System.Int64            -9,223,372,036,854,775,808 to  9,223,372,036,854,775,807      Signed 64-bit Integer
-global using u64 = ulong;   //  System.UInt64                                    0 to 18,446,744,073,709,551,615    Unsigned 64-bit Integer
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-global using f32 = float;   //  System.Single
-
-global using f64 = double;  //  System.Double
-
-//==============================================================================================================================================================
-global using  v1 = float;
-global using  v2 = Utility.vec2;
-global using  v3 = Utility.vec3;
-global using  v4 = Utility.vec4;
-
-global using iv1 = int;
-global using iv2 = Utility.ivec2;
-global using iv3 = Utility.ivec3;
-global using iv4 = Utility.ivec4;
-
-/*
-    global using vec2 = System.Numerics.Vector2;
-    global using vec3 = System.Numerics.Vector3;
-    global using vec4 = System.Numerics.Vector4;
-    global using mat4 = System.Numerics.Matrix4;
-*/
-
-//==============================================================================================================================================================
-//global using iptr = nint;   //  System.IntPtr                   Depends on platform (computed at runtime)             Signed 32-bit or 64-bit integer
-//global using uptr = nuint;  //  System.UIntPtr                  Depends on platform (computed at runtime)           Unsigned 32-bit or 64-bit integer
-
-//##############################################################################################################################################################
-//##############################################################################################################################################################
 global using Utility;
 
 global using static Utility.Array;
 global using static Utility.BitOps;
 global using static Utility.Casting;
+global using static Utility.Constants;
 global using static Utility.Miscellaneous;
 global using static Utility.Random;
 
@@ -65,6 +22,50 @@ global using static Utility.VEC_Geometry;
 global using static Utility.VEC_Interpolation;
 global using static Utility.VEC_Miscellaneous;
 global using static Utility.VEC_Rotation;
+
+//##############################################################################################################################################################
+//##############################################################################################################################################################
+//global using  b8 = bool;    //  System.Boolean
+
+//==============================================================================================================================================================
+global using  s8 = sbyte;   //  System.SByte          Signed  8-bit Integer
+global using  u8 =  byte;   //  System.Byte         Unsigned  8-bit Integer
+
+global using s16 =  short;  //  System.Int16          Signed 16-bit Integer
+global using u16 = ushort;  //  System.UInt1        Unsigned 16-bit Integer
+
+global using s32 =  int;    //  System.Int32          Signed 32-bit Integer
+global using u32 = uint;    //  System.UInt3        Unsigned 32-bit Integer
+
+global using s64 =  long;   //  System.Int64          Signed 64-bit Integer
+global using u64 = ulong;   //  System.UInt6        Unsigned 64-bit Integer
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+global using f32 = float;   //  System.Single
+
+global using f64 = double;  //  System.Double
+
+//==============================================================================================================================================================
+//#pragma warning disable CS8981 //  warning CS8981: The type name '' only contains lower-cased ascii characters. Such names may become reserved for the language.
+//    global using iptr = nint;   //  System.IntPtr         Signed 32-bit or 64-bit integer
+//    global using uptr = nuint;  //  System.UIntPtr      Unsigned 32-bit or 64-bit integer
+//#pragma warning restore CS8981
+
+//==============================================================================================================================================================
+global using  v1 = float;
+global using  v2 = Utility.vec2;
+global using  v3 = Utility.vec3;
+global using  v4 = Utility.vec4;
+
+global using iv1 = int;
+global using iv2 = Utility.ivec2;
+global using iv3 = Utility.ivec3;
+global using iv4 = Utility.ivec4;
+
+////global using vec2 = System.Numerics.Vector2;
+////global using vec3 = System.Numerics.Vector3;
+////global using vec4 = System.Numerics.Vector4;
+////global using mat4 = System.Numerics.Matrix4;
 
 //##############################################################################################################################################################
 //##############################################################################################################################################################

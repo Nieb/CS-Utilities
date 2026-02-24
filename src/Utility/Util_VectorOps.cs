@@ -71,6 +71,27 @@ internal static partial class VEC {
     [Impl(AggressiveInlining)] internal static v1 dot(v4 A)       => (A.x*A.x + A.y*A.y + A.z*A.z + A.w*A.w);
     [Impl(AggressiveInlining)] internal static v1 dot(v4 A, v4 B) => (A.x*B.x + A.y*B.y + A.z*B.z + A.w*B.w);
 
+    //==========================================================================================================================================================
+    //                                                                      "Square"
+    [Impl(AggressiveInlining)] internal static v1 sq(v1 A) => (A * A);
+    [Impl(AggressiveInlining)] internal static v2 sq(v2 A) => new v2((A.x*A.x), (A.y*A.y));
+    [Impl(AggressiveInlining)] internal static v3 sq(v3 A) => new v3((A.x*A.x), (A.y*A.y), (A.z*A.z));
+    [Impl(AggressiveInlining)] internal static v4 sq(v4 A) => new v4((A.x*A.x), (A.y*A.y), (A.z*A.z), (A.w*A.w));
+
+    //==========================================================================================================================================================
+    //                                                                   "Square Root"
+    [Impl(AggressiveInlining)] internal static v1 sqrt(v1 A) => System.MathF.Sqrt(A);
+  //[Impl(AggressiveInlining)] internal static v2 sqrt(v2 A) => new v2(sqrt(A.x), sqrt(A.y));
+  //[Impl(AggressiveInlining)] internal static v3 sqrt(v3 A) => new v3(sqrt(A.x), sqrt(A.y), sqrt(A.z));
+  //[Impl(AggressiveInlining)] internal static v4 sqrt(v4 A) => new v4(sqrt(A.x), sqrt(A.y), sqrt(A.z), sqrt(A.w));
+
+    //==========================================================================================================================================================
+    //                                                                    "Cube Root"
+    [Impl(AggressiveInlining)] internal static v1 cbrt(v1 A) => System.MathF.Cbrt(A);
+  //[Impl(AggressiveInlining)] internal static v2 cbrt(v2 A) => new v2(cbrt(A.x), cbrt(A.y));
+  //[Impl(AggressiveInlining)] internal static v3 cbrt(v3 A) => new v3(cbrt(A.x), cbrt(A.y), cbrt(A.z));
+  //[Impl(AggressiveInlining)] internal static v4 cbrt(v4 A) => new v4(cbrt(A.x), cbrt(A.y), cbrt(A.z), cbrt(A.w));
+
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                                     "Distance"
@@ -105,7 +126,7 @@ internal static partial class VEC {
     //                                                                "Fused Multiply Add"
     //  A * B + C
     //
-    //      https://registry.khronos.org/OpenGL-Refpages/gl4/html/fma.xhtml
+    //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/fma.xhtml
     //
     [Impl(AggressiveInlining)] internal static v1 fma(v1 A, v1 B, v1 C) => System.MathF.FusedMultiplyAdd(A, B, C);
     [Impl(AggressiveInlining)] internal static v2 fma(v2 A, v2 B, v2 C) => new v2(fma(A.x, B.x, C.x), fma(A.y, B.y, C.y));
@@ -149,10 +170,10 @@ internal static partial class VEC {
   //[Impl(AggressiveInlining)] internal static v3 rcp(v3 A) => 1f/A;
   //[Impl(AggressiveInlining)] internal static v4 rcp(v4 A) => 1f/A;
 
-  //[Impl(AggressiveInlining)] internal static v1 rcp0(v1 A) => (A > -EPSILON && A < EPSILON) ? 0f : 1f/A;
-  //[Impl(AggressiveInlining)] internal static v2 rcp0(v2 A) => new v2(rcp0(A.x), rcp0(A.y));
-  //[Impl(AggressiveInlining)] internal static v3 rcp0(v3 A) => new v3(rcp0(A.x), rcp0(A.y), rcp0(A.z));
-  //[Impl(AggressiveInlining)] internal static v4 rcp0(v4 A) => new v4(rcp0(A.x), rcp0(A.y), rcp0(A.z), rcp0(A.w));
+  //[Impl(AggressiveInlining)] internal static v1 rcpz(v1 A) => (A > -EPSILON && A < EPSILON) ? 0f : 1f/A;
+  //[Impl(AggressiveInlining)] internal static v2 rcpz(v2 A) => new v2(rcp0(A.x), rcp0(A.y));
+  //[Impl(AggressiveInlining)] internal static v3 rcpz(v3 A) => new v3(rcp0(A.x), rcp0(A.y), rcp0(A.z));
+  //[Impl(AggressiveInlining)] internal static v4 rcpz(v4 A) => new v4(rcp0(A.x), rcp0(A.y), rcp0(A.z), rcp0(A.w));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -231,7 +252,7 @@ internal static partial class VEC {
     //                                  1 _    /     /     /     /                                  1 _                /     /
     //              Euclidean Modulo          /     /     /     /               Remainder Modulo                      /     /
     //                                       /     /     /     /                                                     /     /
-    //                  mod(x, 2) ==    0 _ /     /     /     /     /                   x % 2 ==    0 _             /     /     /
+    //                 mod(x, 2f) ==    0 _ /     /     /     /     /                  x % 2f ==    0 _             /     /     /
     //                                                                                                       /     /
     //                                                                                                      /     /
     //                                 -1 _                                                        -1 _    /     /
@@ -240,7 +261,7 @@ internal static partial class VEC {
     //                                 -2 _                                                        -2 _ /     /
     //                                     -4 -3 -2 -1  0  1  2  3  4                                  -4 -3 -2 -1  0  1  2  3  4
     //
-    [Impl(AggressiveInlining)] internal static v1 mod(v1 A, v1 B) {v1 R = A % B; return R + (R < 0f ? abs(B) : 0f);}
+    [Impl(AggressiveInlining)] internal static v1 mod(v1 A, v1 B) {v1 R = A % B;  return R + (R < 0f ? abs(B) : 0f);}
 
     [Impl(AggressiveInlining)] internal static v2 mod(v2 A, v1 B) => new v2(mod(A.x,B  ), mod(A.y,B  ));
     [Impl(AggressiveInlining)] internal static v2 mod(v2 A, v2 B) => new v2(mod(A.x,B.x), mod(A.y,B.y));
@@ -275,12 +296,13 @@ internal static partial class VEC {
 
     //==========================================================================================================================================================
     //                                                                    "Logarithm"
-    //  Inverse of Pow() and Exp().
+    //  Inverse of Exp() and Pow().
     //
     //        log(X) = Y   <-->   exp(    Y) = X
     //        log(X) = Y   <-->   pow( e, Y) = X
     //
     //       log2(X) = Y   <-->   pow( 2, Y) = X
+    //
     //      log10(X) = Y   <-->   pow(10, Y) = X
     //
     //      log(X,b) = Y   <-->   pow( b, Y) = X
@@ -303,17 +325,15 @@ internal static partial class VEC {
 
     //==========================================================================================================================================================
     //
-    //  Arbitrary Line version.
+    //  Arbitrary-Line version.
     //
     //  NOTE:   Does not tell you if ProjectedPoint is inbetween A & B.
-    //              Although, D == Distance from LinePointA to NearestPointOnLine as multiple of dAB.
-    //              So, if (D >= 0 & D <= 1) then, ProjectedPoint is on line.
-    //                  SEE: PointVsLine()
+    //              SEE: PointVsLine()
     //
     //      projectAB(  Point,  Line-PointA,  Line-PointB  )
     //
-    internal static v2 projectAB(v2 P, v2 La, v2 Lb) {v2 dAB = Lb-La;  v1 D = dot(P-La,dAB)/dot(dAB);  return La + dAB*D;}
-    internal static v3 projectAB(v3 P, v3 La, v3 Lb) {v3 dAB = Lb-La;  v1 D = dot(P-La,dAB)/dot(dAB);  return La + dAB*D;}
+    internal static v2 projectAB(v2 P, v2 La, v2 Lb) {v2 dAB = Lb-La;  return La + dAB*( dot(P-La,dAB)/dot(dAB) );}
+    internal static v3 projectAB(v3 P, v3 La, v3 Lb) {v3 dAB = Lb-La;  return La + dAB*( dot(P-La,dAB)/dot(dAB) );}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -321,7 +341,7 @@ internal static partial class VEC {
     //
     //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/reflect.xhtml
     //
-    //      reflect( Vector-Normal, Surface-Normal )
+    //      reflect( Direction-Normal, Surface-Normal )
     //
     [Impl(AggressiveInlining)] internal static v2 reflect(v2 Vn, v2 Sn) => Vn - Sn*(2f * dot(Vn, Sn));
     [Impl(AggressiveInlining)] internal static v3 reflect(v3 Vn, v3 Sn) => Vn - Sn*(2f * dot(Vn, Sn));
@@ -330,21 +350,34 @@ internal static partial class VEC {
     //                                                                     "Refract"
     //
     //  https://www.desmos.com/calculator/eb0c0f77c7
-    //
     //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/refract.xhtml
     //
-    //  IndexOfRefraction:  The ratio of the speed-of-light in a vacuum to the speed-of-light in a medium.
-    //                      Or, from one medium to another medium.
+    //  IndexOfRefraction:  The ratio of the speed-of-light from one medium to another medium.
     //
-    //      refract( Vector-Normal, Surface-Normal, Index-of-Refraction )
+    //                             Range:   0 <---> 1
+    //
+    //                      Unsafe-Range:  -2 <---> 2
+    //                                      Becomes unstable as result approaches SurfaceNormal-Tangent.
+    //
+    //                      < 1.0  refracts inwards
+    //                      > 1.0  refracts outwards
+    //
+    //                          |               |
+    //                          |    /     \    |
+    //                          +---●---+---●---+
+    //                               .  |  .
+    //                                .   .
+    //                                 \ /
+    //                                  ●
+    //
+    //      refract( Direction-Normal, Surface-Normal, Index-of-Refraction )
     //
     internal static vec2 refract(vec2 Vn, vec2 Sn, float Ratio) {
         float Dot = dot(Vn, Sn);
 
         float K = 1f - Ratio*Ratio*(1f - Dot*Dot);
 
-        return (K < 0f) ? new vec2(0f)
-                        : Vn*Ratio  -  Sn*(Ratio*Dot + sqrt(K));
+        return (K < 0f) ? ZERO2 : Vn*Ratio  -  Sn*(Ratio*Dot + sqrt(K));
     }
 
     internal static vec3 refract(vec3 Vn, vec3 Sn, float Ratio) {
@@ -352,34 +385,33 @@ internal static partial class VEC {
 
         float K = 1f - Ratio*Ratio*(1f - Dot*Dot);
 
-        return (K < 0f) ? new vec3(0f)
-                        : Vn*Ratio  -  Sn*(Ratio*Dot + sqrt(K));
+        return (K < 0f) ? ZERO3 : Vn*Ratio  -  Sn*(Ratio*Dot + sqrt(K));
     }
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                                      "Round"                                     Each component rounded to nearest integer.
+    //                                                                      "Round"                                     Each component rounded to the nearest Integer.
     [Impl(AggressiveInlining)] internal static v1 round(v1 A) => System.MathF.Round(A);
     [Impl(AggressiveInlining)] internal static v2 round(v2 A) => new v2(round(A.x), round(A.y));
     [Impl(AggressiveInlining)] internal static v3 round(v3 A) => new v3(round(A.x), round(A.y), round(A.z));
     [Impl(AggressiveInlining)] internal static v4 round(v4 A) => new v4(round(A.x), round(A.y), round(A.z), round(A.w));
 
     //==========================================================================================================================================================
-    //                                                                     "Round" To                                   Each component rounded to nearest 'RoundTo'.
-    [Impl(AggressiveInlining)] internal static v1 round(v1 A, v1 RoundTo) => (RoundTo == 0f || RoundTo == 1f) ? round(A) : RoundTo*round(A/RoundTo);
-    [Impl(AggressiveInlining)] internal static v2 round(v2 A, v1 RoundTo) => (RoundTo == 0f || RoundTo == 1f) ? round(A) : RoundTo*round(A/RoundTo);
-    [Impl(AggressiveInlining)] internal static v3 round(v3 A, v1 RoundTo) => (RoundTo == 0f || RoundTo == 1f) ? round(A) : RoundTo*round(A/RoundTo);
-    [Impl(AggressiveInlining)] internal static v4 round(v4 A, v1 RoundTo) => (RoundTo == 0f || RoundTo == 1f) ? round(A) : RoundTo*round(A/RoundTo);
+    //                                                                     "Round" To                                   Each component rounded to the nearest 'RoundTo'.
+    [Impl(AggressiveInlining)] internal static v1 round(v1 A, v1 RoundTo) => (RoundTo==0f || RoundTo==1f) ? round(A) : RoundTo*round(A/RoundTo);
+    [Impl(AggressiveInlining)] internal static v2 round(v2 A, v1 RoundTo) => (RoundTo==0f || RoundTo==1f) ? round(A) : RoundTo*round(A/RoundTo);
+    [Impl(AggressiveInlining)] internal static v3 round(v3 A, v1 RoundTo) => (RoundTo==0f || RoundTo==1f) ? round(A) : RoundTo*round(A/RoundTo);
+    [Impl(AggressiveInlining)] internal static v4 round(v4 A, v1 RoundTo) => (RoundTo==0f || RoundTo==1f) ? round(A) : RoundTo*round(A/RoundTo);
 
     //==========================================================================================================================================================
-    //                                                                      "Floor"                                     Each component rounded down to nearest integer.
+    //                                                                      "Floor"                                     Each component rounded down to the nearest Integer.
     [Impl(AggressiveInlining)] internal static v1 floor(v1 A) => System.MathF.Floor(A);
     [Impl(AggressiveInlining)] internal static v2 floor(v2 A) => new v2(floor(A.x), floor(A.y));
     [Impl(AggressiveInlining)] internal static v3 floor(v3 A) => new v3(floor(A.x), floor(A.y), floor(A.z));
     [Impl(AggressiveInlining)] internal static v4 floor(v4 A) => new v4(floor(A.x), floor(A.y), floor(A.z), floor(A.w));
 
     //==========================================================================================================================================================
-    //                                                                      "Ceiling"                                   Each component rounded up to nearest integer.
+    //                                                                      "Ceiling"                                   Each component rounded up to the nearest Integer.
     [Impl(AggressiveInlining)] internal static v1 ceil(v1 A) => System.MathF.Ceiling(A);
     [Impl(AggressiveInlining)] internal static v2 ceil(v2 A) => new v2(ceil(A.x), ceil(A.y));
     [Impl(AggressiveInlining)] internal static v3 ceil(v3 A) => new v3(ceil(A.x), ceil(A.y), ceil(A.z));
@@ -408,28 +440,6 @@ internal static partial class VEC {
 
     [Impl(AggressiveInlining)] internal static v4 sign(v4 A, v1 S) => new v4(sign(A.x, S  ), sign(A.y, S  ), sign(A.z, S  ), sign(A.w, S  ));
     [Impl(AggressiveInlining)] internal static v4 sign(v4 A, v4 S) => new v4(sign(A.x, S.x), sign(A.y, S.y), sign(A.z, S.z), sign(A.w, S.w));
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //                                                                      "Square"
-    [Impl(AggressiveInlining)] internal static v1 sq(v1 A) => (A * A);
-    [Impl(AggressiveInlining)] internal static v2 sq(v2 A) => new v2( (A.x*A.x),  (A.y*A.y) );
-    [Impl(AggressiveInlining)] internal static v3 sq(v3 A) => new v3( (A.x*A.x),  (A.y*A.y),  (A.z*A.z) );
-    [Impl(AggressiveInlining)] internal static v4 sq(v4 A) => new v4( (A.x*A.x),  (A.y*A.y),  (A.z*A.z),  (A.w*A.w) );
-
-    //==========================================================================================================================================================
-    //                                                                   "Square Root"
-    [Impl(AggressiveInlining)] internal static v1 sqrt(v1 A) => System.MathF.Sqrt(A);
-  //[Impl(AggressiveInlining)] internal static v2 sqrt(v2 A) => new v2(sqrt(A.x), sqrt(A.y));
-  //[Impl(AggressiveInlining)] internal static v3 sqrt(v3 A) => new v3(sqrt(A.x), sqrt(A.y), sqrt(A.z));
-  //[Impl(AggressiveInlining)] internal static v4 sqrt(v4 A) => new v4(sqrt(A.x), sqrt(A.y), sqrt(A.z), sqrt(A.w));
-
-    //==========================================================================================================================================================
-    //                                                                    "Cube Root"
-    [Impl(AggressiveInlining)] internal static v1 cbrt(v1 A) => System.MathF.Cbrt(A);
-  //[Impl(AggressiveInlining)] internal static v2 cbrt(v2 A) => new v2(cbrt(A.x), cbrt(A.y));
-  //[Impl(AggressiveInlining)] internal static v3 cbrt(v3 A) => new v3(cbrt(A.x), cbrt(A.y), cbrt(A.z));
-  //[Impl(AggressiveInlining)] internal static v4 cbrt(v4 A) => new v4(cbrt(A.x), cbrt(A.y), cbrt(A.z), cbrt(A.w));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -509,11 +519,21 @@ internal static partial class VEC {
     [Impl(AggressiveInlining)] internal static v3 ToDeg(v3 Rad) => new v3(ToDeg(Rad.x), ToDeg(Rad.y), ToDeg(Rad.z));
     [Impl(AggressiveInlining)] internal static v4 ToDeg(v4 Rad) => new v4(ToDeg(Rad.x), ToDeg(Rad.y), ToDeg(Rad.z), ToDeg(Rad.w));
 
+    [Impl(AggressiveInlining)] internal static v1 degrees(v1 V) => ToDeg(V);
+    [Impl(AggressiveInlining)] internal static v2 degrees(v2 V) => ToDeg(V);
+    [Impl(AggressiveInlining)] internal static v3 degrees(v3 V) => ToDeg(V);
+    [Impl(AggressiveInlining)] internal static v4 degrees(v4 V) => ToDeg(V);
+
     //==========================================================================================================================================================
     [Impl(AggressiveInlining)] internal static v1 ToRad(v1 Degrees) => (float)((double)Degrees * (3.14159265358979323846264338327950288419716939937511 / 180.0));
     [Impl(AggressiveInlining)] internal static v2 ToRad(v2 Deg) => new v2(ToRad(Deg.x), ToRad(Deg.y));
     [Impl(AggressiveInlining)] internal static v3 ToRad(v3 Deg) => new v3(ToRad(Deg.x), ToRad(Deg.y), ToRad(Deg.z));
     [Impl(AggressiveInlining)] internal static v4 ToRad(v4 Deg) => new v4(ToRad(Deg.x), ToRad(Deg.y), ToRad(Deg.z), ToRad(Deg.w));
+
+    [Impl(AggressiveInlining)] internal static v1 radians(v1 V) => ToRad(V);
+    [Impl(AggressiveInlining)] internal static v2 radians(v2 V) => ToRad(V);
+    [Impl(AggressiveInlining)] internal static v3 radians(v3 V) => ToRad(V);
+    [Impl(AggressiveInlining)] internal static v4 radians(v4 V) => ToRad(V);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

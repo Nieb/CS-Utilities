@@ -38,8 +38,8 @@ internal static class Array {
     //
     //  Get previous/next Element via provided index, with Array.Length wrapping.
     //
-    //      Blarg.prev(i)       Equivalent to:  Blarg.prev(i,1)
-    //      Blarg.next(i)       Equivalent to:  Blarg.next(i,1)
+    //      Blarg.prev(i)       Equivalent to:    Blarg.prev(i,1)
+    //      Blarg.next(i)       Equivalent to:    Blarg.next(i,1)
     //
     //      Blarg.prev(i,2)
     //      Blarg.next(i,2)

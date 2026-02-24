@@ -3,34 +3,6 @@ namespace Utility;
 internal static class INT {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal const sbyte  MIN_I8  =                       -128;     internal const sbyte  MIN_SBYTE  = MIN_I8;
-    internal const sbyte  MAX_I8  =                        127;     internal const sbyte  MAX_SBYTE  = MAX_I8;
-
-    internal const short  MIN_I16 =                    -32_768;     internal const short  MIN_SHORT  = MIN_I16;
-    internal const short  MAX_I16 =                     32_767;     internal const short  MAX_SHORT  = MAX_I16;
-
-    internal const int    MIN_I32 =             -2_147_483_648;     internal const int    MIN_INT    = MIN_I32;
-    internal const int    MAX_I32 =              2_147_483_647;     internal const int    MAX_INT    = MAX_I32;
-
-    internal const long   MIN_I64 = -9_223_372_036_854_775_808;     internal const long   MIN_LONG   = MIN_I64;
-    internal const long   MAX_I64 =  9_223_372_036_854_775_807;     internal const long   MAX_LONG   = MAX_I64;
-
-    internal const byte   MIN_U8  =                          0;     internal const byte   MIN_BYTE   = MIN_U8;
-    internal const byte   MAX_U8  =                        255;     internal const byte   MAX_BYTE   = MAX_U8;
-
-    internal const ushort MIN_U16 =                          0;     internal const ushort MIN_USHORT = MIN_U16;
-    internal const ushort MAX_U16 =                     65_535;     internal const ushort MAX_USHORT = MAX_U16;
-
-    internal const uint   MIN_U32 =                          0;     internal const uint   MIN_UINT   = MIN_U32;
-    internal const uint   MAX_U32 =              4_294_967_295;     internal const uint   MAX_UINT   = MAX_U32;
-
-    internal const ulong  MIN_U64 =                          0;     internal const ulong  MIN_ULONG  = MIN_U64;
-    internal const ulong  MAX_U64 = 18_446_744_073_709_551_615;     internal const ulong  MAX_ULONG  = MAX_U64;
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
     //                                                                  "Absolute" Value
     //  NOTE:  Does not check for overflow.    -(-2_147_483_648)
     //

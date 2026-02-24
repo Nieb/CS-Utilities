@@ -106,15 +106,24 @@ internal struct vec3 : System.IFormattable {
 
         int Padding = FormatStr.Length+1;
 
-        string X = this.x.ToString(FormatStr).PadLeft(Padding);
-        string Y = this.y.ToString(FormatStr).PadLeft(Padding);
-        string Z = this.z.ToString(FormatStr).PadLeft(Padding);
+        #if true
+            string X = FNZ(this.x).ToString(FormatStr).PadLeft(Padding);
+            string Y = FNZ(this.y).ToString(FormatStr).PadLeft(Padding);
+            string Z = FNZ(this.z).ToString(FormatStr).PadLeft(Padding);
+        #else
+            string X = this.x.ToString(FormatStr).PadLeft(Padding);
+            string Y = this.y.ToString(FormatStr).PadLeft(Padding);
+            string Z = this.z.ToString(FormatStr).PadLeft(Padding);
+        #endif
 
         return $"({X}, {Y}, {Z})";
     }
 
-    //==========================================================================================================================================================
-    public readonly override string ToString() => $"({this.x,9:0.000000}, {this.y,9:0.000000}, {this.z,9:0.000000})";
+    #if true
+        public readonly override string ToString() => $"({FNZ(this.x),9:0.000000}, {FNZ(this.y),9:0.000000}, {FNZ(this.z),9:0.000000})";
+    #else
+        public readonly override string ToString() => $"({this.x,9:0.000000}, {this.y,9:0.000000}, {this.z,9:0.000000})";
+    #endif
 
     //==========================================================================================================================================================
     //  Required by types that implement "==" or "!=" operator:

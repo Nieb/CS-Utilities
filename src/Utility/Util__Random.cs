@@ -4,10 +4,10 @@ internal static class Random {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //  Note:  Random is not ThreadSafe...
+    //  NOTE:  Random is not ThreadSafe...
     //
-    //                      *Inclusive*  *Exclusive*
-    //  System.Random.Next( LowerBounds, UpperBounds );
+    //                          *Inclusive*  *Exclusive*
+    //      System.Random.Next( LowerBounds, UpperBounds );
     //
     private static readonly System.Random R = new();
 
@@ -22,12 +22,12 @@ internal static class Random {
     //                  *Inclusive*  *Inclusive*
     //      RandomType( LowerBounds, UpperBounds );
     //
-    internal static u8  RandomByte (u8  L=MIN_U8 , u8  U=MAX_U8 ) => ClampToByte (R.Next     (s32(L), s32(U)+1));
+    internal static u8  RandomByte (u8  L=MIN_u8 , u8  U=MAX_u8 ) => ClampToByte (R.Next     (s32(L), s32(U)+1));
 
-    internal static s16 RandomShort(s16 L=MIN_I16, s16 U=MAX_I16) => ClampToShort(R.Next     (s32(L), s32(U)+1));
+    internal static s16 RandomShort(s16 L=MIN_s16, s16 U=MAX_s16) => ClampToShort(R.Next     (s32(L), s32(U)+1));
 
-    internal static s32 RandomInt  (s32 L=MIN_I32, s32 U=MAX_I32) => ClampToInt  (R.NextInt64(s64(L), s64(U)+1));
-    internal static u32 RandomUint (u32 L=MIN_U32, u32 U=MAX_U32) => ClampToUint (R.NextInt64(s64(L), s64(U)+1));
+    internal static s32 RandomInt  (s32 L=MIN_s32, s32 U=MAX_s32) => ClampToInt  (R.NextInt64(s64(L), s64(U)+1));
+    internal static u32 RandomUint (u32 L=MIN_u32, u32 U=MAX_u32) => ClampToUint (R.NextInt64(s64(L), s64(U)+1));
 
     //==========================================================================================================================================================
     //
@@ -43,8 +43,8 @@ internal static class Random {
     //      -1.0 to 1.0
     //       0.0 to 1.0
     //
-    internal static v1 Random1()  => f32(R.Next(-1_000_000, 1_000_000+1))/1_000_000f;
-    internal static v1 Random1u() => f32(R.Next(         0, 1_000_000+1))/1_000_000f;
+    internal static v1 Random1()  => f32(R.Next(-1_000_000, 1_000_001)) / 1_000_000f;
+    internal static v1 Random1u() => f32(R.Next(         0, 1_000_001)) / 1_000_000f;
 
     internal static v2 Random2()  => normalize(new vec2(Random1() ,Random1() ));
     internal static v2 Random2u() => normalize(new vec2(Random1u(),Random1u()));
@@ -54,8 +54,8 @@ internal static class Random {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //
-    //  Pitch  RotX  -->   Latitude(South –90  +90 North)  -->  TextureCoord Y|V
-    //  Yaw    RotY  -->  Longitude(West -180 +180 East )  -->  TextureCoord X|U
+    //  Pitch  |  RotX  |  PosY  |  TexV  |   Latitude (South  –90   +90  North)
+    //  Yaw    |  RotY  |  PosX  |  TexU  |  Longitude (West  -180  +180  East )
     //
     #if false
         internal static vec3 Random3a() {
