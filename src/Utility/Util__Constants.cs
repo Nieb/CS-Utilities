@@ -149,16 +149,21 @@ internal static class Constants {
     internal static readonly v3 ZERO3 = new v3(0f, 0f, 0f);
     internal static readonly v4 ZERO4 = new v4(0f, 0f, 0f, 0f);
 
-    //internal static v1 ZERO() => 0f;
-    //internal static v2 ZERO() => new v2(0f, 0f);
-    //internal static v3 ZERO() => new v3(0f, 0f, 0f);
-    //internal static v4 ZERO() => new v4(0f, 0f, 0f, 0f);
+    internal const           i1 iZERO  = 0;
+    internal static readonly i2 iZERO2 = new i2(0, 0);
+    internal static readonly i3 iZERO3 = new i3(0, 0, 0);
+    internal static readonly i4 iZERO4 = new i4(0, 0, 0, 0);
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     internal const           v1 ONE  = 1f;
     internal static readonly v2 ONE2 = new v2(1f, 1f);
     internal static readonly v3 ONE3 = new v3(1f, 1f, 1f);
     internal static readonly v4 ONE4 = new v4(1f, 1f, 1f, 1f);
+
+    internal const           i1 iONE  = 1;
+    internal static readonly i2 iONE2 = new i2(1, 1);
+    internal static readonly i3 iONE3 = new i3(1, 1, 1);
+    internal static readonly i4 iONE4 = new i4(1, 1, 1, 1);
 
     //==========================================================================================================================================================
     internal static readonly v2 AXIS2_X  = new v2(1f, 0f);

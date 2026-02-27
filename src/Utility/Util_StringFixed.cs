@@ -12,15 +12,15 @@ public struct DimString {
 
     public readonly int SizeX;
     public readonly int SizeY;
-    public readonly int Size => SizeX * SizeY;
+    public readonly int Size => (SizeX * SizeY);
 
     private Rune[] Text; //  Rune[] insures:  Array.Length == MaxCharacterCount
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public DimString(int CharsPerLine, int NumOfLines) {
-        if (CharsPerLine <= 0) throw new System.ArgumentOutOfRangeException(nameof(CharsPerLine));
-        if (NumOfLines   <= 0) throw new System.ArgumentOutOfRangeException(nameof(NumOfLines));
+        if (CharsPerLine < 1) throw new System.ArgumentOutOfRangeException(nameof(CharsPerLine));
+        if (NumOfLines   < 1) throw new System.ArgumentOutOfRangeException(nameof(NumOfLines));
 
         this.CursorPosX = 0;
         this.CursorPosY = 0;
@@ -29,43 +29,37 @@ public struct DimString {
         this.SizeY = NumOfLines;
 
         this.Text = new Rune[CharsPerLine * NumOfLines];
-        this.FillWith(' ');
     }
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    public void Clear(bool ClearToSpaces = true) {
+    [Impl(AggressiveInlining)] public void Clear() {
         this.CursorPosX = 0;
         this.CursorPosY = 0;
-        if (ClearToSpaces)
-            this.FillWith(' ');
-        else
-            System.Array.Clear(this.Text);
+        System.Array.Clear(this.Text);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] private void FillWith(char c) => this.Text.AsSpan().Fill(new Rune(c));
+    //[Impl(AggressiveInlining)] public void FillWith(char c) => this.Text.AsSpan().Fill(new Rune(c));
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] private void AdvanceCursorToNextLine() {
-        this.CursorPosX = 0;
-        this.CursorPosY++;
-    }
+    [Impl(AggressiveInlining)] private void AdvanceCursorToNextLine() {this.CursorPosX = 0;  ++this.CursorPosY;}
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    public void SetCursorPosX(int X) => this.CursorPosX = clamp(X, 0, this.SizeX);
-    public void SetCursorPosY(int Y) => this.CursorPosY = clamp(Y, 0, this.SizeY);
-    public void SetCursorPos(int X, int Y) {
-        this.CursorPosX = clamp(X, 0, this.SizeX);
-        this.CursorPosY = clamp(Y, 0, this.SizeY);
-    }
+    //[Impl(AggressiveInlining)] public void SetCursorPosX(int X) => this.CursorPosX = clamp(X, 0, this.SizeX);
+    //[Impl(AggressiveInlining)] public void SetCursorPosY(int Y) => this.CursorPosY = clamp(Y, 0, this.SizeY);
+    //[Impl(AggressiveInlining)] public void SetCursorPos(int X, int Y) {
+    //    this.CursorPosX = clamp(X, 0, this.SizeX);
+    //    this.CursorPosY = clamp(Y, 0, this.SizeY);
+    //}
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] private int Index(int X, int Y) => (Y * this.SizeX) + X;
+    [Impl(AggressiveInlining)] private int Index(int X, int Y) => X + (Y*this.SizeX);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    public void Append(string S) => Append(S.AsSpan());
+    [Impl(AggressiveInlining)] public void Append(string S) => Append(S.AsSpan());
+
     public void Append(ReadOnlySpan<char> S) {
         if (this.CursorPosY >= this.SizeY)
             return;
@@ -123,16 +117,19 @@ public struct DimString {
     }
 
     //==========================================================================================================================================================
-    public void AppendLine(string S) => AppendLine(S.AsSpan());
-    public void AppendLine(ReadOnlySpan<char> S) {
-        if (this.CursorPosY >= this.SizeY) return;
+    [Impl(AggressiveInlining)] public void AppendLine(string S) => AppendLine(S.AsSpan());
+
+    [Impl(AggressiveInlining)] public void AppendLine(ReadOnlySpan<char> S) {
+        if (this.CursorPosY >= this.SizeY)
+            return;
         this.Append(S);
         this.AdvanceCursorToNextLine();
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    public void AppendLine() {
-        if (this.CursorPosY >= this.SizeY) return;
+    [Impl(AggressiveInlining)] public void AppendLine() {
+        if (this.CursorPosY >= this.SizeY)
+            return;
         this.AdvanceCursorToNextLine();
     }
 
@@ -149,44 +146,31 @@ public struct DimString {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //public override string ToString() => this.Text.ToString();
-    //public override string ToString() => this.Text.AsSpan().ToString();
+    //public Span<Rune> AsSpan() => this.Text.AsSpan();
 
-    public override string ToString() => ToString(TrimLines: true);
-    public string ToString(bool TrimLines) {
-        // Worst-case: each cell could be surrogate pair (2 chars), plus newlines.
-        int approxCapacity = (this.SizeX * this.SizeY * 2) + (this.SizeY - 1);
-        var SB = new StringBuilder(2*approxCapacity);
+    public override string ToString() {
+        int SB_Capacity = (2 * this.SizeX*this.SizeY) + (this.SizeY - 1); //  Two Chars per-Rune,  plus newline Chars.
+        var SB = new StringBuilder(SB_Capacity);
+        //CONOUT($"{SB.Capacity}");
 
         Span<char> tmp = stackalloc char[2];
 
-        for (int iY = 0; iY < this.SizeY; iY++) {
-            int lineEndX = this.SizeX;
-
-            if (TrimLines) {
-                // Trim trailing spaces (and default \0 if you chose not to fill spaces)
-                int iX = this.SizeX - 1;
-                for (; iX >= 0; iX--) {
-                    Rune r = this.Text[Index(iX,iY)];
-                    if (r.Value != 0 && r.Value != ' ') break;
-                }
-                lineEndX = iX + 1;
-            }
-
-            for (int iX = 0; iX < lineEndX; iX++) {
+        for (int iY = 0; iY < this.SizeY; ++iY) {
+            for (int iX = 0; iX < this.SizeX; ++iX) {
                 Rune r = this.Text[Index(iX,iY)];
+
                 if (r.Value == 0)
-                    r = new Rune(' ');
+                    break;
 
-                int written = r.EncodeToUtf16(tmp);
-
-                SB.Append(tmp.Slice(0, written));
+                int CharsWritten = r.EncodeToUtf16(tmp);
+                SB.Append(tmp.Slice(0, CharsWritten));
             }
 
             if (iY != this.SizeY - 1)
                 SB.Append('\n');
         }
 
+        //CONOUT($"{SB.Capacity}");
         return SB.ToString();
     }
 

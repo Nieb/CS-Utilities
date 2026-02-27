@@ -26,12 +26,14 @@ internal struct ivec4 : System.IFormattable {
     public ivec4(int XYZ            , int W) {x=XYZ;   y=XYZ;   z=XYZ;   w=W;   }
     public ivec4(int XYZW                  ) {x=XYZW;  y=XYZW;  z=XYZW;  w=XYZW;}
 
+    public ivec4(ivec2 XY    , ivec2 ZW    ) {x=XY.x;  y=XY.y;  z=ZW.x;  w=ZW.y;}
     public ivec4(ivec3 XYZ          , int W) {x=XYZ.x; y=XYZ.y; z=XYZ.z; w=W;   }
 
     //==========================================================================================================================================================
     //                                                               Tuple "Constructor"
-    [Impl(AggressiveInlining)] public static implicit operator ivec4((int X, int Y, int Z, int W) t) => new ivec4(t.X, t.Y, t.Z, t.W);
-    [Impl(AggressiveInlining)] public static implicit operator ivec4((ivec3 XYZ,           int W) t) => new ivec4(t.XYZ.x, t.XYZ.y, t.XYZ.z, t.W);
+    [Impl(AggressiveInlining)] public static implicit operator ivec4((int X, int Y, int Z, int W) t) => new ivec4(    t.X,     t.Y,     t.Z,    t.W);
+    [Impl(AggressiveInlining)] public static implicit operator ivec4((ivec2 XY    , ivec2 ZW    ) t) => new ivec4( t.XY.x,  t.XY.y,  t.ZW.x, t.ZW.y);
+    [Impl(AggressiveInlining)] public static implicit operator ivec4((ivec3 XYZ,           int W) t) => new ivec4(t.XYZ.x, t.XYZ.y, t.XYZ.z,    t.W);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

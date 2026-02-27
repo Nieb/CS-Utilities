@@ -70,20 +70,20 @@ internal static class INT {
                                                                                               : ((B < C) ? ((B < D) ? B : D)
                                                                                                          : ((C < D) ? C : D));
 
-    [Impl(AggressiveInlining)] internal static iv2 min(iv2 A, int B)               => new iv2(min(A.x,B          ), min(A.y,B          ));
-    [Impl(AggressiveInlining)] internal static iv2 min(iv2 A, iv2 B)               => new iv2(min(A.x,B.x        ), min(A.y,B.y        ));
-    [Impl(AggressiveInlining)] internal static iv2 min(iv2 A, iv2 B, iv2 C)        => new iv2(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ));
-    [Impl(AggressiveInlining)] internal static iv2 min(iv2 A, iv2 B, iv2 C, iv2 D) => new iv2(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y));
+    [Impl(AggressiveInlining)] internal static i2 min(i2 A, i1 B)             => new i2(min(A.x,B          ), min(A.y,B          ));
+    [Impl(AggressiveInlining)] internal static i2 min(i2 A, i2 B)             => new i2(min(A.x,B.x        ), min(A.y,B.y        ));
+    [Impl(AggressiveInlining)] internal static i2 min(i2 A, i2 B, i2 C)       => new i2(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ));
+    [Impl(AggressiveInlining)] internal static i2 min(i2 A, i2 B, i2 C, i2 D) => new i2(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y));
 
-    [Impl(AggressiveInlining)] internal static iv3 min(iv3 A, int B)               => new iv3(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ));
-    [Impl(AggressiveInlining)] internal static iv3 min(iv3 A, iv3 B)               => new iv3(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ));
-    [Impl(AggressiveInlining)] internal static iv3 min(iv3 A, iv3 B, iv3 C)        => new iv3(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ));
-    [Impl(AggressiveInlining)] internal static iv3 min(iv3 A, iv3 B, iv3 C, iv3 D) => new iv3(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z));
+    [Impl(AggressiveInlining)] internal static i3 min(i3 A, i1 B)             => new i3(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ));
+    [Impl(AggressiveInlining)] internal static i3 min(i3 A, i3 B)             => new i3(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ));
+    [Impl(AggressiveInlining)] internal static i3 min(i3 A, i3 B, i3 C)       => new i3(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ));
+    [Impl(AggressiveInlining)] internal static i3 min(i3 A, i3 B, i3 C, i3 D) => new i3(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z));
 
-    [Impl(AggressiveInlining)] internal static iv4 min(iv4 A, int B)               => new iv4(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ), min(A.w,B          ));
-    [Impl(AggressiveInlining)] internal static iv4 min(iv4 A, iv4 B)               => new iv4(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ), min(A.w,B.w        ));
-    [Impl(AggressiveInlining)] internal static iv4 min(iv4 A, iv4 B, iv4 C)        => new iv4(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ), min(A.w,B.w,C.w    ));
-    [Impl(AggressiveInlining)] internal static iv4 min(iv4 A, iv4 B, iv4 C, iv4 D) => new iv4(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z), min(A.w,B.w,C.w,D.w));
+    [Impl(AggressiveInlining)] internal static i4 min(i4 A, i1 B)             => new i4(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ), min(A.w,B          ));
+    [Impl(AggressiveInlining)] internal static i4 min(i4 A, i4 B)             => new i4(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ), min(A.w,B.w        ));
+    [Impl(AggressiveInlining)] internal static i4 min(i4 A, i4 B, i4 C)       => new i4(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ), min(A.w,B.w,C.w    ));
+    [Impl(AggressiveInlining)] internal static i4 min(i4 A, i4 B, i4 C, i4 D) => new i4(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z), min(A.w,B.w,C.w,D.w));
 
     //==========================================================================================================================================================
     //                                                                  "Maximum" Value
@@ -97,20 +97,20 @@ internal static class INT {
                                                                                               : ((B > C) ? ((B > D) ? B : D)
                                                                                                          : ((C > D) ? C : D));
 
-    [Impl(AggressiveInlining)] internal static iv2 max(iv2 A, int B)               => new iv2(max(A.x,B          ), max(A.y,B          ));
-    [Impl(AggressiveInlining)] internal static iv2 max(iv2 A, iv2 B)               => new iv2(max(A.x,B.x        ), max(A.y,B.y        ));
-    [Impl(AggressiveInlining)] internal static iv2 max(iv2 A, iv2 B, iv2 C)        => new iv2(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ));
-    [Impl(AggressiveInlining)] internal static iv2 max(iv2 A, iv2 B, iv2 C, iv2 D) => new iv2(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y));
+    [Impl(AggressiveInlining)] internal static i2 max(i2 A, i1 B)             => new i2(max(A.x,B          ), max(A.y,B          ));
+    [Impl(AggressiveInlining)] internal static i2 max(i2 A, i2 B)             => new i2(max(A.x,B.x        ), max(A.y,B.y        ));
+    [Impl(AggressiveInlining)] internal static i2 max(i2 A, i2 B, i2 C)       => new i2(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ));
+    [Impl(AggressiveInlining)] internal static i2 max(i2 A, i2 B, i2 C, i2 D) => new i2(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y));
 
-    [Impl(AggressiveInlining)] internal static iv3 max(iv3 A, int B)               => new iv3(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ));
-    [Impl(AggressiveInlining)] internal static iv3 max(iv3 A, iv3 B)               => new iv3(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ));
-    [Impl(AggressiveInlining)] internal static iv3 max(iv3 A, iv3 B, iv3 C)        => new iv3(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ));
-    [Impl(AggressiveInlining)] internal static iv3 max(iv3 A, iv3 B, iv3 C, iv3 D) => new iv3(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z));
+    [Impl(AggressiveInlining)] internal static i3 max(i3 A, i1 B)             => new i3(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ));
+    [Impl(AggressiveInlining)] internal static i3 max(i3 A, i3 B)             => new i3(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ));
+    [Impl(AggressiveInlining)] internal static i3 max(i3 A, i3 B, i3 C)       => new i3(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ));
+    [Impl(AggressiveInlining)] internal static i3 max(i3 A, i3 B, i3 C, i3 D) => new i3(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z));
 
-    [Impl(AggressiveInlining)] internal static iv4 max(iv4 A, int B)               => new iv4(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ), max(A.w,B          ));
-    [Impl(AggressiveInlining)] internal static iv4 max(iv4 A, iv4 B)               => new iv4(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ), max(A.w,B.w        ));
-    [Impl(AggressiveInlining)] internal static iv4 max(iv4 A, iv4 B, iv4 C)        => new iv4(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ), max(A.w,B.w,C.w    ));
-    [Impl(AggressiveInlining)] internal static iv4 max(iv4 A, iv4 B, iv4 C, iv4 D) => new iv4(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z), max(A.w,B.w,C.w,D.w));
+    [Impl(AggressiveInlining)] internal static i4 max(i4 A, i1 B)             => new i4(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ), max(A.w,B          ));
+    [Impl(AggressiveInlining)] internal static i4 max(i4 A, i4 B)             => new i4(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ), max(A.w,B.w        ));
+    [Impl(AggressiveInlining)] internal static i4 max(i4 A, i4 B, i4 C)       => new i4(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ), max(A.w,B.w,C.w    ));
+    [Impl(AggressiveInlining)] internal static i4 max(i4 A, i4 B, i4 C, i4 D) => new i4(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z), max(A.w,B.w,C.w,D.w));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

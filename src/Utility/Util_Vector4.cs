@@ -26,14 +26,15 @@ internal struct vec4 : System.IFormattable {
     public vec4(float XYZ                , float W) {x=XYZ;  y=XYZ;  z=XYZ;  w=W;   }
     public vec4(float XYZW                        ) {x=XYZW; y=XYZW; z=XYZW; w=XYZW;}
 
+    public vec4( vec2 XY        , vec2 ZW         ) {x=XY.x; y=XY.y; z=ZW.x; w=ZW.y;}
     public vec4( vec3 V                  , float W) {x=V.x;  y=V.y;  z=V.z;  w=W;   }
-
     public vec4(ivec4 V                           ) {x=V.x;  y=V.y;  z=V.z;  w=V.w; }
 
     //==========================================================================================================================================================
     //                                                               Tuple "Constructor"
-    [Impl(AggressiveInlining)] public static implicit operator vec4((float X, float Y, float Z, float W) t) => new vec4(  t.X,   t.Y,   t.Z, t.W);
-    [Impl(AggressiveInlining)] public static implicit operator vec4((vec3 V,                    float W) t) => new vec4(t.V.x, t.V.y, t.V.z, t.W);
+    [Impl(AggressiveInlining)] public static implicit operator vec4((float X, float Y, float Z, float W) t) => new vec4(   t.X,    t.Y,    t.Z,    t.W);
+    [Impl(AggressiveInlining)] public static implicit operator vec4((vec2 XY         , vec2 ZW         ) t) => new vec4(t.XY.x, t.XY.y, t.ZW.x, t.ZW.y);
+    [Impl(AggressiveInlining)] public static implicit operator vec4((vec3 V,                    float W) t) => new vec4( t.V.x,  t.V.y,  t.V.z,    t.W);
 
     //==========================================================================================================================================================
     [Impl(AggressiveInlining)] public static implicit operator vec4(ivec4 A) => new vec4(A);        //  Directly assign 'ivec4' to 'vec4'.
