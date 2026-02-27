@@ -3,18 +3,18 @@ namespace Utility;
 internal static partial class VEC_Geometry {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [Impl(AggressiveInlining)] internal static v1  Area(v1  S_x, v1  S_y) => (S_x * S_y);
-    [Impl(AggressiveInlining)] internal static v1  Area(v2  S)            => (S.x * S.y);
+    [Impl(AggressiveInlining)] internal static v1 Area(v1 S_x, v1 S_y) => (S_x * S_y);
+    [Impl(AggressiveInlining)] internal static v1 Area(v2 S)           => (S.x * S.y);
 
-    [Impl(AggressiveInlining)] internal static int Area(int S_x, int S_y) => (S_x * S_y);
-    [Impl(AggressiveInlining)] internal static int Area(iv2 S)            => (S.x * S.y);
+    [Impl(AggressiveInlining)] internal static i1 Area(i1 S_x, i1 S_y) => (S_x * S_y);
+    [Impl(AggressiveInlining)] internal static i1 Area(i2 S)           => (S.x * S.y);
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] internal static v1  Volume(v1  S_x, v1  S_y, v1  S_z) => (S_x * S_y * S_z);
-    [Impl(AggressiveInlining)] internal static v1  Volume(v3  S)                     => (S.x * S.y * S.z);
+    [Impl(AggressiveInlining)] internal static v1 Volume(v1 S_x, v1 S_y, v1 S_z) => (S_x * S_y * S_z);
+    [Impl(AggressiveInlining)] internal static v1 Volume(v3 S)                   => (S.x * S.y * S.z);
 
-    [Impl(AggressiveInlining)] internal static int Volume(int S_x, int S_y, int S_z) => (S_x * S_y * S_z);
-    [Impl(AggressiveInlining)] internal static int Volume(iv3 S)                     => (S.x * S.y * S.z);
+    [Impl(AggressiveInlining)] internal static i1 Volume(i1 S_x, i1 S_y, i1 S_z) => (S_x * S_y * S_z);
+    [Impl(AggressiveInlining)] internal static i1 Volume(i3 S)                   => (S.x * S.y * S.z);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

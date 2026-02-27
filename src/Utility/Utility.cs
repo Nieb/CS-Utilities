@@ -52,15 +52,15 @@ global using f64 = double;  //  System.Double
 //#pragma warning restore CS8981
 
 //==============================================================================================================================================================
-global using  v1 = float;
-global using  v2 = Utility.vec2;
-global using  v3 = Utility.vec3;
-global using  v4 = Utility.vec4;
+global using v1 = float;
+global using v2 = Utility.vec2;
+global using v3 = Utility.vec3;
+global using v4 = Utility.vec4;
 
-global using iv1 = int;
-global using iv2 = Utility.ivec2;
-global using iv3 = Utility.ivec3;
-global using iv4 = Utility.ivec4;
+global using i1 = int;
+global using i2 = Utility.ivec2;
+global using i3 = Utility.ivec3;
+global using i4 = Utility.ivec4;
 
 ////global using vec2 = System.Numerics.Vector2;
 ////global using vec3 = System.Numerics.Vector3;
