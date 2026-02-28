@@ -33,13 +33,15 @@ internal static class INT {
     //                                                                       "Wrap"
     //               *Inclusive*  *Exclusive*
     //      wrap( A, LowerBounds, UpperBounds )
-    //      wrap( A,              UpperBounds )     LowerBounds == 0
+    //      wrap( A,              UpperBounds )     LowerBounds is 0
     //
-    [Impl(AggressiveInlining)] internal static s32 wrap(s32 A, s32 L, s32 U) {s32 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0) ? Domain : 0);}
-    [Impl(AggressiveInlining)] internal static s32 wrap(s32 A,        s32 U) {                   A = (A    %     U);  return A   + ((A < 0) ?      U : 0);}
+    [Impl(AggressiveInlining)] internal static s16 wrap(s16 A, s16 L, s16 U) {s32 Domain = U-L;  A = s16((A-L) % Domain);  return s16(A+L + ((A < 0) ? Domain : 0));}
+    [Impl(AggressiveInlining)] internal static s32 wrap(s32 A, s32 L, s32 U) {s32 Domain = U-L;  A =     (A-L) % Domain;   return     A+L + ((A < 0) ? Domain : 0);}
+    [Impl(AggressiveInlining)] internal static s64 wrap(s64 A, s64 L, s64 U) {s64 Domain = U-L;  A =     (A-L) % Domain;   return     A+L + ((A < 0) ? Domain : 0);}
 
-    [Impl(AggressiveInlining)] internal static s64 wrap(s64 A, s64 L, s64 U) {s64 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0) ? Domain : 0);}
-    [Impl(AggressiveInlining)] internal static s64 wrap(s64 A,        s64 U) {                   A = (A    %     U);  return A   + ((A < 0) ?      U : 0);}
+    [Impl(AggressiveInlining)] internal static s16 wrap(s16 A,        s16 U) {                   A = s16(A     %      U);  return s16(A   + ((A < 0) ?      U : 0));}
+    [Impl(AggressiveInlining)] internal static s32 wrap(s32 A,        s32 U) {                   A =    (A     %      U);  return     A   + ((A < 0) ?      U : 0);}
+    [Impl(AggressiveInlining)] internal static s64 wrap(s64 A,        s64 U) {                   A =    (A     %      U);  return     A   + ((A < 0) ?      U : 0);}
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //
@@ -51,11 +53,21 @@ internal static class INT {
     //      Blarg[ prev(i, 2, Blarg.Length) ]
     //      Blarg[ next(i, 2, Blarg.Length) ]
     //
-    [Impl(AggressiveInlining)] internal static int prev(int i,           int U) => (--i <  0) ? U-1 : i;
-    [Impl(AggressiveInlining)] internal static int next(int i,           int U) => (++i >= U) ?   0 : i;
+    [Impl(AggressiveInlining)] internal static s16 prev(s16 i,           s16 U) => s16((--i <  0) ? U-1 : i);
+    [Impl(AggressiveInlining)] internal static s32 prev(s32 i,           s32 U) =>     (--i <  0) ? U-1 : i;
+    [Impl(AggressiveInlining)] internal static s64 prev(s64 i,           s64 U) =>     (--i <  0) ? U-1 : i;
 
-    [Impl(AggressiveInlining)] internal static int prev(int i, int Step, int U) => (i-Step <  0) ? i-Step + U : i-Step;
-    [Impl(AggressiveInlining)] internal static int next(int i, int Step, int U) => (i+Step >= U) ? i+Step - U : i+Step;
+    [Impl(AggressiveInlining)] internal static s16 next(s16 i,           s16 U) => s16((++i >= U) ?   0 : i);
+    [Impl(AggressiveInlining)] internal static s32 next(s32 i,           s32 U) =>     (++i >= U) ?   0 : i;
+    [Impl(AggressiveInlining)] internal static s64 next(s64 i,           s64 U) =>     (++i >= U) ?   0 : i;
+
+    [Impl(AggressiveInlining)] internal static s16 prev(s16 i, s16 Step, s16 U) => s16((i-Step <  0) ? i-Step + U : i-Step);
+    [Impl(AggressiveInlining)] internal static s32 prev(s32 i, s32 Step, s32 U) =>     (i-Step <  0) ? i-Step + U : i-Step;
+    [Impl(AggressiveInlining)] internal static s64 prev(s64 i, s64 Step, s64 U) =>     (i-Step <  0) ? i-Step + U : i-Step;
+
+    [Impl(AggressiveInlining)] internal static s16 next(s16 i, s16 Step, s16 U) => s16((i+Step >= U) ? i+Step - U : i+Step);
+    [Impl(AggressiveInlining)] internal static s32 next(s32 i, s32 Step, s32 U) =>     (i+Step >= U) ? i+Step - U : i+Step;
+    [Impl(AggressiveInlining)] internal static s64 next(s64 i, s64 Step, s64 U) =>     (i+Step >= U) ? i+Step - U : i+Step;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
