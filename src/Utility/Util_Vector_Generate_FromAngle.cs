@@ -4,11 +4,11 @@ internal static partial class VEC_Generate {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //  These are not CoordinateSystem agnostic.
+    //  Not CoordinateSystem agnostic.
     //
     //               +Y
     //              |
-    //              |      Far                   Plane Z     Plane Y     Plane X
+    //              |      Far                   Z Plane     Y Plane     X Plane
     //              |    +Z                      Spans XY    Spans XZ    Spans ZY
     //              |   /                        +Y          +Z          +Y
     //              |  /                        |           |           |

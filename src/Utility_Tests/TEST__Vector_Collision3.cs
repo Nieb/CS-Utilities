@@ -7,9 +7,17 @@ internal static partial class Program {
         //######################################################################################################################################################
         //######################################################################################################################################################
         TEST("WhichSideOfPlane()", true
-            && WhichSideOfPlane((4f,5f,6f), (1f,2f,3f), (SQRT3_RCP,SQRT3_RCP,SQRT3_RCP)) >  0f
-            && WhichSideOfPlane((6f,3f,0f), (3f,3f,3f), (SQRT3_RCP,SQRT3_RCP,SQRT3_RCP)) == 0f
-            && WhichSideOfPlane((1f,2f,3f), (4f,5f,6f), (SQRT3_RCP,SQRT3_RCP,SQRT3_RCP)) <  0f
+            && WhichSideOfPlane((1f,0f,0f), (0f,0f,0f), (1f,0f,0f)) == 1f
+            && WhichSideOfPlane((0f,1f,0f), (0f,0f,0f), (0f,1f,0f)) == 1f
+            && WhichSideOfPlane((0f,0f,1f), (0f,0f,0f), (0f,0f,1f)) == 1f
+
+            && WhichSideOfPlane((3f,5f,5f), (5f,5f,5f), (1f,0f,0f)) == -2f
+            && WhichSideOfPlane((5f,3f,5f), (5f,5f,5f), (0f,1f,0f)) == -2f
+            && WhichSideOfPlane((5f,5f,3f), (5f,5f,5f), (0f,0f,1f)) == -2f
+
+            && WhichSideOfPlane((-4f,-5f,-5f), (-5f,-5f,-5f), (1f,0f,0f)) == 1f
+            && WhichSideOfPlane((-5f,-4f,-5f), (-5f,-5f,-5f), (0f,1f,0f)) == 1f
+            && WhichSideOfPlane((-5f,-5f,-4f), (-5f,-5f,-5f), (0f,0f,1f)) == 1f
         );
 
         //######################################################################################################################################################
@@ -115,109 +123,111 @@ internal static partial class Program {
         //######################################################################################################################################################
         //######################################################################################################################################################
         TEST("RayVsPlaneX()", true
-            && RayVsPlaneX((2f,2f,2f), ( 1f, 0f, 0f), 1f) == -1f
-            && RayVsPlaneX((2f,2f,2f), (-1f, 0f, 0f), 1f) ==  1f
-            && RayVsPlaneX((2f,2f,2f), ( 0f, 1f, 0f), 1f) == RAY_MISS
-            && RayVsPlaneX((2f,2f,2f), ( 0f,-1f, 0f), 1f) == RAY_MISS
-            && RayVsPlaneX((2f,2f,2f), ( 0f, 0f, 1f), 1f) == RAY_MISS
-            && RayVsPlaneX((2f,2f,2f), ( 0f, 0f,-1f), 1f) == RAY_MISS
+            && RayVsPlaneX((2f,2f,2f),( 1f, 0f, 0f),  1f) == -1f
+            && RayVsPlaneX((2f,2f,2f),(-1f, 0f, 0f),  1f) ==  1f
+            && RayVsPlaneX((2f,2f,2f),( 0f, 1f, 0f),  1f) == RAY_MISS
+            && RayVsPlaneX((2f,2f,2f),( 0f,-1f, 0f),  1f) == RAY_MISS
+            && RayVsPlaneX((2f,2f,2f),( 0f, 0f, 1f),  1f) == RAY_MISS
+            && RayVsPlaneX((2f,2f,2f),( 0f, 0f,-1f),  1f) == RAY_MISS
         );
 
         TEST("RayVsPlaneY()", true
-            && RayVsPlaneY((2f,2f,2f), ( 1f, 0f, 0f), 1f) == RAY_MISS
-            && RayVsPlaneY((2f,2f,2f), (-1f, 0f, 0f), 1f) == RAY_MISS
-            && RayVsPlaneY((2f,2f,2f), ( 0f, 1f, 0f), 1f) == -1f
-            && RayVsPlaneY((2f,2f,2f), ( 0f,-1f, 0f), 1f) ==  1f
-            && RayVsPlaneY((2f,2f,2f), ( 0f, 0f, 1f), 1f) == RAY_MISS
-            && RayVsPlaneY((2f,2f,2f), ( 0f, 0f,-1f), 1f) == RAY_MISS
+            && RayVsPlaneY((2f,2f,2f),( 1f, 0f, 0f),  1f) == RAY_MISS
+            && RayVsPlaneY((2f,2f,2f),(-1f, 0f, 0f),  1f) == RAY_MISS
+            && RayVsPlaneY((2f,2f,2f),( 0f, 1f, 0f),  1f) == -1f
+            && RayVsPlaneY((2f,2f,2f),( 0f,-1f, 0f),  1f) ==  1f
+            && RayVsPlaneY((2f,2f,2f),( 0f, 0f, 1f),  1f) == RAY_MISS
+            && RayVsPlaneY((2f,2f,2f),( 0f, 0f,-1f),  1f) == RAY_MISS
         );
 
         TEST("RayVsPlaneZ()", true
-            && RayVsPlaneZ((2f,2f,2f), ( 1f, 0f, 0f), 1f) == RAY_MISS
-            && RayVsPlaneZ((2f,2f,2f), (-1f, 0f, 0f), 1f) == RAY_MISS
-            && RayVsPlaneZ((2f,2f,2f), ( 0f, 1f, 0f), 1f) == RAY_MISS
-            && RayVsPlaneZ((2f,2f,2f), ( 0f,-1f, 0f), 1f) == RAY_MISS
-            && RayVsPlaneZ((2f,2f,2f), ( 0f, 0f, 1f), 1f) == -1f
-            && RayVsPlaneZ((2f,2f,2f), ( 0f, 0f,-1f), 1f) ==  1f
+            && RayVsPlaneZ((2f,2f,2f),( 1f, 0f, 0f),  1f) == RAY_MISS
+            && RayVsPlaneZ((2f,2f,2f),(-1f, 0f, 0f),  1f) == RAY_MISS
+            && RayVsPlaneZ((2f,2f,2f),( 0f, 1f, 0f),  1f) == RAY_MISS
+            && RayVsPlaneZ((2f,2f,2f),( 0f,-1f, 0f),  1f) == RAY_MISS
+            && RayVsPlaneZ((2f,2f,2f),( 0f, 0f, 1f),  1f) == -1f
+            && RayVsPlaneZ((2f,2f,2f),( 0f, 0f,-1f),  1f) ==  1f
         );
 
         //======================================================================================================================================================
-        //TEST("RayVsPlane()", true
-        //    && RayVsPlane(vec3 Rp, vec3 Rn, vec3 Pp, vec3 Pn)
-        //);
+        TEST("RayVsPlane()", true
+            && RayVsPlane((2f,2f,2f),normalize(-1f,-1f,-1f),    ( 1f, 1f, 1f),normalize( 1f, 1f, 1f)).IsApproximately( SQRT3)
+            && RayVsPlane((2f,2f,2f),normalize( 1f, 1f, 1f),    ( 1f, 1f, 1f),normalize( 1f, 1f, 1f)).IsApproximately(-SQRT3)
+
+            && RayVsPlane((2f,2f,2f),normalize(-1f,-1f,-1f),    (-1f,-1f,-1f),normalize(-1f,-1f,-1f)).IsApproximately( SQRT3 * 3f)
+            && RayVsPlane((2f,2f,2f),normalize( 1f, 1f, 1f),    (-1f,-1f,-1f),normalize(-1f,-1f,-1f)).IsApproximately(-SQRT3 * 3f)
+        );
+
+        #if false
+            CONOUT($"""
+                {RayVsPlane((2f,2f,2f),normalize(-1f,-1f,-1f),    ( 1f, 1f, 1f),normalize( 1f, 1f, 1f))}    { SQRT3}
+                {RayVsPlane((2f,2f,2f),normalize( 1f, 1f, 1f),    ( 1f, 1f, 1f),normalize( 1f, 1f, 1f))}    {-SQRT3}
+                {RayVsPlane((2f,2f,2f),normalize(-1f,-1f,-1f),    (-1f,-1f,-1f),normalize(-1f,-1f,-1f))}    { SQRT3 * 3f}
+                {RayVsPlane((2f,2f,2f),normalize( 1f, 1f, 1f),    (-1f,-1f,-1f),normalize(-1f,-1f,-1f))}    {-SQRT3 * 3f}
+            """);
+        #endif
 
         //######################################################################################################################################################
         //######################################################################################################################################################
         TEST("RayVsQuadX()", true
-            && RayVsQuadX((2f,2f,2f), ( 1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) == -1f
-            && RayVsQuadX((2f,2f,2f), (-1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) ==  1f
-            && RayVsQuadX((2f,2f,2f), ( 0f, 1f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
-            && RayVsQuadX((2f,2f,2f), ( 0f,-1f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
-            && RayVsQuadX((2f,2f,2f), ( 0f, 0f, 1f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
-            && RayVsQuadX((2f,2f,2f), ( 0f, 0f,-1f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadX((2f,2f,2f),( 1f, 0f, 0f),    (1f,1f,1f),(1f,1f)) == -1f
+            && RayVsQuadX((2f,2f,2f),(-1f, 0f, 0f),    (1f,1f,1f),(1f,1f)) ==  1f
+            && RayVsQuadX((2f,2f,2f),( 0f, 1f, 0f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
+            && RayVsQuadX((2f,2f,2f),( 0f,-1f, 0f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
+            && RayVsQuadX((2f,2f,2f),( 0f, 0f, 1f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
+            && RayVsQuadX((2f,2f,2f),( 0f, 0f,-1f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
         );
 
         TEST("RayVsQuadY()", true
-            && RayVsQuadY((2f,2f,2f), ( 1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
-            && RayVsQuadY((2f,2f,2f), (-1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
-            && RayVsQuadY((2f,2f,2f), ( 0f, 1f, 0f),    (1f,1f,1f), (1f,1f)) == -1f
-            && RayVsQuadY((2f,2f,2f), ( 0f,-1f, 0f),    (1f,1f,1f), (1f,1f)) ==  1f
-            && RayVsQuadY((2f,2f,2f), ( 0f, 0f, 1f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
-            && RayVsQuadY((2f,2f,2f), ( 0f, 0f,-1f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadY((2f,2f,2f),( 1f, 0f, 0f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
+            && RayVsQuadY((2f,2f,2f),(-1f, 0f, 0f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
+            && RayVsQuadY((2f,2f,2f),( 0f, 1f, 0f),    (1f,1f,1f),(1f,1f)) == -1f
+            && RayVsQuadY((2f,2f,2f),( 0f,-1f, 0f),    (1f,1f,1f),(1f,1f)) ==  1f
+            && RayVsQuadY((2f,2f,2f),( 0f, 0f, 1f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
+            && RayVsQuadY((2f,2f,2f),( 0f, 0f,-1f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
         );
 
         TEST("RayVsQuadZ()", true
-            && RayVsQuadZ((2f,2f,2f), ( 1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
-            && RayVsQuadZ((2f,2f,2f), (-1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
-            && RayVsQuadZ((2f,2f,2f), ( 0f, 1f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
-            && RayVsQuadZ((2f,2f,2f), ( 0f,-1f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
-            && RayVsQuadZ((2f,2f,2f), ( 0f, 0f, 1f),    (1f,1f,1f), (1f,1f)) == -1f
-            && RayVsQuadZ((2f,2f,2f), ( 0f, 0f,-1f),    (1f,1f,1f), (1f,1f)) ==  1f
+            && RayVsQuadZ((2f,2f,2f),( 1f, 0f, 0f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
+            && RayVsQuadZ((2f,2f,2f),(-1f, 0f, 0f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
+            && RayVsQuadZ((2f,2f,2f),( 0f, 1f, 0f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
+            && RayVsQuadZ((2f,2f,2f),( 0f,-1f, 0f),    (1f,1f,1f),(1f,1f)) == RAY_MISS
+            && RayVsQuadZ((2f,2f,2f),( 0f, 0f, 1f),    (1f,1f,1f),(1f,1f)) == -1f
+            && RayVsQuadZ((2f,2f,2f),( 0f, 0f,-1f),    (1f,1f,1f),(1f,1f)) ==  1f
         );
 
         //######################################################################################################################################################
         //######################################################################################################################################################
         {
-            vec3 R_n = ( 0f, 0f,-1f);
-            vec3 R_p = ( 1f, 1f, 1f);
-            vec3 T_a = ( 1f, 2f, 0f);
-            vec3 T_b = ( 0f, 0f, 0f);
-            vec3 T_c = ( 2f, 0f, 0f);
+            vec3 R_n = (0f, 0f,-1f),    R1n = R_n.xzy,    R2n = R_n.zyx;
+            vec3 R_p = (1f, 1f, 1f),    R1p = R_p.xzy,    R2p = R_p.zyx;
 
-            vec3 R1n = R_n.xzy;
-            vec3 R1p = R_p.xzy;
-            vec3 T1a = T_a.xzy;
-            vec3 T1b = T_b.xzy;
-            vec3 T1c = T_c.xzy;
-
-            vec3 R2n = R_n.zyx;
-            vec3 R2p = R_p.zyx;
-            vec3 T2a = T_a.zyx;
-            vec3 T2b = T_b.zyx;
-            vec3 T2c = T_c.zyx;
+            vec3 T_a = (1f, 2f, 0f),    T1a = T_a.xzy,    T2a = T_a.zyx;
+            vec3 T_b = (0f, 0f, 0f),    T1b = T_b.xzy,    T2b = T_b.zyx;
+            vec3 T_c = (2f, 0f, 0f),    T1c = T_c.xzy,    T2c = T_c.zyx;
 
             TEST("RayVsTriangle()", true
-                && RayVsTriangle(R_p, R_n, T_a, T_b, T_c, false) > 0f
-                && RayVsTriangle(R_p, R_n, T_a, T_b, T_c, true)  > 0f
+                && RayVsTriangle(R_p, R_n, T_a, T_b, T_c, false) == 1f
+                && RayVsTriangle(R_p, R_n, T_a, T_b, T_c, true)  == 1f
 
-                && RayVsTriangle(R1p, R1n, T1a, T1b, T1c, false) > 0f
-                && RayVsTriangle(R1p, R1n, T1a, T1b, T1c, true)  > 0f
+                && RayVsTriangle(R1p, R1n, T1a, T1b, T1c, false) == RAY_MISS
+                && RayVsTriangle(R1p, R1n, T1a, T1b, T1c, true)  == 1f
 
-                && RayVsTriangle(R2p, R2n, T2a, T2b, T2c, false) > 0f
-                && RayVsTriangle(R2p, R2n, T2a, T2b, T2c, true)  > 0f
+                && RayVsTriangle(R2p, R2n, T2a, T2b, T2c, false) == RAY_MISS
+                && RayVsTriangle(R2p, R2n, T2a, T2b, T2c, true)  == 1f
             );
 
-            #if true
+            #if false
                 CONOUT($"""
 
-                    RayVsTriangle({R_p:0},{R_n:0},  {T_a:0},{T_b:0},{T_c:0}, false) == {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, false) > 0f,5}  {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, false)}
-                    RayVsTriangle({R_p:0},{R_n:0},  {T_a:0},{T_b:0},{T_c:0}, true)  == {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, true)  > 0f,5}  {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, true) }
+                    RayVsTriangle({R_p:0},{R_n:0},    {T_a:0},{T_b:0},{T_c:0}, false) == {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, false),2}
+                    RayVsTriangle({R_p:0},{R_n:0},    {T_a:0},{T_b:0},{T_c:0}, true ) == {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, true ),2}
 
-                    RayVsTriangle({R1p:0},{R1n:0},  {T1a:0},{T1b:0},{T1c:0}, false) == {RayVsTriangle(R1p, R1n, T1a, T1b, T1c, false) > 0f,5}  {RayVsTriangle(R1p, R1n, T1a, T1b, T1c, false)}
-                    RayVsTriangle({R1p:0},{R1n:0},  {T1a:0},{T1b:0},{T1c:0}, true)  == {RayVsTriangle(R1p, R1n, T1a, T1b, T1c, true)  > 0f,5}  {RayVsTriangle(R1p, R1n, T1a, T1b, T1c, true) }
+                    RayVsTriangle({R1p:0},{R1n:0},    {T1a:0},{T1b:0},{T1c:0}, false) == {RayVsTriangle(R1p, R1n, T1a, T1b, T1c, false),2}
+                    RayVsTriangle({R1p:0},{R1n:0},    {T1a:0},{T1b:0},{T1c:0}, true ) == {RayVsTriangle(R1p, R1n, T1a, T1b, T1c, true ),2}
 
-                    RayVsTriangle({R2p:0},{R2n:0},  {T2a:0},{T2b:0},{T2c:0}, false) == {RayVsTriangle(R2p, R2n, T2a, T2b, T2c, false) > 0f,5}  {RayVsTriangle(R2p, R2n, T2a, T2b, T2c, false)}
-                    RayVsTriangle({R2p:0},{R2n:0},  {T2a:0},{T2b:0},{T2c:0}, true)  == {RayVsTriangle(R2p, R2n, T2a, T2b, T2c, true)  > 0f,5}  {RayVsTriangle(R2p, R2n, T2a, T2b, T2c, true) }
+                    RayVsTriangle({R2p:0},{R2n:0},    {T2a:0},{T2b:0},{T2c:0}, false) == {RayVsTriangle(R2p, R2n, T2a, T2b, T2c, false),2}
+                    RayVsTriangle({R2p:0},{R2n:0},    {T2a:0},{T2b:0},{T2c:0}, true ) == {RayVsTriangle(R2p, R2n, T2a, T2b, T2c, true ),2}
                 """);
             #endif
         }
@@ -225,52 +235,50 @@ internal static partial class Program {
         //######################################################################################################################################################
         //######################################################################################################################################################
         TEST("RayVsBox()", true
-            && RayVsBox((1.5f, 1.5f, 5.0f),(        0f,        0f,       -1f),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(3f)              //(1.5f, 1.5f, 2.0f, 3f)
+            && RayVsBox((1.5f, 1.5f, 5.0f),(        0f,        0f,       -1f),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(3f)
 
-            && RayVsBox((0.0f, 0.0f, 2.5f),( SQRT3_RCP, SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)           //(1.0f, 1.0f, 1.5f, SQRT3)
-            && RayVsBox((0.0f, 0.0f, 3.0f),( SQRT3_RCP, SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)           //(1.0f, 1.0f, 2.0f, SQRT3)
-            && RayVsBox((0.0f, 0.0f, 3.5f),( SQRT3_RCP, SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3 * 1.5f)    //(1.5f, 1.5f, 2.0f, SQRT3 * 1.5f)
+            && RayVsBox((0.0f, 0.0f, 2.5f),( SQRT3_RCP, SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)
+            && RayVsBox((0.0f, 0.0f, 3.0f),( SQRT3_RCP, SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)
+            && RayVsBox((0.0f, 0.0f, 3.5f),( SQRT3_RCP, SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3 * 1.5f)
 
-            && RayVsBox((0.0f, 0.0f,-0.5f),( SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3 * 1.5f)    //(1.5f, 1.5f, 1.0f, SQRT3 * 1.5f)
-            && RayVsBox((0.0f, 0.0f, 0.0f),( SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)           //(1.0f, 1.0f, 1.0f, SQRT3)
-            && RayVsBox((0.0f, 0.0f, 0.5f),( SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)           //(1.0f, 1.0f, 1.5f, SQRT3)
+            && RayVsBox((0.0f, 0.0f,-0.5f),( SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3 * 1.5f)
+            && RayVsBox((0.0f, 0.0f, 0.0f),( SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)
+            && RayVsBox((0.0f, 0.0f, 0.5f),( SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)
 
-            && RayVsBox((2.5f, 2.5f, 3.0f),(-SQRT3_RCP,-SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)           //(1.5f, 1.5f, 2.0f, SQRT3)
-            && RayVsBox((3.0f, 3.0f, 3.0f),(-SQRT3_RCP,-SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)           //(2.0f, 2.0f, 2.0f, SQRT3)
-            && RayVsBox((3.5f, 3.5f, 3.0f),(-SQRT3_RCP,-SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3 * 1.5f)    //(2.0f, 2.0f, 1.5f, SQRT3 * 1.5f)
+            && RayVsBox((2.5f, 2.5f, 3.0f),(-SQRT3_RCP,-SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)
+            && RayVsBox((3.0f, 3.0f, 3.0f),(-SQRT3_RCP,-SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3)
+            && RayVsBox((3.5f, 3.5f, 3.0f),(-SQRT3_RCP,-SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3 * 1.5f)
         );
         /*
-        TEST.Program.CONOUT(
-            $"""
+        CONOUT($"""
 
-            RAYvsBOX    Rp: {Rp:0.000}    Rn: {Rn:0.000}    Rnr: {Rnr:0.000}    Bp: {Bp:0.000}    Bs: {Bs:0.000}
+        RAYvsBOX    Rp: {Rp:0.000}    Rn: {Rn:0.000}    Rnr: {Rnr:0.000}    Bp: {Bp:0.000}    Bs: {Bs:0.000}
 
-                                      Dist To Near: {DistNear:0.000}
-                                       Dist To Far: {DistFar:0.000}
+                                  Dist To Near: {DistNear:0.000}
+                                   Dist To Far: {DistFar:0.000}
 
-                                 Dist To FrontFace: {DistToFrontFace:0.000}
-                                  Dist To BackFace: {DistToBackFace:0.000}
+                             Dist To FrontFace: {DistToFrontFace:0.000}
+                              Dist To BackFace: {DistToBackFace:0.000}
 
-                (DistToFrontFace > DistToBackFace): {(DistToFrontFace > DistToBackFace)}
-                (DistToBackFace  <             0f): {(DistToBackFace  <             0f)}
-                (DistToFrontFace <=            0f): {(DistToFrontFace <=            0f)}
+            (DistToFrontFace > DistToBackFace): {(DistToFrontFace > DistToBackFace)}
+            (DistToBackFace  <             0f): {(DistToBackFace  <             0f)}
+            (DistToFrontFace <=            0f): {(DistToFrontFace <=            0f)}
 
-                                            RESULT: {((DistToFrontFace > DistToBackFace) ? RAY_MISS
-                                                    : (DistToBackFace  <             0f) ? new vec4(Rp + (Rn*DistToBackFace), DistToBackFace)
-                                                    : (DistToFrontFace <=            0f) ? new vec4(Rp, 0f)
-                                                                                         : new vec4(Rp + (Rn*DistToFrontFace), DistToFrontFace))}
-            """
-        );
+                                        RESULT: {((DistToFrontFace > DistToBackFace) ? RAY_MISS
+                                                : (DistToBackFace  <             0f) ? new vec4(Rp + (Rn*DistToBackFace), DistToBackFace)
+                                                : (DistToFrontFace <=            0f) ? new vec4(Rp, 0f)
+                                                                                     : new vec4(Rp + (Rn*DistToFrontFace), DistToFrontFace))}
+        """);
         */
 
         //######################################################################################################################################################
         //######################################################################################################################################################
         TEST("RayVsSphere()", true
             && RayVsSphere((-1,-1,-1), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 1, 1, 1), 1) != RAY_MISS
-            && RayVsSphere((-1,-1,-1), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 1, 1, 1), 1).IsApproximately(SQRT3 + SQRT3 - 1f)  //((1f-SQRT3_RCP, 1f-SQRT3_RCP, 1f-SQRT3_RCP, SQRT3+SQRT3-1f))
+            && RayVsSphere((-1,-1,-1), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 1, 1, 1), 1).IsApproximately(SQRT3 + SQRT3 - 1f)
 
             && RayVsSphere(( 4,-1, 4), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 6, 1, 6), 1) != RAY_MISS
-            && RayVsSphere(( 4,-1, 4), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 6, 1, 6), 1).IsApproximately(SQRT3 + SQRT3 - 1f)  //((6f-SQRT3_RCP, 1f-SQRT3_RCP, 6f-SQRT3_RCP, SQRT3+SQRT3-1f))
+            && RayVsSphere(( 4,-1, 4), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 6, 1, 6), 1).IsApproximately(SQRT3 + SQRT3 - 1f)
         );
 
         //CONOUT($"{RayVsSphere((-1,-1,-1), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 1, 1, 1), 1)}");

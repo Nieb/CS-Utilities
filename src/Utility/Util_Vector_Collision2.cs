@@ -61,9 +61,12 @@ internal static class VEC_Collision2 {
     //
     //      PointVsRect(  Point,  RectanglePosition,  RectangleSize  )
     //
-    [Impl(AggressiveInlining)] internal static bool PointVsRect  (vec2 P, vec2 Rp, vec2 Rs) => (P >= Rp && P <= Rp+Rs);
+    [Impl(AggressiveInlining)] internal static bool PointVsRect(v2 P, v2 Rp, v2 Rs) => (P >= Rp && P <= Rp+Rs);
+    [Impl(AggressiveInlining)] internal static bool PointVsRect(i2 P, i2 Rp, i2 Rs) => (P >= Rp && P <  Rp+Rs);
 
-    [Impl(AggressiveInlining)] internal static bool PointVsBounds(vec2 P, vec2 b0, vec2 b1) => (P >= b0 && P <= b1);
+    //==========================================================================================================================================================
+    [Impl(AggressiveInlining)] internal static bool PointVsBounds(v2 P, v2 b0, v2 b1) => (P >= b0 && P <= b1);
+    [Impl(AggressiveInlining)] internal static bool PointVsBounds(i2 P, i2 b0, i2 b1) => (P >= b0 && P <  b1);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -167,7 +170,8 @@ internal static class VEC_Collision2 {
     //
     //      RectVsRect(  Rectangle1-Position,  Rectangle1-Size,  Rectangle2-Position,  Rectangle2-Size)
     //
-    [Impl(AggressiveInlining)] internal static bool RectVsRect(vec2 Rp1, vec2 Rs1, vec2 Rp2, vec2 Rs2) => (Rp1 <= Rp2+Rs2  &&  Rp1+Rs1 >= Rp2);
+    [Impl(AggressiveInlining)] internal static bool RectVsRect(v2 Rp1, v2 Rs1, v2 Rp2, v2 Rs2) => (Rp1 <= Rp2+Rs2  &&  Rp1+Rs1 >= Rp2);
+    [Impl(AggressiveInlining)] internal static bool RectVsRect(i2 Rp1, i2 Rs1, i2 Rp2, i2 Rs2) => (Rp1 <  Rp2+Rs2  &&  Rp1+Rs1 >= Rp2);
 
     //==========================================================================================================================================================
     //
