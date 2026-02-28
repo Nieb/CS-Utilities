@@ -106,8 +106,8 @@ internal static partial class VEC_Miscellaneous {
     //  ViewAspectX = ViewSizeX/ViewSizeY      16/9  == 1.777~
     //  ViewAspectY = ViewSizeY/ViewSizeX       9/16 == 0.5625
     //
-    internal static float FovX_FromY(float Y, float ViewAspectX) => 2f * atan(tan(Y/2f) * ViewAspectX);
-    internal static float FovY_FromX(float X, float ViewAspectY) => 2f * atan(tan(X/2f) * ViewAspectY);
+    internal static float FovX_FromY(float FovY, float ViewAspectX) => 2f * atan(tan(FovY/2f) * ViewAspectX);
+    internal static float FovY_FromX(float FovX, float ViewAspectY) => 2f * atan(tan(FovX/2f) * ViewAspectY);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -178,7 +178,7 @@ internal static partial class VEC_Miscellaneous {
 
     //==========================================================================================================================================================
     //
-    //  Inputs are a Unit-Pointing-Vector.
+    //  Inputs are a Unit-Direction-Vector.
     //  Output is Distance in radians (0 to PI).
     //
     //internal static float SphericalDistance(vec3 A, vec3 B) => acos(dot(A,B));            //  Not numerically stable?    acos() == NaN  from tiny overshoots.
@@ -194,7 +194,7 @@ internal static partial class VEC_Miscellaneous {
     //
     //          X   Depth/Elevation     r               Radial Distance         Distance along the line connecting Point to Sphere-Origin.
     //          Y   Pitch               θ "theta"       Polar Angle             Angle between this radial line and a given polar axis.
-    //          Z   Yaw                 φ "phi"         Azimuthal Angle         Angle which is the angle of rotation of the radial line around the polar axis.
+    //          Z   Yaw                 φ "phi"         Azimuthal Angle         Angle of rotation of the radial line around the polar axis.
     //
     //##########################################################################################################################################################
     //##########################################################################################################################################################

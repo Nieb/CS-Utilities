@@ -108,6 +108,7 @@ internal static partial class VEC {
 
     //==========================================================================================================================================================
     //                                                                     "Lengthen"
+    //  Scale vector to "NewLength"
     //  Vector * (NewLength / OldLength)
     //
     [Impl(AggressiveInlining)] internal static v2 lengthen(v2 A, v1 NewLength) => A * (NewLength / sqrt(A.x*A.x + A.y*A.y));
@@ -279,18 +280,18 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                                      "Power"
-    [Impl(AggressiveInlining)] internal static v1 pow(v1 A, v1 Exp) => System.MathF.Pow(A, Exp);
+    [Impl(AggressiveInlining)] internal static v1 pow(v1 A, v1 P) => System.MathF.Pow(A, P);
 
-    [Impl(AggressiveInlining)] internal static v2 pow(v2 A, v1 Exp) => new v2(pow(A.x, Exp  ), pow(A.y, Exp  ));
-    [Impl(AggressiveInlining)] internal static v2 pow(v2 A, v2 Exp) => new v2(pow(A.x, Exp.x), pow(A.y, Exp.y));
+    [Impl(AggressiveInlining)] internal static v2 pow(v2 A, v1 P) => new v2(pow(A.x, P  ), pow(A.y, P  ));
+    [Impl(AggressiveInlining)] internal static v2 pow(v2 A, v2 P) => new v2(pow(A.x, P.x), pow(A.y, P.y));
 
-    [Impl(AggressiveInlining)] internal static v3 pow(v3 A, v1 Exp) => new v3(pow(A.x, Exp  ), pow(A.y, Exp  ), pow(A.z, Exp  ));
-    [Impl(AggressiveInlining)] internal static v3 pow(v3 A, v3 Exp) => new v3(pow(A.x, Exp.x), pow(A.y, Exp.y), pow(A.z, Exp.z));
+    [Impl(AggressiveInlining)] internal static v3 pow(v3 A, v1 P) => new v3(pow(A.x, P  ), pow(A.y, P  ), pow(A.z, P  ));
+    [Impl(AggressiveInlining)] internal static v3 pow(v3 A, v3 P) => new v3(pow(A.x, P.x), pow(A.y, P.y), pow(A.z, P.z));
 
     //==========================================================================================================================================================
     //                                                                   "Exponential"
     //
-    //      exp(x)  ==  pow(e, x)  ==  pow(2.718~, x)
+    //      exp(X)  ==  pow(e, X)  ==  pow(2.718~, X)
     //
     [Impl(AggressiveInlining)] internal static float exp(float A) => System.MathF.Exp(A);
 
