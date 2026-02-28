@@ -1,5 +1,5 @@
 
-namespace TEST;
+namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector_Collision3() {
         CONOUT("\n[Utility.VEC -- Collision3]");
@@ -115,30 +115,30 @@ internal static partial class Program {
         //######################################################################################################################################################
         //######################################################################################################################################################
         TEST("RayVsPlaneX()", true
-            && RayVsPlaneX((2f,2f,2f), ( 1f, 0f, 0f), 1f) == -1f        //(1f,2f,2f,-1f)
-            && RayVsPlaneX((2f,2f,2f), (-1f, 0f, 0f), 1f) ==  1f        //(1f,2f,2f, 1f)
-            && RayVsPlaneX((2f,2f,2f), ( 0f, 1f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
-            && RayVsPlaneX((2f,2f,2f), ( 0f,-1f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
-            && RayVsPlaneX((2f,2f,2f), ( 0f, 0f, 1f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
-            && RayVsPlaneX((2f,2f,2f), ( 0f, 0f,-1f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
+            && RayVsPlaneX((2f,2f,2f), ( 1f, 0f, 0f), 1f) == -1f
+            && RayVsPlaneX((2f,2f,2f), (-1f, 0f, 0f), 1f) ==  1f
+            && RayVsPlaneX((2f,2f,2f), ( 0f, 1f, 0f), 1f) == RAY_MISS
+            && RayVsPlaneX((2f,2f,2f), ( 0f,-1f, 0f), 1f) == RAY_MISS
+            && RayVsPlaneX((2f,2f,2f), ( 0f, 0f, 1f), 1f) == RAY_MISS
+            && RayVsPlaneX((2f,2f,2f), ( 0f, 0f,-1f), 1f) == RAY_MISS
         );
 
         TEST("RayVsPlaneY()", true
-            && RayVsPlaneY((2f,2f,2f), ( 1f, 0f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
-            && RayVsPlaneY((2f,2f,2f), (-1f, 0f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
-            && RayVsPlaneY((2f,2f,2f), ( 0f, 1f, 0f), 1f) == -1f        //(2f,1f,2f,-1f)
-            && RayVsPlaneY((2f,2f,2f), ( 0f,-1f, 0f), 1f) ==  1f        //(2f,1f,2f, 1f)
-            && RayVsPlaneY((2f,2f,2f), ( 0f, 0f, 1f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
-            && RayVsPlaneY((2f,2f,2f), ( 0f, 0f,-1f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
+            && RayVsPlaneY((2f,2f,2f), ( 1f, 0f, 0f), 1f) == RAY_MISS
+            && RayVsPlaneY((2f,2f,2f), (-1f, 0f, 0f), 1f) == RAY_MISS
+            && RayVsPlaneY((2f,2f,2f), ( 0f, 1f, 0f), 1f) == -1f
+            && RayVsPlaneY((2f,2f,2f), ( 0f,-1f, 0f), 1f) ==  1f
+            && RayVsPlaneY((2f,2f,2f), ( 0f, 0f, 1f), 1f) == RAY_MISS
+            && RayVsPlaneY((2f,2f,2f), ( 0f, 0f,-1f), 1f) == RAY_MISS
         );
 
         TEST("RayVsPlaneZ()", true
-            && RayVsPlaneZ((2f,2f,2f), ( 1f, 0f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
-            && RayVsPlaneZ((2f,2f,2f), (-1f, 0f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
-            && RayVsPlaneZ((2f,2f,2f), ( 0f, 1f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
-            && RayVsPlaneZ((2f,2f,2f), ( 0f,-1f, 0f), 1f) == RAY_MISS   //(2f,2f,2f, 0f)
-            && RayVsPlaneZ((2f,2f,2f), ( 0f, 0f, 1f), 1f) == -1f        //(2f,2f,1f,-1f)
-            && RayVsPlaneZ((2f,2f,2f), ( 0f, 0f,-1f), 1f) ==  1f        //(2f,2f,1f, 1f)
+            && RayVsPlaneZ((2f,2f,2f), ( 1f, 0f, 0f), 1f) == RAY_MISS
+            && RayVsPlaneZ((2f,2f,2f), (-1f, 0f, 0f), 1f) == RAY_MISS
+            && RayVsPlaneZ((2f,2f,2f), ( 0f, 1f, 0f), 1f) == RAY_MISS
+            && RayVsPlaneZ((2f,2f,2f), ( 0f,-1f, 0f), 1f) == RAY_MISS
+            && RayVsPlaneZ((2f,2f,2f), ( 0f, 0f, 1f), 1f) == -1f
+            && RayVsPlaneZ((2f,2f,2f), ( 0f, 0f,-1f), 1f) ==  1f
         );
 
         //======================================================================================================================================================
@@ -148,11 +148,82 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        //TEST("RayVsTriangle()", true
-        //    && RayVsTriangle(vec3 Rp, vec3 Rn, vec3 Ta, vec3 Tb, vec3 Tc, bool BackFaceTest)
-        //);
+        TEST("RayVsQuadX()", true
+            && RayVsQuadX((2f,2f,2f), ( 1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) == -1f
+            && RayVsQuadX((2f,2f,2f), (-1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) ==  1f
+            && RayVsQuadX((2f,2f,2f), ( 0f, 1f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadX((2f,2f,2f), ( 0f,-1f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadX((2f,2f,2f), ( 0f, 0f, 1f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadX((2f,2f,2f), ( 0f, 0f,-1f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+        );
 
-        //======================================================================================================================================================
+        TEST("RayVsQuadY()", true
+            && RayVsQuadY((2f,2f,2f), ( 1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadY((2f,2f,2f), (-1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadY((2f,2f,2f), ( 0f, 1f, 0f),    (1f,1f,1f), (1f,1f)) == -1f
+            && RayVsQuadY((2f,2f,2f), ( 0f,-1f, 0f),    (1f,1f,1f), (1f,1f)) ==  1f
+            && RayVsQuadY((2f,2f,2f), ( 0f, 0f, 1f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadY((2f,2f,2f), ( 0f, 0f,-1f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+        );
+
+        TEST("RayVsQuadZ()", true
+            && RayVsQuadZ((2f,2f,2f), ( 1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadZ((2f,2f,2f), (-1f, 0f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadZ((2f,2f,2f), ( 0f, 1f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadZ((2f,2f,2f), ( 0f,-1f, 0f),    (1f,1f,1f), (1f,1f)) == RAY_MISS
+            && RayVsQuadZ((2f,2f,2f), ( 0f, 0f, 1f),    (1f,1f,1f), (1f,1f)) == -1f
+            && RayVsQuadZ((2f,2f,2f), ( 0f, 0f,-1f),    (1f,1f,1f), (1f,1f)) ==  1f
+        );
+
+        //######################################################################################################################################################
+        //######################################################################################################################################################
+        {
+            vec3 R_n = ( 0f, 0f,-1f);
+            vec3 R_p = ( 1f, 1f, 1f);
+            vec3 T_a = ( 1f, 2f, 0f);
+            vec3 T_b = ( 0f, 0f, 0f);
+            vec3 T_c = ( 2f, 0f, 0f);
+
+            vec3 R1n = R_n.xzy;
+            vec3 R1p = R_p.xzy;
+            vec3 T1a = T_a.xzy;
+            vec3 T1b = T_b.xzy;
+            vec3 T1c = T_c.xzy;
+
+            vec3 R2n = R_n.zyx;
+            vec3 R2p = R_p.zyx;
+            vec3 T2a = T_a.zyx;
+            vec3 T2b = T_b.zyx;
+            vec3 T2c = T_c.zyx;
+
+            TEST("RayVsTriangle()", true
+                && RayVsTriangle(R_p, R_n, T_a, T_b, T_c, false) > 0f
+                && RayVsTriangle(R_p, R_n, T_a, T_b, T_c, true)  > 0f
+
+                && RayVsTriangle(R1p, R1n, T1a, T1b, T1c, false) > 0f
+                && RayVsTriangle(R1p, R1n, T1a, T1b, T1c, true)  > 0f
+
+                && RayVsTriangle(R2p, R2n, T2a, T2b, T2c, false) > 0f
+                && RayVsTriangle(R2p, R2n, T2a, T2b, T2c, true)  > 0f
+            );
+
+            #if true
+                CONOUT($"""
+
+                    RayVsTriangle({R_p:0},{R_n:0},  {T_a:0},{T_b:0},{T_c:0}, false) == {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, false) > 0f,5}  {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, false)}
+                    RayVsTriangle({R_p:0},{R_n:0},  {T_a:0},{T_b:0},{T_c:0}, true)  == {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, true)  > 0f,5}  {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, true) }
+
+                    RayVsTriangle({R1p:0},{R1n:0},  {T1a:0},{T1b:0},{T1c:0}, false) == {RayVsTriangle(R1p, R1n, T1a, T1b, T1c, false) > 0f,5}  {RayVsTriangle(R1p, R1n, T1a, T1b, T1c, false)}
+                    RayVsTriangle({R1p:0},{R1n:0},  {T1a:0},{T1b:0},{T1c:0}, true)  == {RayVsTriangle(R1p, R1n, T1a, T1b, T1c, true)  > 0f,5}  {RayVsTriangle(R1p, R1n, T1a, T1b, T1c, true) }
+
+                    RayVsTriangle({R2p:0},{R2n:0},  {T2a:0},{T2b:0},{T2c:0}, false) == {RayVsTriangle(R2p, R2n, T2a, T2b, T2c, false) > 0f,5}  {RayVsTriangle(R2p, R2n, T2a, T2b, T2c, false)}
+                    RayVsTriangle({R2p:0},{R2n:0},  {T2a:0},{T2b:0},{T2c:0}, true)  == {RayVsTriangle(R2p, R2n, T2a, T2b, T2c, true)  > 0f,5}  {RayVsTriangle(R2p, R2n, T2a, T2b, T2c, true) }
+                """);
+            #endif
+        }
+
+        //######################################################################################################################################################
+        //######################################################################################################################################################
         TEST("RayVsBox()", true
             && RayVsBox((1.5f, 1.5f, 5.0f),(        0f,        0f,       -1f),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(3f)              //(1.5f, 1.5f, 2.0f, 3f)
 
@@ -169,7 +240,7 @@ internal static partial class Program {
             && RayVsBox((3.5f, 3.5f, 3.0f),(-SQRT3_RCP,-SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3 * 1.5f)    //(2.0f, 2.0f, 1.5f, SQRT3 * 1.5f)
         );
         /*
-        UtilityTest.Program.CONOUT(
+        TEST.Program.CONOUT(
             $"""
 
             RAYvsBOX    Rp: {Rp:0.000}    Rn: {Rn:0.000}    Rnr: {Rnr:0.000}    Bp: {Bp:0.000}    Bs: {Bs:0.000}
@@ -223,22 +294,99 @@ internal static partial class Program {
         //}
 
         //======================================================================================================================================================
+        {
+            uint[] A = [
+                0xFF, 0xFF, 0x00, 0x00, // [~, 0, 0]
+                0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00,
 
-        //(vec4 HitPos, int HitSide) = RayVsVoxelChunk(
-        //    (1.0f,0.5f,0.5f), (1,0,0), (1,0,0),
-        //    (1,-1,-1), (2,2,2), new uint[] {
-        //        0xff808080, 0xff808080, 0xff808080, 0xff808080,
-        //        0xff808080, 0xff808080, 0xff808080, 0xff808080
-        //    }
-        //);
+                0xFF, 0xFF, 0x00, 0x00,
+                0xFF, 0xFF, 0xFF, 0xFF, // [~, 1, 1]
+                0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00,
 
-        //CONOUT($"{HitPos}");
-        //CONOUT($"{HitSide}");
+                0xFF, 0xFF, 0x00, 0x00,
+                0xFF, 0xFF, 0x00, 0x00,
+                0xFF, 0xFF, 0xFF, 0xFF, // [~, 2, 2]
+                0x00, 0x00, 0x00, 0x00,
 
-        //TEST("RayVsVoxelChunk()", true
-        //    && HitPos  == (1,0,0,1)
-        //    && HitSide == 1
-        //);
+                0xFF, 0xFF, 0x00, 0x00,
+                0xFF, 0xFF, 0x00, 0x00,
+                0xFF, 0xFF, 0x00, 0x00,
+                0x00, 0x00, 0xFF, 0xFF, // [~, 3, 3]
+            ];
+
+            float[] HitDist = new float[16]; HitDist.FillWith(RAY_MISS);
+            int[]   HitSide = new int[16];   HitSide.FillWith(-1);
+
+            (HitDist[ 0], HitSide[ 0]) = RayVsVoxelChunk((2.5f,1.5f,0.0f), (0f,0f, 1f),   (1,1,1), (4,4,4), A);
+            (HitDist[ 1], HitSide[ 1]) = RayVsVoxelChunk((2.5f,2.5f,0.0f), (0f,0f, 1f),   (1,1,1), (4,4,4), A);
+            (HitDist[ 2], HitSide[ 2]) = RayVsVoxelChunk((2.5f,3.5f,0.0f), (0f,0f, 1f),   (1,1,1), (4,4,4), A);
+            (HitDist[ 3], HitSide[ 3]) = RayVsVoxelChunk((2.5f,4.5f,0.0f), (0f,0f, 1f),   (1,1,1), (4,4,4), A);
+
+            (HitDist[ 4], HitSide[ 4]) = RayVsVoxelChunk((3.5f,1.5f,6.0f), (0f,0f,-1f),   (1,1,1), (4,4,4), A);
+            (HitDist[ 5], HitSide[ 5]) = RayVsVoxelChunk((3.5f,2.5f,6.0f), (0f,0f,-1f),   (1,1,1), (4,4,4), A);
+            (HitDist[ 6], HitSide[ 6]) = RayVsVoxelChunk((3.5f,3.5f,6.0f), (0f,0f,-1f),   (1,1,1), (4,4,4), A);
+            (HitDist[ 7], HitSide[ 7]) = RayVsVoxelChunk((3.5f,4.5f,6.0f), (0f,0f,-1f),   (1,1,1), (4,4,4), A);
+
+            (HitDist[ 8], HitSide[ 8]) = RayVsVoxelChunk((2.0f,1.5f,2.0f), (0f,0f, 1f),   (1,1,1), (4,4,4), A);
+            (HitDist[ 9], HitSide[ 9]) = RayVsVoxelChunk((2.0f,2.5f,2.0f), (0f,0f, 1f),   (1,1,1), (4,4,4), A);
+            (HitDist[10], HitSide[10]) = RayVsVoxelChunk((2.0f,3.5f,2.0f), (0f,0f, 1f),   (1,1,1), (4,4,4), A);
+            (HitDist[11], HitSide[11]) = RayVsVoxelChunk((2.0f,4.5f,2.0f), (0f,0f, 1f),   (1,1,1), (4,4,4), A);
+
+            (HitDist[12], HitSide[12]) = RayVsVoxelChunk((0.0000001f, 1.5f, 0.0000000f), normalize(1f,0f,1f),   (1,1,1), (4,4,4), A);
+            (HitDist[13], HitSide[13]) = RayVsVoxelChunk((0.9000010f, 1.5f, 0.9000000f), normalize(1f,1f,1f),   (1,1,1), (4,4,4), A);   //  Diagonal Rays that perfectly hit a corner
+            (HitDist[14], HitSide[14]) = RayVsVoxelChunk((0.0000001f, 1.5f,-1.0000000f), normalize(1f,0f,2f),   (1,1,1), (4,4,4), A);   //  don't register a hit.........
+            (HitDist[15], HitSide[15]) = RayVsVoxelChunk((0.5000010f, 1.5f, 0.0000000f), normalize(1f,0f,2f),   (1,1,1), (4,4,4), A);
+
+            TEST("RayVsVoxelChunk()", true
+                && HitDist[ 0] == 1f          &&    HitSide[ 0] ==  4
+                && HitDist[ 1] == 2f          &&    HitSide[ 1] ==  4
+                && HitDist[ 2] == 3f          &&    HitSide[ 2] ==  4
+                && HitDist[ 3] == RAY_MISS    &&    HitSide[ 3] == -1
+
+                && HitDist[ 4] == RAY_MISS    &&    HitSide[ 4] == -1
+                && HitDist[ 5] == 3f          &&    HitSide[ 5] ==  6
+                && HitDist[ 6] == 2f          &&    HitSide[ 6] ==  6
+                && HitDist[ 7] == 1f          &&    HitSide[ 7] ==  6
+
+                && HitDist[ 8] == 0f          &&    HitSide[ 8] ==  4
+                && HitDist[ 9] == 0f          &&    HitSide[ 9] ==  4
+                && HitDist[10] == 1f          &&    HitSide[10] ==  4
+                && HitDist[11] == RAY_MISS    &&    HitSide[11] == -1
+
+                //&& HitDist[12] == RAY_MISS    &&    HitSide[12] == -1
+                //&& HitDist[13] == RAY_MISS    &&    HitSide[13] == -1
+                //&& HitDist[14] == RAY_MISS    &&    HitSide[14] == -1
+                //&& HitDist[15] == RAY_MISS    &&    HitSide[15] == -1
+            );
+
+            #if false
+                string HitSideStr(int i) => (i==0?"-X" : i==2?"+X" : i==1?"-Y" : i==3?"+Y" : i==4?"-Z" : i==6?"+Z" : "~");
+                CONOUT($"""
+                    [ 0]: {HitDist[ 0]:#0.00}    {HitSide[ 0]} "{HitSideStr(HitSide[ 0])}"
+                    [ 1]: {HitDist[ 1]:#0.00}    {HitSide[ 1]} "{HitSideStr(HitSide[ 1])}"
+                    [ 2]: {HitDist[ 2]:#0.00}    {HitSide[ 2]} "{HitSideStr(HitSide[ 2])}"
+                    [ 3]: {HitDist[ 3]:#0.00}    {HitSide[ 3]} "{HitSideStr(HitSide[ 3])}"
+
+                    [ 4]: {HitDist[ 4]:#0.00}    {HitSide[ 4]} "{HitSideStr(HitSide[ 4])}"
+                    [ 5]: {HitDist[ 5]:#0.00}    {HitSide[ 5]} "{HitSideStr(HitSide[ 5])}"
+                    [ 6]: {HitDist[ 6]:#0.00}    {HitSide[ 6]} "{HitSideStr(HitSide[ 6])}"
+                    [ 7]: {HitDist[ 7]:#0.00}    {HitSide[ 7]} "{HitSideStr(HitSide[ 7])}"
+
+                    [ 8]: {HitDist[ 8]:#0.00}    {HitSide[ 8]} "{HitSideStr(HitSide[ 8])}"
+                    [ 9]: {HitDist[ 9]:#0.00}    {HitSide[ 9]} "{HitSideStr(HitSide[ 9])}"
+                    [10]: {HitDist[10]:#0.00}    {HitSide[10]} "{HitSideStr(HitSide[10])}"
+                    [11]: {HitDist[11]:#0.00}    {HitSide[11]} "{HitSideStr(HitSide[11])}"
+
+                    [12]: {HitDist[12]:#0.00}    {HitSide[12]} "{HitSideStr(HitSide[12])}"
+                    [13]: {HitDist[13]:#0.00}    {HitSide[13]} "{HitSideStr(HitSide[13])}"
+                    [14]: {HitDist[14]:#0.00}    {HitSide[14]} "{HitSideStr(HitSide[14])}"
+                    [15]: {HitDist[15]:#0.00}    {HitSide[15]} "{HitSideStr(HitSide[15])}"
+                """);
+            #endif
+        }
 
         //######################################################################################################################################################
         //######################################################################################################################################################

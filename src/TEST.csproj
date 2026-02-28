@@ -22,7 +22,7 @@
     <Nullable>disable</Nullable>
 
     <!--=============================================================================================================-->
-    <StartupObject>TEST.Program</StartupObject>
+    <StartupObject>UtilityTest.Program</StartupObject>
 
     <!--=============================================================================================================-->
   </PropertyGroup>
