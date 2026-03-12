@@ -115,8 +115,6 @@ internal static partial class Program {
             && LinearStep(2.55f , 1.7f, 3.4f).IsApproximately(0.5f)
             && LinearStep(2.975f, 1.7f, 3.4f).IsApproximately(0.75f)
             && LinearStep(3.40f , 1.7f, 3.4f).IsApproximately(1.0f)
-
-            //@@ more...
         );
 
         TEST("SmoothStep()", true
@@ -125,8 +123,25 @@ internal static partial class Program {
             && SmoothStep(2.55f , 1.7f, 3.4f).IsApproximately(0.5f)
             && SmoothStep(2.975f, 1.7f, 3.4f).IsApproximately(0.84375f) //  27/32
             && SmoothStep(3.40f , 1.7f, 3.4f).IsApproximately(1.0f)
+        );
 
-            //@@ more...
+        //======================================================================================================================================================
+        TEST("QuadStep() & PowerStep()", true
+            && QuadStep(-0.2f).IsApproximately(PowerStep(-0.2f, 2f))
+            && QuadStep(-0.1f).IsApproximately(PowerStep(-0.1f, 2f))
+            && QuadStep( 0.0f).IsApproximately(PowerStep( 0.0f, 2f))
+            && QuadStep( 0.1f).IsApproximately(PowerStep( 0.1f, 2f))
+            && QuadStep( 0.2f).IsApproximately(PowerStep( 0.2f, 2f))
+            && QuadStep( 0.3f).IsApproximately(PowerStep( 0.3f, 2f))
+            && QuadStep( 0.4f).IsApproximately(PowerStep( 0.4f, 2f))
+            && QuadStep( 0.5f).IsApproximately(PowerStep( 0.5f, 2f))
+            && QuadStep( 0.6f).IsApproximately(PowerStep( 0.6f, 2f))
+            && QuadStep( 0.7f).IsApproximately(PowerStep( 0.7f, 2f))
+            && QuadStep( 0.8f).IsApproximately(PowerStep( 0.8f, 2f))
+            && QuadStep( 0.9f).IsApproximately(PowerStep( 0.9f, 2f))
+            && QuadStep( 1.0f).IsApproximately(PowerStep( 1.0f, 2f))
+            && QuadStep( 1.1f).IsApproximately(PowerStep( 1.1f, 2f))
+            && QuadStep( 1.2f).IsApproximately(PowerStep( 1.2f, 2f))
         );
 
         //======================================================================================================================================================

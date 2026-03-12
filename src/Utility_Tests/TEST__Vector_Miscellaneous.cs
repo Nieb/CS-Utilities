@@ -84,6 +84,11 @@ internal static partial class Program {
             #endif
 
         }
+
+        //======================================================================================================================================================
+
+        //CONOUT($"{Lanczos(0f)}");
+
         //######################################################################################################################################################
         //######################################################################################################################################################
         {
@@ -141,64 +146,10 @@ internal static partial class Program {
             && SphericalDistance((  0f, PIH),( PIH,  0f)).IsApproximately(PIH)
 
             && SphericalDistance(( PIQ,  0f),( PIQ, PI )).IsApproximately(PIH)
-            && SphericalDistance(( PIQ,  0f),(-PIQ, PI )).IsApproximately(3.140902f) //PI)      Fix Precision?
-            && SphericalDistance((-PIQ,  0f),( PIQ, PI )).IsApproximately(3.140902f) //PI)        3.1415927f
+            && SphericalDistance(( PIQ,  0f),(-PIQ, PI )).IsApproximately(PI)
+            && SphericalDistance((-PIQ,  0f),( PIQ, PI )).IsApproximately(PI)
             && SphericalDistance((-PIQ,  0f),(-PIQ, PI )).IsApproximately(PIH)
         );
-
-        #if false
-            CONOUT($"""
-
-                PIH == {PIH:0.00000000}
-                PI  == {PI:0.00000000}
-
-              ( PIQ, 0f),( PIQ, PI) == {SphericalDistance(( PIQ, 0f),( PIQ, PI)):0.00000000}
-              ( PIQ, 0f),(-PIQ, PI) == {SphericalDistance(( PIQ, 0f),(-PIQ, PI)):0.00000000}  == 3.140902
-              (-PIQ, 0f),( PIQ, PI) == {SphericalDistance((-PIQ, 0f),( PIQ, PI)):0.00000000}  == 3.140902
-              (-PIQ, 0f),(-PIQ, PI) == {SphericalDistance((-PIQ, 0f),(-PIQ, PI)):0.00000000}
-            """);
-        #endif
-
-        #if false
-        {
-            bool FAIL = false;
-            int Steps = 12;
-            vec2 A = ZERO2;
-            vec2 B = ZERO2;
-            float D = 0f;
-
-            //FAIL = SphericalDistance(A, (-1f, 0f)) != PIH;
-            //FAIL = SphericalDistance(A, ( 1f, 0f)) != PIH;
-
-            System.Text.StringBuilder SB = new();
-
-            if (!FAIL) {
-                for     (int iPch = -Steps/2; iPch <= Steps/2; ++iPch) {
-                    for (int iYaw =        0; iYaw <= Steps*2; ++iYaw) {
-                        B.x = (float)(((double)iPch/(double)Steps) * 3.14159265358979323846264338327950288419716939937511);
-                        B.y = (float)(((double)iYaw/(double)Steps) * 3.14159265358979323846264338327950288419716939937511);
-                        D = SphericalDistance(A, B);
-                        //FAIL = (D != 0f);
-                        //if (FAIL) break;
-
-                        //SB.Append($"  [{iPch,3}, {iYaw,3}]({B.x,6:0.000},{B.y,6:0.000}) {D:0.000}");
-                        //SB.Append($"  ({B.x,6:0.000},{B.y,6:0.000}) {D:0.000}");
-                        SB.Append($"{D/PI:0.0000000},");
-                    }
-                    //if (FAIL) break;
-                    SB.Append("\n");
-                }
-            }
-
-            CONOUT(SB.ToString());
-        }
-        #endif
-
-        //======================================================================================================================================================
-
-
-        //CONOUT($"{Lanczos(0f)}");
-
 
         //======================================================================================================================================================
         TEST("SphericalDistance(vec3, vec3)", true

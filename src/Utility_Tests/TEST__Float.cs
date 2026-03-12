@@ -47,8 +47,8 @@ internal static partial class Program {
              Inf /   0  ==  {FLOAT_INF     / 0f}
             -Inf /   0  ==  {FLOAT_NEG_INF / 0f}
 
-             Inf / EPS  ==  {FLOAT_INF     / EPS_9}
-            -Inf / EPS  ==  {FLOAT_NEG_INF / EPS_9}
+             Inf / EPS  ==  {FLOAT_INF     / EPS9}
+            -Inf / EPS  ==  {FLOAT_NEG_INF / EPS9}
 
 
             RAY_MISS:  {RAY_MISS}

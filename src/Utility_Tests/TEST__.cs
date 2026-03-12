@@ -148,7 +148,7 @@ static void Test___() {
         float B = Cylinder_SurfaceArea(iF, 2f*iF);
 
         CONOUT($"""
-          [{iF:0.00}]  {A:00.000000000} == {B:00.000000000}    {abs(B-A) < EPS_5}
+          [{iF:0.00}]  {A:00.000000000} == {B:00.000000000}    {abs(B-A) < EPS5}
         """);
     }
 #endif

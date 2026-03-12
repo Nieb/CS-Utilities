@@ -18,7 +18,9 @@ internal static partial class Program {
             bool Ex0 = false;  try {float Test = A[  -1 ];}  catch (System.IndexOutOfRangeException) {Ex0 = true;}
             bool Ex1 = false;  try {float Test = A[  16 ];}  catch (System.IndexOutOfRangeException) {Ex1 = true;}
             bool Ex2 = false;  try {float Test = A[-1, 0];}  catch (System.IndexOutOfRangeException) {Ex2 = true;}
-            bool Ex3 = false;  try {float Test = A[ 0, 4];}  catch (System.IndexOutOfRangeException) {Ex3 = true;}
+            bool Ex3 = false;  try {float Test = A[ 0,-1];}  catch (System.IndexOutOfRangeException) {Ex3 = true;}
+            bool Ex4 = false;  try {float Test = A[ 4, 0];}  catch (System.IndexOutOfRangeException) {Ex4 = true;}
+            bool Ex5 = false;  try {float Test = A[ 0, 4];}  catch (System.IndexOutOfRangeException) {Ex5 = true;}
 
             TEST("Mat4[i] Mat4[x,y]", true
                 &&  A.xx   ==  1f  &&  A.yx   ==  2f &&  A.zx   ==  3f  &&  A.wx   ==  4f
@@ -36,7 +38,7 @@ internal static partial class Program {
                 &&  A[0,2] ==  9f  &&  A[1,2] == 10f &&  A[2,2] == 11f  &&  A[3,2] == 12f
                 &&  A[0,3] == 13f  &&  A[1,3] == 14f &&  A[2,3] == 15f  &&  A[3,3] == 16f
 
-                && Ex0 && Ex1 && Ex2 && Ex3
+                && Ex0 && Ex1 && Ex2 && Ex3 && Ex4 && Ex5
             );
         }
 
