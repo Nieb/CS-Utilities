@@ -40,8 +40,8 @@ internal static class Random {
 
     //==========================================================================================================================================================
     //
-    //      -1.0 to 1.0
-    //       0.0 to 1.0
+    //      Random1()  == -1.0 to 1.0
+    //      Random1u() ==  0.0 to 1.0
     //
     internal static v1 Random1()  => f32(R.Next(-1_000_000, 1_000_001)) / 1_000_000f;
     internal static v1 Random1u() => f32(R.Next(         0, 1_000_001)) / 1_000_000f;
@@ -57,23 +57,23 @@ internal static class Random {
     //  Pitch  |  RotX  |  PosY  |  TexV  |   Latitude (South  –90   +90  North)
     //  Yaw    |  RotY  |  PosX  |  TexU  |  Longitude (West  -180  +180  East )
     //
-    #if false
-        internal static vec3 Random3a() {
-            float Pch = (R.NextSingle() - 0.5f) * PI;
-            float Yaw = (R.NextSingle() - 0.5f) * PI2;
+    /*
+    internal static vec3 Random3a() {
+        float Pch = (R.NextSingle() - 0.5f) * PI;
+        float Yaw = (R.NextSingle() - 0.5f) * PI2;
 
-            //  Bias away from poles to get an even distribution:
-            Pch = asin(Pch);
+        //  Bias away from poles to get an even distribution:
+        Pch = asin(Pch);
 
-            float CosPch = cos(Pch);
+        float CosPch = cos(Pch);
 
-            return normalize(new vec3(
-                 CosPch * sin(Yaw),
-                         -sin(Pch),
-                -CosPch * cos(Yaw)
-            ));
-        }
-    #endif
+        return normalize(new vec3(
+             CosPch * sin(Yaw),
+                     -sin(Pch),
+            -CosPch * cos(Yaw)
+        ));
+    }
+    */
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

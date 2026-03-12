@@ -12,6 +12,7 @@ global using static Utility.Random;
 global using static Utility.FLT;
 global using static Utility.INT;
 global using static Utility.STR;
+global using static Utility.MAT;
 global using static Utility.VEC;
 global using static Utility.VEC_Collision2;
 global using static Utility.VEC_Collision3;
@@ -27,7 +28,7 @@ global using static Utility.VEC_Rotation;
 //##############################################################################################################################################################
 //global using  b8 = bool;    //  System.Boolean
 
-//==============================================================================================================================================================
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 global using  s8 = sbyte;   //  System.SByte          Signed  8-bit Integer
 global using  u8 =  byte;   //  System.Byte         Unsigned  8-bit Integer
 
@@ -45,22 +46,27 @@ global using f32 = float;   //  System.Single
 
 global using f64 = double;  //  System.Double
 
-//==============================================================================================================================================================
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 //#pragma warning disable CS8981 //  warning CS8981: The type name '' only contains lower-cased ascii characters. Such names may become reserved for the language.
 //    global using iptr = nint;   //  System.IntPtr         Signed 32-bit or 64-bit integer
 //    global using uptr = nuint;  //  System.UIntPtr      Unsigned 32-bit or 64-bit integer
 //#pragma warning restore CS8981
 
 //==============================================================================================================================================================
-global using v1 = float;
-global using v2 = Utility.vec2;
-global using v3 = Utility.vec3;
-global using v4 = Utility.vec4;
+global using b4 = Utility.VEC.bvec4;
+global using b8 = Utility.VEC.bvec8;
 
 global using i1 = int;
-global using i2 = Utility.ivec2;
-global using i3 = Utility.ivec3;
-global using i4 = Utility.ivec4;
+global using i2 = Utility.VEC.ivec2;
+global using i3 = Utility.VEC.ivec3;
+global using i4 = Utility.VEC.ivec4;
+
+global using v1 = float;
+global using v2 = Utility.VEC.vec2;
+global using v3 = Utility.VEC.vec3;
+global using v4 = Utility.VEC.vec4;
+
+global using m4 = Utility.MAT.mat4;
 
 ////global using vec2 = System.Numerics.Vector2;
 ////global using vec3 = System.Numerics.Vector3;

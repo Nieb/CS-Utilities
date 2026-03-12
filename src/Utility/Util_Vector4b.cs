@@ -1,5 +1,6 @@
 
 namespace Utility;
+internal static partial class VEC {
 [StructLayout(LayoutKind.Explicit, Pack=4)]
 internal struct bvec4 : System.IFormattable {
     //##########################################################################################################################################################
@@ -15,22 +16,22 @@ internal struct bvec4 : System.IFormattable {
     //
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [FieldOffset(3)] public byte x;  [FieldOffset(3)] public byte r;
-    [FieldOffset(2)] public byte y;  [FieldOffset(2)] public byte g;
-    [FieldOffset(1)] public byte z;  [FieldOffset(1)] public byte b;
-    [FieldOffset(0)] public byte w;  [FieldOffset(0)] public byte a;    [FieldOffset(0)] private uint U;
+    [FieldOffset(3)] public u8 x;  [FieldOffset(3)] public u8 r;
+    [FieldOffset(2)] public u8 y;  [FieldOffset(2)] public u8 g;
+    [FieldOffset(1)] public u8 z;  [FieldOffset(1)] public u8 b;
+    [FieldOffset(0)] public u8 w;  [FieldOffset(0)] public u8 a;    [FieldOffset(0)] private u32 U;
 
     public uint ABGR => ByteFlip(this.U);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public bvec4() {}
-    public bvec4(byte X, byte Y, byte Z, byte W) {x=X; y=Y; z=Z; w=W;}
-    public bvec4(uint XYZW)                      {U = XYZW;}
+    public bvec4(u8 X, u8 Y, u8 Z, u8 W) {x=X; y=Y; z=Z; w=W;}
+    public bvec4(u32 XYZW)               {U = XYZW;}
 
     //==========================================================================================================================================================
     //                                                               Tuple "Constructor"
-    [Impl(AggressiveInlining)] public static implicit operator bvec4((byte X, byte Y, byte Z, byte W) t) => new bvec4(t.X, t.Y, t.Z, t.W);
+    [Impl(AggressiveInlining)] public static implicit operator bvec4((u8 X, u8 Y, u8 Z, u8 W) t) => new bvec4(t.X, t.Y, t.Z, t.W);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -103,11 +104,11 @@ internal struct bvec4 : System.IFormattable {
         string Z = this.z.ToString(FormatStr).PadLeft(Padding);
         string W = this.w.ToString(FormatStr).PadLeft(Padding);
 
-        return $"({X}, {Y}, {Z}, {W})";
+        return $"({X},{Y},{Z},{W})";
     }
 
     //==========================================================================================================================================================
-    public readonly override string ToString() => $"({this.x,3}, {this.y,3}, {this.z,3}, {this.w,3})";
+    public readonly override string ToString() => $"({this.x,3},{this.y,3},{this.z,3},{this.w,3})";
 
     //==========================================================================================================================================================
     //  Required by types that implement "==" or "!=" operator:
@@ -116,4 +117,4 @@ internal struct bvec4 : System.IFormattable {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-}
+}}

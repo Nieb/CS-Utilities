@@ -6,9 +6,9 @@ namespace Utility;
 public struct DimString {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    public int CursorPosX;
-    public int CursorPosY;
-    public int CursorPos => (CursorPosY * this.SizeX) + CursorPosX;
+    public int CursorPosX {get; private set;}
+    public int CursorPosY {get; private set;}
+    public readonly int CursorPos => (CursorPosY * this.SizeX) + CursorPosX;
 
     public readonly int SizeX;
     public readonly int SizeY;
@@ -18,6 +18,8 @@ public struct DimString {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
+    public DimString() : this(0,0) {}
+
     public DimString(int CharsPerLine, int NumOfLines) {
         if (CharsPerLine < 1) throw new System.ArgumentOutOfRangeException(nameof(CharsPerLine));
         if (NumOfLines   < 1) throw new System.ArgumentOutOfRangeException(nameof(NumOfLines));
@@ -54,7 +56,7 @@ public struct DimString {
     //}
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] private int Index(int X, int Y) => X + (Y*this.SizeX);
+    [Impl(AggressiveInlining)] private readonly int Index(int X, int Y) => X + (Y*this.SizeX);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -88,8 +90,8 @@ public struct DimString {
                 continue;
             }
 
-            // Newline handling (ASCII only; treated specially)
             c = S[i];
+
             if (c == '\n') {
                 ++i;
                 this.AdvanceCursorToNextLine();
@@ -133,22 +135,11 @@ public struct DimString {
         this.AdvanceCursorToNextLine();
     }
 
-    //==========================================================================================================================================================
-    //public void WriteAt(int X, int Y, string S) {
-    //    int OldX = this.CursorPosX;
-    //    int OldY = this.CursorPosY;
-    //    this.CursorPosX = X;
-    //    this.CursorPosY = Y;
-    //    this.Append(S);
-    //    this.CursorPosX = OldX;
-    //    this.CursorPosY = OldY;
-    //}
-
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //public Span<Rune> AsSpan() => this.Text.AsSpan();
+    //public readonly Span<Rune> AsSpan() => this.Text.AsSpan();
 
-    public override string ToString() {
+    public readonly override string ToString() {
         int SB_Capacity = (2 * this.SizeX*this.SizeY) + (this.SizeY - 1); //  Two Chars per-Rune,  plus newline Chars.
         var SB = new StringBuilder(SB_Capacity);
         //CONOUT($"{SB.Capacity}");

@@ -11,10 +11,8 @@ internal static partial class VEC_Generate {
     //
     //  https://www.desmos.com/calculator/ljqolw7ab1
     //
-    internal static vec2[] Polygon2(int Sides, float Radius = 1f) {
-        #if DEBUG
-            if (Sides < 3) throw new System.ArgumentException("Derp?");
-        #endif
+    internal static vec2[] Polygon(int Sides, float Radius=1f) {
+        Sides = clamp(Sides, 3, 256);
 
         vec2[] Polygon = new vec2[Sides];
 
@@ -26,26 +24,10 @@ internal static partial class VEC_Generate {
         return Polygon;
     }
 
-    //==========================================================================================================================================================
-    internal static vec3[] Polygon3(int Sides, float Radius = 1f) {
-        #if DEBUG
-            if (Sides < 3) throw new System.ArgumentException("Derp?");
-        #endif
-
-        vec3[] Polygon = new vec3[Sides];
-
-        for (int i = 0; i < Sides; ++i) {
-            float rad = -i * (PI2/Sides);
-            Polygon[i] = new vec3(sin(rad)*Radius, 0f, cos(rad)*Radius);
-        }
-
-        return Polygon;
-    }
-
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //  Segments is per-Quadrant.
+    //  SegmentCount is per-Quadrant.
     //
     //                        0            9
     //                    1 ,-+------------+-, 8
@@ -55,80 +37,45 @@ internal static partial class VEC_Generate {
     //                    3 *-+------------+-* 6
     //                        4            5
     //
-    //      Polygon2_Line(  A:(x,y), B:(x,y),    Segments:2, Radius:1f  )
+    //      Polygon_Line(  A:(x,y), B:(x,y),    SegCount:2, Radius:1f  )
     //
-    internal static vec2[] Polygon2_Line(vec2 A, vec2 B, int Segments, float Radius = 1f) {
-        Segments = max(1, Segments);
+    internal static vec2[] Polygon_Line(vec2 A, vec2 B, int SegCount, float Radius=1f) {
+        SegCount = clamp(SegCount, 1, 64);
+        int q1 = (     SegCount    );
+        int q2 = (q1 + SegCount + 1);
+        int q3 = (q2 + SegCount    );
+        int q4 = (q3 + SegCount    );
 
-        vec2 dAB = normalize(B-A);
-        vec2 P0 = (-dAB.y, dAB.x); //  RotateLeft   a <---> 0
+        vec2 AB = lengthen(B-A, Radius);
+        vec2 AZ = (-AB.y, AB.x); //  RotateLeft   a <---> 0
 
-        vec2[] P = new vec2[4*Segments + 2];
+        vec2[] P = new vec2[4*SegCount + 2];
 
-        P[         0  ] = A + (P0  * Radius); //  a <---> 0
-        P[  Segments  ] = A - (dAB * Radius); //  a <---> 2
-        P[2*Segments  ] = A - (P0  * Radius); //  a <---> 4
+        P[ 0  ] = A + AZ; //  a <---> 0
+        P[q1  ] = A - AB; //  a <---> 2
+        P[q2-1] = A - AZ; //  a <---> 4
 
-        P[2*Segments+1] = B - (P0  * Radius); //  b <---> 5
-        P[3*Segments+1] = B + (dAB * Radius); //  b <---> 7
-        P[4*Segments+1] = B + (P0  * Radius); //  b <---> 9
+        P[q2  ] = B - AZ; //  b <---> 5
+        P[q3  ] = B + AB; //  b <---> 7
+        P[q4  ] = B + AZ; //  b <---> 9
 
-        if (Segments > 1) {
-            int i1 =   Segments;
-            int i2 = 2*Segments + 1;
-            int i3 = 3*Segments + 1;
-
-            float ThetaStep = -PIH/Segments;
-            vec2 nP;
-
-            for (int iSeg = 1; iSeg < Segments; ++iSeg) {
-                nP = rot(P0, ThetaStep * (float)iSeg);
-
-                P[iSeg   ] = A +           nP          *Radius;
-                P[iSeg+i1] = A + new vec2(-nP.y,  nP.x)*Radius;
-                P[iSeg+i2] = B + new vec2(-nP.x, -nP.y)*Radius;
-                P[iSeg+i3] = B + new vec2( nP.y, -nP.x)*Radius;
+        if (SegCount > 1) {
+            (float SinT, float CosT) = sincos(PIH/SegCount);
+            for (int iSeg = 1; iSeg < SegCount; ++iSeg) {
+                //  Rotate anti-clockwise:
+                AZ = new vec2(
+                    AZ.x*CosT - AZ.y*SinT,
+                    AZ.x*SinT + AZ.y*CosT
+                );
+                P[   iSeg] = A +           AZ          ;
+                P[q1+iSeg] = A + new vec2(-AZ.y,  AZ.x);
+                P[q2+iSeg] = B + new vec2(-AZ.x, -AZ.y);
+                P[q3+iSeg] = B + new vec2( AZ.y, -AZ.x);
             }
         }
 
         return P;
     }
-
-#if false
-    internal static void DrawCircleX(vec3 C, float Cr, int Segments) {
-        float A_y = Cr, A_z = 0f;
-        float B_y = 0f, B_z = 0f;
-
-        if (Segments > 1) {
-            float StepSize = PIH/Segments;
-
-            for (int iSeg = 1; iSeg < Segments; ++iSeg) {
-                B_y = cos(StepSize*iSeg) * Cr;
-                B_z = sin(StepSize*iSeg) * Cr;
-                DrawLine( WorldToScreen(C.x, C.y+A_y, -C.z-A_z), WorldToScreen(C.x, C.y+B_y, -C.z-B_z) );
-                DrawLine( WorldToScreen(C.x, C.y-A_y, -C.z-A_z), WorldToScreen(C.x, C.y-B_y, -C.z-B_z) );
-                DrawLine( WorldToScreen(C.x, C.y-A_y, -C.z+A_z), WorldToScreen(C.x, C.y-B_y, -C.z+B_z) );
-                DrawLine( WorldToScreen(C.x, C.y+A_y, -C.z+A_z), WorldToScreen(C.x, C.y+B_y, -C.z+B_z) );
-                A_y = B_y;
-                A_z = B_z;
-            }
-        }
-
-        B_y = 0f;
-        B_z = Cr;
-        DrawLine( WorldToScreen(C.x, C.y+A_y, -C.z-A_z), WorldToScreen(C.x, C.y+B_y, -C.z-B_z) );
-        DrawLine( WorldToScreen(C.x, C.y-A_y, -C.z-A_z), WorldToScreen(C.x, C.y-B_y, -C.z-B_z) );
-        DrawLine( WorldToScreen(C.x, C.y-A_y, -C.z+A_z), WorldToScreen(C.x, C.y-B_y, -C.z+B_z) );
-        DrawLine( WorldToScreen(C.x, C.y+A_y, -C.z+A_z), WorldToScreen(C.x, C.y+B_y, -C.z+B_z) );
-    }
-
-    internal static vec2 WorldToScreen(vec3 W) => WorldToScreen(W.x, W.y, W.z);
-    internal static vec2 WorldToScreen(float W_x, float W_y, float W_z) {
-        vec2 ScreenPos = new();
-        return ScreenPos;
-    }
-    internal static void DrawLine(vec2 A, vec2 B) {return;}
-#endif
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

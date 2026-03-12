@@ -70,7 +70,7 @@ internal static partial class VEC_Miscellaneous {
         vec2  Cp;   //  CircumCircle-Position
         float CrCr; //  CircumCircle-Radius   Squared
 
-        if (abs(Determinant) < EPSILON) {
+        if (abs(Determinant) < EPS6) {
             //  Triangle points are Collinear, define CircumCircle by delta between furthest points.
             vec2 Tmin = min(Ta, Tb, Tc);
             vec2 Tmax = max(Ta, Tb, Tc);
@@ -167,13 +167,8 @@ internal static partial class VEC_Miscellaneous {
     //  Output is Distance in radians (0 to PI).
     //
     internal static float SphericalDistance(vec2 A, vec2 B) {
-        vec2 dAB = B-A;
-        dAB = sin(dAB * 0.5f);
-
-        float D = dAB.x*dAB.x
-                + dAB.y*dAB.y * cos(A.x) * cos(B.x);
-
-        return 2f * asin( sqrt(D) );
+        vec2 d = 0.5f - 0.5f*cos(B-A);
+        return 2f * asin(sqrt( d.x  +  d.y*cos(A.x)*cos(B.x) ));
     }
 
     //==========================================================================================================================================================

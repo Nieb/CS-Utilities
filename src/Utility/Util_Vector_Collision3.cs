@@ -163,7 +163,7 @@ internal static class VEC_Collision3 {
             return RAY_MISS;
 
         //  Is Ray coplanar with Triangle Surface?
-        //if (abs(Determinant) < EPSILON)
+        //if (abs(Determinant) < EPS6)
         if (Determinant == 0f)
             return RAY_MISS;
 
@@ -333,9 +333,9 @@ internal static class VEC_Collision3 {
         vec3 RayStep_Dist = abs(1f / Rn);
 
         ivec3 RayCoord = new ivec3(
-            (Rn.x < 0f) ? (int)floor(Rp.x + EPS_6) : (int)floor(Rp.x - EPS_6),
-            (Rn.y < 0f) ? (int)floor(Rp.y + EPS_6) : (int)floor(Rp.y - EPS_6),
-            (Rn.z < 0f) ? (int)floor(Rp.z + EPS_6) : (int)floor(Rp.z - EPS_6)
+            (Rn.x < 0f) ? (int)floor(Rp.x + EPS6) : (int)floor(Rp.x - EPS6),
+            (Rn.y < 0f) ? (int)floor(Rp.y + EPS6) : (int)floor(Rp.y - EPS6),
+            (Rn.z < 0f) ? (int)floor(Rp.z + EPS6) : (int)floor(Rp.z - EPS6)
         );
         vec3 NextDist = new vec3(
             (Rn.x < 0f) ? (Rp.x  -  RayCoord.x) * RayStep_Dist.x

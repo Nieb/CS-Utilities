@@ -46,15 +46,15 @@ internal static class Constants {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal const float EPS_9 = 0.000000001f;
-    internal const float EPS_8 = 0.00000001f;
-    internal const float EPS_7 = 0.0000001f;
-    internal const float EPS_6 = 0.000001f,                 EPSILON = EPS_6,    EPS = EPS_6;
-    internal const float EPS_5 = 0.00001f;
-    internal const float EPS_4 = 0.0001f;
-    internal const float EPS_3 = 0.001f;
-    internal const float EPS_2 = 0.01f;
-    internal const float EPS_1 = 0.1f;
+    internal const float EPS9 = 0.000000001f;
+    internal const float EPS8 = 0.00000001f;
+    internal const float EPS7 = 0.0000001f;
+    internal const float EPS6 = 0.000001f;
+    internal const float EPS5 = 0.00001f;
+    internal const float EPS4 = 0.0001f;
+    internal const float EPS3 = 0.001f;
+    internal const float EPS2 = 0.01f;
+    internal const float EPS1 = 0.1f;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -144,21 +144,21 @@ internal static class Constants {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal const           v1 ZERO  = 0f;
-    internal static readonly v2 ZERO2 = new v2(0f, 0f);
-    internal static readonly v3 ZERO3 = new v3(0f, 0f, 0f);
-    internal static readonly v4 ZERO4 = new v4(0f, 0f, 0f, 0f);
+    internal const           v1  ZERO  = default;
+    internal static readonly v2  ZERO2 = default;
+    internal static readonly v3  ZERO3 = default;
+    internal static readonly v4  ZERO4 = default;
 
-    internal const           i1 iZERO  = 0;
-    internal static readonly i2 iZERO2 = new i2(0, 0);
-    internal static readonly i3 iZERO3 = new i3(0, 0, 0);
-    internal static readonly i4 iZERO4 = new i4(0, 0, 0, 0);
+    internal const           i1 iZERO  = default;
+    internal static readonly i2 iZERO2 = default;
+    internal static readonly i3 iZERO3 = default;
+    internal static readonly i4 iZERO4 = default;
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    internal const           v1 ONE  = 1f;
-    internal static readonly v2 ONE2 = new v2(1f, 1f);
-    internal static readonly v3 ONE3 = new v3(1f, 1f, 1f);
-    internal static readonly v4 ONE4 = new v4(1f, 1f, 1f, 1f);
+    internal const           v1  ONE  = 1f;
+    internal static readonly v2  ONE2 = new v2(1f, 1f);
+    internal static readonly v3  ONE3 = new v3(1f, 1f, 1f);
+    internal static readonly v4  ONE4 = new v4(1f, 1f, 1f, 1f);
 
     internal const           i1 iONE  = 1;
     internal static readonly i2 iONE2 = new i2(1, 1);

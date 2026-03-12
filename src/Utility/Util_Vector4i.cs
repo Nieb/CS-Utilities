@@ -1,5 +1,6 @@
 
 namespace Utility;
+internal static partial class VEC {
 [StructLayout(LayoutKind.Explicit, Pack=4)]
 internal struct ivec4 : System.IFormattable {
     //##########################################################################################################################################################
@@ -120,11 +121,11 @@ internal struct ivec4 : System.IFormattable {
         string Z = this.z.ToString(FormatStr).PadLeft(Padding);
         string W = this.w.ToString(FormatStr).PadLeft(Padding);
 
-        return $"({X}, {Y}, {Z}, {W})";
+        return $"({X},{Y},{Z},{W})";
     }
 
     //==========================================================================================================================================================
-    public readonly override string ToString() => $"({this.x,3}, {this.y,3}, {this.z,3}, {this.w,3})";
+    public readonly override string ToString() => $"({this.x,3},{this.y,3},{this.z,3},{this.w,3})";
 
     //==========================================================================================================================================================
     //  Required by types that implement "==" or "!=" operator:
@@ -133,4 +134,4 @@ internal struct ivec4 : System.IFormattable {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-}
+}}

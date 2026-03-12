@@ -111,11 +111,15 @@ internal static partial class VEC {
     //  Scale vector to "NewLength"
     //  Vector * (NewLength / OldLength)
     //
-    [Impl(AggressiveInlining)] internal static v2 lengthen(v2 A, v1 NewLength) => A * (NewLength / sqrt(A.x*A.x + A.y*A.y));
-    [Impl(AggressiveInlining)] internal static v3 lengthen(v3 A, v1 NewLength) => A * (NewLength / sqrt(A.x*A.x + A.y*A.y + A.z*A.z));
+    [Impl(AggressiveInlining)] internal static v2 lengthen(v2 A, v1 NewLength) => (A == 0f) ? A : A * (NewLength / sqrt(A.x*A.x + A.y*A.y));
+    [Impl(AggressiveInlining)] internal static v3 lengthen(v3 A, v1 NewLength) => (A == 0f) ? A : A * (NewLength / sqrt(A.x*A.x + A.y*A.y + A.z*A.z));
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                                    "Normalize"
+    //  https://github.com/KhronosGroup/WebGL/issues/3697
+    //      ...the GLSL normalize() operation is being called on 0-length vectors.
+    //      This behavior isn't defined in GLSL, but it happens to return a zero-length vector on basically all other GPU hardware.
+    //
     [Impl(AggressiveInlining)] internal static v2 normalize(v2 A) => (A == 0f) ? A : A/sqrt(A.x*A.x + A.y*A.y);
     [Impl(AggressiveInlining)] internal static v3 normalize(v3 A) => (A == 0f) ? A : A/sqrt(A.x*A.x + A.y*A.y + A.z*A.z);
 
@@ -126,8 +130,6 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     //                                                                "Fused Multiply Add"
     //  A * B + C
-    //
-    //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/fma.xhtml
     //
     [Impl(AggressiveInlining)] internal static v1 fma(v1 A, v1 B, v1 C) => System.MathF.FusedMultiplyAdd(A, B, C);
     [Impl(AggressiveInlining)] internal static v2 fma(v2 A, v2 B, v2 C) => new v2(fma(A.x, B.x, C.x), fma(A.y, B.y, C.y));
@@ -171,7 +173,7 @@ internal static partial class VEC {
   //[Impl(AggressiveInlining)] internal static v3 rcp(v3 A) => 1f/A;
   //[Impl(AggressiveInlining)] internal static v4 rcp(v4 A) => 1f/A;
 
-  //[Impl(AggressiveInlining)] internal static v1 rcpz(v1 A) => (A > -EPSILON && A < EPSILON) ? 0f : 1f/A;
+  //[Impl(AggressiveInlining)] internal static v1 rcpz(v1 A) => (abs(A) < EPS6) ? 0f : 1f/A;
   //[Impl(AggressiveInlining)] internal static v2 rcpz(v2 A) => new v2(rcp0(A.x), rcp0(A.y));
   //[Impl(AggressiveInlining)] internal static v3 rcpz(v3 A) => new v3(rcp0(A.x), rcp0(A.y), rcp0(A.z));
   //[Impl(AggressiveInlining)] internal static v4 rcpz(v4 A) => new v4(rcp0(A.x), rcp0(A.y), rcp0(A.z), rcp0(A.w));
@@ -356,9 +358,7 @@ internal static partial class VEC {
     //  IndexOfRefraction:  The ratio of the speed-of-light from one medium to another medium.
     //
     //                             Range:   0 <---> 1
-    //
-    //                      Unsafe-Range:  -2 <---> 2
-    //                                      Becomes unstable as result approaches SurfaceNormal-Tangent.
+    //                      Unsafe-Range:  -2 <---> 2    Becomes unstable as result approaches SurfaceNormal-Tangent.
     //
     //                      < 1.0  refracts inwards
     //                      > 1.0  refracts outwards
@@ -378,7 +378,7 @@ internal static partial class VEC {
 
         float K = 1f - Ratio*Ratio*(1f - Dot*Dot);
 
-        return (K < 0f) ? ZERO2 : Vn*Ratio  -  Sn*(Ratio*Dot + sqrt(K));
+        return (K < 0f) ? default : Vn*Ratio  -  Sn*(Ratio*Dot + sqrt(K));
     }
 
     internal static vec3 refract(vec3 Vn, vec3 Sn, float Ratio) {
@@ -386,7 +386,7 @@ internal static partial class VEC {
 
         float K = 1f - Ratio*Ratio*(1f - Dot*Dot);
 
-        return (K < 0f) ? ZERO3 : Vn*Ratio  -  Sn*(Ratio*Dot + sqrt(K));
+        return (K < 0f) ? default : Vn*Ratio  -  Sn*(Ratio*Dot + sqrt(K));
     }
 
     //##########################################################################################################################################################
@@ -441,6 +441,13 @@ internal static partial class VEC {
 
     [Impl(AggressiveInlining)] internal static v4 sign(v4 A, v1 S) => new v4(sign(A.x, S  ), sign(A.y, S  ), sign(A.z, S  ), sign(A.w, S  ));
     [Impl(AggressiveInlining)] internal static v4 sign(v4 A, v4 S) => new v4(sign(A.x, S.x), sign(A.y, S.y), sign(A.z, S.z), sign(A.w, S.w));
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //                                                            Sum of a Vector's Components
+    [Impl(AggressiveInlining)] internal static v1 sumof(v2 A) => (A.x + A.y            );
+    [Impl(AggressiveInlining)] internal static v1 sumof(v3 A) => (A.x + A.y + A.z      );
+    [Impl(AggressiveInlining)] internal static v1 sumof(v4 A) => (A.x + A.y + A.z + A.w);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

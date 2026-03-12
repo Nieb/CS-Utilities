@@ -67,9 +67,9 @@ internal static class VEC_Interpolation {
     //      D: any              Values to be mixed.
     //  );
     //
-    //  OUTPUT: A..B
+    //  OUTPUT: C..D
     //          :  :
-    //          C..D
+    //          A..B
     //
     internal static v1 BiMix(v2 V,  v1 A, v1 B, v1 C, v1 D) {v2 iV = (1f-V); return A*(iV.x*iV.y) + B*(V.x*iV.y)
                                                                                   + C*(iV.x* V.y) + D*(V.x* V.y);}
@@ -96,7 +96,7 @@ internal static class VEC_Interpolation {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                               "Hermite Interpolation"
+    //                                                            "Cubic/Hermite Interpolation"
     //  SmoothMix(
     //      V: 0..1     Weighted position between A and B.
     //      A: any      Values to be mixed.
@@ -105,10 +105,10 @@ internal static class VEC_Interpolation {
     //
     //  OUTPUT: A..B
     //
-    [Impl(AggressiveInlining)] internal static v1 SmoothMix(v1 V, v1 A, v1 B) => Mix(SmoothStep(V), A,B);
-    [Impl(AggressiveInlining)] internal static v2 SmoothMix(v1 V, v2 A, v2 B) => Mix(SmoothStep(V), A,B);
-    [Impl(AggressiveInlining)] internal static v3 SmoothMix(v1 V, v3 A, v3 B) => Mix(SmoothStep(V), A,B);
-    [Impl(AggressiveInlining)] internal static v4 SmoothMix(v1 V, v4 A, v4 B) => Mix(SmoothStep(V), A,B);
+    [Impl(AggressiveInlining)] internal static v1 SmoothMix(v1 V, v1 A, v1 B) => Mix(SmoothStep(V), A, B);
+    [Impl(AggressiveInlining)] internal static v2 SmoothMix(v1 V, v2 A, v2 B) => Mix(SmoothStep(V), A, B);
+    [Impl(AggressiveInlining)] internal static v3 SmoothMix(v1 V, v3 A, v3 B) => Mix(SmoothStep(V), A, B);
+    [Impl(AggressiveInlining)] internal static v4 SmoothMix(v1 V, v4 A, v4 B) => Mix(SmoothStep(V), A, B);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -165,17 +165,38 @@ internal static class VEC_Interpolation {
     //
     //  OUTPUT: 0..1
     //
-    [Impl(AggressiveInlining)] internal static v1 LinearStep(v1 V, v1 L, v1 U) => clamp((V-L) / (U-L));
+    [Impl(AggressiveInlining)] internal static v1 LinearStep(v1 V, v1 L, v1 U) => clamp((V-L)/(U-L));
 
-    [Impl(AggressiveInlining)] internal static v2 LinearStep(v1 V, v2 L, v2 U) => clamp((V-L) / (U-L));
-    [Impl(AggressiveInlining)] internal static v2 LinearStep(v2 V, v2 L, v2 U) => clamp((V-L) / (U-L));
+    [Impl(AggressiveInlining)] internal static v2 LinearStep(v1 V, v2 L, v2 U) => clamp((V-L)/(U-L));
+    [Impl(AggressiveInlining)] internal static v2 LinearStep(v2 V, v2 L, v2 U) => clamp((V-L)/(U-L));
 
-    [Impl(AggressiveInlining)] internal static v3 LinearStep(v1 V, v3 L, v3 U) => clamp((V-L) / (U-L));
-    [Impl(AggressiveInlining)] internal static v3 LinearStep(v3 V, v3 L, v3 U) => clamp((V-L) / (U-L));
+    [Impl(AggressiveInlining)] internal static v3 LinearStep(v1 V, v3 L, v3 U) => clamp((V-L)/(U-L));
+    [Impl(AggressiveInlining)] internal static v3 LinearStep(v3 V, v3 L, v3 U) => clamp((V-L)/(U-L));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                               "Hermite Interpolation"
+    //                                                               "Quadratic Interpolation"
+    //  QuadStep(
+    //      V: any      Value to weigh between L and U.
+    //      L: any      LowerBounds
+    //      U: any      UpperBounds
+    //  );
+    //
+    //  OUTPUT: 0..1
+    //
+    [Impl(AggressiveInlining)] internal static v1 QuadStep(v1 V)             {V = clamp(V);            return (V < 0.5f)  ?  (2f * V*V)  :  (-1f + (4f - 2f*V) * V);}
+    [Impl(AggressiveInlining)] internal static v1 QuadStep(v1 V, v1 L, v1 U) {V = clamp((V-L)/(U-L));  return (V < 0.5f)  ?  (2f * V*V)  :  (-1f + (4f - 2f*V) * V);}
+
+    //==========================================================================================================================================================
+    //
+    //      PowerStep(x, 2f) == QuadStep(x)
+    //
+    [Impl(AggressiveInlining)] internal static v1 PowerStep(v1 V, v1 P)             {V = clamp(V);            return (V < 0.5f)  ?  pow(2f*V, P)/2f  :  1f-pow(2f-2f*V, P)/2f;}
+    [Impl(AggressiveInlining)] internal static v1 PowerStep(v1 V, v1 P, v1 L, v1 U) {V = clamp((V-L)/(U-L));  return (V < 0.5f)  ?  pow(2f*V, P)/2f  :  1f-pow(2f-2f*V, P)/2f;}
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //                                                            "Cubic/Hermite Interpolation"
     //
     //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/smoothstep.xhtml
     //  GLSL: smoothstep(Edge0, Edge1, X)
@@ -193,16 +214,16 @@ internal static class VEC_Interpolation {
     //
     //  OUTPUT: 0..1
     //
-    [Impl(AggressiveInlining)] internal static v1 SmoothStep(v1 V)               {V = clamp(V);              return V*V * (3f - 2f*V);}
-    [Impl(AggressiveInlining)] internal static v1 SmoothStep(v1 V,   v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
+    [Impl(AggressiveInlining)] internal static v1 SmoothStep(v1 V)             {V = clamp(V);            return V*V * (3f - 2f*V);}
+    [Impl(AggressiveInlining)] internal static v1 SmoothStep(v1 V, v1 L, v1 U) {V = clamp((V-L)/(U-L));  return V*V * (3f - 2f*V);}
 
-    [Impl(AggressiveInlining)] internal static v2 SmoothStep(v2 V)               {V = clamp(V);              return V*V * (3f - 2f*V);}
-    [Impl(AggressiveInlining)] internal static v2 SmoothStep(v2 V,   v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
-    [Impl(AggressiveInlining)] internal static v2 SmoothStep(v2 V,   v2 L, v2 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
+    [Impl(AggressiveInlining)] internal static v2 SmoothStep(v2 V)             {V = clamp(V);            return V*V * (3f - 2f*V);}
+    [Impl(AggressiveInlining)] internal static v2 SmoothStep(v2 V, v1 L, v1 U) {V = clamp((V-L)/(U-L));  return V*V * (3f - 2f*V);}
+    [Impl(AggressiveInlining)] internal static v2 SmoothStep(v2 V, v2 L, v2 U) {V = clamp((V-L)/(U-L));  return V*V * (3f - 2f*V);}
 
-    [Impl(AggressiveInlining)] internal static v3 SmoothStep(v3 V)               {V = clamp(V);              return V*V * (3f - 2f*V);}
-    [Impl(AggressiveInlining)] internal static v3 SmoothStep(v3 V,   v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
-    [Impl(AggressiveInlining)] internal static v3 SmoothStep(v3 V,   v3 L, v3 U) {V = clamp((V-L) / (U-L));  return V*V * (3f - 2f*V);}
+    [Impl(AggressiveInlining)] internal static v3 SmoothStep(v3 V)             {V = clamp(V);            return V*V * (3f - 2f*V);}
+    [Impl(AggressiveInlining)] internal static v3 SmoothStep(v3 V, v1 L, v1 U) {V = clamp((V-L)/(U-L));  return V*V * (3f - 2f*V);}
+    [Impl(AggressiveInlining)] internal static v3 SmoothStep(v3 V, v3 L, v3 U) {V = clamp((V-L)/(U-L));  return V*V * (3f - 2f*V);}
 
     //==========================================================================================================================================================
     //
@@ -223,16 +244,16 @@ internal static class VEC_Interpolation {
     //
     //  OUTPUT: 0..1
     //
-    internal static v1 SmootherStep(v1 V)             {V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);}
-    internal static v1 SmootherStep(v1 V, v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v1 SmootherStep(v1 V)             {V = clamp(V);            return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v1 SmootherStep(v1 V, v1 L, v1 U) {V = clamp((V-L)/(U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
 
-    internal static v2 SmootherStep(v2 V)             {V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);}
-    internal static v2 SmootherStep(v2 V, v2 L, v2 U) {V = clamp((V-L) / (U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
-    internal static v2 SmootherStep(v2 V, v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v2 SmootherStep(v2 V)             {V = clamp(V);            return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v2 SmootherStep(v2 V, v2 L, v2 U) {V = clamp((V-L)/(U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v2 SmootherStep(v2 V, v1 L, v1 U) {V = clamp((V-L)/(U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
 
-    internal static v3 SmootherStep(v3 V)             {V = clamp(V);              return V*V*V * ((6f*V - 15f)*V + 10f);}
-    internal static v3 SmootherStep(v3 V, v3 L, v3 U) {V = clamp((V-L) / (U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
-    internal static v3 SmootherStep(v3 V, v1 L, v1 U) {V = clamp((V-L) / (U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v3 SmootherStep(v3 V)             {V = clamp(V);            return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v3 SmootherStep(v3 V, v3 L, v3 U) {V = clamp((V-L)/(U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
+    internal static v3 SmootherStep(v3 V, v1 L, v1 U) {V = clamp((V-L)/(U-L));  return V*V*V * ((6f*V - 15f)*V + 10f);}
 
     //==========================================================================================================================================================
     //
@@ -247,7 +268,7 @@ internal static class VEC_Interpolation {
     //  OUTPUT: 0..1
     //
     internal static v1 SmoothestStep(v1 V, v1 L, v1 U) {
-        V = clamp((V-L) / (U-L));
+        V = clamp((V-L)/(U-L));
 
         v1 VV   = V   * V;
         v1 VVV  = VV  * V;

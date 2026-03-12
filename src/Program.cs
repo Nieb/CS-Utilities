@@ -20,7 +20,7 @@ internal static partial class Program {
             //CONOUT($"LineNumber: {LINE_NUMBER()}");
 
             CONOUTC($"                                 ~~~ START ~~~");
-            Time Time = new();
+            TIME Time = new();
             Time.Update();
 
             Test__Integer();

@@ -6,7 +6,10 @@ internal static class FLT {
     //
     //      "-0"  -->  "0"
     //
-    [Impl(AggressiveInlining)] internal static float FNZ(float F) => (abs(F) < EPS_9 ? 0f : F);
+    [Impl(AggressiveInlining)] internal static v1 FNZ(v1 F) => (abs(F) < EPS6 ? 0f : F);
+    [Impl(AggressiveInlining)] internal static v2 FNZ(v2 F) => new v2(FNZ(F.x), FNZ(F.y));
+    [Impl(AggressiveInlining)] internal static v3 FNZ(v3 F) => new v3(FNZ(F.x), FNZ(F.y), FNZ(F.z));
+    [Impl(AggressiveInlining)] internal static v4 FNZ(v4 F) => new v4(FNZ(F.x), FNZ(F.y), FNZ(F.z), FNZ(F.w));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

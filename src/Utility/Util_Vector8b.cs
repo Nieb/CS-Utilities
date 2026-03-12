@@ -1,17 +1,18 @@
 
 namespace Utility;
+internal static partial class VEC {
 [StructLayout(LayoutKind.Explicit, Pack=4)]
 internal struct bvec8 {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [FieldOffset(7)] public byte b0;
-    [FieldOffset(6)] public byte b1;    [FieldOffset(6)] public ushort s0;
-    [FieldOffset(5)] public byte b2;
-    [FieldOffset(4)] public byte b3;    [FieldOffset(4)] public ushort s1;    [FieldOffset(4)] public uint i0;
-    [FieldOffset(3)] public byte b4;
-    [FieldOffset(2)] public byte b5;    [FieldOffset(2)] public ushort s2;
-    [FieldOffset(1)] public byte b6;
-    [FieldOffset(0)] public byte b7;    [FieldOffset(0)] public ushort s3;    [FieldOffset(0)] public uint i1;    [FieldOffset(0)] public ulong L;
+    [FieldOffset(7)] public u8 b0;
+    [FieldOffset(6)] public u8 b1;    [FieldOffset(6)] public u16 s0;
+    [FieldOffset(5)] public u8 b2;
+    [FieldOffset(4)] public u8 b3;    [FieldOffset(4)] public u16 s1;    [FieldOffset(4)] public u32 i0;
+    [FieldOffset(3)] public u8 b4;
+    [FieldOffset(2)] public u8 b5;    [FieldOffset(2)] public u16 s2;
+    [FieldOffset(1)] public u8 b6;
+    [FieldOffset(0)] public u8 b7;    [FieldOffset(0)] public u16 s3;    [FieldOffset(0)] public u32 i1;    [FieldOffset(0)] private u64 L;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -33,4 +34,4 @@ internal struct bvec8 {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-}
+}}

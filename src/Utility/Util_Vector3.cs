@@ -1,6 +1,7 @@
 
 namespace Utility;
-[StructLayout(LayoutKind.Explicit, Pack=4, Size=12)] //  if (Size < ActualSize): nothing happens.   if (Size > ActualSize): struct will have extra bytes (padding).
+internal static partial class VEC {
+[StructLayout(LayoutKind.Explicit, Pack=4)]
 internal struct vec3 : System.IFormattable {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -117,13 +118,13 @@ internal struct vec3 : System.IFormattable {
             string Z = this.z.ToString(FormatStr).PadLeft(Padding);
         #endif
 
-        return $"({X}, {Y}, {Z})";
+        return $"({X},{Y},{Z})";
     }
 
     #if true
-        public readonly override string ToString() => $"({FNZ(this.x),9:0.000000}, {FNZ(this.y),9:0.000000}, {FNZ(this.z),9:0.000000})";
+        public readonly override string ToString() => $"({FNZ(this.x),9:0.000000},{FNZ(this.y),9:0.000000},{FNZ(this.z),9:0.000000})";
     #else
-        public readonly override string ToString() => $"({this.x,9:0.000000}, {this.y,9:0.000000}, {this.z,9:0.000000})";
+        public readonly override string ToString() => $"({this.x,9:0.000000},{this.y,9:0.000000},{this.z,9:0.000000})";
     #endif
 
     //==========================================================================================================================================================
@@ -133,4 +134,4 @@ internal struct vec3 : System.IFormattable {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-}
+}}
