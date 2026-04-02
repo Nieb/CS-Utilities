@@ -1,16 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!--=============================================================================================================-->
+    <!-- <DefineConstants>$(DefineConstants);Z_UP;</DefineConstants> -->
+
+    <!--=============================================================================================================-->
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
-
-    <PublishAot>true</PublishAot>
+    <!-- <PlatformTarget>x64</PlatformTarget> -->
 
     <!-- <PublishSingleFile>true</PublishSingleFile> -->
     <!-- <SelfContained>true</SelfContained> -->
     <!-- <RuntimeIdentifier>win-x64</RuntimeIdentifier> -->
 
-    <!-- <PlatformTarget>x64</PlatformTarget> -->
+    <PublishAot>true</PublishAot>
+    <PublishProtocol>FileSystem</PublishProtocol>
+    <_TargetId>Folder</_TargetId>
+    <PublishDir>..\</PublishDir>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>full</TrimMode>
+    <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
 
     <!--=============================================================================================================-->
     <DefaultItemExcludes>$(DefaultItemExcludes);_IGNORE_\**</DefaultItemExcludes>

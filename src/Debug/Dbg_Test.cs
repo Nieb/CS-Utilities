@@ -1,9 +1,9 @@
 
 namespace DEBUG;
-internal static partial class DEBUG {
+internal static class TESTING {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal static void TEST(string TestLabel, bool Result) {
+    [Impl(AggressiveInlining)] internal static void TEST(string TestLabel, bool Result) {
         if (!Result) System.Console.WriteLine($"    {TestLabel,32}: FAIL");
       //else         System.Console.WriteLine($"    {TestLabel,32}: Pass");
     }
