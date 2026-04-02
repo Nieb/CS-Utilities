@@ -2,7 +2,7 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector_Miscellaneous() {
-        CONOUT("\n[Utility.VEC -- Miscellaneous]");
+        TESTOUT("\n[Utility.VEC -- Miscellaneous]");
 
         //######################################################################################################################################################
         //######################################################################################################################################################
@@ -61,33 +61,33 @@ internal static partial class Program {
             );
 
             #if false
-                CONOUT("");
-                CONOUT($"    {Barycentric(Z,  A,B,C):0.000}");
-                CONOUT($"    {Barycentric(Z,  A,B,C):0.000}");
-                CONOUT("");
-                CONOUT($"    {Barycentric(A*0.25f,  A,B,C):0.000}");
-                CONOUT($"    {Barycentric(B*0.25f,  A,B,C):0.000}");
-                CONOUT($"    {Barycentric(C*0.25f,  A,B,C):0.000}");
-                CONOUT("");
-                CONOUT($"    {Barycentric(A*0.50f,  A,B,C):0.000}");
-                CONOUT($"    {Barycentric(B*0.50f,  A,B,C):0.000}");
-                CONOUT($"    {Barycentric(C*0.50f,  A,B,C):0.000}");
-                CONOUT("");
-                CONOUT($"    {Barycentric(A*0.75f,  A,B,C):0.000}");
-                CONOUT($"    {Barycentric(B*0.75f,  A,B,C):0.000}");
-                CONOUT($"    {Barycentric(C*0.75f,  A,B,C):0.000}");
-                CONOUT("");
-                CONOUT($"    {Barycentric(A*ONE_THIRD,  A,B,C):0.000}");
-                CONOUT($"    {Barycentric(B*ONE_THIRD,  A,B,C):0.000}");
-                CONOUT($"    {Barycentric(C*ONE_THIRD,  A,B,C):0.000}");
-                CONOUT("");
+                TESTOUT("");
+                TESTOUT($"    {Barycentric(Z,  A,B,C):0.000}");
+                TESTOUT($"    {Barycentric(Z,  A,B,C):0.000}");
+                TESTOUT("");
+                TESTOUT($"    {Barycentric(A*0.25f,  A,B,C):0.000}");
+                TESTOUT($"    {Barycentric(B*0.25f,  A,B,C):0.000}");
+                TESTOUT($"    {Barycentric(C*0.25f,  A,B,C):0.000}");
+                TESTOUT("");
+                TESTOUT($"    {Barycentric(A*0.50f,  A,B,C):0.000}");
+                TESTOUT($"    {Barycentric(B*0.50f,  A,B,C):0.000}");
+                TESTOUT($"    {Barycentric(C*0.50f,  A,B,C):0.000}");
+                TESTOUT("");
+                TESTOUT($"    {Barycentric(A*0.75f,  A,B,C):0.000}");
+                TESTOUT($"    {Barycentric(B*0.75f,  A,B,C):0.000}");
+                TESTOUT($"    {Barycentric(C*0.75f,  A,B,C):0.000}");
+                TESTOUT("");
+                TESTOUT($"    {Barycentric(A*ONE_THIRD,  A,B,C):0.000}");
+                TESTOUT($"    {Barycentric(B*ONE_THIRD,  A,B,C):0.000}");
+                TESTOUT($"    {Barycentric(C*ONE_THIRD,  A,B,C):0.000}");
+                TESTOUT("");
             #endif
 
         }
 
         //======================================================================================================================================================
 
-        //CONOUT($"{Lanczos(0f)}");
+        //TESTOUT($"{Lanczos(0f)}");
 
         //######################################################################################################################################################
         //######################################################################################################################################################
@@ -112,11 +112,11 @@ internal static partial class Program {
                 //).IsApproximately((2f, 2f))
             );
 
-            //CONOUT("");
-            //CONOUT($"result  == {A:0}");
-            //CONOUT("");
-            //CONOUT($"result  == {B:0}");
-            //CONOUT("");
+            //TESTOUT("");
+            //TESTOUT($"result  == {A:0}");
+            //TESTOUT("");
+            //TESTOUT($"result  == {B:0}");
+            //TESTOUT("");
         }
         //######################################################################################################################################################
         //######################################################################################################################################################
@@ -189,7 +189,7 @@ internal static partial class Program {
         );
 
         #if false
-            CONOUT($"""
+            TESTOUT($"""
 
                 PIH == {PIH:0.00000000}
                 PI  == {PI:0.00000000}
@@ -214,7 +214,7 @@ internal static partial class Program {
         #endif
 
         #if false
-            CONOUT($"""
+            TESTOUT($"""
 
                 PIH == {PIH:0.00000000}
                 PI  == {PI:0.00000000}

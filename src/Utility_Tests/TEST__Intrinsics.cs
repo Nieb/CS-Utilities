@@ -4,7 +4,7 @@ using System.Runtime.Intrinsics.X86;
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Intrinsics() {
-            CONOUT($"""
+            TESTOUT($"""
 
             [Intrinsics]
                  Vector64.IsHardwareAccelerated: {System.Runtime.Intrinsics.Vector64.IsHardwareAccelerated}
@@ -15,7 +15,7 @@ internal static partial class Program {
                      X86Base: {X86Base      .IsSupported,-5}  X64: {X86Base      .X64.IsSupported}
 
                          SSE: {Sse          .IsSupported,-5}  X64: {Sse          .X64.IsSupported}
-                        SSE2: {Sse2         .IsSupported,-5}  X64: {Sse2         .X64.IsSupported} ***
+                        SSE2: {Sse2         .IsSupported,-5}  X64: {Sse2         .X64.IsSupported} ***   SSE2 guaranteed for all x86-64
                         SSE3: {Sse3         .IsSupported,-5}  X64: {Sse3         .X64.IsSupported}
                        SSSE3: {Ssse3        .IsSupported,-5}  X64: {Ssse3        .X64.IsSupported}
                        SSE41: {Sse41        .IsSupported,-5}  X64: {Sse41        .X64.IsSupported}
@@ -32,7 +32,7 @@ internal static partial class Program {
 
             """);
         #if false
-            CONOUT($"""
+            TESTOUT($"""
                      Avx10v1: {Avx10v1      .IsSupported,-5}  X64: {Avx10v1      .X64.IsSupported}
                 Avx10v1.V512: {Avx10v1.V512 .IsSupported,-5}  X64: {Avx10v1.V512 .X64.IsSupported}
 
@@ -41,7 +41,7 @@ internal static partial class Program {
             """);
         #endif
         #if true
-            CONOUT($"""
+            TESTOUT($"""
                          Aes: {Aes          .IsSupported,-5}  X64: {Aes          .X64.IsSupported}
 
                         Bmi1: {Bmi1         .IsSupported,-5}  X64: {Bmi1         .X64.IsSupported}

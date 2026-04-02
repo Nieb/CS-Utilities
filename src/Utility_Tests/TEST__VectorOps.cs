@@ -2,7 +2,7 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__VectorBasicOps() {
-        CONOUT("\n[Utility.VEC Ops]");
+        TESTOUT("\n[Utility.VEC Ops]");
 
         //######################################################################################################################################################
         //######################################################################################################################################################
@@ -239,7 +239,7 @@ internal static partial class Program {
         );
 
         //for (int i = -9; i <= 9; ++i) {
-        //    CONOUT(
+        //    TESTOUT(
         //        $"    {mod(i,2f)} {mod(i,-2f)} {i%2f,2} {i%-2f,2}" +
         //        $"    {mod(i,3f)} {mod(i,-3f)} {i%3f,2} {i%-3f,2}" +
         //        $"    {mod(i,4f)} {mod(i,-4f)} {i%4f,2} {i%-4f,2}" +
@@ -261,7 +261,7 @@ internal static partial class Program {
         #if false
         {
             float x = 0.44f;
-            CONOUT($"""
+            TESTOUT($"""
 
                            x = {x}
 

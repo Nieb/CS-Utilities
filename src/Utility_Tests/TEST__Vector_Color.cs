@@ -2,7 +2,7 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector_Color() {
-        CONOUT("\n[Utility.VEC -- Color]");
+        TESTOUT("\n[Utility.VEC -- Color]");
 
         //======================================================================================================================================================
         {
@@ -13,7 +13,7 @@ internal static partial class Program {
                 //    SB.AppendLine($"UnitToByte(ByteToUnit({i,3})) == {i,3}    {UnitToByte(ByteToUnit(u8(i))) == u8(i)}");
                 Result = Result  &&  (  UnitToByte(ByteToUnit(u8(i))) == u8(i)  );
             }
-            //CONOUT($"{SB}");
+            //TESTOUT($"{SB}");
             TEST("ByteToUnit() <> UnitToByte()", Result);
         }
 
@@ -26,7 +26,7 @@ internal static partial class Program {
                 //    SB.AppendLine($"Lin_to_sRGB(sRGB_to_Lin({v})) == {v}    {Lin_to_sRGB(sRGB_to_Lin(v)).IsApproximately(v)}");
                 Result = Result  &&  Lin_to_sRGB(sRGB_to_Lin(v)).IsApproximately(v);
             }
-            //CONOUT($"{SB}");
+            //TESTOUT($"{SB}");
             TEST("sRGB_to_Lin() <> Lin_to_sRGB()", Result);
         }
 
@@ -79,21 +79,21 @@ internal static partial class Program {
             for (int i = 255; i >= 0; --i) {
                 WavLen = 350f + (i/255f)*Domain;
                 C = Wavelength_to_RGB(WavLen);
-                CONOUT($"  {WavLen,7:0.000}nm  ->  {C}");
+                TESTOUT($"  {WavLen,7:0.000}nm  ->  {C}");
             }
         }
         */
 
         /*
             for (int i = 350; i < 800; ++i) {
-                CONOUT($"  {i}nm  ->  {Wavelength_to_RGB(f32(i))}");
+                TESTOUT($"  {i}nm  ->  {Wavelength_to_RGB(f32(i))}");
             }
         */
 
         /*
-            CONOUT($"{Wavelength_to_RGB(619.68102768746162341399626298384233f)}");
-            CONOUT($"{Wavelength_to_RGB_(619.68102768746162341399626298384233f)}");
-            CONOUT($"{WavLen_to_SpectralColor(619.68102768746162341399626298384233f)}");
+            TESTOUT($"{Wavelength_to_RGB(619.68102768746162341399626298384233f)}");
+            TESTOUT($"{Wavelength_to_RGB_(619.68102768746162341399626298384233f)}");
+            TESTOUT($"{WavLen_to_SpectralColor(619.68102768746162341399626298384233f)}");
         */
 
         //======================================================================================================================================================
@@ -231,20 +231,20 @@ internal static partial class Program {
         //======================================================================================================================================================
         #if false
         {
-            CONOUT("");
+            TESTOUT("");
             vec3 C = new();
             string BLARG = "";
             for (int i = 0; i < 256; ++i) {
                 C = ColorMap_Magma( ((float)i)/255f );
                 BLARG += $"({round(C.r*255f),3},{round(C.g*255f),3},{round(C.b*255f),3},255)";
             }
-            CONOUT(BLARG);
+            TESTOUT(BLARG);
         }
         #endif
 
         #if false
         {
-            CONOUT("");
+            TESTOUT("");
             uint C = new();
             string BLARG = "        ";
             for (int i = 0; i < 256; ++i) {
@@ -256,7 +256,7 @@ internal static partial class Program {
 
                 BLARG += $"0x{C:X8},";
             }
-            CONOUT(BLARG);
+            TESTOUT(BLARG);
         }
         #endif
 

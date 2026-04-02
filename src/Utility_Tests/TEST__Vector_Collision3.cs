@@ -2,7 +2,7 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector_Collision3() {
-        CONOUT("\n[Utility.VEC -- Collision3]");
+        TESTOUT("\n[Utility.VEC -- Collision3]");
 
         //######################################################################################################################################################
         //######################################################################################################################################################
@@ -159,7 +159,7 @@ internal static partial class Program {
         );
 
         #if false
-            CONOUT($"""
+            TESTOUT($"""
                 {RayVsPlane((2f,2f,2f),normalize(-1f,-1f,-1f),    ( 1f, 1f, 1f),normalize( 1f, 1f, 1f))}    { SQRT3}
                 {RayVsPlane((2f,2f,2f),normalize( 1f, 1f, 1f),    ( 1f, 1f, 1f),normalize( 1f, 1f, 1f))}    {-SQRT3}
                 {RayVsPlane((2f,2f,2f),normalize(-1f,-1f,-1f),    (-1f,-1f,-1f),normalize(-1f,-1f,-1f))}    { SQRT3 * 3f}
@@ -218,7 +218,7 @@ internal static partial class Program {
             );
 
             #if false
-                CONOUT($"""
+                TESTOUT($"""
 
                     RayVsTriangle({R_p:0},{R_n:0},    {T_a:0},{T_b:0},{T_c:0}, false) == {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, false),2}
                     RayVsTriangle({R_p:0},{R_n:0},    {T_a:0},{T_b:0},{T_c:0}, true ) == {RayVsTriangle(R_p, R_n, T_a, T_b, T_c, true ),2}
@@ -250,7 +250,7 @@ internal static partial class Program {
             && RayVsBox((3.5f, 3.5f, 3.0f),(-SQRT3_RCP,-SQRT3_RCP,-SQRT3_RCP),  (1f,1f,1f),(1f,1f,1f)).IsApproximately(SQRT3 * 1.5f)
         );
         /*
-        CONOUT($"""
+        TESTOUT($"""
 
         RAYvsBOX    Rp: {Rp:0.000}    Rn: {Rn:0.000}    Rnr: {Rnr:0.000}    Bp: {Bp:0.000}    Bs: {Bs:0.000}
 
@@ -281,19 +281,19 @@ internal static partial class Program {
             && RayVsSphere(( 4,-1, 4), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 6, 1, 6), 1).IsApproximately(SQRT3 + SQRT3 - 1f)
         );
 
-        //CONOUT($"{RayVsSphere((-1,-1,-1), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 1, 1, 1), 1)}");
-        //CONOUT($"{(1f-SQRT3_RCP, 1f-SQRT3_RCP, 1f-SQRT3_RCP, SQRT3+SQRT3-1f)}");
+        //TESTOUT($"{RayVsSphere((-1,-1,-1), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 1, 1, 1), 1)}");
+        //TESTOUT($"{(1f-SQRT3_RCP, 1f-SQRT3_RCP, 1f-SQRT3_RCP, SQRT3+SQRT3-1f)}");
 
-        //CONOUT($"{RayVsSphere(( 4,-1, 4), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 6, 1, 6), 1)}");
-        //CONOUT($"{(4f-SQRT3_RCP, 1f-SQRT3_RCP, 6f-SQRT3_RCP, SQRT3+SQRT3-1f)}");
+        //TESTOUT($"{RayVsSphere(( 4,-1, 4), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ( 6, 1, 6), 1)}");
+        //TESTOUT($"{(4f-SQRT3_RCP, 1f-SQRT3_RCP, 6f-SQRT3_RCP, SQRT3+SQRT3-1f)}");
 
-        //CONOUT($"{SQRT3_RCP}");
-        //CONOUT($"{1f-SQRT3_RCP}");
-        //CONOUT($"{new vec3(SQRT3_RCP, SQRT3_RCP, SQRT3_RCP).Length}");
-        //CONOUT($"{distance((-1,-1,-1), (1,1,1))}");
+        //TESTOUT($"{SQRT3_RCP}");
+        //TESTOUT($"{1f-SQRT3_RCP}");
+        //TESTOUT($"{new vec3(SQRT3_RCP, SQRT3_RCP, SQRT3_RCP).Length}");
+        //TESTOUT($"{distance((-1,-1,-1), (1,1,1))}");
 
         //for (int i = -13; i <= 13; ++i) {
-        //    CONOUT(
+        //    TESTOUT(
         //        $"  {RayVsSphere((i/12f,0f,1f), (0f,0f,-1f),   (0f,0f,0f), 1f),-11}" +
         //        $"  {RayVsSphere((i/12f,0f,2f), (0f,0f,-1f),   (0f,0f,0f), 1f),-11}" +
         //        $"  {RayVsSphere((i/ 6f,0f,5f), (0f,0f,-1f),   (0f,0f,0f), 2f),-11}" +
@@ -372,7 +372,7 @@ internal static partial class Program {
 
             #if false
                 string HitSideStr(int i) => (i==0?"-X" : i==2?"+X" : i==1?"-Y" : i==3?"+Y" : i==4?"-Z" : i==6?"+Z" : "~");
-                CONOUT($"""
+                TESTOUT($"""
                     [ 0]: {HitDist[ 0]:#0.00}    {HitSide[ 0]} "{HitSideStr(HitSide[ 0])}"
                     [ 1]: {HitDist[ 1]:#0.00}    {HitSide[ 1]} "{HitSideStr(HitSide[ 1])}"
                     [ 2]: {HitDist[ 2]:#0.00}    {HitSide[ 2]} "{HitSideStr(HitSide[ 2])}"

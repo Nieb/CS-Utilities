@@ -2,11 +2,11 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector_Generate() {
-        CONOUT("\n[Utility.VEC -- Generation]");
+        TESTOUT("\n[Utility.VEC -- Generation]");
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        TEST("FromAng()", true
+        TEST("FromAng()",true
             && FromAng(ToRad(-360)).IsApproximately((         0,         1))
             && FromAng(ToRad(-270)).IsApproximately((         1,         0))
             && FromAng(ToRad(-180)).IsApproximately((         0,        -1))
@@ -24,83 +24,161 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        TEST("FromPch()", true
-            && FromPch(ToRad(-360)).IsApproximately(( 0,         0,        -1)) && FromPch(ToRad(-360),true).IsApproximately(( 0,         0,         1))
-            && FromPch(ToRad(-270)).IsApproximately(( 0,        -1,         0)) && FromPch(ToRad(-270),true).IsApproximately(( 0,        -1,         0))
-            && FromPch(ToRad(-180)).IsApproximately(( 0,         0,         1)) && FromPch(ToRad(-180),true).IsApproximately(( 0,         0,        -1))
-            && FromPch(ToRad(-135)).IsApproximately(( 0, SQRT2_RCP, SQRT2_RCP)) && FromPch(ToRad(-135),true).IsApproximately(( 0, SQRT2_RCP,-SQRT2_RCP))
-            && FromPch(ToRad(- 90)).IsApproximately(( 0,         1,         0)) && FromPch(ToRad(- 90),true).IsApproximately(( 0,         1,         0))
-            && FromPch(ToRad(- 45)).IsApproximately(( 0, SQRT2_RCP,-SQRT2_RCP)) && FromPch(ToRad(- 45),true).IsApproximately(( 0, SQRT2_RCP, SQRT2_RCP))
-            && FromPch(         0 ).IsApproximately(( 0,         0,        -1)) && FromPch(         0 ,true).IsApproximately(( 0,         0,         1))
-            && FromPch(ToRad(  45)).IsApproximately(( 0,-SQRT2_RCP,-SQRT2_RCP)) && FromPch(ToRad(  45),true).IsApproximately(( 0,-SQRT2_RCP, SQRT2_RCP))
-            && FromPch(ToRad(  90)).IsApproximately(( 0,        -1,         0)) && FromPch(ToRad(  90),true).IsApproximately(( 0,        -1,         0))
-            && FromPch(ToRad( 135)).IsApproximately(( 0,-SQRT2_RCP, SQRT2_RCP)) && FromPch(ToRad( 135),true).IsApproximately(( 0,-SQRT2_RCP,-SQRT2_RCP))
-            && FromPch(ToRad( 180)).IsApproximately(( 0,         0,         1)) && FromPch(ToRad( 180),true).IsApproximately(( 0,         0,        -1))
-            && FromPch(ToRad( 270)).IsApproximately(( 0,         1,         0)) && FromPch(ToRad( 270),true).IsApproximately(( 0,         1,         0))
-            && FromPch(ToRad( 360)).IsApproximately(( 0,         0,        -1)) && FromPch(ToRad( 360),true).IsApproximately(( 0,         0,         1))
-        );
+        #if Z_UP
+            TEST("FromPch()",true
+                && FromPch(ToRad(-360)).IsApproximately(( 0,         0,         1))
+                && FromPch(ToRad(-270)).IsApproximately(( 0,        -1,         0))
+                && FromPch(ToRad(-180)).IsApproximately(( 0,         0,        -1))
+                && FromPch(ToRad(-135)).IsApproximately(( 0, SQRT2_RCP,-SQRT2_RCP))
+                && FromPch(ToRad(- 90)).IsApproximately(( 0,         1,         0))
+                && FromPch(ToRad(- 45)).IsApproximately(( 0, SQRT2_RCP, SQRT2_RCP))
+                && FromPch(         0 ).IsApproximately(( 0,         0,         1))
+                && FromPch(ToRad(  45)).IsApproximately(( 0,-SQRT2_RCP, SQRT2_RCP))
+                && FromPch(ToRad(  90)).IsApproximately(( 0,        -1,         0))
+                && FromPch(ToRad( 135)).IsApproximately(( 0,-SQRT2_RCP,-SQRT2_RCP))
+                && FromPch(ToRad( 180)).IsApproximately(( 0,         0,        -1))
+                && FromPch(ToRad( 270)).IsApproximately(( 0,         1,         0))
+                && FromPch(ToRad( 360)).IsApproximately(( 0,         0,         1))
+            );
+        #else
+            TEST("FromPch()",true
+                && FromPch(ToRad(-360)).IsApproximately(( 0,         0,        -1))
+                && FromPch(ToRad(-270)).IsApproximately(( 0,        -1,         0))
+                && FromPch(ToRad(-180)).IsApproximately(( 0,         0,         1))
+                && FromPch(ToRad(-135)).IsApproximately(( 0, SQRT2_RCP, SQRT2_RCP))
+                && FromPch(ToRad(- 90)).IsApproximately(( 0,         1,         0))
+                && FromPch(ToRad(- 45)).IsApproximately(( 0, SQRT2_RCP,-SQRT2_RCP))
+                && FromPch(         0 ).IsApproximately(( 0,         0,        -1))
+                && FromPch(ToRad(  45)).IsApproximately(( 0,-SQRT2_RCP,-SQRT2_RCP))
+                && FromPch(ToRad(  90)).IsApproximately(( 0,        -1,         0))
+                && FromPch(ToRad( 135)).IsApproximately(( 0,-SQRT2_RCP, SQRT2_RCP))
+                && FromPch(ToRad( 180)).IsApproximately(( 0,         0,         1))
+                && FromPch(ToRad( 270)).IsApproximately(( 0,         1,         0))
+                && FromPch(ToRad( 360)).IsApproximately(( 0,         0,        -1))
+            );
+        #endif
 
         //======================================================================================================================================================
-        TEST("FromYaw()", true
-            && FromYaw(ToRad(-360)).IsApproximately((         0, 0,        -1)) && FromYaw(ToRad(-360),true).IsApproximately((         0,         1, 0))
-            && FromYaw(ToRad(-270)).IsApproximately((         1, 0,         0)) && FromYaw(ToRad(-270),true).IsApproximately((         1,         0, 0))
-            && FromYaw(ToRad(-180)).IsApproximately((         0, 0,         1)) && FromYaw(ToRad(-180),true).IsApproximately((         0,        -1, 0))
-            && FromYaw(ToRad(-135)).IsApproximately((-SQRT2_RCP, 0, SQRT2_RCP)) && FromYaw(ToRad(-135),true).IsApproximately((-SQRT2_RCP,-SQRT2_RCP, 0))
-            && FromYaw(ToRad(- 90)).IsApproximately((        -1, 0,         0)) && FromYaw(ToRad(- 90),true).IsApproximately((        -1,         0, 0))
-            && FromYaw(ToRad(- 45)).IsApproximately((-SQRT2_RCP, 0,-SQRT2_RCP)) && FromYaw(ToRad(- 45),true).IsApproximately((-SQRT2_RCP, SQRT2_RCP, 0))
-            && FromYaw(         0 ).IsApproximately((         0, 0,        -1)) && FromYaw(         0 ,true).IsApproximately((         0,         1, 0))
-            && FromYaw(ToRad(  45)).IsApproximately(( SQRT2_RCP, 0,-SQRT2_RCP)) && FromYaw(ToRad(  45),true).IsApproximately(( SQRT2_RCP, SQRT2_RCP, 0))
-            && FromYaw(ToRad(  90)).IsApproximately((         1, 0,         0)) && FromYaw(ToRad(  90),true).IsApproximately((         1,         0, 0))
-            && FromYaw(ToRad( 135)).IsApproximately(( SQRT2_RCP, 0, SQRT2_RCP)) && FromYaw(ToRad( 135),true).IsApproximately(( SQRT2_RCP,-SQRT2_RCP, 0))
-            && FromYaw(ToRad( 180)).IsApproximately((         0, 0,         1)) && FromYaw(ToRad( 180),true).IsApproximately((         0,        -1, 0))
-            && FromYaw(ToRad( 270)).IsApproximately((        -1, 0,         0)) && FromYaw(ToRad( 270),true).IsApproximately((        -1,         0, 0))
-            && FromYaw(ToRad( 360)).IsApproximately((         0, 0,        -1)) && FromYaw(ToRad( 360),true).IsApproximately((         0,         1, 0))
-        );
+        #if Z_UP
+            TEST("FromYaw()",true
+                && FromYaw(ToRad(-360)).IsApproximately((         0,         1, 0))
+                && FromYaw(ToRad(-270)).IsApproximately((         1,         0, 0))
+                && FromYaw(ToRad(-180)).IsApproximately((         0,        -1, 0))
+                && FromYaw(ToRad(-135)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP, 0))
+                && FromYaw(ToRad(- 90)).IsApproximately((        -1,         0, 0))
+                && FromYaw(ToRad(- 45)).IsApproximately((-SQRT2_RCP, SQRT2_RCP, 0))
+                && FromYaw(         0 ).IsApproximately((         0,         1, 0))
+                && FromYaw(ToRad(  45)).IsApproximately(( SQRT2_RCP, SQRT2_RCP, 0))
+                && FromYaw(ToRad(  90)).IsApproximately((         1,         0, 0))
+                && FromYaw(ToRad( 135)).IsApproximately(( SQRT2_RCP,-SQRT2_RCP, 0))
+                && FromYaw(ToRad( 180)).IsApproximately((         0,        -1, 0))
+                && FromYaw(ToRad( 270)).IsApproximately((        -1,         0, 0))
+                && FromYaw(ToRad( 360)).IsApproximately((         0,         1, 0))
+            );
+        #else
+            TEST("FromYaw()",true
+                && FromYaw(ToRad(-360)).IsApproximately((         0, 0,        -1))
+                && FromYaw(ToRad(-270)).IsApproximately((         1, 0,         0))
+                && FromYaw(ToRad(-180)).IsApproximately((         0, 0,         1))
+                && FromYaw(ToRad(-135)).IsApproximately((-SQRT2_RCP, 0, SQRT2_RCP))
+                && FromYaw(ToRad(- 90)).IsApproximately((        -1, 0,         0))
+                && FromYaw(ToRad(- 45)).IsApproximately((-SQRT2_RCP, 0,-SQRT2_RCP))
+                && FromYaw(         0 ).IsApproximately((         0, 0,        -1))
+                && FromYaw(ToRad(  45)).IsApproximately(( SQRT2_RCP, 0,-SQRT2_RCP))
+                && FromYaw(ToRad(  90)).IsApproximately((         1, 0,         0))
+                && FromYaw(ToRad( 135)).IsApproximately(( SQRT2_RCP, 0, SQRT2_RCP))
+                && FromYaw(ToRad( 180)).IsApproximately((         0, 0,         1))
+                && FromYaw(ToRad( 270)).IsApproximately((        -1, 0,         0))
+                && FromYaw(ToRad( 360)).IsApproximately((         0, 0,        -1))
+            );
+        #endif
 
         //======================================================================================================================================================
-        TEST("FromRol()", true
-            && FromRol(ToRad(-360)).IsApproximately((         0,         1, 0)) && FromRol(ToRad(-360),true).IsApproximately((         0,         1, 0))
-            && FromRol(ToRad(-270)).IsApproximately((         1,         0, 0)) && FromRol(ToRad(-270),true).IsApproximately((        -1,         0, 0))
-            && FromRol(ToRad(-180)).IsApproximately((         0,        -1, 0)) && FromRol(ToRad(-180),true).IsApproximately((         0,        -1, 0))
-            && FromRol(ToRad(-135)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP, 0)) && FromRol(ToRad(-135),true).IsApproximately(( SQRT2_RCP,-SQRT2_RCP, 0))
-            && FromRol(ToRad(- 90)).IsApproximately((        -1,         0, 0)) && FromRol(ToRad(- 90),true).IsApproximately((         1,         0, 0))
-            && FromRol(ToRad(- 45)).IsApproximately((-SQRT2_RCP, SQRT2_RCP, 0)) && FromRol(ToRad(- 45),true).IsApproximately(( SQRT2_RCP, SQRT2_RCP, 0))
-            && FromRol(         0 ).IsApproximately((         0,         1, 0)) && FromRol(         0 ,true).IsApproximately((         0,         1, 0))
-            && FromRol(ToRad(  45)).IsApproximately(( SQRT2_RCP, SQRT2_RCP, 0)) && FromRol(ToRad(  45),true).IsApproximately((-SQRT2_RCP, SQRT2_RCP, 0))
-            && FromRol(ToRad(  90)).IsApproximately((         1,         0, 0)) && FromRol(ToRad(  90),true).IsApproximately((        -1,         0, 0))
-            && FromRol(ToRad( 135)).IsApproximately(( SQRT2_RCP,-SQRT2_RCP, 0)) && FromRol(ToRad( 135),true).IsApproximately((-SQRT2_RCP,-SQRT2_RCP, 0))
-            && FromRol(ToRad( 180)).IsApproximately((         0,        -1, 0)) && FromRol(ToRad( 180),true).IsApproximately((         0,        -1, 0))
-            && FromRol(ToRad( 270)).IsApproximately((        -1,         0, 0)) && FromRol(ToRad( 270),true).IsApproximately((         1,         0, 0))
-            && FromRol(ToRad( 360)).IsApproximately((         0,         1, 0)) && FromRol(ToRad( 360),true).IsApproximately((         0,         1, 0))
-        );
+        #if Z_UP
+            TEST("FromRol()",true
+                && FromRol(ToRad(-360)).IsApproximately((         0,         1, 0))
+                && FromRol(ToRad(-270)).IsApproximately((        -1,         0, 0))
+                && FromRol(ToRad(-180)).IsApproximately((         0,        -1, 0))
+                && FromRol(ToRad(-135)).IsApproximately(( SQRT2_RCP,-SQRT2_RCP, 0))
+                && FromRol(ToRad(- 90)).IsApproximately((         1,         0, 0))
+                && FromRol(ToRad(- 45)).IsApproximately(( SQRT2_RCP, SQRT2_RCP, 0))
+                && FromRol(         0 ).IsApproximately((         0,         1, 0))
+                && FromRol(ToRad(  45)).IsApproximately((-SQRT2_RCP, SQRT2_RCP, 0))
+                && FromRol(ToRad(  90)).IsApproximately((        -1,         0, 0))
+                && FromRol(ToRad( 135)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP, 0))
+                && FromRol(ToRad( 180)).IsApproximately((         0,        -1, 0))
+                && FromRol(ToRad( 270)).IsApproximately((         1,         0, 0))
+                && FromRol(ToRad( 360)).IsApproximately((         0,         1, 0))
+            );
+        #else
+            TEST("FromRol()",true
+                && FromRol(ToRad(-360)).IsApproximately((         0,         1, 0))
+                && FromRol(ToRad(-270)).IsApproximately((         1,         0, 0))
+                && FromRol(ToRad(-180)).IsApproximately((         0,        -1, 0))
+                && FromRol(ToRad(-135)).IsApproximately((-SQRT2_RCP,-SQRT2_RCP, 0))
+                && FromRol(ToRad(- 90)).IsApproximately((        -1,         0, 0))
+                && FromRol(ToRad(- 45)).IsApproximately((-SQRT2_RCP, SQRT2_RCP, 0))
+                && FromRol(         0 ).IsApproximately((         0,         1, 0))
+                && FromRol(ToRad(  45)).IsApproximately(( SQRT2_RCP, SQRT2_RCP, 0))
+                && FromRol(ToRad(  90)).IsApproximately((         1,         0, 0))
+                && FromRol(ToRad( 135)).IsApproximately(( SQRT2_RCP,-SQRT2_RCP, 0))
+                && FromRol(ToRad( 180)).IsApproximately((         0,        -1, 0))
+                && FromRol(ToRad( 270)).IsApproximately((        -1,         0, 0))
+                && FromRol(ToRad( 360)).IsApproximately((         0,         1, 0))
+            );
+        #endif
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        TEST("FromPchYaw()", true
-            && FromPchYaw(ToRad(-360), 0).IsApproximately(( 0, 0,-1))           && FromPchYaw(ToRad(-360), 0,true).IsApproximately(( 0, 1, 0))
-            && FromPchYaw(ToRad(-270), 0).IsApproximately(( 0,-1, 0))           && FromPchYaw(ToRad(-270), 0,true).IsApproximately(( 0, 0,-1))
-            && FromPchYaw(ToRad(-180), 0).IsApproximately(( 0, 0, 1))           && FromPchYaw(ToRad(-180), 0,true).IsApproximately(( 0,-1, 0))
-            && FromPchYaw(ToRad( -90), 0).IsApproximately(( 0, 1, 0))           && FromPchYaw(ToRad( -90), 0,true).IsApproximately(( 0, 0, 1))
-            && FromPchYaw(         0 , 0).IsApproximately(( 0, 0,-1))           && FromPchYaw(         0 , 0,true).IsApproximately(( 0, 1, 0))
-            && FromPchYaw(ToRad(  90), 0).IsApproximately(( 0,-1, 0))           && FromPchYaw(ToRad(  90), 0,true).IsApproximately(( 0, 0,-1))
-            && FromPchYaw(ToRad( 180), 0).IsApproximately(( 0, 0, 1))           && FromPchYaw(ToRad( 180), 0,true).IsApproximately(( 0,-1, 0))
-            && FromPchYaw(ToRad( 270), 0).IsApproximately(( 0, 1, 0))           && FromPchYaw(ToRad( 270), 0,true).IsApproximately(( 0, 0, 1))
-            && FromPchYaw(ToRad( 360), 0).IsApproximately(( 0, 0,-1))           && FromPchYaw(ToRad( 360), 0,true).IsApproximately(( 0, 1, 0))
+        #if Z_UP
+            TEST("FromPchYaw()",true
+                && FromPchYaw(ToRad(-360), 0).IsApproximately(( 0, 1, 0))
+                && FromPchYaw(ToRad(-270), 0).IsApproximately(( 0, 0,-1))
+                && FromPchYaw(ToRad(-180), 0).IsApproximately(( 0,-1, 0))
+                && FromPchYaw(ToRad( -90), 0).IsApproximately(( 0, 0, 1))
+                && FromPchYaw(         0 , 0).IsApproximately(( 0, 1, 0))
+                && FromPchYaw(ToRad(  90), 0).IsApproximately(( 0, 0,-1))
+                && FromPchYaw(ToRad( 180), 0).IsApproximately(( 0,-1, 0))
+                && FromPchYaw(ToRad( 270), 0).IsApproximately(( 0, 0, 1))
+                && FromPchYaw(ToRad( 360), 0).IsApproximately(( 0, 1, 0))
 
-            && FromPchYaw( 0,ToRad(-360)).IsApproximately(( 0, 0,-1))           && FromPchYaw( 0,ToRad(-360),true).IsApproximately(( 0, 1, 0))
-            && FromPchYaw( 0,ToRad(-270)).IsApproximately(( 1, 0, 0))           && FromPchYaw( 0,ToRad(-270),true).IsApproximately(( 1, 0, 0))
-            && FromPchYaw( 0,ToRad(-180)).IsApproximately(( 0, 0, 1))           && FromPchYaw( 0,ToRad(-180),true).IsApproximately(( 0,-1, 0))
-            && FromPchYaw( 0,ToRad( -90)).IsApproximately((-1, 0, 0))           && FromPchYaw( 0,ToRad( -90),true).IsApproximately((-1, 0, 0))
-            && FromPchYaw( 0,         0 ).IsApproximately(( 0, 0,-1))           && FromPchYaw( 0,         0 ,true).IsApproximately(( 0, 1, 0))
-            && FromPchYaw( 0,ToRad(  90)).IsApproximately(( 1, 0, 0))           && FromPchYaw( 0,ToRad(  90),true).IsApproximately(( 1, 0, 0))
-            && FromPchYaw( 0,ToRad( 180)).IsApproximately(( 0, 0, 1))           && FromPchYaw( 0,ToRad( 180),true).IsApproximately(( 0,-1, 0))
-            && FromPchYaw( 0,ToRad( 270)).IsApproximately((-1, 0, 0))           && FromPchYaw( 0,ToRad( 270),true).IsApproximately((-1, 0, 0))
-            && FromPchYaw( 0,ToRad( 360)).IsApproximately(( 0, 0,-1))           && FromPchYaw( 0,ToRad( 360),true).IsApproximately(( 0, 1, 0))
-        );
+                && FromPchYaw( 0,ToRad(-360)).IsApproximately(( 0, 1, 0))
+                && FromPchYaw( 0,ToRad(-270)).IsApproximately(( 1, 0, 0))
+                && FromPchYaw( 0,ToRad(-180)).IsApproximately(( 0,-1, 0))
+                && FromPchYaw( 0,ToRad( -90)).IsApproximately((-1, 0, 0))
+                && FromPchYaw( 0,         0 ).IsApproximately(( 0, 1, 0))
+                && FromPchYaw( 0,ToRad(  90)).IsApproximately(( 1, 0, 0))
+                && FromPchYaw( 0,ToRad( 180)).IsApproximately(( 0,-1, 0))
+                && FromPchYaw( 0,ToRad( 270)).IsApproximately((-1, 0, 0))
+                && FromPchYaw( 0,ToRad( 360)).IsApproximately(( 0, 1, 0))
+            );
+        #else
+            TEST("FromPchYaw()",true
+                && FromPchYaw(ToRad(-360), 0).IsApproximately(( 0, 0,-1))
+                && FromPchYaw(ToRad(-270), 0).IsApproximately(( 0,-1, 0))
+                && FromPchYaw(ToRad(-180), 0).IsApproximately(( 0, 0, 1))
+                && FromPchYaw(ToRad( -90), 0).IsApproximately(( 0, 1, 0))
+                && FromPchYaw(         0 , 0).IsApproximately(( 0, 0,-1))
+                && FromPchYaw(ToRad(  90), 0).IsApproximately(( 0,-1, 0))
+                && FromPchYaw(ToRad( 180), 0).IsApproximately(( 0, 0, 1))
+                && FromPchYaw(ToRad( 270), 0).IsApproximately(( 0, 1, 0))
+                && FromPchYaw(ToRad( 360), 0).IsApproximately(( 0, 0,-1))
+
+                && FromPchYaw( 0,ToRad(-360)).IsApproximately(( 0, 0,-1))
+                && FromPchYaw( 0,ToRad(-270)).IsApproximately(( 1, 0, 0))
+                && FromPchYaw( 0,ToRad(-180)).IsApproximately(( 0, 0, 1))
+                && FromPchYaw( 0,ToRad( -90)).IsApproximately((-1, 0, 0))
+                && FromPchYaw( 0,         0 ).IsApproximately(( 0, 0,-1))
+                && FromPchYaw( 0,ToRad(  90)).IsApproximately(( 1, 0, 0))
+                && FromPchYaw( 0,ToRad( 180)).IsApproximately(( 0, 0, 1))
+                && FromPchYaw( 0,ToRad( 270)).IsApproximately((-1, 0, 0))
+                && FromPchYaw( 0,ToRad( 360)).IsApproximately(( 0, 0,-1))
+            );
+        #endif
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        TEST("RotFromDir()", true
+        TEST("RotFromDir()",true
             && RotFromDir((-1, 0, 0))                .IsApproximately((        0 ,ToRad(- 90), 0))
             && RotFromDir(( 1, 0, 0))                .IsApproximately((        0 ,ToRad(  90), 0))
 
@@ -127,7 +205,7 @@ internal static partial class Program {
             vec2[] Poly5 = Polygon(5,96), Poly6  = Polygon( 6,96), Poly7  = Polygon( 7,96), Poly8  = Polygon( 8,96),
                    Poly9 = Polygon(9,96), Poly10 = Polygon(10,96), Poly11 = Polygon(11,96), Poly12 = Polygon(12,96);
 
-            TEST("Polygon()", true
+            TEST("Polygon()",true
                 &&  Poly5[ 0].IsRoughly((  0.0f       , 96.0f       )) &&  Poly5[ 1].IsRoughly((-91.30142556f, 29.66563145f))
                 &&  Poly5[ 2].IsRoughly((-56.42738422f,-77.66563145f)) &&  Poly5[ 3].IsRoughly(( 56.42738422f,-77.66563145f))
                 &&  Poly5[ 4].IsRoughly(( 91.30142556f, 29.66563145f))
@@ -178,9 +256,9 @@ internal static partial class Program {
         {
             vec2 A = (-1, 0);
             vec2 B = ( 1, 0);
-            vec2[] Poly = Polygon_Line(A, B, SegCount:2, Radius:1f);
+            vec2[] Poly = PolyLine(A, B, SegCount:2, Radius:1f);
 
-            TEST("Polygon_Line()", true
+            TEST("PolyLine()",true
                 &&  Poly.Length == 10
 
                 &&  Poly[0] == (-1, 1)

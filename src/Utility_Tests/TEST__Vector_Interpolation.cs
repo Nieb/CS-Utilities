@@ -2,7 +2,7 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector_Interpolation() {
-        CONOUT("\n[Utility.VEC -- Interpolation]");
+        TESTOUT("\n[Utility.VEC -- Interpolation]");
 
         //======================================================================================================================================================
         TEST("Mix()", true

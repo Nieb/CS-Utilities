@@ -2,43 +2,7 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Vector() {
-        CONOUT("\n[Utility.VEC]");
-
-        //######################################################################################################################################################
-        //######################################################################################################################################################
-        TEST(" vec2 is  8 bytes", System.Runtime.InteropServices.Marshal.SizeOf< vec2>() ==  8);
-        TEST("ivec2 is  8 bytes", System.Runtime.InteropServices.Marshal.SizeOf<ivec2>() ==  8);
-
-        TEST(" vec3 is 12 bytes", System.Runtime.InteropServices.Marshal.SizeOf< vec3>() == 12);
-        TEST("ivec3 is 12 bytes", System.Runtime.InteropServices.Marshal.SizeOf<ivec3>() == 12);
-
-        TEST(" vec4 is 16 bytes", System.Runtime.InteropServices.Marshal.SizeOf< vec4>() == 16);
-        TEST("ivec4 is 16 bytes", System.Runtime.InteropServices.Marshal.SizeOf<ivec4>() == 16);
-
-        TEST("bvec4 is  4 bytes", System.Runtime.InteropServices.Marshal.SizeOf<bvec4>() ==  4);
-        TEST("bvec8 is  8 bytes", System.Runtime.InteropServices.Marshal.SizeOf<bvec8>() ==  8);
-
-        TEST(" mat4 is 64 bytes", System.Runtime.InteropServices.Marshal.SizeOf<mat4>()  == 64);
-
-        #if false
-            CONOUT($"""
-                                   bool: {sizeof(bool  ),2} bytes
-
-                                  sbyte: {sizeof(sbyte ),2} bytes       byte: {sizeof(byte  ),2} bytes
-                                  short: {sizeof(short ),2} bytes     ushort: {sizeof(ushort),2} bytes
-                                    int: {sizeof(int   ),2} bytes       uint: {sizeof(uint  ),2} bytes
-                                   long: {sizeof(long  ),2} bytes      ulong: {sizeof(ulong ),2} bytes
-
-                                  float: {sizeof(float ),2} bytes
-                                 double: {sizeof(double),2} bytes
-
-                System.Numerics.Vector2: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Vector2>(),2} bytes
-                System.Numerics.Vector3: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Vector3>(),2} bytes
-                System.Numerics.Vector4: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Vector4>(),2} bytes
-
-                System.Numerics.Matrix4: {System.Runtime.InteropServices.Marshal.SizeOf<System.Numerics.Matrix4x4>(),2} bytes
-            """);
-        #endif
+        TESTOUT("\n[Utility.VEC]");
 
         //######################################################################################################################################################
         //######################################################################################################################################################
@@ -89,104 +53,6 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        #if false
-            CONOUT($"""
-
-                {BitCast_ToF32(0x3EAAAAABu):F98}
-                {ONE_THIRD:F98}
-
-                {IntToBinaryString(0x3EAAAAABu)}
-                {IntToBinaryString(BitCast_ToU32(ONE_THIRD))}
-
-
-                {BitCast_ToF32(0x3F2AAAABu):F98}
-                {TWO_THIRD:F98}
-                {IntToBinaryString(0x3F2AAAABu)}
-                {IntToBinaryString(BitCast_ToU32(TWO_THIRD))}
-
-
-
-                {0.000000000000123456f:F98}
-            """);
-            /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                CONOUT($"""
-                    ...
-                    {BitCast_ToF32(0x3EAAAAABu):F98}
-                    {ONE_THIRD:F98}
-
-                    {IntToBinaryString(0x3EAAAAABu)}
-                    {IntToBinaryString(BitCast_ToU32(ONE_THIRD))}
-                    ...
-                """);
-
-                    0.33333334326744079589843750000000000000000000000000000000000000000000000000000000000000000000000000
-                    0.33333334326744079589843750000000000000000000000000000000000000000000000000000000000000000000000000
-
-                    00111110_10101010_10101010_10101011
-                                                                                wtf?    where did this newline come from???    only happens with full CONOUT() from above...
-                    00111110_10101010_10101010_10101011
-
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                CONOUT($"""
-                    ...
-                    {BitCast_ToF32(0x3EAAAAABu):F98}
-                    {ONE_THIRD:F98}
-                    {IntToBinaryString(0x3EAAAAABu)}
-                    {IntToBinaryString(BitCast_ToU32(ONE_THIRD))}
-                    ...
-                """);
-
-                    0.33333334326744079589843750000000000000000000000000000000000000000000000000000000000000000000000000
-                    0.33333334326744079589843750000000000000000000000000000000000000000000000000000000000000000000000000
-                    00111110_10101010_10101010_10101011
-                    00111110_10101010_10101010_10101011
-
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-        #endif
-
-        //######################################################################################################################################################
-        //######################################################################################################################################################
-
-        #if false
-        {
-            bvec4 A = 0xFF_CC_99_33u;
-            CONOUT($"");
-            CONOUT($"    A: {A:x}");
-            CONOUT($"  A.x: {A.x:x}");
-            CONOUT($"  A.y: {A.y:x}");
-            CONOUT($"  A.z: {A.z:x}");
-            CONOUT($"  A.w: {A.w:x}");
-
-            uint  B = A;
-            CONOUT($"");
-            CONOUT($"    B: {B:x}");
-
-            bvec4 C = B - 0x11111111u;
-            CONOUT($"");
-            CONOUT($"    C: {C:x}");
-            C.x += 0x11;
-            C.y += 0x11;
-            C.z += 0x11;
-            C.w += 0x11;
-            CONOUT($"    C: {C:x}");
-
-            bvec4 D = new bvec4(0xFF, 0xCC, 0x99, 0x33);
-            CONOUT($"");
-            CONOUT($"    D: {D:x}");
-
-            bvec4 E = (0xFF, 0xCC, 0x99, 0x33);
-            CONOUT($"");
-            CONOUT($"    E: {E:x}");
-            E = E.ByteFlip;
-            CONOUT($"    E: {E:x}");
-
-            //uint S = 0b_0101_0101; // = 0x55 =  85
-            //uint Z = 0b_1010_1010; // = 0xAA = 170
-        }
-        #endif
-
-        //======================================================================================================================================================
-
         {
             bvec4 A = (247,  31,   0, 255);
             bvec4 B = (103, 255,   0, 255);
@@ -207,8 +73,47 @@ internal static partial class Program {
                 && H == 0x9ABC_DEF0u
             );
         }
-
         //======================================================================================================================================================
+        #if false
+        {
+            bvec4 A = 0xFF_CC_99_33u;
+            TESTOUT($"");
+            TESTOUT($"    A: {A:x}");
+            TESTOUT($"  A.x: {A.x:x}");
+            TESTOUT($"  A.y: {A.y:x}");
+            TESTOUT($"  A.z: {A.z:x}");
+            TESTOUT($"  A.w: {A.w:x}");
+
+            uint  B = A;
+            TESTOUT($"");
+            TESTOUT($"    B: {B:x}");
+
+            bvec4 C = B - 0x11111111u;
+            TESTOUT($"");
+            TESTOUT($"    C: {C:x}");
+            C.x += 0x11;
+            C.y += 0x11;
+            C.z += 0x11;
+            C.w += 0x11;
+            TESTOUT($"    C: {C:x}");
+
+            bvec4 D = new bvec4(0xFF, 0xCC, 0x99, 0x33);
+            TESTOUT($"");
+            TESTOUT($"    D: {D:x}");
+
+            bvec4 E = (0xFF, 0xCC, 0x99, 0x33);
+            TESTOUT($"");
+            TESTOUT($"    E: {E:x}");
+            E = E.ByteFlip;
+            TESTOUT($"    E: {E:x}");
+
+            //uint S = 0b_0101_0101; // = 0x55 =  85
+            //uint Z = 0b_1010_1010; // = 0xAA = 170
+        }
+        #endif
+
+        //######################################################################################################################################################
+        //######################################################################################################################################################
         {
             bvec8 A = default;
             A.b0=0x12; A.b1=0x34; A.b2=0x56; A.b3=0x78; A.b4=0x9A; A.b5=0xBC; A.b6=0xDE; A.b7=0xF0;
@@ -228,7 +133,7 @@ internal static partial class Program {
             );
 
             #if false
-                CONOUT($"""
+                TESTOUT($"""
 
                      u8:  {A.b0:X} {A.b1:X} {A.b2:X} {A.b3:X} {A.b4:X} {A.b5:X} {A.b6:X} {A.b7:X}
                     u16:  {A.s0:X}  {A.s1:X}  {A.s2:X}  {A.s3:X}

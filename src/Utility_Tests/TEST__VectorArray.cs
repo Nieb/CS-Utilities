@@ -2,7 +2,7 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__VectorArray() {
-        CONOUT("\n[Utility.VEC Array]");
+        TESTOUT("\n[Utility.VEC Array]");
 
         //######################################################################################################################################################
         //######################################################################################################################################################
@@ -104,7 +104,7 @@ internal static partial class Program {
             //      A.Length == 16
             //      B.Length == 16      should be 48...
             //
-            CONOUT($"{A.Length}    {B.Length}");
+            TESTOUT($"{A.Length}    {B.Length}");
 
             //bool Result = true;
             //for (int i = 0; i < A.Length; ++i) {
@@ -119,7 +119,7 @@ internal static partial class Program {
                     float* pB = (float*)pA;
                     int B_Length = A.Length * 3; //(sizeof(vec3) / sizeof(float));
 
-                    CONOUT($"{A.Length}    {B_Length}");
+                    TESTOUT($"{A.Length}    {B_Length}");
 
                     bool Result = true;
                     for (int i = 0; i < A.Length; ++i) {

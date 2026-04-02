@@ -2,7 +2,7 @@
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__String() {
-        CONOUT("\n[Utility.STR]");
+        TESTOUT("\n[Utility.STR]");
 
         //======================================================================================================================================================
         TEST("RandomDigits()", true
@@ -58,21 +58,37 @@ internal static partial class Program {
         );
 
         TEST("EnumerableToString()", true
-            && EnumerableToString(new string[] { "Aa", "Bb", "Cc", "Dd", "Ee", "Ff", "Gg", "Hh", "Ii" }) == "Aa, Bb, Cc, Dd, Ee, Ff, Gg, Hh, Ii"
-            && EnumerableToString("AaBbCcDdEeFfGgHhIi")                                                  == "A, a, B, b, C, c, D, d, E, e, F, f, G, g, H, h, I, i"
-            && EnumerableToString(new int[] { 1, 2, 3 })                                                 == "1, 2, 3"
+            && EnumerableToString(["Aa", "Bb", "Cc", "Dd", "Ee", "Ff", "Gg", "Hh", "Ii"]) == "Aa, Bb, Cc, Dd, Ee, Ff, Gg, Hh, Ii"
+            && EnumerableToString("AaBbCcDdEeFfGgHhIi")                                   == "A, a, B, b, C, c, D, d, E, e, F, f, G, g, H, h, I, i"
+            && EnumerableToString([1, 2, 3])                                              == "1, 2, 3"
         );
 
-        TEST("IntToBinaryString()", true
-            && IntToBinaryString((sbyte )                 0x7F) ==                                                                "01111111"
-            && IntToBinaryString((short )               0x7FFF) ==                                                       "01111111_11111111"
-            && IntToBinaryString((int   )          0x7FFF_FFFF) ==                                     "01111111_11111111_11111111_11111111"
-            && IntToBinaryString((long  )0x7FFF_FFFF_FFFF_FFFF) == "01111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111"
+        TEST("IntToBinString()", true
+            && IntToBinString((sbyte )                 0x7F) ==                                                                "01111111"
+            && IntToBinString((short )               0x7FFF) ==                                                       "01111111_11111111"
+            && IntToBinString((int   )          0x7FFF_FFFF) ==                                     "01111111_11111111_11111111_11111111"
+            && IntToBinString((long  )0x7FFF_FFFF_FFFF_FFFF) == "01111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111"
 
-            && IntToBinaryString((byte  )                 0xFF) ==                                                                "11111111"
-            && IntToBinaryString((ushort)               0xFFFF) ==                                                       "11111111_11111111"
-            && IntToBinaryString((uint  )          0xFFFF_FFFF) ==                                     "11111111_11111111_11111111_11111111"
-            && IntToBinaryString((ulong )0xFFFF_FFFF_FFFF_FFFF) == "11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111"
+            && IntToBinString((byte  )                 0xFF) ==                                                                "11111111"
+            && IntToBinString((ushort)               0xFFFF) ==                                                       "11111111_11111111"
+            && IntToBinString((uint  )          0xFFFF_FFFF) ==                                     "11111111_11111111_11111111_11111111"
+            && IntToBinString((ulong )0xFFFF_FFFF_FFFF_FFFF) == "11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111"
+        );
+
+        TEST("IntToHexString()", true
+            && IntToHexString((sbyte )                 0x7F) ==                  "7F"
+            && IntToHexString((short )               0x7FFF) ==                "7FFF"
+            && IntToHexString((int   )          0x1234_5678) ==           "1234_5678"
+            && IntToHexString((int   )          0x0034_0078) ==           "0034_0078"
+            && IntToHexString((long  )0x1234_5678_90AB_CDEF) == "1234_5678_90AB_CDEF"
+            && IntToHexString((long  )0x0234_0078_000B_00EF) == "0234_0078_000B_00EF"
+
+            && IntToHexString((byte  )                 0xFF) ==                  "FF"
+            && IntToHexString((ushort)               0xFFFF) ==                "FFFF"
+            && IntToHexString((uint  )          0x1234_5678) ==           "1234_5678"
+            && IntToHexString((uint  )          0x0034_0078) ==           "0034_0078"
+            && IntToHexString((ulong )0x1234_5678_90AB_CDEF) == "1234_5678_90AB_CDEF"
+            && IntToHexString((ulong )0x0234_0078_000B_00EF) == "0234_0078_000B_00EF"
         );
 
         //======================================================================================================================================================

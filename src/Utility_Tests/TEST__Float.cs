@@ -8,7 +8,7 @@ internal static partial class Program {
 
         string b(bool b) => (b ? " •" : "  "); //  ✓ ✔ ✅
 
-        CONOUT($"""
+        TESTOUT($"""
 
         [FLOAT -- Comparison]
                           |  !=  |   <  <=  |  ==  |  >=   >
@@ -51,7 +51,7 @@ internal static partial class Program {
             -Inf / EPS  ==  {FLOAT_NEG_INF / EPS9}
 
 
-            RAY_MISS:  {RAY_MISS}
+                        RAY_MISS:  {RAY_MISS}
             RAY_MISS == RAY_MISS:  {RAY_MISS == RAY_MISS}
 
         """);
@@ -61,7 +61,7 @@ internal static partial class Program {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     static void Test__Float32_Random1() {
-        CONOUT($"""
+        TESTOUT($"""
 
         [FLOAT -- Random1() Range & Precision]
                                                        *Inclusive*  *Exclusive*
@@ -82,7 +82,7 @@ internal static partial class Program {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     static void Test__Float32_BaseTenPrecision() {
-        CONOUT($"""
+        TESTOUT($"""
 
         [FLOAT -- 32-bit Base-10 Precision]
                   |        |        |        |        .|        |        |        |        |        |
@@ -106,7 +106,7 @@ internal static partial class Program {
 
     //==========================================================================================================================================================
     static void Test__Float64_BaseTenPrecision() {
-        CONOUT($"""
+        TESTOUT($"""
 
         [FLOAT -- 64-bit Base-10 Precision]
                   |        |        |        |        .|        |        |        |        |        |
