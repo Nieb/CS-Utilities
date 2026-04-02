@@ -13,7 +13,8 @@ internal static partial class VEC_Filter {
     //
     [Impl(AggressiveInlining)] internal static float HardLimit(float V, float T) => (V > T) ? T : V;
 
-    //==========================================================================================================================================================
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     //
     //  "Rational Decay based Soft-Limiter"
     //
@@ -24,17 +25,8 @@ internal static partial class VEC_Filter {
     //
     //    out: 0 to 1
     //
-    internal static float SoftLimit(float V, float T) {
-        if (V <= T) {
-            return V;
-        } else {
-            float  TT = T * T;
-            float iTT = 1f - T;    iTT *= iTT;
-            return 1f - iTT/(iTT + V - TT);
-        }
-    }
-
-    [Impl(AggressiveInlining)] internal static vec3 SoftLimit(vec3 V, float T) => new vec3(SoftLimit(V.x,T), SoftLimit(V.y,T), SoftLimit(V.z,T));
+    internal static float SoftLimit(float V, float T) {if(V<=T)return V; else {float iTT = 1f-T;   iTT *= iTT;   return 1f - iTT/(iTT + V - T*T);}}
+    internal static vec3  SoftLimit(vec3  V, float T) {if(V<=T)return V; else {float iTT = 1f-T;   iTT *= iTT;   return 1f - iTT/(iTT + V - T*T);}}
 
     //==========================================================================================================================================================
     //
@@ -45,29 +37,15 @@ internal static partial class VEC_Filter {
     //
     //    out: 0 to 1
     //
-    internal static float SoftLimit_Sigmoid(float V, float T) {
-        if (V <= T) {
-            return V;
-        } else {
-            float iT = 1f-T;
-
-            float DivN =             2f * iT;
-            //            ------------------------------
-            float DivD =  1f + exp((-V + T) * (2f / iT));
-
-            return T - iT + (DivN / DivD);
-        }
-    }
-
-    [Impl(AggressiveInlining)] internal static vec3 SoftLimit_Sigmoid(vec3 V, float T) => new vec3(SoftLimit_Sigmoid(V.x,T), SoftLimit_Sigmoid(V.y,T), SoftLimit_Sigmoid(V.z,T));
+    internal static float SoftLimit_Sigmoid(float V, float T) {if(V<=T)return V; else {float iT = 1f-T;   return T-iT + (2f * iT)/( 1f + exp((-V+T)*(2f/iT)) );}}
+    internal static vec3  SoftLimit_Sigmoid(vec3  V, float T) {if(V<=T)return V; else {float iT = 1f-T;   return T-iT + (2f * iT)/( 1f + exp((-V+T)*(2f/iT)) );}}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //  Scale values that exceed a threshold...
+    //  A very application-specific function...
     //
-    //      "Localized Limiter" ?
-    //      "Localized Amp" ?
+    //  Scale values that exceed a threshold.
     //
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private const float Filter_BlendScale = 256f;

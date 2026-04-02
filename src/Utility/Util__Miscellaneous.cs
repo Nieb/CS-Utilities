@@ -1,3 +1,5 @@
+using CallerLineNumber         = System.Runtime.CompilerServices.CallerLineNumberAttribute;
+using CallerArgumentExpression = System.Runtime.CompilerServices.CallerArgumentExpressionAttribute;
 
 namespace Utility;
 internal static class Miscellaneous {
@@ -8,7 +10,7 @@ internal static class Miscellaneous {
     //
     //      LINE_NUMBER()
     //
-    internal static int LINE_NUMBER([System.Runtime.CompilerServices.CallerLineNumber] int LineNumber_AtCallSite = 0) => LineNumber_AtCallSite;
+    internal static int LINE_NUMBER(int Offset=0, [CallerLineNumber] int LineNumber=0) => LineNumber + Offset;
 
     //==========================================================================================================================================================
     //
@@ -16,7 +18,15 @@ internal static class Miscellaneous {
     //
     //      EXPRESSION(1.0 + PI * x)  ==  "1.0 + PI * x"
     //
-  //internal static string EXPRESSION(float Expr, [System.Runtime.CompilerServices.CallerArgumentExpression("Expr")] string ExprStr = "") => ExprStr;
+    internal static string EXPRESSION(float Expr, [CallerArgumentExpression("Expr")] string ExprStr="") => ExprStr;
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //
+    //  'FilePath' can include a file name, it doesn't need to be stripped from string.
+    //
+    [Impl(AggressiveInlining)] public static void IfNotExist_CreateDirectory(string FilePath) =>
+        System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(FilePath));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

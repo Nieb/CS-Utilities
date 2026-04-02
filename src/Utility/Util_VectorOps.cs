@@ -51,14 +51,17 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                                  "Cross" Product
-    [Impl(AggressiveInlining)] internal static v1 cross(v2 A, v2 B) => (A.x*B.y - A.y*B.x); //  "Perpendicular Dot" "2D Pseudoscalar"    Eh, it's "cross". :P
+    [Impl(AggressiveInlining)] internal static v1 cross(v2 A, v2 B) => (A.x*B.y - A.y*B.x);         //  "Perpendicular Dot"    "2D Pseudoscalar"    "cross"...
 
     [Impl(AggressiveInlining)] internal static v3 cross(v3 A, v3 B) => new v3((A.y*B.z - A.z*B.y),  (A.z*B.x - A.x*B.z),  (A.x*B.y - A.y*B.x));
 
-    //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] internal static v1 crozz(v3 A, v3 B) => length(cross(A, B));
+    [Impl(AggressiveInlining)] internal static v1 crozz(v3 A, v3 B) => length(cross(A,B));
 
     //==========================================================================================================================================================
+    //                                                            "Perpendicular Dot" Product       AKA: cross(vec2,vec2)
+  //[Impl(AggressiveInlining)] internal static v1 pot(v2 A, v2 B) => (A.x*B.y - A.y*B.x);
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                                   "Dot" Product
     //  dot(A) == dot(A,A) == "Squared-Length of A."
     //
@@ -111,8 +114,8 @@ internal static partial class VEC {
     //  Scale vector to "NewLength"
     //  Vector * (NewLength / OldLength)
     //
-    [Impl(AggressiveInlining)] internal static v2 lengthen(v2 A, v1 NewLength) => (A == 0f) ? A : A * (NewLength / sqrt(A.x*A.x + A.y*A.y));
-    [Impl(AggressiveInlining)] internal static v3 lengthen(v3 A, v1 NewLength) => (A == 0f) ? A : A * (NewLength / sqrt(A.x*A.x + A.y*A.y + A.z*A.z));
+    [Impl(AggressiveInlining)] internal static v2 length(v2 A, v1 NewLength) => (A == 0f) ? A : A * (NewLength / sqrt(A.x*A.x + A.y*A.y));
+    [Impl(AggressiveInlining)] internal static v3 length(v3 A, v1 NewLength) => (A == 0f) ? A : A * (NewLength / sqrt(A.x*A.x + A.y*A.y + A.z*A.z));
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                                    "Normalize"
@@ -191,17 +194,19 @@ internal static partial class VEC {
                                                                                          : ((B < C) ? ((B < D) ? B : D)
                                                                                                     : ((C < D) ? C : D));
 
-    [Impl(AggressiveInlining)] internal static v2 min(v2 A, v1 B)             => new v2(min(A.x,B          ), min(A.y,B          ));
+    [Impl(AggressiveInlining)] internal static v2 min(v1 A, v2 B) => new v2(min(A  ,B.x), min(A  ,B.y));
+    [Impl(AggressiveInlining)] internal static v2 min(v2 A, v1 B) => new v2(min(A.x,B  ), min(A.y,B  ));
+    [Impl(AggressiveInlining)] internal static v3 min(v1 A, v3 B) => new v3(min(A  ,B.x), min(A  ,B.y), min(A  ,B.z));
+    [Impl(AggressiveInlining)] internal static v3 min(v3 A, v1 B) => new v3(min(A.x,B  ), min(A.y,B  ), min(A.z,B  ));
+    [Impl(AggressiveInlining)] internal static v4 min(v1 A, v4 B) => new v4(min(A  ,B.x), min(A  ,B.y), min(A  ,B.z), min(A  ,B.w));
+    [Impl(AggressiveInlining)] internal static v4 min(v4 A, v1 B) => new v4(min(A.x,B  ), min(A.y,B  ), min(A.z,B  ), min(A.w,B  ));
+
     [Impl(AggressiveInlining)] internal static v2 min(v2 A, v2 B)             => new v2(min(A.x,B.x        ), min(A.y,B.y        ));
     [Impl(AggressiveInlining)] internal static v2 min(v2 A, v2 B, v2 C)       => new v2(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ));
     [Impl(AggressiveInlining)] internal static v2 min(v2 A, v2 B, v2 C, v2 D) => new v2(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y));
-
-    [Impl(AggressiveInlining)] internal static v3 min(v3 A, v1 B)             => new v3(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ));
     [Impl(AggressiveInlining)] internal static v3 min(v3 A, v3 B)             => new v3(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ));
     [Impl(AggressiveInlining)] internal static v3 min(v3 A, v3 B, v3 C)       => new v3(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ));
     [Impl(AggressiveInlining)] internal static v3 min(v3 A, v3 B, v3 C, v3 D) => new v3(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z));
-
-    [Impl(AggressiveInlining)] internal static v4 min(v4 A, v1 B)             => new v4(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ), min(A.w,B          ));
     [Impl(AggressiveInlining)] internal static v4 min(v4 A, v4 B)             => new v4(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ), min(A.w,B.w        ));
     [Impl(AggressiveInlining)] internal static v4 min(v4 A, v4 B, v4 C)       => new v4(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ), min(A.w,B.w,C.w    ));
     [Impl(AggressiveInlining)] internal static v4 min(v4 A, v4 B, v4 C, v4 D) => new v4(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z), min(A.w,B.w,C.w,D.w));
@@ -218,17 +223,19 @@ internal static partial class VEC {
                                                                                          : ((B > C) ? ((B > D) ? B : D)
                                                                                                     : ((C > D) ? C : D));
 
-    [Impl(AggressiveInlining)] internal static v2 max(v2 A, v1 B)             => new v2(max(A.x,B          ), max(A.y,B          ));
+    [Impl(AggressiveInlining)] internal static v2 max(v1 A, v2 B) => new v2(max(A  ,B.x), max(A  ,B.y));
+    [Impl(AggressiveInlining)] internal static v2 max(v2 A, v1 B) => new v2(max(A.x,B  ), max(A.y,B  ));
+    [Impl(AggressiveInlining)] internal static v3 max(v1 A, v3 B) => new v3(max(A  ,B.x), max(A  ,B.y), max(A  ,B.z));
+    [Impl(AggressiveInlining)] internal static v3 max(v3 A, v1 B) => new v3(max(A.x,B  ), max(A.y,B  ), max(A.z,B  ));
+    [Impl(AggressiveInlining)] internal static v4 max(v1 A, v4 B) => new v4(max(A  ,B.x), max(A  ,B.y), max(A  ,B.z), max(A  ,B.w));
+    [Impl(AggressiveInlining)] internal static v4 max(v4 A, v1 B) => new v4(max(A.x,B  ), max(A.y,B  ), max(A.z,B  ), max(A.w,B  ));
+
     [Impl(AggressiveInlining)] internal static v2 max(v2 A, v2 B)             => new v2(max(A.x,B.x        ), max(A.y,B.y        ));
     [Impl(AggressiveInlining)] internal static v2 max(v2 A, v2 B, v2 C)       => new v2(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ));
     [Impl(AggressiveInlining)] internal static v2 max(v2 A, v2 B, v2 C, v2 D) => new v2(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y));
-
-    [Impl(AggressiveInlining)] internal static v3 max(v3 A, v1 B)             => new v3(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ));
     [Impl(AggressiveInlining)] internal static v3 max(v3 A, v3 B)             => new v3(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ));
     [Impl(AggressiveInlining)] internal static v3 max(v3 A, v3 B, v3 C)       => new v3(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ));
     [Impl(AggressiveInlining)] internal static v3 max(v3 A, v3 B, v3 C, v3 D) => new v3(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z));
-
-    [Impl(AggressiveInlining)] internal static v4 max(v4 A, v1 B)             => new v4(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ), max(A.w,B          ));
     [Impl(AggressiveInlining)] internal static v4 max(v4 A, v4 B)             => new v4(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ), max(A.w,B.w        ));
     [Impl(AggressiveInlining)] internal static v4 max(v4 A, v4 B, v4 C)       => new v4(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ), max(A.w,B.w,C.w    ));
     [Impl(AggressiveInlining)] internal static v4 max(v4 A, v4 B, v4 C, v4 D) => new v4(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z), max(A.w,B.w,C.w,D.w));
@@ -236,14 +243,14 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                      "Minimum" Value of a Vector's Components
-    [Impl(AggressiveInlining)] internal static float minof(v2 A) => min(A.x,A.y        );
-    [Impl(AggressiveInlining)] internal static float minof(v3 A) => min(A.x,A.y,A.z    );
+    [Impl(AggressiveInlining)] internal static float minof(v2 A) => min(A.x,A.y);
+    [Impl(AggressiveInlining)] internal static float minof(v3 A) => min(A.x,A.y,A.z);
     [Impl(AggressiveInlining)] internal static float minof(v4 A) => min(A.x,A.y,A.z,A.w);
 
     //==========================================================================================================================================================
     //                                                      "Maximum" Value of a Vector's Components
-    [Impl(AggressiveInlining)] internal static float maxof(v2 A) => max(A.x,A.y        );
-    [Impl(AggressiveInlining)] internal static float maxof(v3 A) => max(A.x,A.y,A.z    );
+    [Impl(AggressiveInlining)] internal static float maxof(v2 A) => max(A.x,A.y);
+    [Impl(AggressiveInlining)] internal static float maxof(v3 A) => max(A.x,A.y,A.z);
     [Impl(AggressiveInlining)] internal static float maxof(v4 A) => max(A.x,A.y,A.z,A.w);
 
     //##########################################################################################################################################################
@@ -295,7 +302,10 @@ internal static partial class VEC {
     //
     //      exp(X)  ==  pow(e, X)  ==  pow(2.718~, X)
     //
-    [Impl(AggressiveInlining)] internal static float exp(float A) => System.MathF.Exp(A);
+    [Impl(AggressiveInlining)] internal static v1 exp(v1 A) => System.MathF.Exp(A);
+    [Impl(AggressiveInlining)] internal static v2 exp(v2 A) => new v2(exp(A.x), exp(A.y));
+    [Impl(AggressiveInlining)] internal static v3 exp(v3 A) => new v3(exp(A.x), exp(A.y), exp(A.z));
+    [Impl(AggressiveInlining)] internal static v4 exp(v4 A) => new v4(exp(A.x), exp(A.y), exp(A.z), exp(A.w));
 
     //==========================================================================================================================================================
     //                                                                    "Logarithm"
@@ -522,26 +532,26 @@ internal static partial class VEC {
     //  For a quick conversion:  Var * TO_DEG
     //                           Var * TO_RAD
     //
-    [Impl(AggressiveInlining)] internal static v1 ToDeg(v1 Radians) => (float)((double)Radians * (180.0 / 3.14159265358979323846264338327950288419716939937511));
+    [Impl(AggressiveInlining)] internal static v1 ToDeg(v1 Radians) => (f32)((f64)Radians * (180d / 3.14159265358979323846264338327950288419716939937511d));
     [Impl(AggressiveInlining)] internal static v2 ToDeg(v2 Rad) => new v2(ToDeg(Rad.x), ToDeg(Rad.y));
     [Impl(AggressiveInlining)] internal static v3 ToDeg(v3 Rad) => new v3(ToDeg(Rad.x), ToDeg(Rad.y), ToDeg(Rad.z));
     [Impl(AggressiveInlining)] internal static v4 ToDeg(v4 Rad) => new v4(ToDeg(Rad.x), ToDeg(Rad.y), ToDeg(Rad.z), ToDeg(Rad.w));
 
-    [Impl(AggressiveInlining)] internal static v1 degrees(v1 V) => ToDeg(V);
-    [Impl(AggressiveInlining)] internal static v2 degrees(v2 V) => ToDeg(V);
-    [Impl(AggressiveInlining)] internal static v3 degrees(v3 V) => ToDeg(V);
-    [Impl(AggressiveInlining)] internal static v4 degrees(v4 V) => ToDeg(V);
+    [Impl(AggressiveInlining)] internal static v1 degrees(v1 Rad) => ToDeg(Rad);
+    [Impl(AggressiveInlining)] internal static v2 degrees(v2 Rad) => ToDeg(Rad);
+    [Impl(AggressiveInlining)] internal static v3 degrees(v3 Rad) => ToDeg(Rad);
+    [Impl(AggressiveInlining)] internal static v4 degrees(v4 Rad) => ToDeg(Rad);
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] internal static v1 ToRad(v1 Degrees) => (float)((double)Degrees * (3.14159265358979323846264338327950288419716939937511 / 180.0));
+    [Impl(AggressiveInlining)] internal static v1 ToRad(v1 Degrees) => (f32)((f64)Degrees * (3.14159265358979323846264338327950288419716939937511d / 180d));
     [Impl(AggressiveInlining)] internal static v2 ToRad(v2 Deg) => new v2(ToRad(Deg.x), ToRad(Deg.y));
     [Impl(AggressiveInlining)] internal static v3 ToRad(v3 Deg) => new v3(ToRad(Deg.x), ToRad(Deg.y), ToRad(Deg.z));
     [Impl(AggressiveInlining)] internal static v4 ToRad(v4 Deg) => new v4(ToRad(Deg.x), ToRad(Deg.y), ToRad(Deg.z), ToRad(Deg.w));
 
-    [Impl(AggressiveInlining)] internal static v1 radians(v1 V) => ToRad(V);
-    [Impl(AggressiveInlining)] internal static v2 radians(v2 V) => ToRad(V);
-    [Impl(AggressiveInlining)] internal static v3 radians(v3 V) => ToRad(V);
-    [Impl(AggressiveInlining)] internal static v4 radians(v4 V) => ToRad(V);
+    [Impl(AggressiveInlining)] internal static v1 radians(v1 Deg) => ToRad(Deg);
+    [Impl(AggressiveInlining)] internal static v2 radians(v2 Deg) => ToRad(Deg);
+    [Impl(AggressiveInlining)] internal static v3 radians(v3 Deg) => ToRad(Deg);
+    [Impl(AggressiveInlining)] internal static v4 radians(v4 Deg) => ToRad(Deg);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

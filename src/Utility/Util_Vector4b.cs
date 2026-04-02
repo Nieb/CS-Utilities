@@ -30,17 +30,15 @@ internal struct bvec4 : System.IFormattable {
     public bvec4(u32 XYZW)               {U = XYZW;}
 
     //==========================================================================================================================================================
-    //                                                               Tuple "Constructor"
-    [Impl(AggressiveInlining)] public static implicit operator bvec4((u8 X, u8 Y, u8 Z, u8 W) t) => new bvec4(t.X, t.Y, t.Z, t.W);
+    //                                                                  Directly Assign
+    [Impl(AggressiveInlining)] public static implicit operator   u32(                   bvec4 A) => A.U;                        //                  bvec4  to  uint
+    [Impl(AggressiveInlining)] public static implicit operator bvec4(                   u32   A) => new bvec4(A);               //                   uint  to  bvec4
+    [Impl(AggressiveInlining)] public static implicit operator bvec4((u8 x, u8 y, u8 z, u8 w) T) => new bvec4(T.x,T.y,T.z,T.w); //  (byte,byte,byte,byte)  to  bvec4
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                            Has Value/Magnitude/Length
     [Impl(AggressiveInlining)] public static implicit operator bool(bvec4 A) => (A.U != 0u);
-
-    //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] public static implicit operator bvec4(uint  A) => new bvec4(A);   //  Directly assign 'uint' to 'bvec'.
-    [Impl(AggressiveInlining)] public static implicit operator  uint(bvec4 A) => A.U;            //  Directly assign 'bvec' to 'uint'.
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

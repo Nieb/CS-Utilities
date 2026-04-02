@@ -3,18 +3,18 @@ namespace Utility;
 internal static partial class VEC {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    const int SizeOfByteVec4 = sizeof(uint);
+    const int SIZE_OF_BVEC4 = 1 * 4; //sizeof(uint);
 
-    const int SizeOfVec2 =  2 * sizeof(float);
-    const int SizeOfVec3 =  3 * sizeof(float);
-    const int SizeOfVec4 =  4 * sizeof(float);
+    const int SIZE_OF_VEC2 =  2 * 4; //sizeof(float);
+    const int SIZE_OF_VEC3 =  3 * 4; //sizeof(float);
+    const int SIZE_OF_VEC4 =  4 * 4; //sizeof(float);
 
-    const int SizeOfMat4 = 16 * sizeof(float);
+    const int SIZE_OF_MAT4 = 16 * 4; //sizeof(float);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     internal static float[] ToFloatArray(this vec2[] Source) {
-        int ByteCount = Source.Length * SizeOfVec2;
+        int ByteCount = Source.Length * SIZE_OF_VEC2;
         float[] Result = new float[Source.Length * 2];
         unsafe {
             //  Pin arrays so the GC doesn't move them:
@@ -33,7 +33,7 @@ internal static partial class VEC {
 
     //==========================================================================================================================================================
     internal static float[] ToFloatArray(this vec3[] Source) {
-        int ByteCount = Source.Length * SizeOfVec3;
+        int ByteCount = Source.Length * SIZE_OF_VEC3;
         float[] Result = new float[Source.Length * 3];
         unsafe {
             //  Pin arrays so the GC doesn't move them:
@@ -52,7 +52,7 @@ internal static partial class VEC {
 
     //==========================================================================================================================================================
     internal static float[] ToFloatArray(this vec4[] Source) {
-        int ByteCount = Source.Length * SizeOfVec4;
+        int ByteCount = Source.Length * SIZE_OF_VEC4;
         float[] Result = new float[Source.Length * 4];
         unsafe {
             //  Pin arrays so the GC doesn't move them:
@@ -72,7 +72,7 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     internal static uint[] ToUintArray(this bvec4[] Source) {
-        int ByteCount = Source.Length * SizeOfByteVec4;
+        int ByteCount = Source.Length * SIZE_OF_BVEC4;
         uint[] Result = new uint[Source.Length];
         unsafe {
             //  Pin arrays so the GC doesn't move them:
@@ -92,7 +92,7 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     internal static float[] ToFloatArray(this mat4 Source) {
-        const int ByteCount = SizeOfMat4;
+        const int ByteCount = SIZE_OF_MAT4;
         float[] Result = new float[16];
         unsafe {
             //  Pin array so the GC doesn't move it:

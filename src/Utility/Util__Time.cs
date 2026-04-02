@@ -1,60 +1,76 @@
 using Stopwatch = System.Diagnostics.Stopwatch;
+using Thread    = System.Threading.Thread;
 
 namespace Utility;
 internal struct TIME {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    public f64 Delta64      {get; private set;}
-    public f32 Delta        {get; private set;}
+    public f64 DeltaClamp = 0d;
+    public f64 Delta64      {get; private set;} = 0d;
+    public f32 Delta        {get; private set;} = 0f;
 
     public f64 DeltaAvg_Weight = 0d;
-    public f64 DeltaAvg64   {get; private set;}
-    public f32 DeltaAvg     {get; private set;}
+    public f64 DeltaAvg64   {get; private set;} = 0d;
+    public f32 DeltaAvg     {get; private set;} = 0f;
 
-  //public  vec4 Cos        {get; private set;} //  ( 1 hertz, 10 hertz, 30 hertz, 60 hertz )
-  //public  vec4 Sin        {get; private set;}
+  //public vec4 Cos         {get; private set;}                                 //  ( 1 hertz, 10 hertz, 30 hertz, 60 hertz )
+  //public vec4 Sin         {get; private set;}
 
-    public u64 Frames       {get; private set;}
+    public u64 Frame        {get; private set;} = 0;
 
-    public f64 SinceStart64 {get; private set;}
-    public f32 SinceStart   {get; private set;}
+    public readonly s64 Beginning = 0;
+    public readonly f64 SinceBeginning64 => f64(this.ThisFrame-this.Beginning) / this.FloatFreq;    //  Absolute Delta
 
-    public string HMS   => $"{Hours:00}:{Minutes:00}:{Seconds:00}";
-    public string HMSf  => $"{Hours:00}:{Minutes:00}:{Seconds:00.000}";
-    public string HMSff => $"{Hours:00}:{Minutes:00}:{Seconds:00.000000}";
+    public f64 SinceStart64 {get; private set;} = 0d;                           //  Cumulative Delta
+    public f32 SinceStart   {get; private set;} = 0f;
 
-    public s64  Frequency => Stopwatch.Frequency;         //  Ticks PerSecond.                     10,000,000      1/t == 0.000_000_1      0.1 MicroSeconds
-    public bool IsHighRes => Stopwatch.IsHighResolution;  //                                       true
+    public f64 Seconds      {get; private set;} = 0d;
+    public s64 Minutes      {get; private set;} = 0;
+    public s64 Hours        {get; private set;} = 0;
+
+    public readonly string HMS   => $"{Hours:00}:{Minutes:00}:{Seconds:00}";
+    public readonly string HMSf  => $"{Hours:00}:{Minutes:00}:{Seconds:00.000}";
+    public readonly string HMSff => $"{Hours:00}:{Minutes:00}:{Seconds:00.000000}";
+
+    public static s64  Frequency => Stopwatch.Frequency;                        //  Ticks PerSecond.    10,000,000      1/t == 0.000_000_1      0.1 MicroSeconds
+    public static bool IsHighRes => Stopwatch.IsHighResolution;                 //                      true
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    private f64 FloatFreq = 0d;
+
     private s64 PrevFrame = 0;
     private s64 ThisFrame = 0;
-
-    private f64 Seconds = 0;
-    private s64 Minutes = 0;
-    private s64 Hours   = 0;
-
-    private f64 FloatFreq = 0d;
+    private s64 NextFrame = 0;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public TIME() : this(1d/24d) {}
 
     public TIME(f64 dAvg_Weight) {
-        this.Delta64      = 0d;
-        this.Delta        = 0f;
-
-        this.SinceStart64 = 0d;
-        this.SinceStart   = 0f;
-
         this.DeltaAvg_Weight = dAvg_Weight;
         this.DeltaAvg64      = 1d/60d;
         this.DeltaAvg        = 1f/60f;
 
         this.FloatFreq = f64(Stopwatch.Frequency);
 
-        this.ThisFrame = Stopwatch.GetTimestamp();
-        this.PrevFrame = this.ThisFrame;
+        this.Beginning = Stopwatch.GetTimestamp();
+        this.PrevFrame = this.Beginning;
+        this.ThisFrame = this.Beginning;
+        this.NextFrame = this.Beginning;
+    }
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    public void WaitNextFrame(s64 TargetFrameRate=240) {
+        s64 OneMS = (Stopwatch.Frequency/1000);
+        this.NextFrame += (Stopwatch.Frequency/TargetFrameRate);
+        while (true) {
+            s64 DeltaNext = this.NextFrame - Stopwatch.GetTimestamp();
+            if (DeltaNext <= 0) return;
+            //if (DeltaNext > OneMS) Thread.Sleep(1);       //  Sleep time-resolution is 1/64 (15.625 ms).  :(
+            //if (DeltaNext > OneMS) Thread.Yield();        //  If there is no other process that wants to use the CPU core, Yield() will return immediately.
+            if (DeltaNext > OneMS) Thread.SpinWait(256);    //  Parameter is "loop iterations".  Highly variable, dependent on CPU performance/speed.
+        }
     }
 
     //##########################################################################################################################################################
@@ -62,11 +78,11 @@ internal struct TIME {
     //public void Update(f64 Speed = 1d) {
     public void Update() {
         this.ThisFrame = Stopwatch.GetTimestamp();
-
-        ++this.Frames;
+        ++this.Frame;
 
         this.Delta64 = f64(this.ThisFrame-this.PrevFrame) / this.FloatFreq;
-        this.Delta   = f32(this.Delta64);
+        if (this.DeltaClamp > 0d) {this.Delta64 = min(this.DeltaClamp, this.Delta64);}
+        this.Delta = f32(this.Delta64);
 
         this.DeltaAvg64 += (this.Delta64 - this.DeltaAvg64) * DeltaAvg_Weight;
         this.DeltaAvg    = f32(this.DeltaAvg64);

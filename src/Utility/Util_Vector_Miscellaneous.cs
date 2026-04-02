@@ -34,7 +34,7 @@ internal static partial class VEC_Miscellaneous {
     //
     //  https://www.desmos.com/calculator/9d31eb577f
     //
-    //  Returns 3 weights corresponding to a position relative to the 3 points of a triangle.
+    //  Returns 3 weights corresponding to a position relative to the 3 Points of a Triangle.
     //      Center == (1/3, 1/3, 1/3)
     //
     internal static vec3 Barycentric(vec2 P, vec2 Ta, vec2 Tb, vec2 Tc) {
@@ -51,6 +51,48 @@ internal static partial class VEC_Miscellaneous {
         return new vec3(wA, wB, wC);
     }
 
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    //
+    //     (0,1)
+    //          C
+    //          |`.
+    //          |  `.
+    //          |    `.
+    //          A------B
+    //     (0,0)        (1,0)
+    //
+    [Impl(AggressiveInlining)] internal static v3 Barycentric(v2 P) => new vec3(1f-P.x-P.y, P.x, P.y);
+
+    //==========================================================================================================================================================
+    [Impl(AggressiveInlining)] internal static v3 NormalizeBary(v3 W) => W / (W.x + W.y + W.z);
+
+    //==========================================================================================================================================================
+    [Impl(AggressiveInlining)] internal static v1 WeightedSum(v1 A, v1 B,             v2 W) => (A*W.x + B*W.y);
+    [Impl(AggressiveInlining)] internal static v2 WeightedSum(v2 A, v2 B,             v2 W) => (A*W.x + B*W.y);
+    [Impl(AggressiveInlining)] internal static v3 WeightedSum(v3 A, v3 B,             v2 W) => (A*W.x + B*W.y);
+    [Impl(AggressiveInlining)] internal static v4 WeightedSum(v4 A, v4 B,             v2 W) => (A*W.x + B*W.y);
+
+    [Impl(AggressiveInlining)] internal static v1 WeightedSum(v1 A, v1 B, v1 C,       v3 W) => (A*W.x + B*W.y + C*W.z);
+    [Impl(AggressiveInlining)] internal static v2 WeightedSum(v2 A, v2 B, v2 C,       v3 W) => (A*W.x + B*W.y + C*W.z);
+    [Impl(AggressiveInlining)] internal static v3 WeightedSum(v3 A, v3 B, v3 C,       v3 W) => (A*W.x + B*W.y + C*W.z);
+    [Impl(AggressiveInlining)] internal static v4 WeightedSum(v4 A, v4 B, v4 C,       v3 W) => (A*W.x + B*W.y + C*W.z);
+
+    [Impl(AggressiveInlining)] internal static v1 WeightedSum(v1 A, v1 B, v1 C, v1 D, v4 W) => (A*W.x + B*W.y + C*W.z + D*W.w);
+    [Impl(AggressiveInlining)] internal static v2 WeightedSum(v2 A, v2 B, v2 C, v2 D, v4 W) => (A*W.x + B*W.y + C*W.z + D*W.w);
+    [Impl(AggressiveInlining)] internal static v3 WeightedSum(v3 A, v3 B, v3 C, v3 D, v4 W) => (A*W.x + B*W.y + C*W.z + D*W.w);
+    [Impl(AggressiveInlining)] internal static v4 WeightedSum(v4 A, v4 B, v4 C, v4 D, v4 W) => (A*W.x + B*W.y + C*W.z + D*W.w);
+
+    //==========================================================================================================================================================
+    [Impl(AggressiveInlining)] internal static v1 BaryLinear(v1 A, v1 B, v1 C,  v2 P) => WeightedSum(A,B,C,  Barycentric(P));
+    [Impl(AggressiveInlining)] internal static v2 BaryLinear(v2 A, v2 B, v2 C,  v2 P) => WeightedSum(A,B,C,  Barycentric(P));
+    [Impl(AggressiveInlining)] internal static v3 BaryLinear(v3 A, v3 B, v3 C,  v2 P) => WeightedSum(A,B,C,  Barycentric(P));
+    [Impl(AggressiveInlining)] internal static v4 BaryLinear(v4 A, v4 B, v4 C,  v2 P) => WeightedSum(A,B,C,  Barycentric(P));
+
+    [Impl(AggressiveInlining)] internal static v1 BaryLinear(v1 A, v1 B, v1 C,  v2 P, v2 Ta, v2 Tb, v2 Tc) => WeightedSum(A,B,C,  Barycentric(P, Ta,Tb,Tc));
+    [Impl(AggressiveInlining)] internal static v2 BaryLinear(v2 A, v2 B, v2 C,  v2 P, v2 Ta, v2 Tb, v2 Tc) => WeightedSum(A,B,C,  Barycentric(P, Ta,Tb,Tc));
+    [Impl(AggressiveInlining)] internal static v3 BaryLinear(v3 A, v3 B, v3 C,  v2 P, v2 Ta, v2 Tb, v2 Tc) => WeightedSum(A,B,C,  Barycentric(P, Ta,Tb,Tc));
+    [Impl(AggressiveInlining)] internal static v4 BaryLinear(v4 A, v4 B, v4 C,  v2 P, v2 Ta, v2 Tb, v2 Tc) => WeightedSum(A,B,C,  Barycentric(P, Ta,Tb,Tc));
+
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
@@ -65,13 +107,13 @@ internal static partial class VEC_Miscellaneous {
         vec2 dAB = Tb-Ta;
         vec2 dAC = Tc-Ta;
 
-        float Determinant = cross(dAB, dAC);
+        float Determinant = cross(normalize(dAB), normalize(dAC)); //  Epsilon check only works if this is normalized...
 
         vec2  Cp;   //  CircumCircle-Position
         float CrCr; //  CircumCircle-Radius   Squared
 
-        if (abs(Determinant) < EPS6) {
-            //  Triangle points are Collinear, define CircumCircle by delta between furthest points.
+        if (abs(Determinant) < 0.001f) {
+            //  Triangle points are Colinear, define CircumCircle by delta between furthest points.
             vec2 Tmin = min(Ta, Tb, Tc);
             vec2 Tmax = max(Ta, Tb, Tc);
 
@@ -80,6 +122,8 @@ internal static partial class VEC_Miscellaneous {
             CrCr = dot(Cp-Tmin);
 
         } else {
+            Determinant = cross(dAB, dAC);
+
             float AB_AB = dot(dAB, Ta+Tb);
             float AC_AC = dot(dAC, Ta+Tc);
 
@@ -103,11 +147,11 @@ internal static partial class VEC_Miscellaneous {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //  ViewAspectX = ViewSizeX/ViewSizeY      16/9  == 1.777~
-    //  ViewAspectY = ViewSizeY/ViewSizeX       9/16 == 0.5625
+    //  ViewAspectX == ViewSizeX/ViewSizeY      1.777~ == 16/9
+    //  ViewAspectY == ViewSizeY/ViewSizeX      0.5625 ==  9/16
     //
-    internal static float FovX_FromY(float FovY, float ViewAspectX) => 2f * atan(tan(FovY/2f) * ViewAspectX);
-    internal static float FovY_FromX(float FovX, float ViewAspectY) => 2f * atan(tan(FovX/2f) * ViewAspectY);
+    [Impl(AggressiveInlining)] internal static float FovX_FromY(float FovY, float ViewAspectX) => 2f * atan(tan(FovY/2f) * ViewAspectX);
+    [Impl(AggressiveInlining)] internal static float FovY_FromX(float FovX, float ViewAspectY) => 2f * atan(tan(FovX/2f) * ViewAspectY);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -117,19 +161,16 @@ internal static partial class VEC_Miscellaneous {
     //  https://www.desmos.com/calculator/mqajs8tfgd
     //  https://www.desmos.com/3d/p8hvpd8xwz
     //
-    //  Falloff infinitely approaches zero.  AKA: Asymptotic
-    //
-    //  Result < 0.1         at radius: 1.51742712939~
-    //  Result < 0.01        at radius: 2.14596602629~
-    //  Result < 0.001       at radius: 2.62826088488~
-    //
-    //  Result < 0.0001      at radius: 3.03485425877~
-    //  Result < 0.00001     at radius: 3.39307021221~
-    //  Result < 0.000001    at radius: 3.71692218885~
-    //
-    //  Result < 0.0000001   at radius: 4.01473481702~
-    //  Result < 0.00000001  at radius: 4.29193205258~
-    //  Result < 0.000000001 at radius: 4.55228138816~
+    //  Asymptotic  AKA: "Falloff infinitely approaches zero."
+    //      Result < 0.1           at radius: 1.51742712939~
+    //      Result < 0.01          at radius: 2.14596602629~
+    //      Result < 0.001         at radius: 2.62826088488~
+    //      Result < 0.000_1       at radius: 3.03485425877~
+    //      Result < 0.000_01      at radius: 3.39307021221~
+    //      Result < 0.000_001     at radius: 3.71692218885~
+    //      Result < 0.000_000_1   at radius: 4.01473481702~
+    //      Result < 0.000_000_01  at radius: 4.29193205258~
+    //      Result < 0.000_000_001 at radius: 4.55228138816~
     //
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     [Impl(AggressiveInlining)] internal static v1  Gaussian(v1 x)             => exp(-(x*x));
@@ -151,10 +192,10 @@ internal static partial class VEC_Miscellaneous {
     //  NOTE:   Formula undefined at zero.
     //              Lanczos(0.0) == NaN
     //
-    internal static v1 Lanczos(v1 x) {x = x*PI;  return (2f * sin(x) * sin(x/2f)) / (x*x);}
+    [Impl(AggressiveInlining)] internal static v1 Lanczos(v1 x) {x = x*PI;  return (2f * sin(x) * sin(x/2f)) / (x*x);}
 
     //==========================================================================================================================================================
-    internal static v1 Sigmoid(v1 x) => 1f / (1f + exp(-x));
+    [Impl(AggressiveInlining)] internal static v1 Sigmoid(v1 x) => 1f / (1f + exp(-x));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -176,9 +217,8 @@ internal static partial class VEC_Miscellaneous {
     //  Inputs are a Unit-Direction-Vector.
     //  Output is Distance in radians (0 to PI).
     //
-    //internal static float SphericalDistance(vec3 A, vec3 B) => acos(dot(A,B));            //  Not numerically stable?    acos() == NaN  from tiny overshoots.
-    //internal static float SphericalDistance(vec3 A, vec3 B) => acos(clamp(dot(A,B), -PIH, PIH));
-    //internal static float SphericalDistance(vec3 A, vec3 B) => acos(clamp(dot(A,B), -1.5707963f, 1.5707963f));
+    //internal static float SphericalDistance(vec3 A, vec3 B) => acos(dot(A,B));                    //  Not numerically stable?    acos() == NaN  from tiny overshoots.
+    //internal static float SphericalDistance(vec3 A, vec3 B) => acos(clamp(dot(A,B), -1f, 1f));
     internal static float SphericalDistance(vec3 A, vec3 B) => atan2(length(cross(A,B)), dot(A,B));
 
     //==========================================================================================================================================================
@@ -191,6 +231,49 @@ internal static partial class VEC_Miscellaneous {
     //          Y   Pitch               θ "theta"       Polar Angle             Angle between this radial line and a given polar axis.
     //          Z   Yaw                 φ "phi"         Azimuthal Angle         Angle of rotation of the radial line around the polar axis.
     //
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    internal static vec3 ProjectRayToLine(vec3 Rp, vec3 Rn, vec3 La, vec3 Lb) {
+        vec3 dAB = Lb - La;
+        vec3 dAP = Rp - La;
+
+        float dotL  = dot(dAB);
+        float dotRL = dot(Rn,dAB);
+
+        float Determinant = dotL - dotRL*dotRL;
+
+        //  Distance from LinePointA to NearestPointOnLine, as multiple of DeltaAB:
+        float Dist = (abs(Determinant) < EPS7) ?  dot(dAP,dAB)                        / dotL        //  If RayLine & Line near parallel, project RayPos to Line.
+                                               : (dot(dAB,dAP) - dotRL * dot(Rn,dAP)) / Determinant;
+        return La + dAB*Dist;
+    }
+
+    //==========================================================================================================================================================
+    internal static vec3 ProjectLineToLine(vec3 L1a, vec3 L1b, vec3 L2a, vec3 L2b) {
+        vec3 dAB1 = L1b - L1a;
+        vec3 dAB2 = L2b - L2a;
+        vec3 dAA  = L1a - L2a;
+
+        float dotL1 = dot(dAB1);
+        float dotL2 = dot(dAB2);
+        float dotLL = dot(dAB1, dAB2);
+
+        float Determinant = dotL1*dotL2 - dotLL*dotLL;
+
+        //  Are Line1 & Line2 near parallel?               return mid point?
+        if (abs(Determinant) < EPS7)
+            return L2a;
+
+        //  Distance from Line2PointA to NearestPointOnLine, as multiple of DeltaAB2:
+        float Dist = (dotL1*dot(dAB2,dAA) - dotLL*dot(dAB1,dAA)) / Determinant;
+
+        return L2a + dAB2*Dist;
+    }
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
 }

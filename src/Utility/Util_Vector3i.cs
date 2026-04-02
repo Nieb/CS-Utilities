@@ -1,3 +1,13 @@
+using   F2 = (float x, float y);
+using   F3 = (float x, float y, float z);
+using   F4 = (float x, float y, float z, float w);
+using   I2 = (int x, int y);
+using   I3 = (int x, int y, int z);
+using   I4 = (int x, int y, int z, int w);
+using VEC2 = System.Numerics.Vector2;
+using VEC3 = System.Numerics.Vector3;
+using VEC4 = System.Numerics.Vector4;
+using MAT4 = System.Numerics.Matrix4x4;
 
 namespace Utility;
 internal static partial class VEC {
@@ -19,12 +29,15 @@ internal struct ivec3 : System.IFormattable {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public ivec3() {}
-    public ivec3(int X, int Y, int Z) {x=X; y=Y; z=Z;}
-    public ivec3(int V              ) {x=V; y=V; z=V;}
+    public ivec3(i1 X, i1 Y, i1 Z) {x=X; y=Y; z=Z;}
+    public ivec3(i1 V            ) {x=V; y=V; z=V;}
 
     //==========================================================================================================================================================
-    //                                                               Tuple "Constructor"
-    [Impl(AggressiveInlining)] public static implicit operator ivec3((int X, int Y, int Z) t) => new ivec3(t.X, t.Y, t.Z);
+    //                                                                  Directly Assign
+    [Impl(AggressiveInlining)] public static implicit operator ivec3((i1 x, i1 y, i1 z) T) => new ivec3( T.x, T.y, T.z); //  (int,int,int)  to  ivec3
+    [Impl(AggressiveInlining)] public static implicit operator ivec3(             int[] V) => new ivec3(V[0],V[1],V[2]); //         int[3]  to  ivec3
+
+    [Impl(AggressiveInlining)] public static implicit operator  VEC3(             ivec3 V) => new  VEC3( V.x, V.y, V.z); //          ivec3  to  ew-gross
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

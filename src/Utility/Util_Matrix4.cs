@@ -27,26 +27,35 @@ internal struct mat4 {
     public vec4 Col2 {get => new vec4(zx,zy,zz,zw); set {zx=value.x; zy=value.y; zz=value.z; zw=value.w;}}
     public vec4 Col3 {get => new vec4(wx,wy,wz,ww); set {wx=value.x; wy=value.y; wz=value.z; ww=value.w;}}
 
-    [FieldOffset( 0)] public vec4 Row0;
-    [FieldOffset(16)] public vec4 Row1;
-    [FieldOffset(32)] public vec4 Row2;
-    [FieldOffset(48)] public vec4 Row3;
+    [FieldOffset( 0)] public vec4 Row0;    [FieldOffset( 0)] public vec4 RowX;
+    [FieldOffset(16)] public vec4 Row1;    [FieldOffset(16)] public vec4 RowY;
+    [FieldOffset(32)] public vec4 Row2;    [FieldOffset(32)] public vec4 RowZ;
+    [FieldOffset(48)] public vec4 Row3;    [FieldOffset(48)] public vec4 RowW;
 
     //==========================================================================================================================================================
     [FieldOffset(0)] private InlineArray16_Float index;
 
     public float this[int i] {
-        get => this.index[i];
-        set => this.index[i] = value;
+        [Impl(AggressiveInlining)] get => this.index[i];
+        [Impl(AggressiveInlining)] set => this.index[i] = value;
     }
 
     public float this[int x, int y] {
-        get =>                       (x<0 || x>3 || y<0 || y>3) ? throw new System.IndexOutOfRangeException() : this.index[x + 4*y];
-        set => this.index[x + 4*y] = (x<0 || x>3 || y<0 || y>3) ? throw new System.IndexOutOfRangeException() : value;
+        #if DEBUG
+            get =>                       (x<0||x>3||y<0||y>3) ? throw new System.IndexOutOfRangeException() : this.index[x + 4*y];
+            set => this.index[x + 4*y] = (x<0||x>3||y<0||y>3) ? throw new System.IndexOutOfRangeException() : value;
+        #else
+            [Impl(AggressiveInlining)] get => this.index[x + 4*y];
+            [Impl(AggressiveInlining)] set => this.index[x + 4*y] = value;
+        #endif
     }
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
+    //
+    //      mat4 A = default;   Zeroed out.
+    //      mat4 B = new();     Identity.
+    //
     public mat4() {
         xx=1f; yx=0f; zx=0f; wx=0f;
         xy=0f; yy=1f; zy=0f; wy=0f;

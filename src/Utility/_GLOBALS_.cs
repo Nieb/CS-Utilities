@@ -9,10 +9,13 @@ global using static Utility.Constants;
 global using static Utility.Miscellaneous;
 global using static Utility.Random;
 
+global using static Utility.DATA;
 global using static Utility.FLT;
 global using static Utility.INT;
 global using static Utility.STR;
+
 global using static Utility.MAT;
+
 global using static Utility.VEC;
 global using static Utility.VEC_Collision2;
 global using static Utility.VEC_Collision3;
@@ -42,12 +45,16 @@ global using s64 =  long;   //  System.Int64          Signed 64-bit Integer
 global using u64 = ulong;   //  System.UInt6        Unsigned 64-bit Integer
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+global using f16 = System.Half;
 global using f32 = float;   //  System.Single
-
 global using f64 = double;  //  System.Double
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-//#pragma warning disable CS8981 //  warning CS8981: The type name '' only contains lower-cased ascii characters. Such names may become reserved for the language.
+global using d32 = Utility.DATA.Data32;
+global using d64 = Utility.DATA.Data64;
+
+//==============================================================================================================================================================
+//#pragma warning disable CS8981 //  warning CS8981: The type name '' only contains lower-cased ascii characters.  Such names may become reserved for the language.
 //    global using iptr = nint;   //  System.IntPtr         Signed 32-bit or 64-bit integer
 //    global using uptr = nuint;  //  System.UIntPtr      Unsigned 32-bit or 64-bit integer
 //#pragma warning restore CS8981
@@ -66,29 +73,23 @@ global using v2 = Utility.VEC.vec2;
 global using v3 = Utility.VEC.vec3;
 global using v4 = Utility.VEC.vec4;
 
+global using m2 = Utility.MAT.mat2;
+global using m3 = Utility.MAT.mat3;
 global using m4 = Utility.MAT.mat4;
-
-////global using vec2 = System.Numerics.Vector2;
-////global using vec3 = System.Numerics.Vector3;
-////global using vec4 = System.Numerics.Vector4;
-////global using mat4 = System.Numerics.Matrix4;
 
 //##############################################################################################################################################################
 //##############################################################################################################################################################
 //                                                                       Struct Layout
-
+//                  [StructLayout(LayoutKind.Sequential)]
+//                  [StructLayout(LayoutKind.Explicit)]
+//                  [StructLayout(LayoutKind.Auto)]
+//
+//                  [FieldOffset(0)]
+//                  [FieldOffset(4)]
+//
 global using StructLayout = System.Runtime.InteropServices.StructLayoutAttribute;
-global using FieldOffset  = System.Runtime.InteropServices.FieldOffsetAttribute;
 global using LayoutKind   = System.Runtime.InteropServices.LayoutKind;
-
-/*
-                    [StructLayout(LayoutKind.Sequential)]
-                    [StructLayout(LayoutKind.Explicit)]
-                    [StructLayout(LayoutKind.Auto)]
-
-                    [FieldOffset(0)]
-                    [FieldOffset(4)]
-*/
+global using FieldOffset  = System.Runtime.InteropServices.FieldOffsetAttribute;
 
 //##############################################################################################################################################################
 //##############################################################################################################################################################

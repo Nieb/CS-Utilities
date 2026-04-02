@@ -109,7 +109,7 @@ internal static partial class STR {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //  Convert TO String:
+    //                                                                 Convert TO String
     //==========================================================================================================================================================
     internal static string ByteArrayToString(byte[] ByteArr, int BytesPerLine = 16, string Delimiter = " ") {
         if (ByteArr == null)
@@ -128,6 +128,9 @@ internal static partial class STR {
     }
 
     //==========================================================================================================================================================
+    //
+    //      EnumerableToString(Enmrbl, ItemsPerLine: 0, ItemPadding: 0, LineIndent: 0, ItemDelimiter: ", ", LineDelimiter: "\n")
+    //
     internal static string EnumerableToString<T>(System.Collections.Generic.IEnumerable<T> Enmrbl, int ItemsPerLine = 0, int ItemPadding = 0, int LineIndent = 0, string ItemDelimiter = ", ", string LineDelimiter = "\n") {
         if (Enmrbl == null)
             return "";
@@ -159,24 +162,24 @@ internal static partial class STR {
     }
 
     //==========================================================================================================================================================
-    internal static string IntToBinaryString( s8 A) =>               System.Convert.ToString(      A, 2).PadLeft( 8,'0');
-    internal static string IntToBinaryString( u8 A) =>               System.Convert.ToString(      A, 2).PadLeft( 8,'0');
-    internal static string IntToBinaryString(s16 A) => Regex.Replace(System.Convert.ToString(      A, 2).PadLeft(16,'0'), @".{8}(?!$)", @"$0_");
-    internal static string IntToBinaryString(u16 A) => Regex.Replace(System.Convert.ToString(      A, 2).PadLeft(16,'0'), @".{8}(?!$)", @"$0_");
-    internal static string IntToBinaryString(s32 A) => Regex.Replace(System.Convert.ToString(      A, 2).PadLeft(32,'0'), @".{8}(?!$)", @"$0_");
-    internal static string IntToBinaryString(u32 A) => Regex.Replace(System.Convert.ToString(      A, 2).PadLeft(32,'0'), @".{8}(?!$)", @"$0_");
-    internal static string IntToBinaryString(s64 A) => Regex.Replace(System.Convert.ToString(      A, 2).PadLeft(64,'0'), @".{8}(?!$)", @"$0_");
-    internal static string IntToBinaryString(u64 A) => Regex.Replace(System.Convert.ToString((long)A, 2).PadLeft(64,'0'), @".{8}(?!$)", @"$0_");
+    internal static string IntToBinString( s8 A) =>               System.Convert.ToString(      A, 2).PadLeft( 8,'0');
+    internal static string IntToBinString( u8 A) =>               System.Convert.ToString(      A, 2).PadLeft( 8,'0');
+    internal static string IntToBinString(s16 A) => Regex.Replace(System.Convert.ToString(      A, 2).PadLeft(16,'0'), @".{8}(?!$)", @"$0_");
+    internal static string IntToBinString(u16 A) => Regex.Replace(System.Convert.ToString(      A, 2).PadLeft(16,'0'), @".{8}(?!$)", @"$0_");
+    internal static string IntToBinString(s32 A) => Regex.Replace(System.Convert.ToString(      A, 2).PadLeft(32,'0'), @".{8}(?!$)", @"$0_");
+    internal static string IntToBinString(u32 A) => Regex.Replace(System.Convert.ToString(      A, 2).PadLeft(32,'0'), @".{8}(?!$)", @"$0_");
+    internal static string IntToBinString(s64 A) => Regex.Replace(System.Convert.ToString(      A, 2).PadLeft(64,'0'), @".{8}(?!$)", @"$0_");
+    internal static string IntToBinString(u64 A) => Regex.Replace(System.Convert.ToString((long)A, 2).PadLeft(64,'0'), @".{8}(?!$)", @"$0_");
 
     //==========================================================================================================================================================
-    //internal static string IntToHexString( s8 A) =>        ((int)A).ToString( "X2");
-    //internal static string IntToHexString( u8 A) =>               A.ToString( "X2");
-    //internal static string IntToHexString(s16 A) =>               A.ToString( "X4");
-    //internal static string IntToHexString(u16 A) =>               A.ToString( "X4");
-    //internal static string IntToHexString(s32 A) => Regex.Replace(A.ToString( "X8"), @".{4}(?!$)", "$0_");
-    //internal static string IntToHexString(u32 A) => Regex.Replace(A.ToString( "X8"), @".{4}(?!$)", "$0_");
-    //internal static string IntToHexString(s64 A) => Regex.Replace(A.ToString("X16"), @".{4}(?!$)", "$0_");
-    //internal static string IntToHexString(u64 A) => Regex.Replace(A.ToString("X16"), @".{4}(?!$)", "$0_");
+    internal static string IntToHexString( s8 A) => ((int)A).ToString("X2");
+    internal static string IntToHexString( u8 A) =>        A.ToString("X2");
+    internal static string IntToHexString(s16 A) =>        A.ToString("X4");
+    internal static string IntToHexString(u16 A) =>        A.ToString("X4");
+    internal static string IntToHexString(s32 A) =>                                         $"{(A>>16)&0xFFFF:X4}_{A&0xFFFF:X4}";
+    internal static string IntToHexString(u32 A) =>                                         $"{(A>>16)&0xFFFF:X4}_{A&0xFFFF:X4}";
+    internal static string IntToHexString(s64 A) => $"{(A>>48)&0xFFFF:X4}_{(A>>32)&0xFFFF:X4}_{(A>>16)&0xFFFF:X4}_{A&0xFFFF:X4}";
+    internal static string IntToHexString(u64 A) => $"{(A>>48)&0xFFFF:X4}_{(A>>32)&0xFFFF:X4}_{(A>>16)&0xFFFF:X4}_{A&0xFFFF:X4}";
 
     //==========================================================================================================================================================
     internal static string CommaDelimit(s16 A, int N=3) => Regex.Replace(A.ToString(), @"(?<=\d)(?=(\d{" + N.ToString() + @"})+(?!\d))", ",");
@@ -188,9 +191,9 @@ internal static partial class STR {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //  String Is <Something>:
+    //                                                                 String Is <Something>
     //==========================================================================================================================================================
-    internal static bool IsNumeric(this string STR, bool Signed = false, bool Fractional = false) {
+    internal static bool IsNumeric(this string STR, bool Signed=false, bool Fractional=false) {
         if (STR.IsVoid())
             return false;
 
@@ -212,16 +215,16 @@ internal static partial class STR {
     //      "user@sub.domain.top".IsValidEmailAddress("top", "domain", "sub") == TRUE
     //      "user@sub.domain.top".IsValidEmailAddress("blarg")                == FALSE
     //
-    internal static bool IsValidEmailAddress(this string STR, string DomainTop = "", string Domain = "", string DomainSub = "") {
+    internal static bool IsValidEmailAddress(this string STR, string DomainTop="", string Domain="", string DomainSub="") {
         /* Validate Input: STR */{
-            const int MaxLen_EmailAddress = 317; //  253 + 63 + 1  for '@'
-            const int MaxLen_Domain       = 253;
             const int MaxLen_Local        =  63;
+            const int MaxLen_Domain       = 253;
+            const int MaxLen_EmailAddress = MaxLen_Local + MaxLen_Domain + 1; //  317 == 253 + 63 + 1  for '@'
 
             if (STR.IsVoid())
                 return false;
 
-            STR = STR.Trim();
+            //STR = STR.Trim();  This could be misleading, trim the string before testing|using|storing.
 
             if (STR.Length > MaxLen_EmailAddress)
                 return false;
@@ -285,7 +288,7 @@ internal static partial class STR {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //  String Operators:
+    //                                                                  String Operators
     //==========================================================================================================================================================
     //
     //      "blarg".ContainsAny( {"ugh", "arg"} ) == TRUE

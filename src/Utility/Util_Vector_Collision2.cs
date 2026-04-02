@@ -35,14 +35,14 @@ internal static class VEC_Collision2 {
     //
     //      PointVsLine(  Point,  Line-PointA,  Line-PointB,  Tolerance  )
     //
-    internal static bool PointVsLine(vec2 P, vec2 La, vec2 Lb, float T) {
+    [Impl(AggressiveInlining)] internal static bool PointVsLine(vec2 P, vec2 La, vec2 Lb, float T) {
         vec2 dAP = P  - La;
         vec2 dAB = Lb - La;
 
         //  Distance from LinePointA to NearestPointOnLine, as multiple of DeltaAB:
         float Dist = dot(dAP, dAB) / dot(dAB);
 
-        return (Dist >= 0f || Dist <= 1f)
+        return (Dist >= 0f && Dist <= 1f)
             && dot(dAP - dAB*Dist) <= (T*T);
     }
 
@@ -52,11 +52,11 @@ internal static class VEC_Collision2 {
     //  Axis-Aligned.
     //
     //       +Y           RectSize
-    //          *--------●
+    //          +--------●
     //          |        |
     //          |        |
     //          |        |
-    //          ●--------*
+    //          ●--------+
     //   RectPos            +X
     //
     //      PointVsRect(  Point,  RectanglePosition,  RectangleSize  )
@@ -85,8 +85,7 @@ internal static class VEC_Collision2 {
     //
     //      PointVsTriangle(  Point,  TrianglePointA,  TrianglePointB,  TrianglePointC  )
     //
-    [Impl(AggressiveInlining)]
-    internal static bool PointVsTriangle(vec2 P, vec2 Ta, vec2 Tb, vec2 Tc) {
+    [Impl(AggressiveInlining)] internal static bool PointVsTriangle(vec2 P, vec2 Ta, vec2 Tb, vec2 Tc) {
         vec2 dPA = Ta - P;
         vec2 dPB = Tb - P;
         vec2 dPC = Tc - P;
@@ -119,8 +118,7 @@ internal static class VEC_Collision2 {
     //
     //      PointVsQuad(  Point,  QuadPointA,  QuadPointB,  QuadPointC,  QuadPointD  )
     //
-    [Impl(AggressiveInlining)]
-    internal static bool PointVsQuad(vec2 P, vec2 Qa, vec2 Qb, vec2 Qc, vec2 Qd) {
+    [Impl(AggressiveInlining)] internal static bool PointVsQuad(vec2 P, vec2 Qa, vec2 Qb, vec2 Qc, vec2 Qd) {
         vec2 dPA = Qa - P;
         vec2 dPB = Qb - P;
         vec2 dPC = Qc - P;
@@ -170,10 +168,15 @@ internal static class VEC_Collision2 {
     //
     //      RectVsRect(  Rectangle1-Position,  Rectangle1-Size,  Rectangle2-Position,  Rectangle2-Size)
     //
-    [Impl(AggressiveInlining)] internal static bool RectVsRect(v2 Rp1, v2 Rs1, v2 Rp2, v2 Rs2) => (Rp1 <= Rp2+Rs2  &&  Rp1+Rs1 >= Rp2);
-    [Impl(AggressiveInlining)] internal static bool RectVsRect(i2 Rp1, i2 Rs1, i2 Rp2, i2 Rs2) => (Rp1 <  Rp2+Rs2  &&  Rp1+Rs1 >= Rp2);
+    [Impl(AggressiveInlining)] internal static bool RectVsRect( vec2 Rp1,  vec2 Rs1,  vec2 Rp2,  vec2 Rs2) => (Rp1+Rs1 >= Rp2  &&  Rp1 <= Rp2+Rs2);
+    [Impl(AggressiveInlining)] internal static bool RectVsRect(ivec2 Rp1, ivec2 Rs1, ivec2 Rp2, ivec2 Rs2) => (Rp1+Rs1 >= Rp2  &&  Rp1 <  Rp2+Rs2);
 
     //==========================================================================================================================================================
+    [Impl(AggressiveInlining)] internal static bool BoundsVsBounds( vec2 a0,  vec2 a1,  vec2 b0,  vec2 b1) => (a1 >= b0  &&  a0 <= b1);
+    [Impl(AggressiveInlining)] internal static bool BoundsVsBounds(ivec2 a0, ivec2 a1, ivec2 b0, ivec2 b1) => (a1 >= b0  &&  a0 <  b1);
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     //
     //  Axis-Aligned.
     //
@@ -199,22 +202,9 @@ internal static class VEC_Collision2 {
     //
     //      CircleVsRect(  Circle-Position,  Circle-Radius,  Rectangle-Position,  Rectangle-Size  )
     //
-    internal static bool CircleVsRect(vec2 Cp, float Cr, vec2 Rp, vec2 Rs) {
-        float R_Lf = Rp.x;        //  "Rectangle Left"
-        float R_Rt = Rp.x + Rs.x; //  "Rectangle Right"
-        float R_Bm = Rp.y;        //  "Rectangle Bottom"
-        float R_Tp = Rp.y + Rs.y; //  "Rectangle Top"
+    [Impl(AggressiveInlining)] internal static bool CircleVsRect(vec2 Cp, float Cr, vec2 Rp, vec2 Rs)   => dot(min(0f,Cp-Rp) + max(0f,Cp-(Rp+Rs))) <= Cr*Cr;
 
-        float dX = (Cp.x < R_Lf) ? Cp.x-R_Lf
-                 : (Cp.x > R_Rt) ? Cp.x-R_Rt
-                                 : 0f;
-
-        float dY = (Cp.y < R_Bm) ? Cp.y-R_Bm
-                 : (Cp.y > R_Tp) ? Cp.y-R_Tp
-                                 : 0f;
-
-        return (dX*dX + dY*dY <= Cr*Cr);
-    }
+    [Impl(AggressiveInlining)] internal static bool CircleVsBounds(vec2 Cp, float Cr, vec2 b0, vec2 b1) => dot(min(0f,Cp-b0) + max(0f,Cp-b1)) <= Cr*Cr;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -246,6 +236,8 @@ internal static class VEC_Collision2 {
     //      LineVsRect(  Line-PointA,  Line-PointB,  Rectangle-Position,  Rectangle-Size  )
     //
     internal static bool LineVsRect(vec2 La, vec2 Lb, vec2 Rp, vec2 Rs) {
+        throw new System.Exception("This is gross, don't use it.");
+        /*
         vec2 dL1 = Lb - La;
         vec2 L0 = ((dL1.x < 0f ? Lb.x    :   La.x),  (dL1.y < 0f) ? Lb.y : La.y);
         vec2 L1 = ((dL1.x < 0f ? La.x    :   Lb.x),  (dL1.y < 0f) ? La.y : Lb.y);
@@ -305,6 +297,7 @@ internal static class VEC_Collision2 {
         }
 
         return false;
+        */
     }
 
     //##########################################################################################################################################################
@@ -313,6 +306,8 @@ internal static class VEC_Collision2 {
     //      LineVsCircle(  Line-Point-A,  Line-Point-B,  Circle-Position,  Circle-Radius  )
     //
     internal static bool LineVsCircle(vec2 La, vec2 Lb, vec2 Cp, float Cr) {
+        throw new System.Exception("This is gross, don't use it.");
+        /*
         vec2 dBC = Cp - Lb;
         float CrCr = Cr*Cr;
 
@@ -342,6 +337,7 @@ internal static class VEC_Collision2 {
             return true;
 
         return false;
+        */
     }
 
     //##########################################################################################################################################################

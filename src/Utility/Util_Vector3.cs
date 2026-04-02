@@ -1,3 +1,13 @@
+using   F2 = (float x, float y);
+using   F3 = (float x, float y, float z);
+using   F4 = (float x, float y, float z, float w);
+using   I2 = (int x, int y);
+using   I3 = (int x, int y, int z);
+using   I4 = (int x, int y, int z, int w);
+using VEC2 = System.Numerics.Vector2;
+using VEC3 = System.Numerics.Vector3;
+using VEC4 = System.Numerics.Vector4;
+using MAT4 = System.Numerics.Matrix4x4;
 
 namespace Utility;
 internal static partial class VEC {
@@ -24,21 +34,23 @@ internal struct vec3 : System.IFormattable {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public vec3() {}
-    public vec3(float X, float Y, float Z) {x=X;   y=Y;   z=Z;  }
-    public vec3(float V                  ) {x=V;   y=V;   z=V;  }
+    public vec3(v1 X, v1 Y, v1 Z) {x=X;   y=Y;   z=Z;  }
+    public vec3(v1 V            ) {x=V;   y=V;   z=V;  }
 
-    public vec3( vec2 V,          float Z) {x=V.x; y=V.y; z=Z;  }
-    public vec3(ivec2 V,          float Z) {x=V.x; y=V.y; z=Z;  }
+    public vec3(v2 V,       v1 Z) {x=V.x; y=V.y; z=Z;  }
+    public vec3(i2 V,       v1 Z) {x=V.x; y=V.y; z=Z;  }
 
-    public vec3(ivec3 V                  ) {x=V.x; y=V.y; z=V.z;}
-
-    //==========================================================================================================================================================
-    //                                                               Tuple "Constructor"
-    [Impl(AggressiveInlining)] public static implicit operator vec3((float X, float Y, float Z) t) => new vec3(  t.X,   t.Y, t.Z);
-    [Impl(AggressiveInlining)] public static implicit operator vec3((vec2 V,           float Z) t) => new vec3(t.V.x, t.V.y, t.Z);
+    public vec3(i3 V            ) {x=V.x; y=V.y; z=V.z;}
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] public static implicit operator vec3(ivec3 A) => new vec3(A);     //  Directly assign 'ivec3' to 'vec3'
+    //                                                                  Directly Assign
+    [Impl(AggressiveInlining)] public static implicit operator vec3((v1 x, v1 y, v1 z) T) => new vec3(  T.x,  T.y,  T.z); //  (float,float,float)  to  vec3
+    [Impl(AggressiveInlining)] public static implicit operator vec3((v2 V,       v1 z) T) => new vec3(T.V.x,T.V.y,  T.z); //         (vec2,float)  to  vec3
+    [Impl(AggressiveInlining)] public static implicit operator vec3(                i3 V) => new vec3(  V.x,  V.y,  V.z); //                ivec3  to  vec3
+    [Impl(AggressiveInlining)] public static implicit operator vec3(           float[] V) => new vec3( V[0], V[1], V[2]); //             float[3]  to  vec3
+
+    [Impl(AggressiveInlining)] public static implicit operator vec3(              VEC3 v) => new vec3(  v.X,  v.Y,  v.Z); //             ew-gross  to  vec3
+    [Impl(AggressiveInlining)] public static implicit operator VEC3(              vec3 V) => new VEC3(  V.x,  V.y,  V.z); //                 vec3  to  ew-gross
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

@@ -13,33 +13,52 @@ internal static partial class VEC_Generate {
     //
     //  Direction(X, Y)  FROM  Angle(in radians).
     //
-    [Impl(AggressiveInlining)] internal static vec2 FromAng(float Theta) => new vec2(sin(Theta), cos(Theta));
+    [Impl(AggressiveInlining)] internal static vec2 FromAng(float Theta) => sincos(Theta);
 
     //==========================================================================================================================================================
     //
     //  Direction(X, Y, Z)  FROM  Angle(in radians)
     //
-    [Impl(AggressiveInlining)] internal static vec3 FromPch(float Theta, bool Z_Up=false) => !Z_Up ? new vec3(         0f,-sin(Theta),-cos(Theta))
-                                                                                                   : new vec3(         0f,-sin(Theta), cos(Theta));
+    [Impl(AggressiveInlining)] internal static vec3 FromPch(float Theta) {
+        (float SinT, float CosT) = sincos(Theta);
+        #if Z_UP
+            return new vec3(   0f,-SinT, CosT);
+        #else
+            return new vec3(   0f,-SinT,-CosT);
+        #endif
+    }
 
-    [Impl(AggressiveInlining)] internal static vec3 FromYaw(float Theta, bool Z_Up=false) => !Z_Up ? new vec3( sin(Theta),         0f,-cos(Theta))
-                                                                                                   : new vec3( sin(Theta), cos(Theta),         0f);
+    [Impl(AggressiveInlining)] internal static vec3 FromYaw(float Theta) {
+        (float SinT, float CosT) = sincos(Theta);
+        #if Z_UP
+            return new vec3( SinT, CosT,   0f);
+        #else
+            return new vec3( SinT,   0f,-CosT);
+        #endif
+    }
 
-    [Impl(AggressiveInlining)] internal static vec3 FromRol(float Theta, bool Z_Up=false) => !Z_Up ? new vec3( sin(Theta), cos(Theta),         0f)
-                                                                                                   : new vec3(-sin(Theta), cos(Theta),         0f);
+    [Impl(AggressiveInlining)] internal static vec3 FromRol(float Theta) {
+        (float SinT, float CosT) = sincos(Theta);
+        #if Z_UP
+            return new vec3(-SinT, CosT,   0f);
+        #else
+            return new vec3( SinT, CosT,   0f);
+        #endif
+    }
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
     //  Direction(X, Y, Z)  FROM  Rotation(Pitch, Yaw)
     //
-    [Impl(AggressiveInlining)]
-    internal static vec3 FromPchYaw(float Pch, float Yaw, bool Z_Up=false) {
+    [Impl(AggressiveInlining)] internal static vec3 FromPchYaw(float Pch, float Yaw) {
         (float SinPch, float CosPch) = sincos(Pch);
         (float SinYaw, float CosYaw) = sincos(Yaw);
-
-        return !Z_Up ? new vec3(CosPch*SinYaw, -SinPch       , -CosPch*CosYaw)  // Y Up
-                     : new vec3(CosPch*SinYaw,  CosPch*CosYaw, -SinPch       ); // Z Up
+        #if Z_UP
+            return new vec3(CosPch*SinYaw,  CosPch*CosYaw, -SinPch       );
+        #else
+            return new vec3(CosPch*SinYaw, -SinPch       , -CosPch*CosYaw);
+        #endif
     }
 
     //##########################################################################################################################################################
@@ -47,8 +66,7 @@ internal static partial class VEC_Generate {
     //
     //  Rotation(Pitch, Yaw, 0)    FROM    Direction(X, Y, Z)
     //
-    [Impl(AggressiveInlining)]
-    internal static vec3 RotFromDir(vec3 V) {
+    [Impl(AggressiveInlining)] internal static vec3 RotFromDir(vec3 V) {
         float Pch, Yaw;
 
         V.z = -V.z;

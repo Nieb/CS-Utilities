@@ -13,7 +13,8 @@ internal static partial class VEC_Blend {
     internal static v3 Blend_Screen(v3 S, v1 D) => (S+D - S*D);
     internal static v3 Blend_Screen(v1 S, v3 D) => (S+D - S*D);
 
-    //==========================================================================================================================================================
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     internal static v1 Blend_Overlay(v1 S, v1 D) => (D <= 0.5f) ?      2f*(   S)*(   D)
                                                                 : 1f - 2f*(1f-S)*(1f-D);
 
@@ -21,7 +22,7 @@ internal static partial class VEC_Blend {
     internal static v3 Blend_Overlay(v3 S, v1 D) => new v3(Blend_Overlay(S.r, D  ),Blend_Overlay(S.g, D  ),Blend_Overlay(S.b, D  ));
     internal static v3 Blend_Overlay(v1 S, v3 D) => new v3(Blend_Overlay(S  , D.r),Blend_Overlay(S  , D.g),Blend_Overlay(S  , D.b));
 
-    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    //==========================================================================================================================================================
     internal static v1 Blend_SoftLight(v1 S, v1 D) => (S <= 0.5f              ) ? D - (1f-2f*S   ) * D*(       1f - D     )
                                                     : (S >  0.5f && D <= 0.25f) ? D + (   2f*S-1f) * D*((16f*D-12f)*D + 3f)
                                                                                 : D + (   2f*S-1f) *   (  sqrt(D) - D     );
@@ -38,13 +39,14 @@ internal static partial class VEC_Blend {
     internal static v3 Blend_HardLight(v3 S, v1 D) => new v3(Blend_HardLight(S.r, D  ),Blend_HardLight(S.g, D  ),Blend_HardLight(S.b, D  ));
     internal static v3 Blend_HardLight(v1 S, v3 D) => new v3(Blend_HardLight(S  , D.r),Blend_HardLight(S  , D.g),Blend_HardLight(S  , D.b));
 
-    //==========================================================================================================================================================
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
     internal static v1 Blend_Difference(v1 S, v1 D) => abs(D-S);
     internal static v3 Blend_Difference(v3 S, v3 D) => abs(D-S);
     internal static v3 Blend_Difference(v3 S, v1 D) => abs(D-S);
     internal static v3 Blend_Difference(v1 S, v3 D) => abs(D-S);
 
-    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    //==========================================================================================================================================================
     internal static v1 Blend_Exclusion(v1 S, v1 D) => (S+D - 2f*S*D);
     internal static v3 Blend_Exclusion(v3 S, v3 D) => (S+D - 2f*S*D);
     internal static v3 Blend_Exclusion(v3 S, v1 D) => (S+D - 2f*S*D);

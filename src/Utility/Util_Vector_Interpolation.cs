@@ -123,8 +123,7 @@ internal static class VEC_Interpolation {
     //
     //  OUTPUT: A..B
     //
-    internal static v2 Slerp(v1 V, v2 A, v2 B) {v1 tAB = acos(dot(A,B));  v1 SinT = sin(tAB);  return A*(sin(tAB*(1f-V))/SinT)  +  B*(sin(tAB*V)/SinT);}
-
+  //internal static v2 Slerp(v1 V, v2 A, v2 B) {v1 tAB = acos(dot(A,B));  v1 SinT = sin(tAB);  return A*(sin(tAB*(1f-V))/SinT)  +  B*(sin(tAB*V)/SinT);}
     internal static v3 Slerp(v1 V, v3 A, v3 B) {v1 tAB = acos(dot(A,B));  v1 SinT = sin(tAB);  return A*(sin(tAB*(1f-V))/SinT)  +  B*(sin(tAB*V)/SinT);}
 
     //##########################################################################################################################################################
@@ -133,7 +132,7 @@ internal static class VEC_Interpolation {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                                    "Threshold"               In the same spirit as "Nearest Neighbor Interpolation".
+    //                                                                    "Threshold"
     //  GLSL: step(Edge, X)
     //
     //  Step(
@@ -270,9 +269,9 @@ internal static class VEC_Interpolation {
     internal static v1 SmoothestStep(v1 V, v1 L, v1 U) {
         V = clamp((V-L)/(U-L));
 
-        v1 VV   = V   * V;
-        v1 VVV  = VV  * V;
-        v1 VVVV = VVV * V;
+        v1 VV   = V  * V;
+        v1 VVV  = VV * V;
+        v1 VVVV = VV * VV;
 
         return VVVV * (-20f*VVV + 70f*VV - 84f*V + 35f);
     }

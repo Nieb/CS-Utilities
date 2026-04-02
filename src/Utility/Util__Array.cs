@@ -8,7 +8,9 @@ internal static class Array {
     [System.Runtime.CompilerServices.InlineArray( 2)] internal struct  InlineArray2_Float {private float i;}
     [System.Runtime.CompilerServices.InlineArray( 3)] internal struct  InlineArray3_Float {private float i;}
     [System.Runtime.CompilerServices.InlineArray( 4)] internal struct  InlineArray4_Float {private float i;}
+    [System.Runtime.CompilerServices.InlineArray( 6)] internal struct  InlineArray6_Float {private float i;}
     [System.Runtime.CompilerServices.InlineArray( 8)] internal struct  InlineArray8_Float {private float i;}
+    [System.Runtime.CompilerServices.InlineArray( 9)] internal struct  InlineArray9_Float {private float i;}
     [System.Runtime.CompilerServices.InlineArray(12)] internal struct InlineArray12_Float {private float i;}
     [System.Runtime.CompilerServices.InlineArray(16)] internal struct InlineArray16_Float {private float i;}
 
@@ -86,6 +88,17 @@ internal static class Array {
 
     //==========================================================================================================================================================
     //
+    //      Blarg.IndexFill();
+    //
+    [Impl(AggressiveInlining)] internal static void IndexFill(this  s8[] A) {for (int i=0; i<A.Length; ++i) {A[i] =  (s8)i;}}
+    [Impl(AggressiveInlining)] internal static void IndexFill(this  u8[] A) {for (int i=0; i<A.Length; ++i) {A[i] =  (u8)i;}}
+    [Impl(AggressiveInlining)] internal static void IndexFill(this s16[] A) {for (int i=0; i<A.Length; ++i) {A[i] = (s16)i;}}
+    [Impl(AggressiveInlining)] internal static void IndexFill(this u16[] A) {for (int i=0; i<A.Length; ++i) {A[i] = (u16)i;}}
+    [Impl(AggressiveInlining)] internal static void IndexFill(this s32[] A) {for (int i=0; i<A.Length; ++i) {A[i] =      i;}}
+    [Impl(AggressiveInlining)] internal static void IndexFill(this u32[] A) {for (u32 i=0; i<A.Length; ++i) {A[i] =      i;}}
+
+    //==========================================================================================================================================================
+    //
     //  This would be better, but alas...
     //      Blarg[i] = [Values, To, Set, Etc];
     //
@@ -99,6 +112,9 @@ internal static class Array {
     [Impl(AggressiveInlining)] internal static void SetFrom(this u32[] A, int I, params u32[] B) => B.CopyTo(A, I);
 
     [Impl(AggressiveInlining)] internal static void SetFrom(this f32[] A, int I, params f32[] B) => B.CopyTo(A, I);
+
+    [Impl(AggressiveInlining)] internal static void SetFrom(this Data32[] A, int I, params Data32[] B) => B.CopyTo(A, I);
+    [Impl(AggressiveInlining)] internal static void SetFrom(this Data64[] A, int I, params Data64[] B) => B.CopyTo(A, I);
 
   //[Impl(AggressiveInlining)] internal static void SetFrom<T>(this T[] A, int I, params T[] B) => B.CopyTo(A, I);  fails to determine type...
 

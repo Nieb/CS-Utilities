@@ -39,35 +39,34 @@ internal static partial class VEC_Generate {
     //
     //      Polygon_Line(  A:(x,y), B:(x,y),    SegCount:2, Radius:1f  )
     //
-    internal static vec2[] Polygon_Line(vec2 A, vec2 B, int SegCount, float Radius=1f) {
+    internal static vec2[] PolyLine(vec2 A, vec2 B, int SegCount, float Radius=1f) {
         SegCount = clamp(SegCount, 1, 64);
-        int q1 = (     SegCount    );
-        int q2 = (q1 + SegCount + 1);
-        int q3 = (q2 + SegCount    );
-        int q4 = (q3 + SegCount    );
+        int q1 =    SegCount;
+        int q2 = q1+SegCount+1;
+        int q3 = q2+SegCount;
+        int q4 = q3+SegCount;
 
-        vec2 AB = lengthen(B-A, Radius);
+        vec2 AB = length(B-A, Radius);
         vec2 AZ = (-AB.y, AB.x); //  RotateLeft   a <---> 0
 
         vec2[] P = new vec2[4*SegCount + 2];
 
-        P[ 0  ] = A + AZ; //  a <---> 0
-        P[q1  ] = A - AB; //  a <---> 2
+        P[ 0]   = A + AZ; //  a <---> 0
+        P[q1]   = A - AB; //  a <---> 2
         P[q2-1] = A - AZ; //  a <---> 4
 
-        P[q2  ] = B - AZ; //  b <---> 5
-        P[q3  ] = B + AB; //  b <---> 7
-        P[q4  ] = B + AZ; //  b <---> 9
+        P[q2]   = B - AZ; //  b <---> 5
+        P[q3]   = B + AB; //  b <---> 7
+        P[q4]   = B + AZ; //  b <---> 9
 
         if (SegCount > 1) {
             (float SinT, float CosT) = sincos(PIH/SegCount);
             for (int iSeg = 1; iSeg < SegCount; ++iSeg) {
-                //  Rotate anti-clockwise:
                 AZ = new vec2(
-                    AZ.x*CosT - AZ.y*SinT,
+                    AZ.x*CosT - AZ.y*SinT, //  Rotate anti-clockwise.
                     AZ.x*SinT + AZ.y*CosT
                 );
-                P[   iSeg] = A +           AZ          ;
+                P[   iSeg] = A +           AZ;
                 P[q1+iSeg] = A + new vec2(-AZ.y,  AZ.x);
                 P[q2+iSeg] = B + new vec2(-AZ.x, -AZ.y);
                 P[q3+iSeg] = B + new vec2( AZ.y, -AZ.x);

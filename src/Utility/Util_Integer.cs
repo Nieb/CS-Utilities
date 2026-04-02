@@ -61,65 +61,71 @@ internal static class INT {
     [Impl(AggressiveInlining)] internal static s32 next(s32 i,           s32 U) =>     (++i >= U) ?   0 : i;
     [Impl(AggressiveInlining)] internal static s64 next(s64 i,           s64 U) =>     (++i >= U) ?   0 : i;
 
-    [Impl(AggressiveInlining)] internal static s16 prev(s16 i, s16 Step, s16 U) => s16((i-Step <  0) ? i-Step + U : i-Step);
-    [Impl(AggressiveInlining)] internal static s32 prev(s32 i, s32 Step, s32 U) =>     (i-Step <  0) ? i-Step + U : i-Step;
-    [Impl(AggressiveInlining)] internal static s64 prev(s64 i, s64 Step, s64 U) =>     (i-Step <  0) ? i-Step + U : i-Step;
+    [Impl(AggressiveInlining)] internal static s16 prev(s16 i, s16 Step, s16 U) => ((i = s16(i-Step)) <  0) ? s16(i+U) : i;
+    [Impl(AggressiveInlining)] internal static s32 prev(s32 i, s32 Step, s32 U) => ((i =     i-Step ) <  0) ?     i+U  : i;
+    [Impl(AggressiveInlining)] internal static s64 prev(s64 i, s64 Step, s64 U) => ((i =     i-Step ) <  0) ?     i+U  : i;
 
-    [Impl(AggressiveInlining)] internal static s16 next(s16 i, s16 Step, s16 U) => s16((i+Step >= U) ? i+Step - U : i+Step);
-    [Impl(AggressiveInlining)] internal static s32 next(s32 i, s32 Step, s32 U) =>     (i+Step >= U) ? i+Step - U : i+Step;
-    [Impl(AggressiveInlining)] internal static s64 next(s64 i, s64 Step, s64 U) =>     (i+Step >= U) ? i+Step - U : i+Step;
+    [Impl(AggressiveInlining)] internal static s16 next(s16 i, s16 Step, s16 U) => ((i = s16(i+Step)) >= U) ? s16(i-U) : i;
+    [Impl(AggressiveInlining)] internal static s32 next(s32 i, s32 Step, s32 U) => ((i =     i+Step ) >= U) ?     i-U  : i;
+    [Impl(AggressiveInlining)] internal static s64 next(s64 i, s64 Step, s64 U) => ((i =     i+Step ) >= U) ?     i-U  : i;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                                  "Minimum" Value
-    [Impl(AggressiveInlining)] internal static int min(int A, int B)               => (A < B) ? A : B;
+    [Impl(AggressiveInlining)] internal static s32 min(s32 A, s32 B)               => (A < B) ? A : B;
+    [Impl(AggressiveInlining)] internal static s64 min(s64 A, s64 B)               => (A < B) ? A : B;
 
-    [Impl(AggressiveInlining)] internal static int min(int A, int B, int C)        => (A < B) ? ((A < C) ? A : C)
+    [Impl(AggressiveInlining)] internal static s32 min(s32 A, s32 B, s32 C)        => (A < B) ? ((A < C) ? A : C)
                                                                                               : ((B < C) ? B : C);
 
-    [Impl(AggressiveInlining)] internal static int min(int A, int B, int C, int D) => (A < B) ? ((A < C) ? ((A < D) ? A : D)
+    [Impl(AggressiveInlining)] internal static s32 min(s32 A, s32 B, s32 C, s32 D) => (A < B) ? ((A < C) ? ((A < D) ? A : D)
                                                                                                          : ((C < D) ? C : D))
                                                                                               : ((B < C) ? ((B < D) ? B : D)
                                                                                                          : ((C < D) ? C : D));
 
-    [Impl(AggressiveInlining)] internal static i2 min(i2 A, i1 B)             => new i2(min(A.x,B          ), min(A.y,B          ));
+    [Impl(AggressiveInlining)] internal static i2 min(i2 A, i1 B) => new i2(min(A.x,B  ), min(A.y,B  ));
+    [Impl(AggressiveInlining)] internal static i2 min(i1 A, i2 B) => new i2(min(A  ,B.x), min(A  ,B.y));
+    [Impl(AggressiveInlining)] internal static i3 min(i3 A, i1 B) => new i3(min(A.x,B  ), min(A.y,B  ), min(A.z,B  ));
+    [Impl(AggressiveInlining)] internal static i3 min(i1 A, i3 B) => new i3(min(A  ,B.x), min(A  ,B.y), min(A  ,B.z));
+    [Impl(AggressiveInlining)] internal static i4 min(i4 A, i1 B) => new i4(min(A.x,B  ), min(A.y,B  ), min(A.z,B  ), min(A.w,B  ));
+    [Impl(AggressiveInlining)] internal static i4 min(i1 A, i4 B) => new i4(min(A  ,B.x), min(A  ,B.y), min(A  ,B.z), min(A  ,B.w));
+
     [Impl(AggressiveInlining)] internal static i2 min(i2 A, i2 B)             => new i2(min(A.x,B.x        ), min(A.y,B.y        ));
     [Impl(AggressiveInlining)] internal static i2 min(i2 A, i2 B, i2 C)       => new i2(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ));
     [Impl(AggressiveInlining)] internal static i2 min(i2 A, i2 B, i2 C, i2 D) => new i2(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y));
-
-    [Impl(AggressiveInlining)] internal static i3 min(i3 A, i1 B)             => new i3(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ));
     [Impl(AggressiveInlining)] internal static i3 min(i3 A, i3 B)             => new i3(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ));
     [Impl(AggressiveInlining)] internal static i3 min(i3 A, i3 B, i3 C)       => new i3(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ));
     [Impl(AggressiveInlining)] internal static i3 min(i3 A, i3 B, i3 C, i3 D) => new i3(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z));
-
-    [Impl(AggressiveInlining)] internal static i4 min(i4 A, i1 B)             => new i4(min(A.x,B          ), min(A.y,B          ), min(A.z,B          ), min(A.w,B          ));
     [Impl(AggressiveInlining)] internal static i4 min(i4 A, i4 B)             => new i4(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ), min(A.w,B.w        ));
     [Impl(AggressiveInlining)] internal static i4 min(i4 A, i4 B, i4 C)       => new i4(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ), min(A.w,B.w,C.w    ));
     [Impl(AggressiveInlining)] internal static i4 min(i4 A, i4 B, i4 C, i4 D) => new i4(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z), min(A.w,B.w,C.w,D.w));
 
     //==========================================================================================================================================================
     //                                                                  "Maximum" Value
-    [Impl(AggressiveInlining)] internal static int max(int A, int B)               => (A > B) ? A : B;
+    [Impl(AggressiveInlining)] internal static s32 max(s32 A, s32 B)               => (A > B) ? A : B;
+    [Impl(AggressiveInlining)] internal static s64 max(s64 A, s64 B)               => (A > B) ? A : B;
 
-    [Impl(AggressiveInlining)] internal static int max(int A, int B, int C)        => (A > B) ? ((A > C) ? A : C)
+    [Impl(AggressiveInlining)] internal static s32 max(s32 A, s32 B, s32 C)        => (A > B) ? ((A > C) ? A : C)
                                                                                               : ((B > C) ? B : C);
 
-    [Impl(AggressiveInlining)] internal static int max(int A, int B, int C, int D) => (A > B) ? ((A > C) ? ((A > D) ? A : D)
+    [Impl(AggressiveInlining)] internal static s32 max(s32 A, s32 B, s32 C, s32 D) => (A > B) ? ((A > C) ? ((A > D) ? A : D)
                                                                                                          : ((C > D) ? C : D))
                                                                                               : ((B > C) ? ((B > D) ? B : D)
                                                                                                          : ((C > D) ? C : D));
 
-    [Impl(AggressiveInlining)] internal static i2 max(i2 A, i1 B)             => new i2(max(A.x,B          ), max(A.y,B          ));
+    [Impl(AggressiveInlining)] internal static i2 max(i2 A, i1 B) => new i2(max(A.x,B  ), max(A.y,B  ));
+    [Impl(AggressiveInlining)] internal static i2 max(i1 A, i2 B) => new i2(max(A  ,B.x), max(A  ,B.y));
+    [Impl(AggressiveInlining)] internal static i3 max(i3 A, i1 B) => new i3(max(A.x,B  ), max(A.y,B  ), max(A.z,B  ));
+    [Impl(AggressiveInlining)] internal static i3 max(i1 A, i3 B) => new i3(max(A  ,B.x), max(A  ,B.y), max(A  ,B.z));
+    [Impl(AggressiveInlining)] internal static i4 max(i4 A, i1 B) => new i4(max(A.x,B  ), max(A.y,B  ), max(A.z,B  ), max(A.w,B  ));
+    [Impl(AggressiveInlining)] internal static i4 max(i1 A, i4 B) => new i4(max(A  ,B.x), max(A  ,B.y), max(A  ,B.z), max(A  ,B.w));
+
     [Impl(AggressiveInlining)] internal static i2 max(i2 A, i2 B)             => new i2(max(A.x,B.x        ), max(A.y,B.y        ));
     [Impl(AggressiveInlining)] internal static i2 max(i2 A, i2 B, i2 C)       => new i2(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ));
     [Impl(AggressiveInlining)] internal static i2 max(i2 A, i2 B, i2 C, i2 D) => new i2(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y));
-
-    [Impl(AggressiveInlining)] internal static i3 max(i3 A, i1 B)             => new i3(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ));
     [Impl(AggressiveInlining)] internal static i3 max(i3 A, i3 B)             => new i3(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ));
     [Impl(AggressiveInlining)] internal static i3 max(i3 A, i3 B, i3 C)       => new i3(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ));
     [Impl(AggressiveInlining)] internal static i3 max(i3 A, i3 B, i3 C, i3 D) => new i3(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z));
-
-    [Impl(AggressiveInlining)] internal static i4 max(i4 A, i1 B)             => new i4(max(A.x,B          ), max(A.y,B          ), max(A.z,B          ), max(A.w,B          ));
     [Impl(AggressiveInlining)] internal static i4 max(i4 A, i4 B)             => new i4(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ), max(A.w,B.w        ));
     [Impl(AggressiveInlining)] internal static i4 max(i4 A, i4 B, i4 C)       => new i4(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ), max(A.w,B.w,C.w    ));
     [Impl(AggressiveInlining)] internal static i4 max(i4 A, i4 B, i4 C, i4 D) => new i4(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z), max(A.w,B.w,C.w,D.w));

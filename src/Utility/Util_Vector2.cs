@@ -1,3 +1,13 @@
+using   F2 = (float x, float y);
+using   F3 = (float x, float y, float z);
+using   F4 = (float x, float y, float z, float w);
+using   I2 = (int x, int y);
+using   I3 = (int x, int y, int z);
+using   I4 = (int x, int y, int z, int w);
+using VEC2 = System.Numerics.Vector2;
+using VEC3 = System.Numerics.Vector3;
+using VEC4 = System.Numerics.Vector4;
+using MAT4 = System.Numerics.Matrix4x4;
 
 namespace Utility;
 internal static partial class VEC {
@@ -18,17 +28,20 @@ internal struct vec2 : System.IFormattable {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public vec2() {}
-    public vec2(float X, float Y) {x=X;   y=Y;  }
-    public vec2(float V         ) {x=V;   y=V;  }
+    public vec2(v1 X, v1 Y) {x=X;   y=Y;  }
+    public vec2(v1 V      ) {x=V;   y=V;  }
 
-    public vec2(ivec2 V         ) {x=V.x; y=V.y;}
-
-    //==========================================================================================================================================================
-    //                                                               Tuple "Constructor"
-    [Impl(AggressiveInlining)] public static implicit operator vec2((float X, float Y) t) => new vec2(t.X, t.Y);
+    public vec2(i2 V      ) {x=V.x; y=V.y;}
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] public static implicit operator vec2(ivec2 A) => new vec2(A);        //  Directly assign 'ivec2' to 'vec2'.
+    //                                                                  Directly Assign
+    [Impl(AggressiveInlining)] public static implicit operator vec2(  i2 V) => new vec2( V.x, V.y); //          ivec2  to  vec2
+    [Impl(AggressiveInlining)] public static implicit operator vec2(  F2 T) => new vec2( T.x, T.y); //  (float,float)  to  vec2
+  //[Impl(AggressiveInlining)] public static implicit operator   F2(vec2 V) =>         ( V.x, V.y); //           vec2  to  (float,float)
+    [Impl(AggressiveInlining)] public static implicit operator vec2(v1[] V) => new vec2(V[0],V[1]); //       float[2]  to  vec2
+
+    [Impl(AggressiveInlining)] public static implicit operator vec2(VEC2 v) => new vec2( v.X, v.Y); //       ew-gross  to  vec2
+    [Impl(AggressiveInlining)] public static implicit operator VEC2(vec2 V) => new VEC2( V.x, V.y); //           vec2  to  ew-gross
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -39,27 +52,39 @@ internal struct vec2 : System.IFormattable {
     //##########################################################################################################################################################
     //  Operators Arithmetic:  +  -  *  /  %
 
-    [Impl(AggressiveInlining)] public static vec2 operator +(vec2  A, vec2  B) => new vec2(A.x+B.x, A.y+B.y);
-    [Impl(AggressiveInlining)] public static vec2 operator +(vec2  A, float B) => new vec2(A.x+B  , A.y+B  );
-    [Impl(AggressiveInlining)] public static vec2 operator +(float A, vec2  B) => new vec2(A  +B.x, A  +B.y);
+    [Impl(AggressiveInlining)] public static vec2 operator +( vec2 A,  vec2 B) => new vec2(A.x+B.x, A.y+B.y);
+    [Impl(AggressiveInlining)] public static vec2 operator +( vec2 A, float B) => new vec2(A.x+B  , A.y+B  );
+    [Impl(AggressiveInlining)] public static vec2 operator +(float A,  vec2 B) => new vec2(A  +B.x, A  +B.y);
+    //[Impl(AggressiveInlining)] public static vec2 operator +( vec2 A,    F2 B) => new vec2(A.x+B.x, A.y+B.y);
+    //[Impl(AggressiveInlining)] public static vec2 operator +(   F2 A,  vec2 B) => new vec2(A.x+B.x, A.y+B.y);
+////[Impl(AggressiveInlining)] public static vec2 operator +(   F2 A, float B) => new vec2(A.x+B  , A.y+B  );
+////[Impl(AggressiveInlining)] public static vec2 operator +(float A,    F2 B) => new vec2(A  +B.x, A  +B.y);
 
-    [Impl(AggressiveInlining)] public static vec2 operator -(vec2  A, vec2  B) => new vec2(A.x-B.x, A.y-B.y);
-    [Impl(AggressiveInlining)] public static vec2 operator -(vec2  A, float B) => new vec2(A.x-B  , A.y-B  );
-    [Impl(AggressiveInlining)] public static vec2 operator -(float A, vec2  B) => new vec2(A  -B.x, A  -B.y);
+    [Impl(AggressiveInlining)] public static vec2 operator -( vec2 A,  vec2 B) => new vec2(A.x-B.x, A.y-B.y);
+    [Impl(AggressiveInlining)] public static vec2 operator -( vec2 A, float B) => new vec2(A.x-B  , A.y-B  );
+    [Impl(AggressiveInlining)] public static vec2 operator -(float A,  vec2 B) => new vec2(A  -B.x, A  -B.y);
+    //[Impl(AggressiveInlining)] public static vec2 operator -( vec2 A,    F2 B) => new vec2(A.x-B.x, A.y-B.y);
+    //[Impl(AggressiveInlining)] public static vec2 operator -(   F2 A,  vec2 B) => new vec2(A.x-B.x, A.y-B.y);
 
-    [Impl(AggressiveInlining)] public static vec2 operator -(vec2  A)          => new vec2(   -A.x,    -A.y);
+    [Impl(AggressiveInlining)] public static vec2 operator -( vec2 A)          => new vec2(   -A.x,    -A.y);
 
-    [Impl(AggressiveInlining)] public static vec2 operator *(vec2  A, vec2  B) => new vec2(A.x*B.x, A.y*B.y);
-    [Impl(AggressiveInlining)] public static vec2 operator *(vec2  A, float B) => new vec2(A.x*B  , A.y*B  );
-    [Impl(AggressiveInlining)] public static vec2 operator *(float A, vec2  B) => new vec2(A  *B.x, A  *B.y);
+    [Impl(AggressiveInlining)] public static vec2 operator *( vec2 A,  vec2 B) => new vec2(A.x*B.x, A.y*B.y);
+    [Impl(AggressiveInlining)] public static vec2 operator *( vec2 A, float B) => new vec2(A.x*B  , A.y*B  );
+    [Impl(AggressiveInlining)] public static vec2 operator *(float A,  vec2 B) => new vec2(A  *B.x, A  *B.y);
+    //[Impl(AggressiveInlining)] public static vec2 operator *( vec2 A,    F2 B) => new vec2(A.x*B.x, A.y*B.y);
+    //[Impl(AggressiveInlining)] public static vec2 operator *(   F2 A,  vec2 B) => new vec2(A.x*B.x, A.y*B.y);
 
-    [Impl(AggressiveInlining)] public static vec2 operator /(vec2  A, vec2  B) => new vec2(A.x/B.x, A.y/B.y);
-    [Impl(AggressiveInlining)] public static vec2 operator /(vec2  A, float B) => new vec2(A.x/B  , A.y/B  );
-    [Impl(AggressiveInlining)] public static vec2 operator /(float A, vec2  B) => new vec2(A  /B.x, A  /B.y);
+    [Impl(AggressiveInlining)] public static vec2 operator /( vec2 A,  vec2 B) => new vec2(A.x/B.x, A.y/B.y);
+    [Impl(AggressiveInlining)] public static vec2 operator /( vec2 A, float B) => new vec2(A.x/B  , A.y/B  );
+    [Impl(AggressiveInlining)] public static vec2 operator /(float A,  vec2 B) => new vec2(A  /B.x, A  /B.y);
+    //[Impl(AggressiveInlining)] public static vec2 operator /( vec2 A,    F2 B) => new vec2(A.x/B.x, A.y/B.y);
+    //[Impl(AggressiveInlining)] public static vec2 operator /(   F2 A,  vec2 B) => new vec2(A.x/B.x, A.y/B.y);
 
-    [Impl(AggressiveInlining)] public static vec2 operator %(vec2  A, vec2  B) => new vec2(A.x%B.x, A.y%B.y);
-    [Impl(AggressiveInlining)] public static vec2 operator %(vec2  A, float B) => new vec2(A.x%B  , A.y%B  );
-    [Impl(AggressiveInlining)] public static vec2 operator %(float A, vec2  B) => new vec2(A  %B.x, A  %B.y);
+    [Impl(AggressiveInlining)] public static vec2 operator %( vec2 A,  vec2 B) => new vec2(A.x%B.x, A.y%B.y);
+    [Impl(AggressiveInlining)] public static vec2 operator %( vec2 A, float B) => new vec2(A.x%B  , A.y%B  );
+    [Impl(AggressiveInlining)] public static vec2 operator %(float A,  vec2 B) => new vec2(A  %B.x, A  %B.y);
+    //[Impl(AggressiveInlining)] public static vec2 operator %( vec2 A,    F2 B) => new vec2(A.x%B.x, A.y%B.y);
+    //[Impl(AggressiveInlining)] public static vec2 operator %(   F2 A,  vec2 B) => new vec2(A.x%B.x, A.y%B.y);
 
     //==========================================================================================================================================================
     //  Operators Bitwise:  ~    &    |   ^    <<          >>           >>>
@@ -68,24 +93,36 @@ internal struct vec2 : System.IFormattable {
     //==========================================================================================================================================================
     //  Operators Logical:  ==  !=  <  >  <=  >=     ( ! && || )
 
-    [Impl(AggressiveInlining)] public static bool operator ==(vec2  A, vec2  B) => (A.x==B.x && A.y==B.y);
-    [Impl(AggressiveInlining)] public static bool operator ==(vec2  A, float B) => (A.x==B   && A.y==B  );
+    [Impl(AggressiveInlining)] public static bool operator ==( vec2 A,  vec2 B) => (A.x==B.x && A.y==B.y);
+    [Impl(AggressiveInlining)] public static bool operator ==( vec2 A, float B) => (A.x==B   && A.y==B  );
+    //[Impl(AggressiveInlining)] public static bool operator ==( vec2 A,    I2 B) => (A.x==B.x && A.y==B.y);
+    //[Impl(AggressiveInlining)] public static bool operator ==( vec2 A,    F2 B) => (A.x==B.x && A.y==B.y);
 
-    [Impl(AggressiveInlining)] public static bool operator !=(vec2  A, vec2  B) => (A.x!=B.x || A.y!=B.y);
-    [Impl(AggressiveInlining)] public static bool operator !=(vec2  A, float B) => (A.x!=B   || A.y!=B  );
+    [Impl(AggressiveInlining)] public static bool operator !=( vec2 A,  vec2 B) => (A.x!=B.x || A.y!=B.y);
+    [Impl(AggressiveInlining)] public static bool operator !=( vec2 A, float B) => (A.x!=B   || A.y!=B  );
+    //[Impl(AggressiveInlining)] public static bool operator !=( vec2 A,    I2 B) => (A.x!=B.x || A.y!=B.y);
+    //[Impl(AggressiveInlining)] public static bool operator !=( vec2 A,    F2 B) => (A.x!=B.x || A.y!=B.y);
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] public static bool operator  <(vec2  A, vec2  B) => (A.x< B.x && A.y< B.y);
-    [Impl(AggressiveInlining)] public static bool operator  <(vec2  A, float B) => (A.x< B   && A.y< B  );
+    [Impl(AggressiveInlining)] public static bool operator  <( vec2 A,  vec2 B) => (A.x< B.x && A.y< B.y);
+    [Impl(AggressiveInlining)] public static bool operator  <( vec2 A, float B) => (A.x< B   && A.y< B  );
+    //[Impl(AggressiveInlining)] public static bool operator  <( vec2 A,    I2 B) => (A.x< B.x && A.y< B.y);
+    //[Impl(AggressiveInlining)] public static bool operator  <( vec2 A,    F2 B) => (A.x< B.x && A.y< B.y);
 
-    [Impl(AggressiveInlining)] public static bool operator  >(vec2  A, vec2  B) => (A.x> B.x && A.y> B.y);
-    [Impl(AggressiveInlining)] public static bool operator  >(vec2  A, float B) => (A.x> B   && A.y> B  );
+    [Impl(AggressiveInlining)] public static bool operator  >( vec2 A,  vec2 B) => (A.x> B.x && A.y> B.y);
+    [Impl(AggressiveInlining)] public static bool operator  >( vec2 A, float B) => (A.x> B   && A.y> B  );
+    //[Impl(AggressiveInlining)] public static bool operator  >( vec2 A,    I2 B) => (A.x> B.x && A.y> B.y);
+    //[Impl(AggressiveInlining)] public static bool operator  >( vec2 A,    F2 B) => (A.x> B.x && A.y> B.y);
 
-    [Impl(AggressiveInlining)] public static bool operator <=(vec2  A, vec2  B) => (A.x<=B.x && A.y<=B.y);
-    [Impl(AggressiveInlining)] public static bool operator <=(vec2  A, float B) => (A.x<=B   && A.y<=B  );
+    [Impl(AggressiveInlining)] public static bool operator <=( vec2 A,  vec2 B) => (A.x<=B.x && A.y<=B.y);
+    [Impl(AggressiveInlining)] public static bool operator <=( vec2 A, float B) => (A.x<=B   && A.y<=B  );
+    //[Impl(AggressiveInlining)] public static bool operator <=( vec2 A,    I2 B) => (A.x<=B.x && A.y<=B.y);
+    //[Impl(AggressiveInlining)] public static bool operator <=( vec2 A,    F2 B) => (A.x<=B.x && A.y<=B.y);
 
-    [Impl(AggressiveInlining)] public static bool operator >=(vec2  A, vec2  B) => (A.x>=B.x && A.y>=B.y);
-    [Impl(AggressiveInlining)] public static bool operator >=(vec2  A, float B) => (A.x>=B   && A.y>=B  );
+    [Impl(AggressiveInlining)] public static bool operator >=( vec2 A,  vec2 B) => (A.x>=B.x && A.y>=B.y);
+    [Impl(AggressiveInlining)] public static bool operator >=( vec2 A, float B) => (A.x>=B   && A.y>=B  );
+    //[Impl(AggressiveInlining)] public static bool operator >=( vec2 A,    I2 B) => (A.x>=B.x && A.y>=B.y);
+    //[Impl(AggressiveInlining)] public static bool operator >=( vec2 A,    F2 B) => (A.x>=B.x && A.y>=B.y);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
