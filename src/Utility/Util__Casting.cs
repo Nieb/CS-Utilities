@@ -32,22 +32,32 @@ internal static class Casting {
     //  All BYTE,SHORT operations result in an INT.  :(
     //
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] internal static  u8 ClampToByte  (s32 A) =>        (u8)clamp(A, (s32)MIN_u8,  (s32)MAX_u8);
-    [Impl(AggressiveInlining)] internal static  u8 ClampToByte  (s64 A) =>        (u8)clamp(A, (s64)MIN_u8,  (s64)MAX_u8);
+    [Impl(AggressiveInlining)] internal static  u8 ClampToByte  (f32 A) =>  (u8)round(clamp(A, (f32)MIN_u8,  (f32)MAX_u8));
+    [Impl(AggressiveInlining)] internal static  u8 ClampToByte  (s32 A) =>  (u8)      clamp(A, (s32)MIN_u8,  (s32)MAX_u8);
+    [Impl(AggressiveInlining)] internal static  u8 ClampToByte  (s64 A) =>  (u8)      clamp(A, (s64)MIN_u8,  (s64)MAX_u8);
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     [Impl(AggressiveInlining)] internal static s16 ClampToShort (f32 A) => (s16)round(clamp(A, (f32)MIN_s16, (f32)MAX_s16));
-    [Impl(AggressiveInlining)] internal static s16 ClampToShort (s32 A) =>       (s16)clamp(A, (s32)MIN_s16, (s32)MAX_s16);
-    [Impl(AggressiveInlining)] internal static s16 ClampToShort (s64 A) =>       (s16)clamp(A, (s64)MIN_s16, (s64)MAX_s16);
+    [Impl(AggressiveInlining)] internal static s16 ClampToShort (s32 A) => (s16)      clamp(A, (s32)MIN_s16, (s32)MAX_s16);
+    [Impl(AggressiveInlining)] internal static s16 ClampToShort (s64 A) => (s16)      clamp(A, (s64)MIN_s16, (s64)MAX_s16);
 
     [Impl(AggressiveInlining)] internal static u16 ClampToUshort(f32 A) => (u16)round(clamp(A, (f32)MIN_u16, (f32)MAX_u16));
-    [Impl(AggressiveInlining)] internal static u16 ClampToUshort(s32 A) =>       (u16)clamp(A, (s32)MIN_u16, (s32)MAX_u16);
+    [Impl(AggressiveInlining)] internal static u16 ClampToUshort(s32 A) => (u16)      clamp(A, (s32)MIN_u16, (s32)MAX_u16);
+    [Impl(AggressiveInlining)] internal static u16 ClampToUshort(s64 A) => (u16)      clamp(A, (s64)MIN_u16, (s64)MAX_u16);
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] internal static s32 ClampToInt   (s64 A) =>       (s32)clamp(A, (s64)MIN_s32, (s64)MAX_s32);
+    [Impl(AggressiveInlining)] internal static s32 ClampToInt   (f32 A) => (s32)round(clamp(A, (f32)MIN_s32, (f32)MAX_s32));                //  round first ???
+    [Impl(AggressiveInlining)] internal static s32 ClampToInt   (s64 A) => (s32)      clamp(A, (s64)MIN_s32, (s64)MAX_s32);
 
-    [Impl(AggressiveInlining)] internal static u32 ClampToUint  (s32 A) =>       (u32)clamp(A, (s32)MIN_u32,      MAX_s32);
-    [Impl(AggressiveInlining)] internal static u32 ClampToUint  (s64 A) =>       (u32)clamp(A, (s64)MIN_u32, (s64)MAX_u32);
+    [Impl(AggressiveInlining)] internal static u32 ClampToUint  (s32 A) => (u32)      clamp(A, (s32)MIN_u32,      MAX_s32);
+    [Impl(AggressiveInlining)] internal static u32 ClampToUint  (s64 A) => (u32)      clamp(A, (s64)MIN_u32, (s64)MAX_u32);
+
+    //==========================================================================================================================================================
+    [Impl(AggressiveInlining)] internal static s32 RoundToInt(f32 A)  => (s32)round(A);
+    [Impl(AggressiveInlining)] internal static s32 RoundToInt(f64 A)  => (s32)round(A);
+
+    [Impl(AggressiveInlining)] internal static s64 RoundToLong(f32 A) => (s64)round(A);
+    [Impl(AggressiveInlining)] internal static s64 RoundToLong(f64 A) => (s64)round(A);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

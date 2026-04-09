@@ -5,13 +5,13 @@ internal static partial class VEC_Color {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [Impl(AggressiveInlining)] internal static float ByteToUnit(byte Byte) => ((float)Byte) / 255f;
+    [Impl(AggressiveInlining)] internal static float ByteToUnit(u8 Byte) => ((float)Byte) / 255f;
 
-    [Impl(AggressiveInlining)] internal static vec3  ByteToUnit(byte R, byte G, byte B)         => new vec3(ByteToUnit(R), ByteToUnit(G), ByteToUnit(B));
-    [Impl(AggressiveInlining)] internal static vec4  ByteToUnit(byte R, byte G, byte B, byte A) => new vec4(ByteToUnit(R), ByteToUnit(G), ByteToUnit(B), ByteToUnit(A));
+    [Impl(AggressiveInlining)] internal static vec3  ByteToUnit(u8 R, u8 G, u8 B)       => new vec3(ByteToUnit(R), ByteToUnit(G), ByteToUnit(B));
+    [Impl(AggressiveInlining)] internal static vec4  ByteToUnit(u8 R, u8 G, u8 B, u8 A) => new vec4(ByteToUnit(R), ByteToUnit(G), ByteToUnit(B), ByteToUnit(A));
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] internal static byte UnitToByte(float Unit) => (byte)round(Unit * 255f);
+    [Impl(AggressiveInlining)] internal static u8 UnitToByte(float Unit) => (u8)round(Unit * 255f);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

@@ -4,7 +4,7 @@ using MemoryMarshal = System.Runtime.InteropServices.MemoryMarshal;
 namespace Utility;
 internal static partial class DATA {
 [StructLayout(LayoutKind.Explicit, Pack=4)]
-internal struct DataArray {
+internal readonly struct DataArray {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     [FieldOffset(0)] public readonly u8[] Data;

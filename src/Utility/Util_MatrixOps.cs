@@ -69,10 +69,10 @@ internal static partial class MAT {
         (float SinYaw, float CosYaw) = sincos(-Yaw);
         #if Z_UP
             return new mat4(
-                        CosYaw,             0,        SinYaw,  -Pos.x*(       CosYaw)                - Pos.y*(       SinYaw),
-                 SinPch*SinYaw,        CosPch,-SinPch*CosYaw,  -Pos.x*(SinPch*SinYaw) - Pos.z*CosPch + Pos.y*(SinPch*CosYaw),
-                -CosPch*SinYaw,        SinPch, CosPch*CosYaw,   Pos.x*(CosPch*SinYaw) - Pos.z*SinPch - Pos.y*(CosPch*CosYaw),
-                             0,             0,             0,                                                              1
+                        CosYaw,             0,        SinYaw,  -Pos.x*(       CosYaw)                  - Pos.y*(       SinYaw),
+                 SinPch*SinYaw,        CosPch,-SinPch*CosYaw,  -Pos.x*(SinPch*SinYaw) - Pos.z*(CosPch) + Pos.y*(SinPch*CosYaw),
+                -CosPch*SinYaw,        SinPch, CosPch*CosYaw,   Pos.x*(CosPch*SinYaw) - Pos.z*(SinPch) - Pos.y*(CosPch*CosYaw),
+                             0,             0,             0,                                                                1
             );
         #else
             return new(); //  todo...
@@ -123,7 +123,7 @@ internal static partial class MAT {
     //
     //  Project View-to-Orthographic
     //
-    [Impl(AggressiveInlining)] public static mat4 ToOrtho(float ViewRadiusX, float ViewRadiusY, float ViewDepthNear, float ViewDepthFar) {
+    [Impl(AggressiveInlining)] public static mat4 ToOrthographic(float ViewRadiusX, float ViewRadiusY, float ViewDepthNear, float ViewDepthFar) {
         float N = ViewDepthNear;
         float F = ViewDepthFar;
         float dZ = (F-N);
@@ -141,9 +141,9 @@ internal static partial class MAT {
 
     //==========================================================================================================================================================
     //
-    //  Asymmetric-Frustum version...
+    //  Asymmetric-Frustum version
     //
-    [Impl(AggressiveInlining)] public static mat4 ToOrthoAsym() {
+    [Impl(AggressiveInlining)] public static mat4 ToOrthographicAsymmetric() {
         return new(); //  todo...
     }
 
@@ -154,7 +154,7 @@ internal static partial class MAT {
     //
     //  Project View-to-Perspective
     //
-    [Impl(AggressiveInlining)] public static mat4 ToPersp(float ViewAspectX, float FovY, float ViewDepthNear, float ViewDepthFar) {
+    [Impl(AggressiveInlining)] public static mat4 ToPerspective(float ViewAspectX, float FovY, float ViewDepthNear, float ViewDepthFar) {
         float F = ViewDepthFar;
         float N = ViewDepthNear;
 
@@ -178,9 +178,9 @@ internal static partial class MAT {
 
     //==========================================================================================================================================================
     //
-    //  Asymmetric-Frustum version...
+    //  Asymmetric-Frustum version
     //
-    [Impl(AggressiveInlining)] public static mat4 ToPerspAsym() {
+    [Impl(AggressiveInlining)] public static mat4 ToPerspectiveAsymmetric() {
         return new(); //  todo...
 
         //return new mat4(

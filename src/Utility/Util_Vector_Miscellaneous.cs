@@ -235,45 +235,4 @@ internal static partial class VEC_Miscellaneous {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal static vec3 ProjectRayToLine(vec3 Rp, vec3 Rn, vec3 La, vec3 Lb) {
-        vec3 dAB = Lb - La;
-        vec3 dAP = Rp - La;
-
-        float dotL  = dot(dAB);
-        float dotRL = dot(Rn,dAB);
-
-        float Determinant = dotL - dotRL*dotRL;
-
-        //  Distance from LinePointA to NearestPointOnLine, as multiple of DeltaAB:
-        float Dist = (abs(Determinant) < EPS7) ?  dot(dAP,dAB)                        / dotL        //  If RayLine & Line near parallel, project RayPos to Line.
-                                               : (dot(dAB,dAP) - dotRL * dot(Rn,dAP)) / Determinant;
-        return La + dAB*Dist;
-    }
-
-    //==========================================================================================================================================================
-    internal static vec3 ProjectLineToLine(vec3 L1a, vec3 L1b, vec3 L2a, vec3 L2b) {
-        vec3 dAB1 = L1b - L1a;
-        vec3 dAB2 = L2b - L2a;
-        vec3 dAA  = L1a - L2a;
-
-        float dotL1 = dot(dAB1);
-        float dotL2 = dot(dAB2);
-        float dotLL = dot(dAB1, dAB2);
-
-        float Determinant = dotL1*dotL2 - dotLL*dotLL;
-
-        //  Are Line1 & Line2 near parallel?               return mid point?
-        if (abs(Determinant) < EPS7)
-            return L2a;
-
-        //  Distance from Line2PointA to NearestPointOnLine, as multiple of DeltaAB2:
-        float Dist = (dotL1*dot(dAB2,dAA) - dotLL*dot(dAB1,dAA)) / Determinant;
-
-        return L2a + dAB2*Dist;
-    }
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
 }

@@ -46,6 +46,7 @@ internal static class INT {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //
     //  Get previous/next Index, with Array.Length wrapping.
+    //  Essentially a less-gross version of the above wrap() function that only works with positive integers in the 0 to N range.
     //
     //      Blarg[ prev(i, Blarg.Length) ]      Equivalent to:  Blarg[ prev(i, 1, Blarg.Length) ]
     //      Blarg[ next(i, Blarg.Length) ]      Equivalent to:  Blarg[ next(i, 1, Blarg.Length) ]
@@ -90,14 +91,14 @@ internal static class INT {
     [Impl(AggressiveInlining)] internal static i4 min(i4 A, i1 B) => new i4(min(A.x,B  ), min(A.y,B  ), min(A.z,B  ), min(A.w,B  ));
     [Impl(AggressiveInlining)] internal static i4 min(i1 A, i4 B) => new i4(min(A  ,B.x), min(A  ,B.y), min(A  ,B.z), min(A  ,B.w));
 
-    [Impl(AggressiveInlining)] internal static i2 min(i2 A, i2 B)             => new i2(min(A.x,B.x        ), min(A.y,B.y        ));
-    [Impl(AggressiveInlining)] internal static i2 min(i2 A, i2 B, i2 C)       => new i2(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ));
+    [Impl(AggressiveInlining)] internal static i2 min(i2 A, i2 B)             => new i2(min(A.x,B.x),         min(A.y,B.y));
+    [Impl(AggressiveInlining)] internal static i2 min(i2 A, i2 B, i2 C)       => new i2(min(A.x,B.x,C.x),     min(A.y,B.y,C.y));
     [Impl(AggressiveInlining)] internal static i2 min(i2 A, i2 B, i2 C, i2 D) => new i2(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y));
-    [Impl(AggressiveInlining)] internal static i3 min(i3 A, i3 B)             => new i3(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ));
-    [Impl(AggressiveInlining)] internal static i3 min(i3 A, i3 B, i3 C)       => new i3(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ));
+    [Impl(AggressiveInlining)] internal static i3 min(i3 A, i3 B)             => new i3(min(A.x,B.x),         min(A.y,B.y),         min(A.z,B.z));
+    [Impl(AggressiveInlining)] internal static i3 min(i3 A, i3 B, i3 C)       => new i3(min(A.x,B.x,C.x),     min(A.y,B.y,C.y),     min(A.z,B.z,C.z));
     [Impl(AggressiveInlining)] internal static i3 min(i3 A, i3 B, i3 C, i3 D) => new i3(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z));
-    [Impl(AggressiveInlining)] internal static i4 min(i4 A, i4 B)             => new i4(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ), min(A.w,B.w        ));
-    [Impl(AggressiveInlining)] internal static i4 min(i4 A, i4 B, i4 C)       => new i4(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ), min(A.w,B.w,C.w    ));
+    [Impl(AggressiveInlining)] internal static i4 min(i4 A, i4 B)             => new i4(min(A.x,B.x),         min(A.y,B.y),         min(A.z,B.z),         min(A.w,B.w));
+    [Impl(AggressiveInlining)] internal static i4 min(i4 A, i4 B, i4 C)       => new i4(min(A.x,B.x,C.x),     min(A.y,B.y,C.y),     min(A.z,B.z,C.z),     min(A.w,B.w,C.w));
     [Impl(AggressiveInlining)] internal static i4 min(i4 A, i4 B, i4 C, i4 D) => new i4(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z), min(A.w,B.w,C.w,D.w));
 
     //==========================================================================================================================================================
@@ -120,25 +121,54 @@ internal static class INT {
     [Impl(AggressiveInlining)] internal static i4 max(i4 A, i1 B) => new i4(max(A.x,B  ), max(A.y,B  ), max(A.z,B  ), max(A.w,B  ));
     [Impl(AggressiveInlining)] internal static i4 max(i1 A, i4 B) => new i4(max(A  ,B.x), max(A  ,B.y), max(A  ,B.z), max(A  ,B.w));
 
-    [Impl(AggressiveInlining)] internal static i2 max(i2 A, i2 B)             => new i2(max(A.x,B.x        ), max(A.y,B.y        ));
-    [Impl(AggressiveInlining)] internal static i2 max(i2 A, i2 B, i2 C)       => new i2(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ));
+    [Impl(AggressiveInlining)] internal static i2 max(i2 A, i2 B)             => new i2(max(A.x,B.x),         max(A.y,B.y));
+    [Impl(AggressiveInlining)] internal static i2 max(i2 A, i2 B, i2 C)       => new i2(max(A.x,B.x,C.x),     max(A.y,B.y,C.y));
     [Impl(AggressiveInlining)] internal static i2 max(i2 A, i2 B, i2 C, i2 D) => new i2(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y));
-    [Impl(AggressiveInlining)] internal static i3 max(i3 A, i3 B)             => new i3(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ));
-    [Impl(AggressiveInlining)] internal static i3 max(i3 A, i3 B, i3 C)       => new i3(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ));
+    [Impl(AggressiveInlining)] internal static i3 max(i3 A, i3 B)             => new i3(max(A.x,B.x),         max(A.y,B.y),         max(A.z,B.z));
+    [Impl(AggressiveInlining)] internal static i3 max(i3 A, i3 B, i3 C)       => new i3(max(A.x,B.x,C.x),     max(A.y,B.y,C.y),     max(A.z,B.z,C.z));
     [Impl(AggressiveInlining)] internal static i3 max(i3 A, i3 B, i3 C, i3 D) => new i3(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z));
-    [Impl(AggressiveInlining)] internal static i4 max(i4 A, i4 B)             => new i4(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ), max(A.w,B.w        ));
-    [Impl(AggressiveInlining)] internal static i4 max(i4 A, i4 B, i4 C)       => new i4(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ), max(A.w,B.w,C.w    ));
+    [Impl(AggressiveInlining)] internal static i4 max(i4 A, i4 B)             => new i4(max(A.x,B.x),         max(A.y,B.y),         max(A.z,B.z),         max(A.w,B.w));
+    [Impl(AggressiveInlining)] internal static i4 max(i4 A, i4 B, i4 C)       => new i4(max(A.x,B.x,C.x),     max(A.y,B.y,C.y),     max(A.z,B.z,C.z),     max(A.w,B.w,C.w));
     [Impl(AggressiveInlining)] internal static i4 max(i4 A, i4 B, i4 C, i4 D) => new i4(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z), max(A.w,B.w,C.w,D.w));
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                                      "Modulo"
-    //  Based on Euclidean-Division.
-    //
+    //                                                                 Euclidean "Modulo"
     [Impl(AggressiveInlining)] internal static int mod(int A, int B) {int R = A % B; return R + (R < 0 ? (B < 0 ? -B : B) : 0);}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
+    //                                                                     "Round" To
+    //  Each component rounded to the nearest 'N'.
+    //
+    //      round(  Value,  RoundTo  )
+    //      floor(  Value,  FloorTo  )
+    //       ceil(  Value,  CeilingTo  )
+    //
+    [Impl(AggressiveInlining)] internal static i1 round(i1 A, i1 N) => (A < 0) ? N*((A - N/2 + ((N&1)!=0?0:1) )/N)
+                                                                               : N*((A + N/2                  )/N);
+
+    [Impl(AggressiveInlining)] internal static i1 floor(i1 A, i1 N) => (A < 0) ? N*((A - N + 1)/N)
+                                                                               : N*(     A     /N);
+
+    [Impl(AggressiveInlining)] internal static i1  ceil(i1 A, i1 N) => (A < 0) ? N*(     A     /N)
+                                                                               : N*((A + N - 1)/N);
+
+    [Impl(AggressiveInlining)] internal static i2 round(i2 A, i1 N) => new i2(round(A.x,N), round(A.y,N));
+    [Impl(AggressiveInlining)] internal static i3 round(i3 A, i1 N) => new i3(round(A.x,N), round(A.y,N), round(A.z,N));
+    [Impl(AggressiveInlining)] internal static i4 round(i4 A, i1 N) => new i4(round(A.x,N), round(A.y,N), round(A.z,N), round(A.w,N));
+
+    [Impl(AggressiveInlining)] internal static i2 floor(i2 A, i1 N) => new i2(floor(A.x,N), floor(A.y,N));
+    [Impl(AggressiveInlining)] internal static i3 floor(i3 A, i1 N) => new i3(floor(A.x,N), floor(A.y,N), floor(A.z,N));
+    [Impl(AggressiveInlining)] internal static i4 floor(i4 A, i1 N) => new i4(floor(A.x,N), floor(A.y,N), floor(A.z,N), floor(A.w,N));
+
+    [Impl(AggressiveInlining)] internal static i2 ceil(i2 A, i1 N) => new i2(ceil(A.x,N), ceil(A.y,N));
+    [Impl(AggressiveInlining)] internal static i3 ceil(i3 A, i1 N) => new i3(ceil(A.x,N), ceil(A.y,N), ceil(A.z,N));
+    [Impl(AggressiveInlining)] internal static i4 ceil(i4 A, i1 N) => new i4(ceil(A.x,N), ceil(A.y,N), ceil(A.z,N), ceil(A.w,N));
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //                                                                       "Sign"
     [Impl(AggressiveInlining)] internal static  s8 sign( s8 A) =>  s8((A < 0) ? -1 : 1);
     [Impl(AggressiveInlining)] internal static s16 sign(s16 A) => s16((A < 0) ? -1 : 1);
     [Impl(AggressiveInlining)] internal static s32 sign(s32 A) =>     (A < 0) ? -1 : 1;
@@ -146,8 +176,8 @@ internal static class INT {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                                 "Trunkate" Digits
-    //  NOTE:  Doesn't handle "-" symbol.
+    //                                                             "Trunkate" base10 Digits
+    //  NOTE:  Doesn't handle "-" symbol...
     //
     //      trunk(12345, -2) ==   345
     //      trunk(12345,  2) == 123

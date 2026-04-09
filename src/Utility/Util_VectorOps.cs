@@ -43,7 +43,7 @@ internal static partial class VEC {
     //               *Inclusive*  *Exclusive*
     //      wrap( A, LowerBounds, UpperBounds )
     //
-    [Impl(AggressiveInlining)] internal static v1 wrap(v1 A, v1 L, v1 U) {v1 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0f) ? Domain : 0f);}
+    [Impl(AggressiveInlining)] internal static v1 wrap(v1 A, v1 L, v1 U) {v1 Domain = U-L;  A = (A-L) % Domain;  return A+L + ((A < 0f) ? Domain : 0f);}        // => L + (A-L) % (U-L);
     [Impl(AggressiveInlining)] internal static v2 wrap(v2 A, v1 L, v1 U) => new v2(wrap(A.x, L, U), wrap(A.y, L, U));
     [Impl(AggressiveInlining)] internal static v3 wrap(v3 A, v1 L, v1 U) => new v3(wrap(A.x, L, U), wrap(A.y, L, U), wrap(A.z, L, U));
     [Impl(AggressiveInlining)] internal static v4 wrap(v4 A, v1 L, v1 U) => new v4(wrap(A.x, L, U), wrap(A.y, L, U), wrap(A.z, L, U), wrap(A.w, L, U));
@@ -201,14 +201,14 @@ internal static partial class VEC {
     [Impl(AggressiveInlining)] internal static v4 min(v1 A, v4 B) => new v4(min(A  ,B.x), min(A  ,B.y), min(A  ,B.z), min(A  ,B.w));
     [Impl(AggressiveInlining)] internal static v4 min(v4 A, v1 B) => new v4(min(A.x,B  ), min(A.y,B  ), min(A.z,B  ), min(A.w,B  ));
 
-    [Impl(AggressiveInlining)] internal static v2 min(v2 A, v2 B)             => new v2(min(A.x,B.x        ), min(A.y,B.y        ));
-    [Impl(AggressiveInlining)] internal static v2 min(v2 A, v2 B, v2 C)       => new v2(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ));
+    [Impl(AggressiveInlining)] internal static v2 min(v2 A, v2 B)             => new v2(min(A.x,B.x),         min(A.y,B.y));
+    [Impl(AggressiveInlining)] internal static v2 min(v2 A, v2 B, v2 C)       => new v2(min(A.x,B.x,C.x),     min(A.y,B.y,C.y));
     [Impl(AggressiveInlining)] internal static v2 min(v2 A, v2 B, v2 C, v2 D) => new v2(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y));
-    [Impl(AggressiveInlining)] internal static v3 min(v3 A, v3 B)             => new v3(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ));
-    [Impl(AggressiveInlining)] internal static v3 min(v3 A, v3 B, v3 C)       => new v3(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ));
+    [Impl(AggressiveInlining)] internal static v3 min(v3 A, v3 B)             => new v3(min(A.x,B.x),         min(A.y,B.y),         min(A.z,B.z));
+    [Impl(AggressiveInlining)] internal static v3 min(v3 A, v3 B, v3 C)       => new v3(min(A.x,B.x,C.x),     min(A.y,B.y,C.y),     min(A.z,B.z,C.z));
     [Impl(AggressiveInlining)] internal static v3 min(v3 A, v3 B, v3 C, v3 D) => new v3(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z));
-    [Impl(AggressiveInlining)] internal static v4 min(v4 A, v4 B)             => new v4(min(A.x,B.x        ), min(A.y,B.y        ), min(A.z,B.z        ), min(A.w,B.w        ));
-    [Impl(AggressiveInlining)] internal static v4 min(v4 A, v4 B, v4 C)       => new v4(min(A.x,B.x,C.x    ), min(A.y,B.y,C.y    ), min(A.z,B.z,C.z    ), min(A.w,B.w,C.w    ));
+    [Impl(AggressiveInlining)] internal static v4 min(v4 A, v4 B)             => new v4(min(A.x,B.x),         min(A.y,B.y),         min(A.z,B.z),         min(A.w,B.w));
+    [Impl(AggressiveInlining)] internal static v4 min(v4 A, v4 B, v4 C)       => new v4(min(A.x,B.x,C.x),     min(A.y,B.y,C.y),     min(A.z,B.z,C.z),     min(A.w,B.w,C.w));
     [Impl(AggressiveInlining)] internal static v4 min(v4 A, v4 B, v4 C, v4 D) => new v4(min(A.x,B.x,C.x,D.x), min(A.y,B.y,C.y,D.y), min(A.z,B.z,C.z,D.z), min(A.w,B.w,C.w,D.w));
 
     //==========================================================================================================================================================
@@ -230,14 +230,14 @@ internal static partial class VEC {
     [Impl(AggressiveInlining)] internal static v4 max(v1 A, v4 B) => new v4(max(A  ,B.x), max(A  ,B.y), max(A  ,B.z), max(A  ,B.w));
     [Impl(AggressiveInlining)] internal static v4 max(v4 A, v1 B) => new v4(max(A.x,B  ), max(A.y,B  ), max(A.z,B  ), max(A.w,B  ));
 
-    [Impl(AggressiveInlining)] internal static v2 max(v2 A, v2 B)             => new v2(max(A.x,B.x        ), max(A.y,B.y        ));
-    [Impl(AggressiveInlining)] internal static v2 max(v2 A, v2 B, v2 C)       => new v2(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ));
+    [Impl(AggressiveInlining)] internal static v2 max(v2 A, v2 B)             => new v2(max(A.x,B.x),         max(A.y,B.y));
+    [Impl(AggressiveInlining)] internal static v2 max(v2 A, v2 B, v2 C)       => new v2(max(A.x,B.x,C.x),     max(A.y,B.y,C.y));
     [Impl(AggressiveInlining)] internal static v2 max(v2 A, v2 B, v2 C, v2 D) => new v2(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y));
-    [Impl(AggressiveInlining)] internal static v3 max(v3 A, v3 B)             => new v3(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ));
-    [Impl(AggressiveInlining)] internal static v3 max(v3 A, v3 B, v3 C)       => new v3(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ));
+    [Impl(AggressiveInlining)] internal static v3 max(v3 A, v3 B)             => new v3(max(A.x,B.x),         max(A.y,B.y),         max(A.z,B.z));
+    [Impl(AggressiveInlining)] internal static v3 max(v3 A, v3 B, v3 C)       => new v3(max(A.x,B.x,C.x),     max(A.y,B.y,C.y),     max(A.z,B.z,C.z));
     [Impl(AggressiveInlining)] internal static v3 max(v3 A, v3 B, v3 C, v3 D) => new v3(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z));
-    [Impl(AggressiveInlining)] internal static v4 max(v4 A, v4 B)             => new v4(max(A.x,B.x        ), max(A.y,B.y        ), max(A.z,B.z        ), max(A.w,B.w        ));
-    [Impl(AggressiveInlining)] internal static v4 max(v4 A, v4 B, v4 C)       => new v4(max(A.x,B.x,C.x    ), max(A.y,B.y,C.y    ), max(A.z,B.z,C.z    ), max(A.w,B.w,C.w    ));
+    [Impl(AggressiveInlining)] internal static v4 max(v4 A, v4 B)             => new v4(max(A.x,B.x),         max(A.y,B.y),         max(A.z,B.z),         max(A.w,B.w));
+    [Impl(AggressiveInlining)] internal static v4 max(v4 A, v4 B, v4 C)       => new v4(max(A.x,B.x,C.x),     max(A.y,B.y,C.y),     max(A.z,B.z,C.z),     max(A.w,B.w,C.w));
     [Impl(AggressiveInlining)] internal static v4 max(v4 A, v4 B, v4 C, v4 D) => new v4(max(A.x,B.x,C.x,D.x), max(A.y,B.y,C.y,D.y), max(A.z,B.z,C.z,D.z), max(A.w,B.w,C.w,D.w));
 
     //##########################################################################################################################################################
@@ -255,7 +255,7 @@ internal static partial class VEC {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                                      "Modulo"
+    //                                                                 Euclidean "Modulo"
     //                                  2 _                                                         2 _
     //                                           /     /     /     /                                                     /     /
     //                                          /     /     /     /                                                     /     /
@@ -328,29 +328,7 @@ internal static partial class VEC {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                                    "Projection"
-    //  Get Nearest-Point-On-Line from Point.
-    //
-    //      project(  Point,  Line-Position,  Line-Normal  )
-    //
-    [Impl(AggressiveInlining)] internal static v2 project(v2 P, v2 Lp, v2 Ln) => Lp + Ln*dot(P-Lp, Ln);
-    [Impl(AggressiveInlining)] internal static v3 project(v3 P, v3 Lp, v3 Ln) => Lp + Ln*dot(P-Lp, Ln);
-
-    //==========================================================================================================================================================
-    //
-    //  Arbitrary-Line version.
-    //
-    //  NOTE:   Does not tell you if ProjectedPoint is inbetween A & B.
-    //              SEE: PointVsLine()
-    //
-    //      projectAB(  Point,  Line-PointA,  Line-PointB  )
-    //
-    internal static v2 projectAB(v2 P, v2 La, v2 Lb) {v2 dAB = Lb-La;  return La + dAB*( dot(P-La,dAB)/dot(dAB) );}
-    internal static v3 projectAB(v3 P, v3 La, v3 Lb) {v3 dAB = Lb-La;  return La + dAB*( dot(P-La,dAB)/dot(dAB) );}
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //                                                                     "Reflect"
+    //                                                                     "Reflect"                move these to "VEC_Projection" ?
     //
     //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/reflect.xhtml
     //
@@ -455,8 +433,8 @@ internal static partial class VEC {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                            Sum of a Vector's Components
-    [Impl(AggressiveInlining)] internal static v1 sumof(v2 A) => (A.x + A.y            );
-    [Impl(AggressiveInlining)] internal static v1 sumof(v3 A) => (A.x + A.y + A.z      );
+    [Impl(AggressiveInlining)] internal static v1 sumof(v2 A) => (A.x + A.y);
+    [Impl(AggressiveInlining)] internal static v1 sumof(v3 A) => (A.x + A.y + A.z);
     [Impl(AggressiveInlining)] internal static v1 sumof(v4 A) => (A.x + A.y + A.z + A.w);
 
     //##########################################################################################################################################################

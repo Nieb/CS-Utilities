@@ -70,9 +70,8 @@ internal static class VEC_Collision3 {
     //
     //      PointVsCylinder(  Point,  Cylinder-Position,  Cylinder-Radius,  Cylinder-Height  )
     //
-    internal static bool PointVsCylinder(vec3 P, vec3 Cp, float Cr, float Ch) => (
-           P.y >= Cp.y                  //  Is Point in same vertical space as Cylinder?
-        && P.y <= Cp.y+Ch
+    [Impl(AggressiveInlining)] internal static bool PointVsCylinder(vec3 P, vec3 Cp, float Cr, float Ch) => (
+         P.y >= Cp.y && P.y <= Cp.y+Ch  //  Is Point in same vertical space as Cylinder?
         && dot(P.xz - Cp.xz) <= (Cr*Cr) //  Is Point inside of Cylinder-Radius?
     );
 
@@ -83,7 +82,21 @@ internal static class VEC_Collision3 {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //  All RayVs***() functions return:  HitDistance                           HitPos = RayPos + (RayNrm * HitDist);
+    //      SphereVsBox(  SpherePosition, SphereRadius,  BoxPosition, BoxSize  )
+    //
+    [Impl(AggressiveInlining)] internal static bool SphereVsBox(vec3 Sp, float Sr, vec3 Bp, vec3 Bs)   => dot(min(0f,Sp-Bp) + max(0f,Sp-(Bp+Bs))) <= Sr*Sr;
+
+    //==========================================================================================================================================================
+    [Impl(AggressiveInlining)] internal static bool SphereVsBounds(vec3 Sp, float Sr, vec3 b0, vec3 b1) => dot(min(0f,Sp-b0) + max(0f,Sp-b1)) <= Sr*Sr;
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //
+    //  All RayVs*() functions return:  HitDistance                             HitPos = RayPos + (RayNrm * HitDist);
     //
     //                         Surface      Ray
     //       HitDist < 0.0      |-->        -->  Surface/Volume is Behind Ray.
@@ -92,7 +105,7 @@ internal static class VEC_Collision3 {
     //
     //       HitDist > 0.0      |-->        <--  Surface/Volume is InFront of Ray.
     //
-    internal static readonly float RAY_MISS = float.NegativeInfinity;
+    internal const float RAY_MISS = float.NegativeInfinity;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -154,7 +167,7 @@ internal static class VEC_Collision3 {
     //
     //      RayVsTriangle(  Ray-Position,  Ray-Normal,    Triangle-PointA,  Triangle-PointB,  Triangle-PointC,    BackFaceTest  )
     //
-    internal static float RayVsTriangle(vec3 Rp, vec3 Rn,   vec3 Ta, vec3 Tb, vec3 Tc,   bool BackFaceTest = false) {
+    internal static float RayVsTriangle(vec3 Rp, vec3 Rn,   vec3 Ta, vec3 Tb, vec3 Tc,   bool BackFaceTest=false) {
         vec3 dAB = Tb - Ta;
         vec3 dAC = Tc - Ta;
 
@@ -194,15 +207,19 @@ internal static class VEC_Collision3 {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //  Geometric solution.
+    //      RayVsPoint(  Ray-Position,  Ray-Normal,  Point-Position,  Radius  )
+    //
+    [Impl(AggressiveInlining)] internal static float RayVsPoint(vec3 Rp, vec3 Rn,    vec3 P, float Radius) => RayVsSphere(Rp,Rn, P,Radius);
+
+    //==========================================================================================================================================================
     //
     //  https://www.desmos.com/calculator/zigiqzj8dm
     //
     //      RayVsSphere(  Ray-Position,  Ray-Normal,    Sphere-Position,  Sphere-Radius  )
     //
     internal static float RayVsSphere(vec3 Rp, vec3 Rn, vec3 Sp, float Sr) {
-        vec3  dRS  = Sp - Rp;
-        float SrSr = Sr * Sr;
+        vec3  dRS = Sp - Rp;
+        float  RR = Sr * Sr; //  SphereRadius squared.
 
         float DistRP = dot(dRS, Rn); //  Distance         from  RayPos  to  ProjectedPoint.
         float DistRS = dot(dRS);     //  Distance-Squared from  RayPos  to  SpherePos.
@@ -210,12 +227,77 @@ internal static class VEC_Collision3 {
         float dD = DistRS - DistRP*DistRP;
 
         //  Is ProjectedPoint inside Sphere?
-        return (dD > SrSr) ? RAY_MISS
-                           : DistRP - sqrt(SrSr - dD);
+        return (dD > RR) ? RAY_MISS
+                         : DistRP - sqrt(RR - dD);
+    }
 
-        //float HitDist0 = DistRP - dD;
-        //float HitDist1 = DistRP + dD;
-        //return HitDist0;
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //
+    //      RayVsLine(  Ray-Position,  Ray-Normal,    LinePointA, RadiusA,  LinePointB, RadiusB  )
+    //
+    [Impl(AggressiveInlining)] internal static float RayVsLine(vec3 Rp, vec3 Rn,    vec3 A, float Ar, vec3 B, float Br) => RayVsCapsule(Rp,Rn, A,Ar,B,Br);
+
+    //==========================================================================================================================================================
+    //
+    //                                       RadiusB
+    //                RadiusA        ___---+--.._
+    //                      ,-+---```      |     `.
+    //                    .`  |            |       \
+    //                   /    | A          | B     |
+    //                   +----●------------●-------+
+    //                   \    |            |       |
+    //                    *,  |            |       /
+    //                      `-+---___      |    _.`
+    //                               ```---+--``
+    //
+    //      RayVsLine(  Ray-Position,  Ray-Normal,       PointA, RadiusA,  PointB, RadiusB  )
+    //
+    internal static float RayVsCapsule(vec3 Rp, vec3 Rn,    vec3 A, float Ar, vec3 B, float Br) {
+        vec3 dAB =  B - A;
+        vec3 dAP = Rp - A;
+
+        float dotL  = dot(dAB);
+        float dotRL = dot(Rn,dAB);
+
+        float Determinant = dotL - dotRL*dotRL;
+
+        if (abs(Determinant) < EPS7)
+            return RAY_MISS;
+
+        float DtrmA =         dot(dAB, dAP);  //  This appears to be a vertical-alignment thing...?    Since all Wall-PointLines are vertical, this could be precomputed.
+        float DtrmB = dotRL * dot( Rn, dAP);
+        float DtrmC = (DtrmA - DtrmB);
+
+        //  Distance from LinePointA to NearestPointOnLine, as multiple of DeltaAB:
+        float DistA = clamp(DtrmC / Determinant);
+
+        /*PRINT($"""
+
+            ({DtrmA,8:0.00} - {DtrmB,8:0.00})
+                  {DtrmC,8:0.00}
+            ---------------------    ==    {DistA,7:0.00}
+                  {Determinant,8:0.00}
+        """);*/
+
+        vec3 NearestPointOnLine = A + dAB * DistA;
+
+        //  Find the ClosestPointOnRay from NearestPointOnLine
+        float DistR = max(0f, dot(NearestPointOnLine - Rp, Rn)); //  max(0,d) -> Clamp to infront-of-Ray.
+        vec3 ClosestPointOnRay = Rp + Rn * DistR;
+
+        float DistToLine = dot(ClosestPointOnRay - NearestPointOnLine);
+
+        float RadiusAtNearestPoint = Lerp(DistA, Ar, Br);
+
+        if (DistToLine > RadiusAtNearestPoint*RadiusAtNearestPoint)
+            return RAY_MISS;
+
+        //  Not the actual distance to the surface of the Capsule...
+        //  Hmm, projecting an arbitrarily aligned Ray to an arbitrarily aligned CapsuleSurface, that is also tapered, sounds hairy...
+        return DistR - RadiusAtNearestPoint;
+        //  Offset towards RayPos, so adjacent RayVsTri & RayVsQuad hits don't "eat" the LineHit.
+        //  Well, this isn't a RayVsLine function...  Create a distinct version of the function for Lines...??
     }
 
     //##########################################################################################################################################################
@@ -233,17 +315,21 @@ internal static class VEC_Collision3 {
         //  Distance to bounding-planes from RayPos along RayNrm,
         //  for 3 Axes, Near & Far, 6 total.
         //
-        //          DistNearX
-        //              |   DistFarX                              +Y
-        //          +Y  v      v                                    |         |
-        //              .      .                                    |         | +X
-        //          - - +------+ - -  <- DistFarY               - - ●---------+ - -   <- DistNearZ
-        //              |      |                                   /         /
-        //              |      |                                | /       | /
-        //              |      |                                |/        |/
-        //          - - ●------+ - -  <- DistNearY          - - +---------+ - -   <- DistFarZ
-        //              .      .                             +Z
-        //              .      .  +X
+        //                        Near X     Far X
+        //                           |         |
+        //                           v         v
+        //                        +Y .         .
+        //           Far Y ->  - - - +---------+
+        //                          /|        /|
+        //                         / |       / |
+        //                        /  |      /  |
+        //                       +---------+   | +X
+        //          Near Y ->  - | - ●-----|---+ - -   <- Near Z
+        //                       |  /      |  /
+        //                       | /       | /
+        //                       |/        |/
+        //                       +---------+ - -   <- Far Z
+        //                    +Z
         //
         vec3 DistNear = (b0 - Rp) / Rn; //* Rnr;     //  NOTE: DivByZero == -∞|∞
         vec3 DistFar  = (b1 - Rp) / Rn; //* Rnr;     //        is desired in cases where ray is coplanar with an axis-plane.

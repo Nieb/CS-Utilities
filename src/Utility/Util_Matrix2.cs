@@ -1,5 +1,4 @@
 
-
 namespace Utility;
 internal static partial class MAT {
 [StructLayout(LayoutKind.Explicit, Pack=4)]

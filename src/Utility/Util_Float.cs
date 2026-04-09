@@ -13,8 +13,12 @@ internal static class FLT {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    [Impl(AggressiveInlining)] internal static f64 min(f64 A, f64 B) => System.Math.Min(A,B);
-    [Impl(AggressiveInlining)] internal static f64 max(f64 A, f64 B) => System.Math.Max(A,B);
+    [Impl(AggressiveInlining)] internal static f64   abs(f64 A)        => System.Math.Abs(A);
+    [Impl(AggressiveInlining)] internal static f64   min(f64 A, f64 B) => System.Math.Min(A,B);
+    [Impl(AggressiveInlining)] internal static f64   max(f64 A, f64 B) => System.Math.Max(A,B);
+    [Impl(AggressiveInlining)] internal static f64 round(f64 A)        => System.Math.Round(A);
+    [Impl(AggressiveInlining)] internal static f64 floor(f64 A)        => System.Math.Floor(A);
+    [Impl(AggressiveInlining)] internal static f64  ceil(f64 A)        => System.Math.Ceiling(A);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

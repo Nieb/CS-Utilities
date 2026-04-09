@@ -42,6 +42,12 @@ internal struct TIME {
     private s64 ThisFrame = 0;
     private s64 NextFrame = 0;
 
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    public bool LimitFrameRate = false;
+    private s64 TargetFrameRate = 240;
+    private s64 FrameStep       =   0;
+    private s64 OneMillis       =   0;
+
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     public TIME() : this(1d/24d) {}
@@ -56,27 +62,34 @@ internal struct TIME {
         this.Beginning = Stopwatch.GetTimestamp();
         this.PrevFrame = this.Beginning;
         this.ThisFrame = this.Beginning;
+
         this.NextFrame = this.Beginning;
+        this.FrameStep = (Stopwatch.Frequency/this.TargetFrameRate);
+        this.OneMillis = (Stopwatch.Frequency/1000);
     }
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    public void WaitNextFrame(s64 TargetFrameRate=240) {
-        s64 OneMS = (Stopwatch.Frequency/1000);
-        this.NextFrame += (Stopwatch.Frequency/TargetFrameRate);
-        while (true) {
-            s64 DeltaNext = this.NextFrame - Stopwatch.GetTimestamp();
-            if (DeltaNext <= 0) return;
-            //if (DeltaNext > OneMS) Thread.Sleep(1);       //  Sleep time-resolution is 1/64 (15.625 ms).  :(
-            //if (DeltaNext > OneMS) Thread.Yield();        //  If there is no other process that wants to use the CPU core, Yield() will return immediately.
-            if (DeltaNext > OneMS) Thread.SpinWait(256);    //  Parameter is "loop iterations".  Highly variable, dependent on CPU performance/speed.
-        }
+    public void SetTargetFrameRate(s64 Target) {
+        this.TargetFrameRate = clamp(Target, 15, 960);
+        this.FrameStep = (Stopwatch.Frequency/this.TargetFrameRate);
     }
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //public void Update(f64 Speed = 1d) {
     public void Update() {
+        #if true
+            this.NextFrame += this.FrameStep;
+            while (this.LimitFrameRate) {
+                s64 DeltaNext = this.NextFrame - Stopwatch.GetTimestamp();
+                if (DeltaNext <= 0) break;
+                //if (DeltaNext > this.OneMillis) Thread.Sleep(1);       //  Sleep time-resolution is 1/64 (15.625 ms).  :(
+                //if (DeltaNext > this.OneMillis) Thread.Yield();        //  If there is no other process that wants to use the CPU core, Yield() will return immediately.
+                if (DeltaNext > this.OneMillis) Thread.SpinWait(64);     //  Parameter is "loop iterations".  Highly variable, dependent on CPU performance/speed.
+            }
+        #endif
+
         this.ThisFrame = Stopwatch.GetTimestamp();
         ++this.Frame;
 

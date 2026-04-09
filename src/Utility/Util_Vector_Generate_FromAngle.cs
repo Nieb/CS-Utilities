@@ -6,7 +6,7 @@ internal static partial class VEC_Generate {
     //
     //  The starting orientations are selected for being practical, not "correct".
     //
-    //  Theta in Radians.  +Theta is Clockwise, from perspective of +Axis looking towards Zero.
+    //  Theta in Radians.  +Theta is Clockwise, from the perspective of +Axis looking towards Zero.
     //
     //##########################################################################################################################################################
     //##########################################################################################################################################################

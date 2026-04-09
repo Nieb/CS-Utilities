@@ -55,6 +55,9 @@ internal static class BitOps {
     [Impl(AggressiveInlining)] internal static float BitDec(float A) => System.MathF.BitDecrement(A);
     [Impl(AggressiveInlining)] internal static float BitInc(float A) => System.MathF.BitIncrement(A);
 
+    [Impl(AggressiveInlining)] internal static float BitDec(float A, int I) {while(I-- > 0) System.MathF.BitDecrement(A); return A;} //  meh...
+    [Impl(AggressiveInlining)] internal static float BitInc(float A, int I) {while(I-- > 0) System.MathF.BitIncrement(A); return A;} //  BitCast?
+
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################

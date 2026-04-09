@@ -25,6 +25,7 @@ global using static Utility.VEC_Generate;
 global using static Utility.VEC_Geometry;
 global using static Utility.VEC_Interpolation;
 global using static Utility.VEC_Miscellaneous;
+global using static Utility.VEC_Projection;
 global using static Utility.VEC_Rotation;
 
 //##############################################################################################################################################################
