@@ -27,21 +27,21 @@ internal struct vec2 : System.IFormattable {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    public vec2() {}
-    public vec2(v1 X, v1 Y) {x=X;   y=Y;  }
-    public vec2(v1 V      ) {x=V;   y=V;  }
+    [Impl(AggressiveInlining)] public vec2() {}
+    [Impl(AggressiveInlining)] public vec2(v1 X, v1 Y) {x=X;   y=Y;  }
+    [Impl(AggressiveInlining)] public vec2(v1 V      ) {x=V;   y=V;  }
 
-    public vec2(i2 V      ) {x=V.x; y=V.y;}
+    [Impl(AggressiveInlining)] public vec2(i2 V      ) {x=V.x; y=V.y;}
 
     //==========================================================================================================================================================
     //                                                                  Directly Assign
-    [Impl(AggressiveInlining)] public static implicit operator vec2(  i2 V) => new vec2( V.x, V.y); //          ivec2  to  vec2
-    [Impl(AggressiveInlining)] public static implicit operator vec2(  F2 T) => new vec2( T.x, T.y); //  (float,float)  to  vec2
-  //[Impl(AggressiveInlining)] public static implicit operator   F2(vec2 V) =>         ( V.x, V.y); //           vec2  to  (float,float)
-    [Impl(AggressiveInlining)] public static implicit operator vec2(v1[] V) => new vec2(V[0],V[1]); //       float[2]  to  vec2
+    [Impl(AggressiveInlining)] public static implicit operator vec2(     F2 T) => new vec2( T.x, T.y); //  (float,float)  to  vec2
+  //[Impl(AggressiveInlining)] public static implicit operator   F2(   vec2 V) =>         ( V.x, V.y); //           vec2  to  (float,float)
+    [Impl(AggressiveInlining)] public static implicit operator vec2(float[] V) => new vec2(V[0],V[1]); //       float[2]  to  vec2
+    [Impl(AggressiveInlining)] public static implicit operator vec2(  ivec2 V) => new vec2( V.x, V.y); //          ivec2  to  vec2
 
-    [Impl(AggressiveInlining)] public static implicit operator vec2(VEC2 v) => new vec2( v.X, v.Y); //       ew-gross  to  vec2
-    [Impl(AggressiveInlining)] public static implicit operator VEC2(vec2 V) => new VEC2( V.x, V.y); //           vec2  to  ew-gross
+    [Impl(AggressiveInlining)] public static implicit operator vec2(   VEC2 v) => new vec2( v.X, v.Y); //       ew-gross  to  vec2
+    [Impl(AggressiveInlining)] public static implicit operator VEC2(   vec2 V) => new VEC2( V.x, V.y); //           vec2  to  ew-gross
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

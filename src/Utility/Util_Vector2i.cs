@@ -27,16 +27,17 @@ internal struct ivec2 : System.IFormattable {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    public ivec2() {}
-    public ivec2(i1 X, i1 Y) {x=X; y=Y;}
-    public ivec2(i1 V      ) {x=V; y=V;}
+    [Impl(AggressiveInlining)] public ivec2() {}
+    [Impl(AggressiveInlining)] public ivec2(i1 X, i1 Y) {x=X; y=Y;}
+    [Impl(AggressiveInlining)] public ivec2(i1 V      ) {x=V; y=V;}
 
     //==========================================================================================================================================================
     //                                                                  Directly Assign
-    [Impl(AggressiveInlining)] public static implicit operator ivec2((i1 x, i1 y) T) => new ivec2( T.x, T.y); //  (int,int)  to  ivec2
-    [Impl(AggressiveInlining)] public static implicit operator ivec2(        i1[] V) => new ivec2(V[0],V[1]); //     int[2]  to  ivec2
+    [Impl(AggressiveInlining)] public static implicit operator ivec2(   I2 T) => new ivec2( T.x, T.y); //  (int,int)  to  ivec2
+  //[Impl(AggressiveInlining)] public static implicit operator    I2(ivec2 V) =>          ( V.x, V.y); //      ivec2  to  (int,int)
+    [Impl(AggressiveInlining)] public static implicit operator ivec2(int[] V) => new ivec2(V[0],V[1]); //     int[2]  to  ivec2
 
-    [Impl(AggressiveInlining)] public static implicit operator  VEC2(       ivec2 V) => new  VEC2( V.x, V.y); //      ivec2  to  ew-gross
+    [Impl(AggressiveInlining)] public static implicit operator  VEC2(ivec2 V) => new  VEC2( V.x, V.y); //      ivec2  to  ew-gross
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

@@ -32,21 +32,22 @@ internal struct ivec4 : System.IFormattable {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    public ivec4() {}
-    public ivec4(i1 X, i1 Y, i1 Z, i1 W) {x=X; y=Y; z=Z; w=W;}
-    public ivec4(i1 V                  ) {x=V; y=V; z=V; w=V;}
+    [Impl(AggressiveInlining)] public ivec4() {}
+    [Impl(AggressiveInlining)] public ivec4(i1 X, i1 Y, i1 Z, i1 W) {x=X; y=Y; z=Z; w=W;}
+    [Impl(AggressiveInlining)] public ivec4(i1 V                  ) {x=V; y=V; z=V; w=V;}
 
-    public ivec4(i2 vA     , i2 vB     ) {x=vA.x; y=vA.y; z=vB.x; w=vB.y;}
-    public ivec4(i3 V            , i1 W) {x=V.x;  y=V.y;  z=V.z;  w=W;   }
+    [Impl(AggressiveInlining)] public ivec4(i2 vA     , i2 vB     ) {x=vA.x; y=vA.y; z=vB.x; w=vB.y;}
+    [Impl(AggressiveInlining)] public ivec4(i3 V            , i1 W) {x=V.x;  y=V.y;  z=V.z;  w=W;   }
 
     //==========================================================================================================================================================
     //                                                                  Directly Assign
-    [Impl(AggressiveInlining)] public static implicit operator ivec4((i1 x, i1 y, i1 z, i1 w) T) => new ivec4(  T.x,  T.y,  T.z,  T.w); //  (int,int,int,int)  to  ivec4
-    [Impl(AggressiveInlining)] public static implicit operator ivec4((i2 A      , i2 B      ) T) => new ivec4(T.A.x,T.A.y,T.B.x,T.B.y); //      (ivec2,ivec2)  to  ivec4
-    [Impl(AggressiveInlining)] public static implicit operator ivec4((i3 V,             i1 w) T) => new ivec4(T.V.x,T.V.y,T.V.z,  T.w); //        (ivec3,int)  to  ivec4
-    [Impl(AggressiveInlining)] public static implicit operator ivec4(                   int[] V) => new ivec4( V[0], V[1], V[2], V[3]); //             int[4]  to  ivec4
+    [Impl(AggressiveInlining)] public static implicit operator ivec4(          I4 T) => new ivec4(  T.x,  T.y,  T.z,  T.w); //  (int,int,int,int)  to  ivec4
+  //[Impl(AggressiveInlining)] public static implicit operator    I4(        vec4 V) =>          (  V.x,  V.y,  V.z,  V.w); //              ivec4  to  (int,int,int,int)
+    [Impl(AggressiveInlining)] public static implicit operator ivec4((i2 A, i2 B) T) => new ivec4(T.A.x,T.A.y,T.B.x,T.B.y); //      (ivec2,ivec2)  to  ivec4
+    [Impl(AggressiveInlining)] public static implicit operator ivec4((i3 V, i1 w) T) => new ivec4(T.V.x,T.V.y,T.V.z,  T.w); //        (ivec3,int)  to  ivec4
+    [Impl(AggressiveInlining)] public static implicit operator ivec4(       int[] V) => new ivec4( V[0], V[1], V[2], V[3]); //             int[4]  to  ivec4
 
-    [Impl(AggressiveInlining)] public static implicit operator  VEC4(                   ivec4 V) => new  VEC4(  V.x,  V.y,  V.z,  V.w); //              ivec4  to  ew-gross
+    [Impl(AggressiveInlining)] public static implicit operator  VEC4(       ivec4 V) => new  VEC4(  V.x,  V.y,  V.z,  V.w); //              ivec4  to  ew-gross
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

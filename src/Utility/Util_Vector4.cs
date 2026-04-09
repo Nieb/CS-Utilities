@@ -32,24 +32,25 @@ internal struct vec4 : System.IFormattable {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    public vec4() {}
-    public vec4(v1 X, v1 Y, v1 Z, v1 W) {x=X;    y=Y;    z=Z;    w=W;   }
-    public vec4(v1 V                  ) {x=V;    y=V;    z=V;    w=V;   }
+    [Impl(AggressiveInlining)] public vec4() {}
+    [Impl(AggressiveInlining)] public vec4(v1 X, v1 Y, v1 Z, v1 W) {x=X;    y=Y;    z=Z;    w=W;   }
+    [Impl(AggressiveInlining)] public vec4(v1 V                  ) {x=V;    y=V;    z=V;    w=V;   }
 
-    public vec4(v2 XY     , v2 ZW     ) {x=XY.x; y=XY.y; z=ZW.x; w=ZW.y;}
-    public vec4(v3 V            , v1 W) {x=V.x;  y=V.y;  z=V.z;  w=W;   }
-    public vec4(i4 V                  ) {x=V.x;  y=V.y;  z=V.z;  w=V.w; }
+    [Impl(AggressiveInlining)] public vec4(v2 XY     , v2 ZW     ) {x=XY.x; y=XY.y; z=ZW.x; w=ZW.y;}
+    [Impl(AggressiveInlining)] public vec4(v3 V            , v1 W) {x=V.x;  y=V.y;  z=V.z;  w=W;   }
+    [Impl(AggressiveInlining)] public vec4(i4 V                  ) {x=V.x;  y=V.y;  z=V.z;  w=V.w; }
 
     //==========================================================================================================================================================
     //                                                                  Directly Assign
-    [Impl(AggressiveInlining)] public static implicit operator vec4((v1 x, v1 y, v1 z, v1 w) T) => new vec4(  T.x,  T.y,  T.z,  T.w); //  (float,float,float,float)  to  vec4
-    [Impl(AggressiveInlining)] public static implicit operator vec4((v2 A,       v2 B      ) T) => new vec4(T.A.x,T.A.y,T.B.x,T.B.y); //                (vec2,vec2)  to  vec4
-    [Impl(AggressiveInlining)] public static implicit operator vec4((v3 V,             v1 w) T) => new vec4(T.V.x,T.V.y,T.V.z,  T.w); //               (vec3,float)  to  vec4
-    [Impl(AggressiveInlining)] public static implicit operator vec4(                      i4 V) => new vec4(  V.x,  V.y,  V.z,  V.w); //                      ivec4  to  vec4
-    [Impl(AggressiveInlining)] public static implicit operator vec4(                 float[] V) => new vec4( V[0], V[1], V[2], V[3]); //                   float[4]  to  vec4
+    [Impl(AggressiveInlining)] public static implicit operator vec4(          F4 T) => new vec4(  T.x,  T.y,  T.z,  T.w); //  (float,float,float,float)  to  vec4
+  //[Impl(AggressiveInlining)] public static implicit operator   F4(        vec4 V) =>         (  V.x,  V.y,  V.z,  V.w); //                       vec4  to  (float,float,float,float)
+    [Impl(AggressiveInlining)] public static implicit operator vec4((v2 A, v2 B) T) => new vec4(T.A.x,T.A.y,T.B.x,T.B.y); //                (vec2,vec2)  to  vec4
+    [Impl(AggressiveInlining)] public static implicit operator vec4((v3 V, v1 w) T) => new vec4(T.V.x,T.V.y,T.V.z,  T.w); //               (vec3,float)  to  vec4
+    [Impl(AggressiveInlining)] public static implicit operator vec4(     float[] V) => new vec4( V[0], V[1], V[2], V[3]); //                   float[4]  to  vec4
+    [Impl(AggressiveInlining)] public static implicit operator vec4(       ivec4 V) => new vec4(  V.x,  V.y,  V.z,  V.w); //                      ivec4  to  vec4
 
-    [Impl(AggressiveInlining)] public static implicit operator vec4(                    VEC4 v) => new vec4(  v.X,  v.Y,  v.Z,  v.W); //                   ew-gross  to  vec4
-    [Impl(AggressiveInlining)] public static implicit operator VEC4(                    vec4 V) => new VEC4(  V.x,  V.y,  V.z,  V.w); //                       vec4  to  ew-gross
+    [Impl(AggressiveInlining)] public static implicit operator vec4(        VEC4 v) => new vec4(  v.X,  v.Y,  v.Z,  v.W); //                   ew-gross  to  vec4
+    [Impl(AggressiveInlining)] public static implicit operator VEC4(        vec4 V) => new VEC4(  V.x,  V.y,  V.z,  V.w); //                       vec4  to  ew-gross
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
