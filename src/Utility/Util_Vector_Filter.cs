@@ -3,9 +3,7 @@ namespace Utility;
 internal static partial class VEC_Filter {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //
-    //  "Hard-Limiter"
-    //
+    //                                                                   "Hard-Limiter"
     //      V: 0 to ∞
     //      T: 0 to 1*
     //
@@ -15,10 +13,8 @@ internal static partial class VEC_Filter {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //
-    //  "Rational Decay based Soft-Limiter"
-    //
-    //      https://www.desmos.com/calculator/cs73ninsvh
+    //                                                         "Rational-Decay based Soft-Limiter"
+    //  https://www.desmos.com/calculator/cs73ninsvh
     //
     //      V: 0 to ∞
     //      T: 0 to 1
@@ -29,9 +25,7 @@ internal static partial class VEC_Filter {
     internal static vec3  SoftLimit(vec3  V, float T) {if(V<=T)return V; else {float iTT = 1f-T;   iTT *= iTT;   return 1f - iTT/(iTT + V - T*T);}}
 
     //==========================================================================================================================================================
-    //
-    //  "Sigmoid based Soft-Limiter"
-    //
+    //                                                            "Sigmoid based Soft-Limiter"
     //      V: 0 to ∞
     //      T: 0 to 1
     //
@@ -112,8 +106,7 @@ internal static partial class VEC_Filter {
     //
     //      Notch(  x,  Radius, Falloff  )
     //
-    [Impl(AggressiveInlining)]
-    internal static float Notch(float x, float R, float F) => pow(R, -pow(x/R, F));
+    [Impl(AggressiveInlining)] internal static float Notch(float x, float R, float F) => pow(R, -pow(x/R, F));
 
     //==========================================================================================================================================================
     //
@@ -134,7 +127,7 @@ internal static partial class VEC_Filter {
 
         Result = abs(x - P) / R;
 
-        /* Wrap */ {
+        /* Wrap */{
             float m  = D/R;
             float mh = m * 0.5f;
             Result = ((Result + mh) % m) - mh;

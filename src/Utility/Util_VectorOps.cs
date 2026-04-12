@@ -300,7 +300,6 @@ internal static partial class VEC {
 
     //==========================================================================================================================================================
     //                                                                   "Exponential"
-    //
     //      exp(X)  ==  pow(e, X)  ==  pow(2.718~, X)
     //
     [Impl(AggressiveInlining)] internal static v1 exp(v1 A) => System.MathF.Exp(A);
@@ -329,8 +328,7 @@ internal static partial class VEC {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                                     "Reflect"                move these to "VEC_Projection" ?
-    //
+    //                                                                     "Reflect"
     //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/reflect.xhtml
     //
     //      reflect( Direction-Normal, Surface-Normal )
@@ -340,20 +338,16 @@ internal static partial class VEC {
 
     //==========================================================================================================================================================
     //                                                                     "Refract"
-    //
     //  https://www.desmos.com/calculator/eb0c0f77c7
     //  https://registry.khronos.org/OpenGL-Refpages/gl4/html/refract.xhtml
     //
     //  IndexOfRefraction:  The ratio of the speed-of-light from one medium to another medium.
     //
     //                             Range:   0 <---> 1
-    //                      Unsafe-Range:  -2 <---> 2    Becomes unstable as result approaches SurfaceNormal-Tangent.
+    //                      Unsafe-Range:  -2 <---> 2   Becomes unstable as result approaches SurfaceNormal-Tangent.
     //
-    //                      < 1.0  refracts inwards
-    //                      > 1.0  refracts outwards
-    //
-    //                          |               |
-    //                          |    /     \    |
+    //                          |               |       < 1.0  refracts inwards
+    //                          |    /     \    |       > 1.0  refracts outwards
     //                          +---●---+---●---+
     //                               .  |  .
     //                                .   .
@@ -380,32 +374,34 @@ internal static partial class VEC {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                                      "Round"                                     Each component rounded to the nearest Integer.
+    //                                                                      "Round"
     [Impl(AggressiveInlining)] internal static v1 round(v1 A) => System.MathF.Round(A);
     [Impl(AggressiveInlining)] internal static v2 round(v2 A) => new v2(round(A.x), round(A.y));
     [Impl(AggressiveInlining)] internal static v3 round(v3 A) => new v3(round(A.x), round(A.y), round(A.z));
     [Impl(AggressiveInlining)] internal static v4 round(v4 A) => new v4(round(A.x), round(A.y), round(A.z), round(A.w));
 
-    //==========================================================================================================================================================
-    //                                                                     "Round" To                                   Each component rounded to the nearest 'RoundTo'.
-    [Impl(AggressiveInlining)] internal static v1 round(v1 A, v1 RoundTo) => (RoundTo==0f || RoundTo==1f) ? round(A) : RoundTo*round(A/RoundTo);
-    [Impl(AggressiveInlining)] internal static v2 round(v2 A, v1 RoundTo) => (RoundTo==0f || RoundTo==1f) ? round(A) : RoundTo*round(A/RoundTo);
-    [Impl(AggressiveInlining)] internal static v3 round(v3 A, v1 RoundTo) => (RoundTo==0f || RoundTo==1f) ? round(A) : RoundTo*round(A/RoundTo);
-    [Impl(AggressiveInlining)] internal static v4 round(v4 A, v1 RoundTo) => (RoundTo==0f || RoundTo==1f) ? round(A) : RoundTo*round(A/RoundTo);
-
-    //==========================================================================================================================================================
-    //                                                                      "Floor"                                     Each component rounded down to the nearest Integer.
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                                      "Floor"
     [Impl(AggressiveInlining)] internal static v1 floor(v1 A) => System.MathF.Floor(A);
     [Impl(AggressiveInlining)] internal static v2 floor(v2 A) => new v2(floor(A.x), floor(A.y));
     [Impl(AggressiveInlining)] internal static v3 floor(v3 A) => new v3(floor(A.x), floor(A.y), floor(A.z));
     [Impl(AggressiveInlining)] internal static v4 floor(v4 A) => new v4(floor(A.x), floor(A.y), floor(A.z), floor(A.w));
 
-    //==========================================================================================================================================================
-    //                                                                      "Ceiling"                                   Each component rounded up to the nearest Integer.
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                                      "Ceiling"
     [Impl(AggressiveInlining)] internal static v1 ceil(v1 A) => System.MathF.Ceiling(A);
     [Impl(AggressiveInlining)] internal static v2 ceil(v2 A) => new v2(ceil(A.x), ceil(A.y));
     [Impl(AggressiveInlining)] internal static v3 ceil(v3 A) => new v3(ceil(A.x), ceil(A.y), ceil(A.z));
     [Impl(AggressiveInlining)] internal static v4 ceil(v4 A) => new v4(ceil(A.x), ceil(A.y), ceil(A.z), ceil(A.w));
+
+    //==========================================================================================================================================================
+    //                                                                     "Round" To
+    //  Each component rounded to the nearest 'RoundTo'.
+    //
+    [Impl(AggressiveInlining)] internal static v1 round(v1 A, v1 RoundTo) => /*(RoundTo==0f || RoundTo==1f) ? round(A) :*/ RoundTo * round(A/RoundTo);
+    [Impl(AggressiveInlining)] internal static v2 round(v2 A, v1 RoundTo) => /*(RoundTo==0f || RoundTo==1f) ? round(A) :*/ RoundTo * round(A/RoundTo);
+    [Impl(AggressiveInlining)] internal static v3 round(v3 A, v1 RoundTo) => /*(RoundTo==0f || RoundTo==1f) ? round(A) :*/ RoundTo * round(A/RoundTo);
+    [Impl(AggressiveInlining)] internal static v4 round(v4 A, v1 RoundTo) => /*(RoundTo==0f || RoundTo==1f) ? round(A) :*/ RoundTo * round(A/RoundTo);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -433,7 +429,7 @@ internal static partial class VEC {
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    //                                                            Sum of a Vector's Components
+    //                                                           "Sum of" a Vector's Components
     [Impl(AggressiveInlining)] internal static v1 sumof(v2 A) => (A.x + A.y);
     [Impl(AggressiveInlining)] internal static v1 sumof(v3 A) => (A.x + A.y + A.z);
     [Impl(AggressiveInlining)] internal static v1 sumof(v4 A) => (A.x + A.y + A.z + A.w);

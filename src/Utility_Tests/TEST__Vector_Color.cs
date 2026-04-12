@@ -44,26 +44,26 @@ internal static partial class Program {
 
         //======================================================================================================================================================
         TEST("HSV_to_RGB()", true
-            && HSV_to_RGB(-6f, 1, 1).IsApproximately((1.0f, 0.0f, 0.0f))  &&  HSV_to_RGB(-5.5f, 1f, 1f).IsApproximately((1.0f, 0.5f, 0.0f))
-            && HSV_to_RGB(-5f, 1, 1).IsApproximately((1.0f, 1.0f, 0.0f))  &&  HSV_to_RGB(-4.5f, 1f, 1f).IsApproximately((0.5f, 1.0f, 0.0f))
-            && HSV_to_RGB(-4f, 1, 1).IsApproximately((0.0f, 1.0f, 0.0f))  &&  HSV_to_RGB(-3.5f, 1f, 1f).IsApproximately((0.0f, 1.0f, 0.5f))
-            && HSV_to_RGB(-3f, 1, 1).IsApproximately((0.0f, 1.0f, 1.0f))  &&  HSV_to_RGB(-2.5f, 1f, 1f).IsApproximately((0.0f, 0.5f, 1.0f))
-            && HSV_to_RGB(-2f, 1, 1).IsApproximately((0.0f, 0.0f, 1.0f))  &&  HSV_to_RGB(-1.5f, 1f, 1f).IsApproximately((0.5f, 0.0f, 1.0f))
-            && HSV_to_RGB(-1f, 1, 1).IsApproximately((1.0f, 0.0f, 1.0f))  &&  HSV_to_RGB(-0.5f, 1f, 1f).IsApproximately((1.0f, 0.0f, 0.5f))
+            && HSV_to_RGB(-6f, 1, 1).IsApproximately((1, 0, 0))  &&  HSV_to_RGB(-5.5f, 1f, 1f).IsApproximately((1.0f, 0.5f, 0.0f))
+            && HSV_to_RGB(-5f, 1, 1).IsApproximately((1, 1, 0))  &&  HSV_to_RGB(-4.5f, 1f, 1f).IsApproximately((0.5f, 1.0f, 0.0f))
+            && HSV_to_RGB(-4f, 1, 1).IsApproximately((0, 1, 0))  &&  HSV_to_RGB(-3.5f, 1f, 1f).IsApproximately((0.0f, 1.0f, 0.5f))
+            && HSV_to_RGB(-3f, 1, 1).IsApproximately((0, 1, 1))  &&  HSV_to_RGB(-2.5f, 1f, 1f).IsApproximately((0.0f, 0.5f, 1.0f))
+            && HSV_to_RGB(-2f, 1, 1).IsApproximately((0, 0, 1))  &&  HSV_to_RGB(-1.5f, 1f, 1f).IsApproximately((0.5f, 0.0f, 1.0f))
+            && HSV_to_RGB(-1f, 1, 1).IsApproximately((1, 0, 1))  &&  HSV_to_RGB(-0.5f, 1f, 1f).IsApproximately((1.0f, 0.0f, 0.5f))
 
-            && HSV_to_RGB( 0f, 1, 1).IsApproximately((1.0f, 0.0f, 0.0f))  &&  HSV_to_RGB( 0.5f, 1f, 1f).IsApproximately((1.0f, 0.5f, 0.0f))
-            && HSV_to_RGB( 1f, 1, 1).IsApproximately((1.0f, 1.0f, 0.0f))  &&  HSV_to_RGB( 1.5f, 1f, 1f).IsApproximately((0.5f, 1.0f, 0.0f))
-            && HSV_to_RGB( 2f, 1, 1).IsApproximately((0.0f, 1.0f, 0.0f))  &&  HSV_to_RGB( 2.5f, 1f, 1f).IsApproximately((0.0f, 1.0f, 0.5f))
-            && HSV_to_RGB( 3f, 1, 1).IsApproximately((0.0f, 1.0f, 1.0f))  &&  HSV_to_RGB( 3.5f, 1f, 1f).IsApproximately((0.0f, 0.5f, 1.0f))
-            && HSV_to_RGB( 4f, 1, 1).IsApproximately((0.0f, 0.0f, 1.0f))  &&  HSV_to_RGB( 4.5f, 1f, 1f).IsApproximately((0.5f, 0.0f, 1.0f))
-            && HSV_to_RGB( 5f, 1, 1).IsApproximately((1.0f, 0.0f, 1.0f))  &&  HSV_to_RGB( 5.5f, 1f, 1f).IsApproximately((1.0f, 0.0f, 0.5f))
+            && HSV_to_RGB( 0f, 1, 1).IsApproximately((1, 0, 0))  &&  HSV_to_RGB( 0.5f, 1f, 1f).IsApproximately((1.0f, 0.5f, 0.0f))
+            && HSV_to_RGB( 1f, 1, 1).IsApproximately((1, 1, 0))  &&  HSV_to_RGB( 1.5f, 1f, 1f).IsApproximately((0.5f, 1.0f, 0.0f))
+            && HSV_to_RGB( 2f, 1, 1).IsApproximately((0, 1, 0))  &&  HSV_to_RGB( 2.5f, 1f, 1f).IsApproximately((0.0f, 1.0f, 0.5f))
+            && HSV_to_RGB( 3f, 1, 1).IsApproximately((0, 1, 1))  &&  HSV_to_RGB( 3.5f, 1f, 1f).IsApproximately((0.0f, 0.5f, 1.0f))
+            && HSV_to_RGB( 4f, 1, 1).IsApproximately((0, 0, 1))  &&  HSV_to_RGB( 4.5f, 1f, 1f).IsApproximately((0.5f, 0.0f, 1.0f))
+            && HSV_to_RGB( 5f, 1, 1).IsApproximately((1, 0, 1))  &&  HSV_to_RGB( 5.5f, 1f, 1f).IsApproximately((1.0f, 0.0f, 0.5f))
 
-            && HSV_to_RGB( 6f, 1, 1).IsApproximately((1.0f, 0.0f, 0.0f))  &&  HSV_to_RGB( 6.5f, 1f, 1f).IsApproximately((1.0f, 0.5f, 0.0f))
-            && HSV_to_RGB( 7f, 1, 1).IsApproximately((1.0f, 1.0f, 0.0f))  &&  HSV_to_RGB( 7.5f, 1f, 1f).IsApproximately((0.5f, 1.0f, 0.0f))
-            && HSV_to_RGB( 8f, 1, 1).IsApproximately((0.0f, 1.0f, 0.0f))  &&  HSV_to_RGB( 8.5f, 1f, 1f).IsApproximately((0.0f, 1.0f, 0.5f))
-            && HSV_to_RGB( 9f, 1, 1).IsApproximately((0.0f, 1.0f, 1.0f))  &&  HSV_to_RGB( 9.5f, 1f, 1f).IsApproximately((0.0f, 0.5f, 1.0f))
-            && HSV_to_RGB(10f, 1, 1).IsApproximately((0.0f, 0.0f, 1.0f))  &&  HSV_to_RGB(10.5f, 1f, 1f).IsApproximately((0.5f, 0.0f, 1.0f))
-            && HSV_to_RGB(11f, 1, 1).IsApproximately((1.0f, 0.0f, 1.0f))  &&  HSV_to_RGB(11.5f, 1f, 1f).IsApproximately((1.0f, 0.0f, 0.5f))
+            && HSV_to_RGB( 6f, 1, 1).IsApproximately((1, 0, 0))  &&  HSV_to_RGB( 6.5f, 1f, 1f).IsApproximately((1.0f, 0.5f, 0.0f))
+            && HSV_to_RGB( 7f, 1, 1).IsApproximately((1, 1, 0))  &&  HSV_to_RGB( 7.5f, 1f, 1f).IsApproximately((0.5f, 1.0f, 0.0f))
+            && HSV_to_RGB( 8f, 1, 1).IsApproximately((0, 1, 0))  &&  HSV_to_RGB( 8.5f, 1f, 1f).IsApproximately((0.0f, 1.0f, 0.5f))
+            && HSV_to_RGB( 9f, 1, 1).IsApproximately((0, 1, 1))  &&  HSV_to_RGB( 9.5f, 1f, 1f).IsApproximately((0.0f, 0.5f, 1.0f))
+            && HSV_to_RGB(10f, 1, 1).IsApproximately((0, 0, 1))  &&  HSV_to_RGB(10.5f, 1f, 1f).IsApproximately((0.5f, 0.0f, 1.0f))
+            && HSV_to_RGB(11f, 1, 1).IsApproximately((1, 0, 1))  &&  HSV_to_RGB(11.5f, 1f, 1f).IsApproximately((1.0f, 0.0f, 0.5f))
         );
 
         //======================================================================================================================================================
