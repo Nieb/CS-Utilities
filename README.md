@@ -1,5 +1,5 @@
 # C# Utilities
-A collection of various utilities.  All written in very ***unconventional*** style of C#.
+A collection of various utilities.  All written in *very unconventional* style of C#.
 
 This is all a perpetual work-in-progress.  Being refined and expanded, over time, with use.
 
