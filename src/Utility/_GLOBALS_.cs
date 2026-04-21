@@ -65,14 +65,14 @@ global using b4 = Utility.VEC.bvec4;
 global using b8 = Utility.VEC.bvec8;
 
 global using i1 = int;
-global using i2 = Utility.VEC.ivec2;
-global using i3 = Utility.VEC.ivec3;
-global using i4 = Utility.VEC.ivec4;
+global using i2 = Utility.VEC.ivec2;    global using I2 = (int x, int y);
+global using i3 = Utility.VEC.ivec3;    global using I3 = (int x, int y, int z);
+global using i4 = Utility.VEC.ivec4;    global using I4 = (int x, int y, int z, int w);
 
 global using v1 = float;
-global using v2 = Utility.VEC.vec2;
-global using v3 = Utility.VEC.vec3;
-global using v4 = Utility.VEC.vec4;
+global using v2 = Utility.VEC.vec2;     global using V2 = (float x, float y);
+global using v3 = Utility.VEC.vec3;     global using V3 = (float x, float y, float z);
+global using v4 = Utility.VEC.vec4;     global using V4 = (float x, float y, float z, float w);
 
 global using m2 = Utility.MAT.mat2;
 global using m3 = Utility.MAT.mat3;
@@ -81,9 +81,9 @@ global using m4 = Utility.MAT.mat4;
 //##############################################################################################################################################################
 //##############################################################################################################################################################
 //                                                                       Struct Layout
-//                  [StructLayout(LayoutKind.Sequential)]
-//                  [StructLayout(LayoutKind.Explicit)]
 //                  [StructLayout(LayoutKind.Auto)]
+//                  [StructLayout(LayoutKind.Explicit)]
+//                  [StructLayout(LayoutKind.Sequential)]
 //
 //                  [FieldOffset(0)]
 //                  [FieldOffset(4)]

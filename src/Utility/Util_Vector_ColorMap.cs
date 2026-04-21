@@ -6,6 +6,13 @@ internal static class ColorMap {
     //
     //  Outputs are an sRGB color.
     //
+    //      ColorMap.BlackBody(v);
+    //      ColorMap.Fast(v);
+    //      ColorMap.Inferno(v);
+    //      ColorMap.Magma(v);
+    //      ColorMap.Turbo(v);
+    //      ColorMap.Viridis(v);
+    //
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     [Impl(AggressiveInlining)] internal static uint BlackBody(int V) => LUT_Byte_BlackBody[ClampToByte(V)];
@@ -19,37 +26,37 @@ internal static class ColorMap {
     internal static vec3 BlackBody(float V) {
         if      (V <= 0f) return LUT_Unit_BlackBody[0];
         else if (V >= 1f) return LUT_Unit_BlackBody[255];
-        else {V *= 255f; return Mix(fract(V), LUT_Unit_BlackBody[(int)floor(V)], LUT_Unit_BlackBody[(int)ceil(V)]);}
+        else {V *= 255f; return Mix(fract(V), LUT_Unit_BlackBody[FloorToInt(V)], LUT_Unit_BlackBody[CeilToInt(V)]);}
     }
 
     internal static vec3 Fast(float V) {
         if      (V <= 0f) return LUT_Unit_Fast[0];
         else if (V >= 1f) return LUT_Unit_Fast[255];
-        else {V *= 255f; return Mix(fract(V), LUT_Unit_Fast[(int)floor(V)], LUT_Unit_Fast[(int)ceil(V)]);}
+        else {V *= 255f; return Mix(fract(V), LUT_Unit_Fast[FloorToInt(V)], LUT_Unit_Fast[CeilToInt(V)]);}
     }
 
     internal static vec3 Inferno(float V) {
         if      (V <= 0f) return LUT_Unit_Inferno[0];
         else if (V >= 1f) return LUT_Unit_Inferno[255];
-        else {V *= 255f; return Mix(fract(V), LUT_Unit_Inferno[(int)floor(V)], LUT_Unit_Inferno[(int)ceil(V)]);}
+        else {V *= 255f; return Mix(fract(V), LUT_Unit_Inferno[FloorToInt(V)], LUT_Unit_Inferno[CeilToInt(V)]);}
     }
 
     internal static vec3 Magma(float V) {
         if      (V <= 0f) return LUT_Unit_Magma[0];
         else if (V >= 1f) return LUT_Unit_Magma[255];
-        else {V *= 255f; return Mix(fract(V), LUT_Unit_Magma[(int)floor(V)], LUT_Unit_Magma[(int)ceil(V)]);}
+        else {V *= 255f; return Mix(fract(V), LUT_Unit_Magma[FloorToInt(V)], LUT_Unit_Magma[CeilToInt(V)]);}
     }
 
     internal static vec3 Turbo(float V) {
         if      (V <= 0f) return LUT_Unit_Turbo[0];
         else if (V >= 1f) return LUT_Unit_Turbo[255];
-        else {V *= 255f; return Mix(fract(V), LUT_Unit_Turbo[(int)floor(V)], LUT_Unit_Turbo[(int)ceil(V)]);}
+        else {V *= 255f; return Mix(fract(V), LUT_Unit_Turbo[FloorToInt(V)], LUT_Unit_Turbo[CeilToInt(V)]);}
     }
 
     internal static vec3 Viridis(float V) {
         if      (V <= 0f) return LUT_Unit_Viridis[0];
         else if (V >= 1f) return LUT_Unit_Viridis[255];
-        else {V *= 255f; return Mix(fract(V), LUT_Unit_Viridis[(int)floor(V)], LUT_Unit_Viridis[(int)ceil(V)]);}
+        else {V *= 255f; return Mix(fract(V), LUT_Unit_Viridis[FloorToInt(V)], LUT_Unit_Viridis[CeilToInt(V)]);}
     }
 
     //##########################################################################################################################################################

@@ -1,3 +1,4 @@
+using MAT4 = System.Numerics.Matrix4x4;
 
 namespace Utility;
 internal static partial class MAT {
@@ -72,6 +73,12 @@ internal struct mat3 {
         xz=XZ; yz=YZ; zz=ZZ;
     }
 
+    public mat3(float[] V) {
+        xx=V[0]; yx=V[1]; zx=V[2];
+        xy=V[3]; yy=V[4]; zy=V[5];
+        xz=V[6]; yz=V[7]; zz=V[8];
+    }
+
     //  Truncate Mat4 to Mat3:
     public mat3(mat4 M) {
         xx=M.xx; yx=M.yx; zx=M.zx;
@@ -81,7 +88,8 @@ internal struct mat3 {
 
     //==========================================================================================================================================================
     //                                                                  Directly Assign
-    [Impl(AggressiveInlining)] public static implicit operator mat3(mat4 M) => new mat3(M); //  mat4  to  mat3
+    [Impl(AggressiveInlining)] public static implicit operator mat3(float[] V) => new mat3(V); //   float[9]  to  mat3
+    [Impl(AggressiveInlining)] public static implicit operator mat3(   mat4 M) => new mat3(M); //       mat4  to  mat3
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

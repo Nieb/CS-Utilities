@@ -76,7 +76,7 @@ internal static class VEC_Rotation {
     //                                                                      "Pitch"
     internal static mat4 pch(float Theta) {
         if (Theta == 0f)
-            return IDENTITY4;
+            return new();
 
         (float SinT, float CosT) = sincos(-Theta); //  Theta is clockwise.
 
@@ -122,9 +122,13 @@ internal static class VEC_Rotation {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                                       "Yaw"
+#if Z_UP
+    internal static mat4 rol(float Theta) {
+#else
     internal static mat4 yaw(float Theta) {
+#endif
         if (Theta == 0f)
-            return IDENTITY4;
+            return new();
 
         (float SinT, float CosT) = sincos(-Theta); //  Theta is clockwise.
 
@@ -137,7 +141,11 @@ internal static class VEC_Rotation {
     }
 
     //==========================================================================================================================================================
+#if Z_UP
+    internal static vec3 rol(vec3 P, float Theta) {
+#else
     internal static vec3 yaw(vec3 P, float Theta) {
+#endif
         if (Theta == 0f)
             return P;
 
@@ -151,7 +159,11 @@ internal static class VEC_Rotation {
     }
 
     //==========================================================================================================================================================
+#if Z_UP
+    internal static vec3 rol(vec3 P, vec3 Pivot, float Theta) {
+#else
     internal static vec3 yaw(vec3 P, vec3 Pivot, float Theta) {
+#endif
         if (Theta == 0f)
             return P;
 
@@ -170,9 +182,13 @@ internal static class VEC_Rotation {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                                       "Roll"
+#if Z_UP
+    internal static mat4 yaw(float Theta) {
+#else
     internal static mat4 rol(float Theta) {
+#endif
         if (Theta == 0f)
-            return IDENTITY4;
+            return new();
 
         (float SinT, float CosT) = sincos(-Theta); //  Theta is clockwise.
 
@@ -185,7 +201,11 @@ internal static class VEC_Rotation {
     }
 
     //==========================================================================================================================================================
+#if Z_UP
+    internal static vec3 yaw(vec3 P, float Theta) {
+#else
     internal static vec3 rol(vec3 P, float Theta) {
+#endif
         if (Theta == 0f)
             return P;
 
@@ -199,7 +219,11 @@ internal static class VEC_Rotation {
     }
 
     //==========================================================================================================================================================
+#if Z_UP
+    internal static vec3 yaw(vec3 P, vec3 Pivot, float Theta) {
+#else
     internal static vec3 rol(vec3 P, vec3 Pivot, float Theta) {
+#endif
         if (Theta == 0f)
             return P;
 
@@ -221,7 +245,7 @@ internal static class VEC_Rotation {
     //##########################################################################################################################################################
     internal static mat4 rot(vec3 Axis, float Theta) {
         if (Theta == 0f)
-            return IDENTITY4;
+            return new();
 
         (float SinT, float CosT) = sincos(-Theta); //  Theta is clockwise.
         float iCosT = 1f-CosT;
@@ -325,7 +349,7 @@ internal static class VEC_Rotation {
     //
     internal static mat4 rot(vec3 ThetaV) {
         if (ThetaV == new vec3(0f))
-            return IDENTITY4;
+            return new();
 
         ThetaV = -ThetaV; //  Theta is clockwise.
 

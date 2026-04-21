@@ -30,10 +30,20 @@ internal static partial class VEC_Projection {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
+    //  Clamped version of projectAB()
+    //
+    [Impl(AggressiveInlining)] internal static vec2 NearestPointOnLine(vec2 P, vec2 A, vec2 B) {vec2 dAB = B-A;  return A + dAB*clamp( dot(P-A,dAB)/dot(dAB) );}
+    [Impl(AggressiveInlining)] internal static vec3 NearestPointOnLine(vec3 P, vec3 A, vec3 B) {vec3 dAB = B-A;  return A + dAB*clamp( dot(P-A,dAB)/dot(dAB) );}
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //
     //  Project Point to a Line along an axis.
     //
     //  These assume the Point is already aligned with the Line on given axis.
-    //  Otherwise it's just projecting to the imaginary plane the Line exists along.
+    //  Otherwise, it's just projecting to the imaginary plane the Line exists along.
     //
     //      ProjectZ(  Point,  LinePointA, LinePointB  )
     //

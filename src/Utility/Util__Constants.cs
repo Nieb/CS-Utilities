@@ -144,28 +144,6 @@ internal static class Constants {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //##########################################################################################################################################################
-    internal const           v1  ZERO  = default;
-    internal static readonly v2  ZERO2 = default;
-    internal static readonly v3  ZERO3 = default;
-    internal static readonly v4  ZERO4 = default;
-
-    internal const           i1 iZERO  = default;
-    internal static readonly i2 iZERO2 = default;
-    internal static readonly i3 iZERO3 = default;
-    internal static readonly i4 iZERO4 = default;
-
-    //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    internal const           v1  ONE  = 1f;
-    internal static readonly v2  ONE2 = new v2(1f, 1f);
-    internal static readonly v3  ONE3 = new v3(1f, 1f, 1f);
-    internal static readonly v4  ONE4 = new v4(1f, 1f, 1f, 1f);
-
-    internal const           i1 iONE  = 1;
-    internal static readonly i2 iONE2 = new i2(1, 1);
-    internal static readonly i3 iONE3 = new i3(1, 1, 1);
-    internal static readonly i4 iONE4 = new i4(1, 1, 1, 1);
-
-    //==========================================================================================================================================================
     internal static readonly v2 AXIS2_X  = new v2(1f, 0f);
     internal static readonly v2 AXIS2_Y  = new v2(0f, 1f);
 
@@ -188,14 +166,6 @@ internal static class Constants {
   //internal static readonly v3 UP = new v3( 0f,  1f,  0f); // Up
   //internal static readonly v3 BK = new v3( 0f,  0f, -1f); // Back   Far
   //internal static readonly v3 FT = new v3( 0f,  0f,  1f); // Front  Near
-
-    //==========================================================================================================================================================
-    internal static readonly mat4 IDENTITY4 = new mat4(
-        1f, 0f, 0f, 0f,
-        0f, 1f, 0f, 0f,
-        0f, 0f, 1f, 0f,
-        0f, 0f, 0f, 1f
-    );
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

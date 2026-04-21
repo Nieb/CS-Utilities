@@ -1,13 +1,6 @@
-using   F2 = (float x, float y);
-using   F3 = (float x, float y, float z);
-using   F4 = (float x, float y, float z, float w);
-using   I2 = (int x, int y);
-using   I3 = (int x, int y, int z);
-using   I4 = (int x, int y, int z, int w);
 using VEC2 = System.Numerics.Vector2;
 using VEC3 = System.Numerics.Vector3;
 using VEC4 = System.Numerics.Vector4;
-using MAT4 = System.Numerics.Matrix4x4;
 
 namespace Utility;
 internal static partial class VEC {
@@ -35,18 +28,13 @@ internal struct vec2 : System.IFormattable {
 
     //==========================================================================================================================================================
     //                                                                  Directly Assign
-    [Impl(AggressiveInlining)] public static implicit operator vec2(     F2 T) => new vec2( T.x, T.y); //  (float,float)  to  vec2
-  //[Impl(AggressiveInlining)] public static implicit operator   F2(   vec2 V) =>         ( V.x, V.y); //           vec2  to  (float,float)
     [Impl(AggressiveInlining)] public static implicit operator vec2(float[] V) => new vec2(V[0],V[1]); //       float[2]  to  vec2
+    [Impl(AggressiveInlining)] public static implicit operator vec2(     V2 T) => new vec2( T.x, T.y); //  (float,float)  to  vec2
+  //[Impl(AggressiveInlining)] public static implicit operator   F2(   vec2 V) =>         ( V.x, V.y); //           vec2  to  (float,float)
     [Impl(AggressiveInlining)] public static implicit operator vec2(  ivec2 V) => new vec2( V.x, V.y); //          ivec2  to  vec2
 
     [Impl(AggressiveInlining)] public static implicit operator vec2(   VEC2 v) => new vec2( v.X, v.Y); //       ew-gross  to  vec2
     [Impl(AggressiveInlining)] public static implicit operator VEC2(   vec2 V) => new VEC2( V.x, V.y); //           vec2  to  ew-gross
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //                                                            Has Value/Magnitude/Length
-  //[Impl(AggressiveInlining)] public static implicit operator bool(vec2 A) => (A != 0f);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

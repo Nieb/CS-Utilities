@@ -11,9 +11,6 @@ internal struct bvec4 : System.IFormattable {
     //      0xXxYyZzWw   (X, Y, Z, W)
     //      0xRrGgBbAa   (Red, Green, Blue, Alpha)
     //
-    //    3  2  1  0 |  7  6  5  4 | 11 10  9  8 | 15 14 13 12          Which endianness does OpenGL want?
-    //    0  1  2  3 |  4  5  6  7 |  8  9 10 11 | 12 13 14 15          just use byte[] arrays...
-    //
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     [FieldOffset(3)] public u8 x;  [FieldOffset(3)] public u8 r;
@@ -34,11 +31,6 @@ internal struct bvec4 : System.IFormattable {
     [Impl(AggressiveInlining)] public static implicit operator   u32(                   bvec4 A) => A.U;                        //                  bvec4  to  uint
     [Impl(AggressiveInlining)] public static implicit operator bvec4(                   u32   A) => new bvec4(A);               //                   uint  to  bvec4
     [Impl(AggressiveInlining)] public static implicit operator bvec4((u8 x, u8 y, u8 z, u8 w) T) => new bvec4(T.x,T.y,T.z,T.w); //  (byte,byte,byte,byte)  to  bvec4
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //                                                            Has Value/Magnitude/Length
-  //[Impl(AggressiveInlining)] public static implicit operator bool(bvec4 A) => (A.U != 0u);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

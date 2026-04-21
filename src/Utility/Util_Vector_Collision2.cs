@@ -218,6 +218,8 @@ internal static class VEC_Collision2 {
     //      LineVsLine(  Line1-PointA,  Line1-PointB,  Line2-PointA,  Line2-PointB  )
     //
     internal static bool LineVsLine(vec2 L1a, vec2 L1b, vec2 L2a, vec2 L2b) {
+        //throw new System.Exception("This is gross, don't use it.");
+
         vec2 dL1 = L1b - L1a;
         vec2 dL2 = L2b - L2a;
         vec2 dAA = L1a - L2a;

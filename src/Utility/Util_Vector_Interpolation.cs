@@ -21,7 +21,7 @@ internal static class VEC_Interpolation {
     //##########################################################################################################################################################
     //                                                               "Linear Interpolation"
     //  Mix(
-    //      V: 0..1     Weighted position between A and B.
+    //      w: 0..1     Weighted position between A and B.
     //      A: any      Values to be mixed.
     //      B: any      Values to be mixed.
     //  );
@@ -33,82 +33,76 @@ internal static class VEC_Interpolation {
     //
     //          https://registry.khronos.org/OpenGL-Refpages/gl4/html/mix.xhtml
     //
-    [Impl(AggressiveInlining)] internal static v1 Mix(v1 V, v1 A, v1 B) => A*(1f-V) + B*(V);
+    [Impl(AggressiveInlining)] internal static v1 Mix(v1 w, v1 A, v1 B) {w=clamp(w);  return A*(1f-w) + B*(w);}
 
-    [Impl(AggressiveInlining)] internal static v2 Mix(v1 V, v2 A, v2 B) => A*(1f-V) + B*(V);
-    [Impl(AggressiveInlining)] internal static v2 Mix(v2 V, v2 A, v2 B) => A*(1f-V) + B*(V);
+    [Impl(AggressiveInlining)] internal static v2 Mix(v1 w, v2 A, v2 B) {w=clamp(w);  return A*(1f-w) + B*(w);}
+    [Impl(AggressiveInlining)] internal static v2 Mix(v2 w, v2 A, v2 B) {w=clamp(w);  return A*(1f-w) + B*(w);}
 
-    [Impl(AggressiveInlining)] internal static v3 Mix(v1 V, v3 A, v3 B) => A*(1f-V) + B*(V);
-    [Impl(AggressiveInlining)] internal static v3 Mix(v3 V, v3 A, v3 B) => A*(1f-V) + B*(V);
+    [Impl(AggressiveInlining)] internal static v3 Mix(v1 w, v3 A, v3 B) {w=clamp(w);  return A*(1f-w) + B*(w);}
+    [Impl(AggressiveInlining)] internal static v3 Mix(v3 w, v3 A, v3 B) {w=clamp(w);  return A*(1f-w) + B*(w);}
 
-    [Impl(AggressiveInlining)] internal static v4 Mix(v1 V, v4 A, v4 B) => A*(1f-V) + B*(V);
-    [Impl(AggressiveInlining)] internal static v4 Mix(v4 V, v4 A, v4 B) => A*(1f-V) + B*(V);
+    [Impl(AggressiveInlining)] internal static v4 Mix(v1 w, v4 A, v4 B) {w=clamp(w);  return A*(1f-w) + B*(w);}
+    [Impl(AggressiveInlining)] internal static v4 Mix(v4 w, v4 A, v4 B) {w=clamp(w);  return A*(1f-w) + B*(w);}
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] internal static v1 Lerp(v1 V, v1 A, v1 B) => Mix(V,A,B);
+    [Impl(AggressiveInlining)] internal static v1 Lerp(v1 w, v1 A, v1 B) => A*(1f-w) + B*(w);
 
-    [Impl(AggressiveInlining)] internal static v2 Lerp(v1 V, v2 A, v2 B) => Mix(V,A,B);
-    [Impl(AggressiveInlining)] internal static v2 Lerp(v2 V, v2 A, v2 B) => Mix(V,A,B);
+    [Impl(AggressiveInlining)] internal static v2 Lerp(v1 w, v2 A, v2 B) => A*(1f-w) + B*(w);
+    [Impl(AggressiveInlining)] internal static v2 Lerp(v2 w, v2 A, v2 B) => A*(1f-w) + B*(w);
 
-    [Impl(AggressiveInlining)] internal static v3 Lerp(v1 V, v3 A, v3 B) => Mix(V,A,B);
-    [Impl(AggressiveInlining)] internal static v3 Lerp(v3 V, v3 A, v3 B) => Mix(V,A,B);
+    [Impl(AggressiveInlining)] internal static v3 Lerp(v1 w, v3 A, v3 B) => A*(1f-w) + B*(w);
+    [Impl(AggressiveInlining)] internal static v3 Lerp(v3 w, v3 A, v3 B) => A*(1f-w) + B*(w);
 
-    [Impl(AggressiveInlining)] internal static v4 Lerp(v1 V, v4 A, v4 B) => Mix(V,A,B);
-    [Impl(AggressiveInlining)] internal static v4 Lerp(v4 V, v4 A, v4 B) => Mix(V,A,B);
+    [Impl(AggressiveInlining)] internal static v4 Lerp(v1 w, v4 A, v4 B) => A*(1f-w) + B*(w);
+    [Impl(AggressiveInlining)] internal static v4 Lerp(v4 w, v4 A, v4 B) => A*(1f-w) + B*(w);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                              "Bilinear Interpolation"
     //  BiMix(
-    //      V: (0..1, 0..1)     Weighted position for X & Y axis.
+    //      w: (0..1, 0..1)     Weighted position for X & Y axis.
     //      A: any              Values to be mixed.
     //      B: any              Values to be mixed.
     //      C: any              Values to be mixed.
     //      D: any              Values to be mixed.
     //  );
-    //
+    //              (1,1)
     //  OUTPUT: C..D
     //          :  :
     //          A..B
+    //     (0,0)
     //
-    internal static v1 BiMix(v2 V,  v1 A, v1 B, v1 C, v1 D) {v2 iV = (1f-V); return A*(iV.x*iV.y) + B*(V.x*iV.y)
-                                                                                  + C*(iV.x* V.y) + D*(V.x* V.y);}
+    internal static v1 BiMix(v2 w,  v1 A, v1 B, v1 C, v1 D) {w=clamp(w);  v2 iw=(1f-w);  return A*(iw.x*iw.y) + B*(w.x*iw.y)   +   C*(iw.x* w.y) + D*(w.x* w.y);}
+    internal static v2 BiMix(v2 w,  v2 A, v2 B, v2 C, v2 D) {w=clamp(w);  v2 iw=(1f-w);  return A*(iw.x*iw.y) + B*(w.x*iw.y)   +   C*(iw.x* w.y) + D*(w.x* w.y);}
+    internal static v3 BiMix(v2 w,  v3 A, v3 B, v3 C, v3 D) {w=clamp(w);  v2 iw=(1f-w);  return A*(iw.x*iw.y) + B*(w.x*iw.y)   +   C*(iw.x* w.y) + D*(w.x* w.y);}
+    internal static v4 BiMix(v2 w,  v4 A, v4 B, v4 C, v4 D) {w=clamp(w);  v2 iw=(1f-w);  return A*(iw.x*iw.y) + B*(w.x*iw.y)   +   C*(iw.x* w.y) + D*(w.x* w.y);}
 
-    internal static v2 BiMix(v2 V,  v2 A, v2 B, v2 C, v2 D) {v2 iV = (1f-V); return A*(iV.x*iV.y) + B*(V.x*iV.y)
-                                                                                  + C*(iV.x* V.y) + D*(V.x* V.y);}
-
-    internal static v3 BiMix(v2 V,  v3 A, v3 B, v3 C, v3 D) {v2 iV = (1f-V); return A*(iV.x*iV.y) + B*(V.x*iV.y)
-                                                                                  + C*(iV.x* V.y) + D*(V.x* V.y);}
-
-    internal static v4 BiMix(v2 V,  v4 A, v4 B, v4 C, v4 D) {v2 iV = (1f-V); return A*(iV.x*iV.y) + B*(V.x*iV.y)
-                                                                                  + C*(iV.x* V.y) + D*(V.x* V.y);}
+    [Impl(AggressiveInlining)] internal static v1 Bilinear(v2 w,  v1 A, v1 B, v1 C, v1 D) => BiMix(w, A,B,C,D);
+    [Impl(AggressiveInlining)] internal static v2 Bilinear(v2 w,  v2 A, v2 B, v2 C, v2 D) => BiMix(w, A,B,C,D);
+    [Impl(AggressiveInlining)] internal static v3 Bilinear(v2 w,  v3 A, v3 B, v3 C, v3 D) => BiMix(w, A,B,C,D);
+    [Impl(AggressiveInlining)] internal static v4 Bilinear(v2 w,  v4 A, v4 B, v4 C, v4 D) => BiMix(w, A,B,C,D);
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Impl(AggressiveInlining)] internal static v1 Blerp(v2 V,  v1 A, v1 B, v1 C, v1 D) => BiMix(V, A,B,C,D);
-    [Impl(AggressiveInlining)] internal static v2 Blerp(v2 V,  v2 A, v2 B, v2 C, v2 D) => BiMix(V, A,B,C,D);
-    [Impl(AggressiveInlining)] internal static v3 Blerp(v2 V,  v3 A, v3 B, v3 C, v3 D) => BiMix(V, A,B,C,D);
-    [Impl(AggressiveInlining)] internal static v4 Blerp(v2 V,  v4 A, v4 B, v4 C, v4 D) => BiMix(V, A,B,C,D);
-
-    [Impl(AggressiveInlining)] internal static v1 Bilinear(v2 V,  v1 A, v1 B, v1 C, v1 D) => BiMix(V, A,B,C,D);
-    [Impl(AggressiveInlining)] internal static v2 Bilinear(v2 V,  v2 A, v2 B, v2 C, v2 D) => BiMix(V, A,B,C,D);
-    [Impl(AggressiveInlining)] internal static v3 Bilinear(v2 V,  v3 A, v3 B, v3 C, v3 D) => BiMix(V, A,B,C,D);
-    [Impl(AggressiveInlining)] internal static v4 Bilinear(v2 V,  v4 A, v4 B, v4 C, v4 D) => BiMix(V, A,B,C,D);
+    internal static v1 Blerp(v2 w,  v1 A, v1 B, v1 C, v1 D) {             v2 iw=(1f-w);  return A*(iw.x*iw.y) + B*(w.x*iw.y)   +   C*(iw.x* w.y) + D*(w.x* w.y);}
+    internal static v2 Blerp(v2 w,  v2 A, v2 B, v2 C, v2 D) {             v2 iw=(1f-w);  return A*(iw.x*iw.y) + B*(w.x*iw.y)   +   C*(iw.x* w.y) + D*(w.x* w.y);}
+    internal static v3 Blerp(v2 w,  v3 A, v3 B, v3 C, v3 D) {             v2 iw=(1f-w);  return A*(iw.x*iw.y) + B*(w.x*iw.y)   +   C*(iw.x* w.y) + D*(w.x* w.y);}
+    internal static v4 Blerp(v2 w,  v4 A, v4 B, v4 C, v4 D) {             v2 iw=(1f-w);  return A*(iw.x*iw.y) + B*(w.x*iw.y)   +   C*(iw.x* w.y) + D*(w.x* w.y);}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //                                                            "Cubic/Hermite Interpolation"
     //  SmoothMix(
-    //      V: 0..1     Weighted position between A and B.
+    //      w: 0..1     Weighted position between A and B.
     //      A: any      Values to be mixed.
     //      B: any      Values to be mixed.
     //  );
     //
     //  OUTPUT: A..B
     //
-    [Impl(AggressiveInlining)] internal static v1 SmoothMix(v1 V, v1 A, v1 B) => Mix(SmoothStep(V), A, B);
-    [Impl(AggressiveInlining)] internal static v2 SmoothMix(v1 V, v2 A, v2 B) => Mix(SmoothStep(V), A, B);
-    [Impl(AggressiveInlining)] internal static v3 SmoothMix(v1 V, v3 A, v3 B) => Mix(SmoothStep(V), A, B);
-    [Impl(AggressiveInlining)] internal static v4 SmoothMix(v1 V, v4 A, v4 B) => Mix(SmoothStep(V), A, B);
+    [Impl(AggressiveInlining)] internal static v1 SmoothMix(v1 w, v1 A, v1 B) => Lerp(SmoothStep(w), A, B);
+    [Impl(AggressiveInlining)] internal static v2 SmoothMix(v1 w, v2 A, v2 B) => Lerp(SmoothStep(w), A, B);
+    [Impl(AggressiveInlining)] internal static v3 SmoothMix(v1 w, v3 A, v3 B) => Lerp(SmoothStep(w), A, B);
+    [Impl(AggressiveInlining)] internal static v4 SmoothMix(v1 w, v4 A, v4 B) => Lerp(SmoothStep(w), A, B);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -116,15 +110,15 @@ internal static class VEC_Interpolation {
     //  https://www.desmos.com/calculator/0faaf03695
     //
     //  Slerp(
-    //      V: 0..1     Weighted position between A and B.
+    //      w: 0..1     Weighted position between A and B.
     //      A: any      Position on Schircle/Sphere (normalized).
     //      B: any      Position on Schircle/Sphere (normalized).
     //  );
     //
     //  OUTPUT: A..B
     //
-  //internal static v2 Slerp(v1 V, v2 A, v2 B) {v1 tAB = acos(dot(A,B));  v1 SinT = sin(tAB);  return A*(sin(tAB*(1f-V))/SinT)  +  B*(sin(tAB*V)/SinT);}
-    internal static v3 Slerp(v1 V, v3 A, v3 B) {v1 tAB = acos(dot(A,B));  v1 SinT = sin(tAB);  return A*(sin(tAB*(1f-V))/SinT)  +  B*(sin(tAB*V)/SinT);}
+  //internal static v2 Slerp(v1 w, v2 A, v2 B) {v1 tAB = acos(dot(A,B));  v1 SinT = sin(tAB);  return A*(sin(tAB*(1f-w))/SinT)  +  B*(sin(tAB*w)/SinT);}
+    internal static v3 Slerp(v1 w, v3 A, v3 B) {v1 tAB = acos(dot(A,B));  v1 SinT = sin(tAB);  return A*(sin(tAB*(1f-w))/SinT)  +  B*(sin(tAB*w)/SinT);}
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
@@ -226,7 +220,7 @@ internal static class VEC_Interpolation {
 
     //==========================================================================================================================================================
     //
-    //  This has a sharper transition, if applied over the same bounds as SmoothStep.
+    //  If applied over the same bounds as SmoothStep, this has a sharper transition.
     //  The extra smoothness comes from correcting a discontinuity at the bounds,
     //  by smoothing the "rate-of-change of the rate-of-change".  AKA: the second derivative
     //  This can correct an illusory-line that can be perceived at the bounds of SmoothStep.

@@ -1,13 +1,6 @@
-using   F2 = (float x, float y);
-using   F3 = (float x, float y, float z);
-using   F4 = (float x, float y, float z, float w);
-using   I2 = (int x, int y);
-using   I3 = (int x, int y, int z);
-using   I4 = (int x, int y, int z, int w);
 using VEC2 = System.Numerics.Vector2;
 using VEC3 = System.Numerics.Vector3;
 using VEC4 = System.Numerics.Vector4;
-using MAT4 = System.Numerics.Matrix4x4;
 
 namespace Utility;
 internal static partial class VEC {
@@ -32,18 +25,15 @@ internal struct ivec3 : System.IFormattable {
     [Impl(AggressiveInlining)] public ivec3(i1 X, i1 Y, i1 Z) {x=X; y=Y; z=Z;}
     [Impl(AggressiveInlining)] public ivec3(i1 V            ) {x=V; y=V; z=V;}
 
+    [Impl(AggressiveInlining)] public ivec3(v3 V            ) {x=RoundToInt(V.x); y=RoundToInt(V.y); z=RoundToInt(V.z);}
+
     //==========================================================================================================================================================
     //                                                                  Directly Assign
+    [Impl(AggressiveInlining)] public static implicit operator ivec3(int[] V) => new ivec3(V[0],V[1],V[2]); //         int[3]  to  ivec3
     [Impl(AggressiveInlining)] public static implicit operator ivec3(   I3 T) => new ivec3( T.x, T.y, T.z); //  (int,int,int)  to  ivec3
   //[Impl(AggressiveInlining)] public static implicit operator    I3(ivec3 V) =>          ( V.x, V.y, V.z); //          ivec3  to  (int,int,int)
-    [Impl(AggressiveInlining)] public static implicit operator ivec3(int[] V) => new ivec3(V[0],V[1],V[2]); //         int[3]  to  ivec3
 
     [Impl(AggressiveInlining)] public static implicit operator  VEC3(ivec3 V) => new  VEC3( V.x, V.y, V.z); //          ivec3  to  ew-gross
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //                                                            Has Value/Magnitude/Length
-  //[Impl(AggressiveInlining)] public static implicit operator bool(ivec3 A) => (A != 0);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

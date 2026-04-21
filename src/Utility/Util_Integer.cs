@@ -17,11 +17,11 @@ internal static class INT {
     //                *Inclusive*  *Inclusive*
     //      clamp( A, LowerBounds, UpperBounds )
     //
-    [Impl(AggressiveInlining)] internal static  s8 clamp( s8 A,  s8 L,  s8 U) => (A < L) ? L : (A > U) ? U : A;
-    [Impl(AggressiveInlining)] internal static  u8 clamp( u8 A,  u8 L,  u8 U) => (A < L) ? L : (A > U) ? U : A;
+  //[Impl(AggressiveInlining)] internal static  s8 clamp( s8 A,  s8 L,  s8 U) => (A < L) ? L : (A > U) ? U : A;
+  //[Impl(AggressiveInlining)] internal static  u8 clamp( u8 A,  u8 L,  u8 U) => (A < L) ? L : (A > U) ? U : A;
 
-    [Impl(AggressiveInlining)] internal static s16 clamp(s16 A, s16 L, s16 U) => (A < L) ? L : (A > U) ? U : A;
-    [Impl(AggressiveInlining)] internal static u16 clamp(u16 A, u16 L, u16 U) => (A < L) ? L : (A > U) ? U : A;
+  //[Impl(AggressiveInlining)] internal static s16 clamp(s16 A, s16 L, s16 U) => (A < L) ? L : (A > U) ? U : A;         ambiguous call...
+  //[Impl(AggressiveInlining)] internal static u16 clamp(u16 A, u16 L, u16 U) => (A < L) ? L : (A > U) ? U : A;             implicit cast:   short -> int
 
     [Impl(AggressiveInlining)] internal static s32 clamp(s32 A, s32 L, s32 U) => (A < L) ? L : (A > U) ? U : A;
     [Impl(AggressiveInlining)] internal static u32 clamp(u32 A, u32 L, u32 U) => (A < L) ? L : (A > U) ? U : A;
@@ -46,7 +46,7 @@ internal static class INT {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------
     //
     //  Get previous/next Index, with Array.Length wrapping.
-    //  Essentially a less-gross version of the above wrap() function that only works with positive integers in the 0 to N range.
+    //  Essentially, a less-gross version of the above wrap() function that only works with positive integers in the 0 to N range.
     //
     //      Blarg[ prev(i, Blarg.Length) ]      Equivalent to:  Blarg[ prev(i, 1, Blarg.Length) ]
     //      Blarg[ next(i, Blarg.Length) ]      Equivalent to:  Blarg[ next(i, 1, Blarg.Length) ]

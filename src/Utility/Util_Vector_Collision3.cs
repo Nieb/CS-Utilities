@@ -234,71 +234,79 @@ internal static class VEC_Collision3 {
     //##########################################################################################################################################################
     //##########################################################################################################################################################
     //
-    //      RayVsLine(  Ray-Position,  Ray-Normal,    LinePointA, RadiusA,  LinePointB, RadiusB  )
-    //
-    [Impl(AggressiveInlining)] internal static float RayVsLine(vec3 Rp, vec3 Rn,    vec3 A, float Ar, vec3 B, float Br) => RayVsCapsule(Rp,Rn, A,Ar,B,Br);
-
-    //==========================================================================================================================================================
+    //  NOTE:  This function finds a Plane perpendicular to the RayNormal that has the shortest distance between the two points where the RayLine & Line intersect the Plane.
+    //         With that said, the radius-test part of this function behaves in a 2D fashion.
+    //         So, while it is similar, this is not a RayVsCapsule test.
     //
     //                                       RadiusB
     //                RadiusA        ___---+--.._
-    //                      ,-+---```      |     `.
-    //                    .`  |            |       \
-    //                   /    | A          | B     |
-    //                   +----●------------●-------+
-    //                   \    |            |       |
-    //                    *,  |            |       /
-    //                      `-+---___      |    _.`
+    //                      ,-+---```      '     `.
+    //                    .`  '            '       ;
+    //                   /    ' A          ' B     |
+    //                   + - -●------------●- - - -+
+    //                   \    '            '       |
+    //                    +_  '            '       :
+    //                      `-+---___      '    _.`
     //                               ```---+--``
     //
-    //      RayVsLine(  Ray-Position,  Ray-Normal,       PointA, RadiusA,  PointB, RadiusB  )
+    //      RayVsLine(  Ray-Position,  Ray-Normal,    LinePointA, RadiusA,  LinePointB, RadiusB  )
     //
-    internal static float RayVsCapsule(vec3 Rp, vec3 Rn,    vec3 A, float Ar, vec3 B, float Br) {
+    [Impl(AggressiveInlining)] internal static float RayVsLine(vec3 Rp, vec3 Rn,    vec3 A, float Ar, vec3 B, float Br,    bool OffsetResult=false) {
         vec3 dAB =  B - A;
         vec3 dAP = Rp - A;
 
-        float dotL  = dot(dAB);
         float dotRL = dot(Rn,dAB);
 
-        float Determinant = dotL - dotRL*dotRL;
+        float Determinant = dot(dAB) - dotRL*dotRL;
 
-        if (abs(Determinant) < EPS7)
+        if (abs(Determinant) < EPS7) // this should probably branch to a RayVsPoint( nearest of A or B )...
             return RAY_MISS;
 
-        float DtrmA =         dot(dAB, dAP);  //  This appears to be a vertical-alignment thing...?    Since all Wall-PointLines are vertical, this could be precomputed.
-        float DtrmB = dotRL * dot( Rn, dAP);
-        float DtrmC = (DtrmA - DtrmB);
-
         //  Distance from LinePointA to NearestPointOnLine, as multiple of DeltaAB:
-        float DistA = clamp(DtrmC / Determinant);
+        float DistA = clamp((dot(dAB,dAP) - dot(Rn,dAP)*dotRL) / Determinant);
 
-        /*PRINT($"""
-
-            ({DtrmA,8:0.00} - {DtrmB,8:0.00})
-                  {DtrmC,8:0.00}
-            ---------------------    ==    {DistA,7:0.00}
-                  {Determinant,8:0.00}
-        """);*/
-
-        vec3 NearestPointOnLine = A + dAB * DistA;
+        vec3 NearestPointOnLine = A + dAB*DistA;
 
         //  Find the ClosestPointOnRay from NearestPointOnLine
-        float DistR = max(0f, dot(NearestPointOnLine - Rp, Rn)); //  max(0,d) -> Clamp to infront-of-Ray.
-        vec3 ClosestPointOnRay = Rp + Rn * DistR;
+        float DistR = max(0f, dot(NearestPointOnLine - Rp, Rn)); //  Clamp to infront-of-Ray.
+        vec3 ClosestPointOnRay = Rp + Rn*DistR;
+
+        float LineRadius = Lerp(DistA, Ar, Br);
 
         float DistToLine = dot(ClosestPointOnRay - NearestPointOnLine);
 
-        float RadiusAtNearestPoint = Lerp(DistA, Ar, Br);
+//if (DistToLine <= LineRadius*LineRadius)
+//    PRINT($"  {DistR,8:####0.00}  -  {LineRadius,8:####0.00} * {dot(Rn,normalize(dAB)),8:####0.00} ");
 
-        if (DistToLine > RadiusAtNearestPoint*RadiusAtNearestPoint)
-            return RAY_MISS;
-
-        //  Not the actual distance to the surface of the Capsule...
-        //  Hmm, projecting an arbitrarily aligned Ray to an arbitrarily aligned CapsuleSurface, that is also tapered, sounds hairy...
-        return DistR - RadiusAtNearestPoint;
-        //  Offset towards RayPos, so adjacent RayVsTri & RayVsQuad hits don't "eat" the LineHit.
-        //  Well, this isn't a RayVsLine function...  Create a distinct version of the function for Lines...??
+        return (DistToLine > LineRadius*LineRadius) ? RAY_MISS
+                                     : OffsetResult ? DistR - LineRadius //  Offset towards RayPos.
+                                                    : DistR;
     }
+
+    //==========================================================================================================================================================
+    //
+    //  Axis-Aligned.
+    //
+    //      RayVsLine(  Ray-Position,  Ray-Normal,    LinePointA, RadiusA,  LinePointB, RadiusB  )
+    //
+    [Impl(AggressiveInlining)] internal static float RayVsLineX(vec3 Rp, vec3 Rn,    vec3 A, float Ar, float B_x, float Br,    bool OffsetResult=true) => RAY_MISS;
+
+    [Impl(AggressiveInlining)] internal static float RayVsLineY(vec3 Rp, vec3 Rn,    vec3 A, float Ar, float B_y, float Br,    bool OffsetResult=true) => RAY_MISS;
+
+    [Impl(AggressiveInlining)] internal static float RayVsLineZ(vec3 Rp, vec3 Rn,    vec3 A, float Ar, float B_z, float Br,    bool OffsetResult=true) => RAY_MISS;
+
+    //##########################################################################################################################################################
+    //##########################################################################################################################################################
+    //
+    //  Axis-Aligned.
+    //
+    //      RayVsCapsule(  Ray-Position,  Ray-Normal,       Capsule-Position, Capsule-Radius, Capsule-Length  )
+    //
+    [Impl(AggressiveInlining)] internal static float RayVsCapsuleX(vec3 Rp, vec3 Rn,    vec3 Cp, float Cr, float Cl) => RAY_MISS;
+
+    [Impl(AggressiveInlining)] internal static float RayVsCapsuleY(vec3 Rp, vec3 Rn,    vec3 Cp, float Cr, float Cl) => RAY_MISS;
+
+    [Impl(AggressiveInlining)] internal static float RayVsCapsuleZ(vec3 Rp, vec3 Rn,    vec3 Cp, float Cr, float Cl) => RAY_MISS;
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

@@ -1,3 +1,4 @@
+using MAT4 = System.Numerics.Matrix4x4;
 
 namespace Utility;
 internal static partial class MAT {
@@ -79,6 +80,24 @@ internal struct mat4 {
         xz=XZ; yz=YZ; zz=ZZ; wz=WZ;
         xw=XW; yw=YW; zw=ZW; ww=WW;
     }
+
+    public mat4(float[] V) {//=> V.CopyTo(&this.index[0],0);
+        xx=V[ 0]; yx=V[ 1]; zx=V[ 2]; wx=V[ 3];
+        xy=V[ 4]; yy=V[ 5]; zy=V[ 6]; wy=V[ 7];
+        xz=V[ 8]; yz=V[ 9]; zz=V[10]; wz=V[11];
+        xw=V[12]; yw=V[13]; zw=V[14]; ww=V[15];
+    }
+
+    //public mat4(float[] V) {unsafe {
+    //    fixed (float* S = &V[0])
+    //    fixed (float* D = &this.index[0]) {
+    //        System.Buffer.MemoryCopy(S,D,64,64);
+    //    }
+    //}}
+
+    //==========================================================================================================================================================
+    //                                                                  Directly Assign
+    [Impl(AggressiveInlining)] public static implicit operator mat4(float[] V) => new mat4(V); //   float[16]  to  mat4
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

@@ -1,13 +1,6 @@
-using   F2 = (float x, float y);
-using   F3 = (float x, float y, float z);
-using   F4 = (float x, float y, float z, float w);
-using   I2 = (int x, int y);
-using   I3 = (int x, int y, int z);
-using   I4 = (int x, int y, int z, int w);
 using VEC2 = System.Numerics.Vector2;
 using VEC3 = System.Numerics.Vector3;
 using VEC4 = System.Numerics.Vector4;
-using MAT4 = System.Numerics.Matrix4x4;
 
 namespace Utility;
 internal static partial class VEC {
@@ -39,20 +32,17 @@ internal struct ivec4 : System.IFormattable {
     [Impl(AggressiveInlining)] public ivec4(i2 vA     , i2 vB     ) {x=vA.x; y=vA.y; z=vB.x; w=vB.y;}
     [Impl(AggressiveInlining)] public ivec4(i3 V            , i1 W) {x=V.x;  y=V.y;  z=V.z;  w=W;   }
 
+    [Impl(AggressiveInlining)] public ivec4(v4 V                  ) {x=RoundToInt(V.x); y=RoundToInt(V.y); z=RoundToInt(V.z); w=RoundToInt(V.w);}
+
     //==========================================================================================================================================================
     //                                                                  Directly Assign
+    [Impl(AggressiveInlining)] public static implicit operator ivec4(       int[] V) => new ivec4( V[0], V[1], V[2], V[3]); //             int[4]  to  ivec4
     [Impl(AggressiveInlining)] public static implicit operator ivec4(          I4 T) => new ivec4(  T.x,  T.y,  T.z,  T.w); //  (int,int,int,int)  to  ivec4
   //[Impl(AggressiveInlining)] public static implicit operator    I4(        vec4 V) =>          (  V.x,  V.y,  V.z,  V.w); //              ivec4  to  (int,int,int,int)
     [Impl(AggressiveInlining)] public static implicit operator ivec4((i2 A, i2 B) T) => new ivec4(T.A.x,T.A.y,T.B.x,T.B.y); //      (ivec2,ivec2)  to  ivec4
     [Impl(AggressiveInlining)] public static implicit operator ivec4((i3 V, i1 w) T) => new ivec4(T.V.x,T.V.y,T.V.z,  T.w); //        (ivec3,int)  to  ivec4
-    [Impl(AggressiveInlining)] public static implicit operator ivec4(       int[] V) => new ivec4( V[0], V[1], V[2], V[3]); //             int[4]  to  ivec4
 
     [Impl(AggressiveInlining)] public static implicit operator  VEC4(       ivec4 V) => new  VEC4(  V.x,  V.y,  V.z,  V.w); //              ivec4  to  ew-gross
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //                                                            Has Value/Magnitude/Length
-  //[Impl(AggressiveInlining)] public static implicit operator bool(ivec4 A) => (A != 0);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

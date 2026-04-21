@@ -22,18 +22,15 @@ internal static partial class MAT {
     //
     //  DepthRange == (Near, Far);
     //
-    [Impl(AggressiveInlining)] public static mat4 ToView2D(vec2 ViewSize, vec2 DepthRange=default,
+    [Impl(AggressiveInlining)] public static mat4 ToView2D(vec2 ViewSize, vec2 DepthRange=default, //float ViewDepthNear, float ViewDepthFar,
                                                            bool CornerOrigin=true, bool FlipX=false, bool FlipY=false) {
-        float x0 = 0f, x1;
-        float y0 = 0f, y1;
+        float x0 = 0f, x1 = (FlipX ? -2f/ViewSize.x : 2f/ViewSize.x);
+        float y0 = 0f, y1 = (FlipY ? -2f/ViewSize.y : 2f/ViewSize.y);
         float z0 = 0f, z1 = 1f;
 
         if (CornerOrigin) {
-            if (FlipX) {x0 = 1f;  x1 = -2f/ViewSize.x;} else {x0 = -1f;  x1 = 2f/ViewSize.x;}
-            if (FlipY) {y0 = 1f;  y1 = -2f/ViewSize.y;} else {y0 = -1f;  y1 = 2f/ViewSize.y;}
-        } else {
-            x1 = (FlipX ? -1f/ViewSize.x : 1f/ViewSize.x);
-            y1 = (FlipY ? -1f/ViewSize.y : 1f/ViewSize.y);
+            x0 = (FlipX ? 1f : -1f);
+            y0 = (FlipY ? 1f : -1f);
         }
 
         if (DepthRange != 0f) {

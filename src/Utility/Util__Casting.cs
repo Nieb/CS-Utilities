@@ -53,11 +53,26 @@ internal static class Casting {
     [Impl(AggressiveInlining)] internal static u32 ClampToUint  (s64 A) => (u32)      clamp(A, (s64)MIN_u32, (s64)MAX_u32);
 
     //==========================================================================================================================================================
-    [Impl(AggressiveInlining)] internal static s32 RoundToInt(f32 A)  => (s32)round(A);
-    [Impl(AggressiveInlining)] internal static s32 RoundToInt(f64 A)  => (s32)round(A);
+    [Impl(AggressiveInlining)] internal static s32 FloorToInt(f32 A) => (s32)floor(A);
+    [Impl(AggressiveInlining)] internal static s32 FloorToInt(f64 A) => (s32)floor(A);
+    [Impl(AggressiveInlining)] internal static s32  CeilToInt(f32 A) => (s32)ceil(A);
+    [Impl(AggressiveInlining)] internal static s32  CeilToInt(f64 A) => (s32)ceil(A);
+    [Impl(AggressiveInlining)] internal static s32 RoundToInt(f32 A) => (s32)round(A);
+    [Impl(AggressiveInlining)] internal static s32 RoundToInt(f64 A) => (s32)round(A);
 
-    [Impl(AggressiveInlining)] internal static s64 RoundToLong(f32 A) => (s64)round(A);
-    [Impl(AggressiveInlining)] internal static s64 RoundToLong(f64 A) => (s64)round(A);
+    [Impl(AggressiveInlining)] internal static i2 FloorToInt(v2 A) => new ivec2(FloorToInt(A.x), FloorToInt(A.y));
+    [Impl(AggressiveInlining)] internal static i3 FloorToInt(v3 A) => new ivec3(FloorToInt(A.x), FloorToInt(A.y), FloorToInt(A.z));
+    [Impl(AggressiveInlining)] internal static i4 FloorToInt(v4 A) => new ivec4(FloorToInt(A.x), FloorToInt(A.y), FloorToInt(A.z), FloorToInt(A.w));
+    [Impl(AggressiveInlining)] internal static i2  CeilToInt(v2 A) => new ivec2(CeilToInt(A.x), CeilToInt(A.y));
+    [Impl(AggressiveInlining)] internal static i3  CeilToInt(v3 A) => new ivec3(CeilToInt(A.x), CeilToInt(A.y), CeilToInt(A.z));
+    [Impl(AggressiveInlining)] internal static i4  CeilToInt(v4 A) => new ivec4(CeilToInt(A.x), CeilToInt(A.y), CeilToInt(A.z), CeilToInt(A.w));
+    [Impl(AggressiveInlining)] internal static i2 RoundToInt(v2 A) => new ivec2(RoundToInt(A.x), RoundToInt(A.y));
+    [Impl(AggressiveInlining)] internal static i3 RoundToInt(v3 A) => new ivec3(RoundToInt(A.x), RoundToInt(A.y), RoundToInt(A.z));
+    [Impl(AggressiveInlining)] internal static i4 RoundToInt(v4 A) => new ivec4(RoundToInt(A.x), RoundToInt(A.y), RoundToInt(A.z), RoundToInt(A.w));
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------
+  //[Impl(AggressiveInlining)] internal static s64 RoundToLong(f32 A) => (s64)round(A);
+  //[Impl(AggressiveInlining)] internal static s64 RoundToLong(f64 A) => (s64)round(A);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

@@ -512,10 +512,10 @@ internal static partial class VEC {
     [Impl(AggressiveInlining)] internal static v3 ToDeg(v3 Rad) => new v3(ToDeg(Rad.x), ToDeg(Rad.y), ToDeg(Rad.z));
     [Impl(AggressiveInlining)] internal static v4 ToDeg(v4 Rad) => new v4(ToDeg(Rad.x), ToDeg(Rad.y), ToDeg(Rad.z), ToDeg(Rad.w));
 
-    [Impl(AggressiveInlining)] internal static v1 degrees(v1 Rad) => ToDeg(Rad);
-    [Impl(AggressiveInlining)] internal static v2 degrees(v2 Rad) => ToDeg(Rad);
-    [Impl(AggressiveInlining)] internal static v3 degrees(v3 Rad) => ToDeg(Rad);
-    [Impl(AggressiveInlining)] internal static v4 degrees(v4 Rad) => ToDeg(Rad);
+  //[Impl(AggressiveInlining)] internal static v1 degrees(v1 Rad) => ToDeg(Rad);
+  //[Impl(AggressiveInlining)] internal static v2 degrees(v2 Rad) => ToDeg(Rad);
+  //[Impl(AggressiveInlining)] internal static v3 degrees(v3 Rad) => ToDeg(Rad);
+  //[Impl(AggressiveInlining)] internal static v4 degrees(v4 Rad) => ToDeg(Rad);
 
     //==========================================================================================================================================================
     [Impl(AggressiveInlining)] internal static v1 ToRad(v1 Degrees) => (f32)((f64)Degrees * (3.14159265358979323846264338327950288419716939937511d / 180d));
@@ -523,10 +523,20 @@ internal static partial class VEC {
     [Impl(AggressiveInlining)] internal static v3 ToRad(v3 Deg) => new v3(ToRad(Deg.x), ToRad(Deg.y), ToRad(Deg.z));
     [Impl(AggressiveInlining)] internal static v4 ToRad(v4 Deg) => new v4(ToRad(Deg.x), ToRad(Deg.y), ToRad(Deg.z), ToRad(Deg.w));
 
-    [Impl(AggressiveInlining)] internal static v1 radians(v1 Deg) => ToRad(Deg);
-    [Impl(AggressiveInlining)] internal static v2 radians(v2 Deg) => ToRad(Deg);
-    [Impl(AggressiveInlining)] internal static v3 radians(v3 Deg) => ToRad(Deg);
-    [Impl(AggressiveInlining)] internal static v4 radians(v4 Deg) => ToRad(Deg);
+  //[Impl(AggressiveInlining)] internal static v1 radians(v1 Deg) => ToRad(Deg);
+  //[Impl(AggressiveInlining)] internal static v2 radians(v2 Deg) => ToRad(Deg);
+  //[Impl(AggressiveInlining)] internal static v3 radians(v3 Deg) => ToRad(Deg);
+  //[Impl(AggressiveInlining)] internal static v4 radians(v4 Deg) => ToRad(Deg);
+
+    //==========================================================================================================================================================
+    //
+    //  Tau(0.125) ==  "45 degrees"  in radians
+    //  Tau(0.25)  ==  "90 degrees"
+    //  Tau(0.5)   == "180 degrees"
+    //  Tau(0.75)  == "270 degrees"
+    //  Tau(1.0)   == "360 degrees"
+    //
+    [Impl(AggressiveInlining)] internal static f32 Tau(f64 u) => (f32)(u * 6.28318530717958647692528676655900576839433879875021);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################

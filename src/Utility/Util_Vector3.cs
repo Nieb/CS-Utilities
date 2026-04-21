@@ -1,13 +1,6 @@
-using   F2 = (float x, float y);
-using   F3 = (float x, float y, float z);
-using   F4 = (float x, float y, float z, float w);
-using   I2 = (int x, int y);
-using   I3 = (int x, int y, int z);
-using   I4 = (int x, int y, int z, int w);
 using VEC2 = System.Numerics.Vector2;
 using VEC3 = System.Numerics.Vector3;
 using VEC4 = System.Numerics.Vector4;
-using MAT4 = System.Numerics.Matrix4x4;
 
 namespace Utility;
 internal static partial class VEC {
@@ -44,19 +37,14 @@ internal struct vec3 : System.IFormattable {
 
     //==========================================================================================================================================================
     //                                                                  Directly Assign
-    [Impl(AggressiveInlining)] public static implicit operator vec3(          F3 T) => new vec3(  T.x,  T.y,  T.z); //  (float,float,float)  to  vec3
+    [Impl(AggressiveInlining)] public static implicit operator vec3(     float[] V) => new vec3( V[0], V[1], V[2]); //             float[3]  to  vec3
+    [Impl(AggressiveInlining)] public static implicit operator vec3(          V3 T) => new vec3(  T.x,  T.y,  T.z); //  (float,float,float)  to  vec3
   //[Impl(AggressiveInlining)] public static implicit operator   F3(        vec3 V) =>         (  V.x,  V.y,  V.z); //                 vec3  to  (float,float,float)
     [Impl(AggressiveInlining)] public static implicit operator vec3((v2 V, v1 z) T) => new vec3(T.V.x,T.V.y,  T.z); //         (vec2,float)  to  vec3
-    [Impl(AggressiveInlining)] public static implicit operator vec3(     float[] V) => new vec3( V[0], V[1], V[2]); //             float[3]  to  vec3
     [Impl(AggressiveInlining)] public static implicit operator vec3(       ivec3 V) => new vec3(  V.x,  V.y,  V.z); //                ivec3  to  vec3
 
     [Impl(AggressiveInlining)] public static implicit operator vec3(        VEC3 v) => new vec3(  v.X,  v.Y,  v.Z); //             ew-gross  to  vec3
     [Impl(AggressiveInlining)] public static implicit operator VEC3(        vec3 V) => new VEC3(  V.x,  V.y,  V.z); //                 vec3  to  ew-gross
-
-    //##########################################################################################################################################################
-    //##########################################################################################################################################################
-    //                                                            Has Value/Magnitude/Length
-  //[Impl(AggressiveInlining)] public static implicit operator bool(vec3 A) => (A != 0f);
 
     //##########################################################################################################################################################
     //##########################################################################################################################################################
