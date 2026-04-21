@@ -1,17 +1,6 @@
 using CompilerServices = System.Runtime.CompilerServices;
 using InteropServices  = System.Runtime.InteropServices;
 
-using   F2 = (float x, float y);
-using   F3 = (float x, float y, float z);
-using   F4 = (float x, float y, float z, float w);
-using   I2 = (int x, int y);
-using   I3 = (int x, int y, int z);
-using   I4 = (int x, int y, int z, int w);
-using VEC2 = System.Numerics.Vector2;
-using VEC3 = System.Numerics.Vector3;
-using VEC4 = System.Numerics.Vector4;
-using MAT4 = System.Numerics.Matrix4x4;
-
 namespace UtilityTest;
 internal static partial class Program {
     static void Test__Utility() {

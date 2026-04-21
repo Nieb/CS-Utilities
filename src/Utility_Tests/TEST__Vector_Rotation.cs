@@ -6,41 +6,41 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        TEST("vec2 rotl()", true
+        TEST("rotl(vec2)", true
             &&  rotl(( 0f, 1f)) == (-1f, 0f)
         );
-        TEST("vec2 rotr()", true
+        TEST("rotr(vec2)", true
             &&  rotr(( 0f, 1f)) == ( 1f, 0f)
         );
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        TEST("vec3 rotXl()", true
+        TEST("rotXl(vec3)", true
             &&  rotXl(( 0f, 0f, 1f)) == ( 0f, 1f, 0f)
         );
-        TEST("vec3 rotXr()", true
+        TEST("rotXr(vec3)", true
             &&  rotXr(( 0f, 0f, 1f)) == ( 0f,-1f, 0f)
         );
 
         //======================================================================================================================================================
-        TEST("vec3 rotYl()", true
+        TEST("rotYl(vec3)", true
             &&  rotYl(( 0f, 0f, 1f)) == (-1f, 0f, 0f)
         );
-        TEST("vec3 rotYr()", true
+        TEST("rotYr(vec3)", true
             &&  rotYr(( 0f, 0f, 1f)) == ( 1f, 0f, 0f)
         );
 
         //======================================================================================================================================================
-        TEST("vec3 rotZl()", true
+        TEST("rotZl(vec3)", true
             &&  rotZl(( 1f, 0f, 0f)) == ( 0f,-1f, 0f)
         );
-        TEST("vec3 rotZr()", true
+        TEST("rotZr(vec3)", true
             &&  rotZr(( 1f, 0f, 0f)) == ( 0f, 1f, 0f)
         );
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        TEST("vec2 rot(P,        Theta)", true
+        TEST("rot(vec2, Theta)", true
             && rot((0f,1f), ToRad(-450f)).IsApproximately((-1f, 0f))
             && rot((0f,1f), ToRad(-360f)).IsApproximately(( 0f, 1f))
             && rot((0f,1f), ToRad(-270f)).IsApproximately(( 1f, 0f))
@@ -65,7 +65,7 @@ internal static partial class Program {
             && rot((0f,1f), ToRad( 405f)).IsApproximately(( SQRT2_RCP, SQRT2_RCP))
         );
 
-        TEST("vec2 rot(P, Pivot, Theta)", true
+        TEST("rot(vec2, Pivot, Theta)", true
             && rot((2f,3f), (2f,2f),         0f ).IsApproximately((2f, 3f))
             && rot((2f,3f), (2f,2f), ToRad( 90f)).IsApproximately((3f, 2f))
             && rot((2f,3f), (2f,2f), ToRad(180f)).IsApproximately((2f, 1f))
@@ -75,7 +75,7 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        TEST("vec3 pch(P,        Theta)", true
+        TEST("pch(vec3,        Theta)", true
             && pch((0f, 0f,-2f),         0f ).IsApproximately((0f, 0f,-2f))
             && pch((0f, 0f,-2f), ToRad( 90f)).IsApproximately((0f,-2f, 0f))
             && pch((0f, 0f,-2f), ToRad(180f)).IsApproximately((0f, 0f, 2f))
@@ -83,7 +83,7 @@ internal static partial class Program {
             && pch((0f, 0f,-2f), ToRad(360f)).IsApproximately((0f, 0f,-2f))
         );
 
-        TEST("vec3 pch(P, Pivot, Theta)", true
+        TEST("pch(vec3, Pivot, Theta)", true
             && pch((3f, 3f, 1f), (3f, 3f, 3f),         0f ).IsApproximately(( 3f, 3f, 1f))
             && pch((3f, 3f, 1f), (3f, 3f, 3f), ToRad( 90f)).IsApproximately(( 3f, 1f, 3f))
             && pch((3f, 3f, 1f), (3f, 3f, 3f), ToRad(180f)).IsApproximately(( 3f, 3f, 5f))
@@ -92,42 +92,71 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        TEST("vec3 yaw(P,        Theta)", true
-            && yaw((0f, 0f,-2f),         0f ).IsApproximately(( 0f, 0f,-2f))
-            && yaw((0f, 0f,-2f), ToRad( 90f)).IsApproximately(( 2f, 0f, 0f))
-            && yaw((0f, 0f,-2f), ToRad(180f)).IsApproximately(( 0f, 0f, 2f))
-            && yaw((0f, 0f,-2f), ToRad(270f)).IsApproximately((-2f, 0f, 0f))
-            && yaw((0f, 0f,-2f), ToRad(360f)).IsApproximately(( 0f, 0f,-2f))
-        );
-
-        TEST("vec3 yaw(P, Pivot, Theta)", true
-            && yaw((3f, 3f, 1f), (3f, 3f, 3f),         0f ).IsApproximately(( 3f, 3f, 1f))
-            && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad( 90f)).IsApproximately(( 5f, 3f, 3f))
-            && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad(180f)).IsApproximately(( 3f, 3f, 5f))
-            && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad(270f)).IsApproximately(( 1f, 3f, 3f))
-            && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad(360f)).IsApproximately(( 3f, 3f, 1f))
-        );
-
-        //======================================================================================================================================================
-        TEST("vec3 rol(P,        Theta)", true
-            && rol((0f, 2f, 0f),         0f ).IsApproximately(( 0f, 2f, 0f))
-            && rol((0f, 2f, 0f), ToRad( 90f)).IsApproximately(( 2f, 0f, 0f))
-            && rol((0f, 2f, 0f), ToRad(180f)).IsApproximately(( 0f,-2f, 0f))
-            && rol((0f, 2f, 0f), ToRad(270f)).IsApproximately((-2f, 0f, 0f))
-            && rol((0f, 2f, 0f), ToRad(360f)).IsApproximately(( 0f, 2f, 0f))
-        );
-
-        TEST("vec3 rol(P, Pivot, Theta)", true
-            && rol((3f, 5f, 3f), (3f, 3f, 3f),         0f ).IsApproximately(( 3f, 5f, 3f))
-            && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad( 90f)).IsApproximately(( 5f, 3f, 3f))
-            && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad(180f)).IsApproximately(( 3f, 1f, 3f))
-            && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad(270f)).IsApproximately(( 1f, 3f, 3f))
-            && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad(360f)).IsApproximately(( 3f, 5f, 3f))
-        );
+        #if Z_UP
+            TEST("rol(vec3,        Theta)", true
+                && rol((0f, 0f,-2f),         0f ).IsApproximately(( 0f, 0f,-2f))
+                && rol((0f, 0f,-2f), ToRad( 90f)).IsApproximately(( 2f, 0f, 0f))
+                && rol((0f, 0f,-2f), ToRad(180f)).IsApproximately(( 0f, 0f, 2f))
+                && rol((0f, 0f,-2f), ToRad(270f)).IsApproximately((-2f, 0f, 0f))
+                && rol((0f, 0f,-2f), ToRad(360f)).IsApproximately(( 0f, 0f,-2f))
+            );
+            TEST("rol(vec3, Pivot, Theta)", true
+                && rol((3f, 3f, 1f), (3f, 3f, 3f),         0f ).IsApproximately(( 3f, 3f, 1f))
+                && rol((3f, 3f, 1f), (3f, 3f, 3f), ToRad( 90f)).IsApproximately(( 5f, 3f, 3f))
+                && rol((3f, 3f, 1f), (3f, 3f, 3f), ToRad(180f)).IsApproximately(( 3f, 3f, 5f))
+                && rol((3f, 3f, 1f), (3f, 3f, 3f), ToRad(270f)).IsApproximately(( 1f, 3f, 3f))
+                && rol((3f, 3f, 1f), (3f, 3f, 3f), ToRad(360f)).IsApproximately(( 3f, 3f, 1f))
+            );
+            //--------------------------------------------------------------------------------------------------------------------------------------------------
+            TEST("yaw(vec3,        Theta)", true
+                && yaw((0f, 2f, 0f),         0f ).IsApproximately(( 0f, 2f, 0f))
+                && yaw((0f, 2f, 0f), ToRad( 90f)).IsApproximately(( 2f, 0f, 0f))
+                && yaw((0f, 2f, 0f), ToRad(180f)).IsApproximately(( 0f,-2f, 0f))
+                && yaw((0f, 2f, 0f), ToRad(270f)).IsApproximately((-2f, 0f, 0f))
+                && yaw((0f, 2f, 0f), ToRad(360f)).IsApproximately(( 0f, 2f, 0f))
+            );
+            TEST("yaw(vec3, Pivot, Theta)", true
+                && yaw((3f, 5f, 3f), (3f, 3f, 3f),         0f ).IsApproximately(( 3f, 5f, 3f))
+                && yaw((3f, 5f, 3f), (3f, 3f, 3f), ToRad( 90f)).IsApproximately(( 5f, 3f, 3f))
+                && yaw((3f, 5f, 3f), (3f, 3f, 3f), ToRad(180f)).IsApproximately(( 3f, 1f, 3f))
+                && yaw((3f, 5f, 3f), (3f, 3f, 3f), ToRad(270f)).IsApproximately(( 1f, 3f, 3f))
+                && yaw((3f, 5f, 3f), (3f, 3f, 3f), ToRad(360f)).IsApproximately(( 3f, 5f, 3f))
+            );
+        #else
+            TEST("yaw(vec3,        Theta)", true
+                && yaw((0f, 0f,-2f),         0f ).IsApproximately(( 0f, 0f,-2f))
+                && yaw((0f, 0f,-2f), ToRad( 90f)).IsApproximately(( 2f, 0f, 0f))
+                && yaw((0f, 0f,-2f), ToRad(180f)).IsApproximately(( 0f, 0f, 2f))
+                && yaw((0f, 0f,-2f), ToRad(270f)).IsApproximately((-2f, 0f, 0f))
+                && yaw((0f, 0f,-2f), ToRad(360f)).IsApproximately(( 0f, 0f,-2f))
+            );
+            TEST("yaw(vec3, Pivot, Theta)", true
+                && yaw((3f, 3f, 1f), (3f, 3f, 3f),         0f ).IsApproximately(( 3f, 3f, 1f))
+                && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad( 90f)).IsApproximately(( 5f, 3f, 3f))
+                && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad(180f)).IsApproximately(( 3f, 3f, 5f))
+                && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad(270f)).IsApproximately(( 1f, 3f, 3f))
+                && yaw((3f, 3f, 1f), (3f, 3f, 3f), ToRad(360f)).IsApproximately(( 3f, 3f, 1f))
+            );
+            //--------------------------------------------------------------------------------------------------------------------------------------------------
+            TEST("rol(vec3,        Theta)", true
+                && rol((0f, 2f, 0f),         0f ).IsApproximately(( 0f, 2f, 0f))
+                && rol((0f, 2f, 0f), ToRad( 90f)).IsApproximately(( 2f, 0f, 0f))
+                && rol((0f, 2f, 0f), ToRad(180f)).IsApproximately(( 0f,-2f, 0f))
+                && rol((0f, 2f, 0f), ToRad(270f)).IsApproximately((-2f, 0f, 0f))
+                && rol((0f, 2f, 0f), ToRad(360f)).IsApproximately(( 0f, 2f, 0f))
+            );
+            TEST("rol(vec3, Pivot, Theta)", true
+                && rol((3f, 5f, 3f), (3f, 3f, 3f),         0f ).IsApproximately(( 3f, 5f, 3f))
+                && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad( 90f)).IsApproximately(( 5f, 3f, 3f))
+                && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad(180f)).IsApproximately(( 3f, 1f, 3f))
+                && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad(270f)).IsApproximately(( 1f, 3f, 3f))
+                && rol((3f, 5f, 3f), (3f, 3f, 3f), ToRad(360f)).IsApproximately(( 3f, 5f, 3f))
+            );
+        #endif
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        TEST("vec3 rot(P,        Axis, Theta)", true
+        TEST("rot(vec3,        Axis, Theta)", true
             && rot((0f,2f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),          0f ).IsApproximately((0f,2f,0f))
             && rot((0f,2f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad( 120f)).IsApproximately((2f,0f,0f))
             && rot((0f,2f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad( 240f)).IsApproximately((0f,0f,2f))
@@ -146,7 +175,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        TEST("vec3 rot(P, Pivot, Axis, Theta)", true
+        TEST("rot(vec3, Pivot, Axis, Theta)", true
             && rot((0f,5f,0f), (0f,3f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP),         0f ).IsApproximately((0f,5f,0f))
             && rot((0f,5f,0f), (0f,3f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad(120f)).IsApproximately((2f,3f,0f))
             && rot((0f,5f,0f), (0f,3f,0f), (SQRT3_RCP, SQRT3_RCP, SQRT3_RCP), ToRad(240f)).IsApproximately((0f,3f,2f))
@@ -155,7 +184,7 @@ internal static partial class Program {
 
         //######################################################################################################################################################
         //######################################################################################################################################################
-        TEST("vec3 rot(P,        ThetaVec)", true
+        TEST("rot(vec3,        ThetaVec)", true
             && rot((0f,1f,  0f), (       0f,        0f,        0f)).IsApproximately((        0f,        1f,        0f))
             && rot((0f,1f,  0f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately(( TWO_THIRD,-ONE_THIRD, TWO_THIRD)) //  180 along diagonal axis
             && rot((0f,2f,  0f), (PI2/SQRT3, PI2/SQRT3, PI2/SQRT3)).IsApproximately((        0f,        2f,        0f)) //  360 along diagonal axis
@@ -203,7 +232,7 @@ internal static partial class Program {
         );
 
         //======================================================================================================================================================
-        TEST("vec3 rot(P, Pivot, ThetaVec)", true
+        TEST("rot(vec3, Pivot, ThetaVec)", true
             && rot((5f,6f,5f), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately((5f+TWO_THIRD          ,5f-ONE_THIRD          ,5f+TWO_THIRD          ))
             && rot((5f,7f,5f), (5f,5f,5f), (PI /SQRT3, PI /SQRT3, PI /SQRT3)).IsApproximately((5f+TWO_THIRD+TWO_THIRD,5f-ONE_THIRD-ONE_THIRD,5f+TWO_THIRD+TWO_THIRD))
 
